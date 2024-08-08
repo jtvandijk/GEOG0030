@@ -1,0 +1,38 @@
+{
+  "00-index.qmd": {
+    "00-index.html": "1254ca37"
+  },
+  "11-data.qmd": {
+    "11-data.html": "78cb3524"
+  },
+  "08-network.qmd": {
+    "08-network.html": "71cdcf54"
+  },
+  "05-models.qmd": {
+    "05-models.html": "75c2a0fa"
+  },
+  "09-datavis.qmd": {
+    "09-datavis.html": "0936f2af"
+  },
+  "02-point-pattern.qmd": {
+    "02-point-pattern.html": "ceb9c03e"
+  },
+  "04-autocorrelation.qmd": {
+    "04-autocorrelation.html": "9d0687b8"
+  },
+  "01-spatial.qmd": {
+    "01-spatial.html": "7eae0586"
+  },
+  "03-operations.qmd": {
+    "03-operations.html": "bc6ae36b"
+  },
+  "06-raster.qmd": {
+    "06-raster.html": "a44f90ce"
+  },
+  "10-maps.qmd": {
+    "10-maps.html": "34c26e9b"
+  },
+  "07-geodemographics.qmd": {
+    "07-geodemographics.html": "f1bb9720"
+  }
+}

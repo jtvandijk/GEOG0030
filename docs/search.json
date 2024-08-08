@@ -1,0 +1,142 @@
+[
+  {
+    "objectID": "07-geodemographics.html",
+    "href": "07-geodemographics.html",
+    "title": "1 Geodemographics",
+    "section": "",
+    "text": "1 Geodemographics"
+  },
+  {
+    "objectID": "10-maps.html",
+    "href": "10-maps.html",
+    "title": "1 Beyond the Choropleth",
+    "section": "",
+    "text": "1 Beyond the Choropleth"
+  },
+  {
+    "objectID": "00-index.html",
+    "href": "00-index.html",
+    "title": "Geocomputation",
+    "section": "",
+    "text": "Welcome to Geocomputation. This module will introduce you both to the principles of spatial analysis as well as provide you with a comprehensive introduction to the use of programming. Over the next ten weeks, you will learn about the theory, methods and tools of spatial analysis through relevant case studies. You will learn how to find, manage and clean spatial, demographic and socioeconomic datasets, and then analyse them using core spatial analysis techniques.\n\n\n\nMoodle is the central point of contact for GEOG0030 and it is where all important information will be communicated such as key module and assessment information. This workbook contains links to all reading material as well as the contents for all computer tutorials\n\n\n\nThe topics covered over the next ten weeks are:\n\n\n\nWeek\nSection\nTopic\n\n\n\n\n1\nFoundational Concepts\nProgramming for Spatial Analysis\n\n\n2\nFoundational Concepts\nAnalysing Point Data\n\n\n3\nFoundational Concepts\nSpatial Queries and Geometric Operations\n\n\n4\nFoundational Concepts\nSpatial Autocorrelation\n\n\n5\nFoundational Concepts\nSpatial Models\n\n\n\nReading week\nReading week\n\n\n6\nApplied Spatial Analysis\nRaster Models\n\n\n7\nApplied Spatial Analysis\nGeodemographics\n\n\n8\nApplied Spatial Analysis\nTransport Network Analysis\n\n\n9\nData Visualisation\nComplex Visualisations\n\n\n10\nData Visualisation\nBeyond the Choropleth\n\n\n\n\n\n\nSpatial analysis can yield fascinating insights into geographical relationships, albeit at times it can be challenging, particularly when we combine this with learning how to program at the same time. You will most likely encounter error messages, experience software crashes, and spend time to identify bugs in your code. However, the rewards of learning how to programmatically solve complex spatial problems will be very much worth it in the end.\nIf you need specific assistance with this module, please:\n\nAsk a question at the end of a lecture or during the computer practicals.\nCheck the Moodle assessment tab for queries relating to this module’s assessment.\nAttend the scheduled Geocomputation Additional Support Hours.\nBook a slot in our Academic Support and Feedback hours.\n\n\n\n\nThis year’s workbook is compiled using:\n\nThe GEOG0030: Geocomputation 2023-2024 workbook by Justin van Dijk\nThe GEOG0030: Geocomputation 2022-2023 workbook by Justin van Dijk\nThe GEOG0030: Geocomputation 2021-2022 workbook by Justin van Dijk\nThe GEOG0030: Geocomputation 2020-2021 workbook by Jo Wilkin\n\nThis year’s workbook also takes inspiration and design elements from:\n\nThe Spatial Data Science for Social Geography course by Martin Fleischmann\nThe Mapping and Modelling Geographic Data in R course by Richard Harris\n\n\n\n\n\n\n\n\n\n\nThis year’s version features the following major updates:\n\nSecond full rewrite of the workbook using Quarto.\nImproved alignment with GEOG0018 Methods in Human Geography.\nNew material on geocoding, spatial models, geodemographic classification, and data visualisation.\nIntroduction of package management using renv."
+  },
+  {
+    "objectID": "00-index.html#welcome",
+    "href": "00-index.html#welcome",
+    "title": "Geocomputation",
+    "section": "",
+    "text": "Welcome to Geocomputation. This module will introduce you both to the principles of spatial analysis as well as provide you with a comprehensive introduction to the use of programming. Over the next ten weeks, you will learn about the theory, methods and tools of spatial analysis through relevant case studies. You will learn how to find, manage and clean spatial, demographic and socioeconomic datasets, and then analyse them using core spatial analysis techniques."
+  },
+  {
+    "objectID": "00-index.html#moodle",
+    "href": "00-index.html#moodle",
+    "title": "Geocomputation",
+    "section": "",
+    "text": "Moodle is the central point of contact for GEOG0030 and it is where all important information will be communicated such as key module and assessment information. This workbook contains links to all reading material as well as the contents for all computer tutorials"
+  },
+  {
+    "objectID": "00-index.html#module-overview",
+    "href": "00-index.html#module-overview",
+    "title": "Geocomputation",
+    "section": "",
+    "text": "The topics covered over the next ten weeks are:\n\n\n\nWeek\nSection\nTopic\n\n\n\n\n1\nFoundational Concepts\nProgramming for Spatial Analysis\n\n\n2\nFoundational Concepts\nAnalysing Point Data\n\n\n3\nFoundational Concepts\nSpatial Queries and Geometric Operations\n\n\n4\nFoundational Concepts\nSpatial Autocorrelation\n\n\n5\nFoundational Concepts\nSpatial Models\n\n\n\nReading week\nReading week\n\n\n6\nApplied Spatial Analysis\nRaster Models\n\n\n7\nApplied Spatial Analysis\nGeodemographics\n\n\n8\nApplied Spatial Analysis\nTransport Network Analysis\n\n\n9\nData Visualisation\nComplex Visualisations\n\n\n10\nData Visualisation\nBeyond the Choropleth"
+  },
+  {
+    "objectID": "00-index.html#troubleshooting",
+    "href": "00-index.html#troubleshooting",
+    "title": "Geocomputation",
+    "section": "",
+    "text": "Spatial analysis can yield fascinating insights into geographical relationships, albeit at times it can be challenging, particularly when we combine this with learning how to program at the same time. You will most likely encounter error messages, experience software crashes, and spend time to identify bugs in your code. However, the rewards of learning how to programmatically solve complex spatial problems will be very much worth it in the end.\nIf you need specific assistance with this module, please:\n\nAsk a question at the end of a lecture or during the computer practicals.\nCheck the Moodle assessment tab for queries relating to this module’s assessment.\nAttend the scheduled Geocomputation Additional Support Hours.\nBook a slot in our Academic Support and Feedback hours."
+  },
+  {
+    "objectID": "00-index.html#acknowledgements",
+    "href": "00-index.html#acknowledgements",
+    "title": "Geocomputation",
+    "section": "",
+    "text": "This year’s workbook is compiled using:\n\nThe GEOG0030: Geocomputation 2023-2024 workbook by Justin van Dijk\nThe GEOG0030: Geocomputation 2022-2023 workbook by Justin van Dijk\nThe GEOG0030: Geocomputation 2021-2022 workbook by Justin van Dijk\nThe GEOG0030: Geocomputation 2020-2021 workbook by Jo Wilkin\n\nThis year’s workbook also takes inspiration and design elements from:\n\nThe Spatial Data Science for Social Geography course by Martin Fleischmann\nThe Mapping and Modelling Geographic Data in R course by Richard Harris"
+  },
+  {
+    "objectID": "00-index.html#major-updates",
+    "href": "00-index.html#major-updates",
+    "title": "Geocomputation",
+    "section": "",
+    "text": "This year’s version features the following major updates:\n\nSecond full rewrite of the workbook using Quarto.\nImproved alignment with GEOG0018 Methods in Human Geography.\nNew material on geocoding, spatial models, geodemographic classification, and data visualisation.\nIntroduction of package management using renv."
+  },
+  {
+    "objectID": "01-spatial.html",
+    "href": "01-spatial.html",
+    "title": "1 Programming for Spatial Analysis",
+    "section": "",
+    "text": "1 Programming for Spatial Analysis"
+  },
+  {
+    "objectID": "02-point-pattern.html",
+    "href": "02-point-pattern.html",
+    "title": "1 Analysing Point Data",
+    "section": "",
+    "text": "1 Analysing Point Data"
+  },
+  {
+    "objectID": "05-models.html",
+    "href": "05-models.html",
+    "title": "1 Spatial Models",
+    "section": "",
+    "text": "1 Spatial Models"
+  },
+  {
+    "objectID": "08-network.html",
+    "href": "08-network.html",
+    "title": "1 Transport Network Analysis",
+    "section": "",
+    "text": "1 Transport Network Analysis"
+  },
+  {
+    "objectID": "09-datavis.html",
+    "href": "09-datavis.html",
+    "title": "1 Complex Visualisations",
+    "section": "",
+    "text": "1 Complex Visualisations"
+  },
+  {
+    "objectID": "04-autocorrelation.html",
+    "href": "04-autocorrelation.html",
+    "title": "1 Spatial Autocorrelation",
+    "section": "",
+    "text": "1 Spatial Autocorrelation"
+  },
+  {
+    "objectID": "03-operations.html",
+    "href": "03-operations.html",
+    "title": "1 Spatial Queries and Geometric Operations",
+    "section": "",
+    "text": "1 Spatial Queries and Geometric Operations"
+  },
+  {
+    "objectID": "06-raster.html",
+    "href": "06-raster.html",
+    "title": "1 Rasters Models",
+    "section": "",
+    "text": "1 Rasters Models"
+  },
+  {
+    "objectID": "11-data.html",
+    "href": "11-data.html",
+    "title": "1 Data Sources",
+    "section": "",
+    "text": "Below you will find a list of resources that you might want to explore when sourcing data for your coursework assignment or your dissertation. This is by no means an exhaustive list, but simply contains some suggestions of websites that you may want to use.\n\n\n\n\n\n\nYou are not limited to using these datasets for your coursework assignment or your dissertation, but these are merely some suggestions.\n\n\n\n\n\nThe following websites contain Open Data or link to Open Data from several respectable data providers:\n\nAfricanUrbanNetwork\nAirBnB Data\nBike Docking Data (ready for R)\nBing Maps worldwide road detections\nCamden Air Action\nConsumer Data Research Centre\nDepartment for Environment, Food & Rural Affairs\nEdina (e.g. OS mastermap)\nEU Tourism Data\nEurostat\nGeofabrik (OSM data)\nGeolytix Supermarket Retail Points\nGlobal Urban Areas dataset\nGlobal Weather Data\nGoogle Dataset Search\nGoogle Open Buildings\nKaggle Public Datasets\nKing’s College Data on Air Pollution\nLondon Data Store\nLondon Local Authority Maintained Trees\nLondon Tube PM2.5 Levels\nMicrosoft Global Building Footprints\nMicrosoft Research Open Data\nNational Public Transport Access Nodes (NaPTAN)\nNASA EARTHDATA\nNASA SocioEconomic Data and Applications Center (SEDAC)\nNHS Data (ready for R)\nnomis Official Census and Labour Market Statistics\nOffice for National Statistics Geoportal\nOffice for National Statistics\nOpen Topography\nOverture Point of Interest data for the United Kingdom\nPlanetary Computer Data Catalog\npseudo Census Output Areas 2001-2011-2021\nPublic transport accessibility indicators Great Britain\nTesco Store Data (London)\nTfL Cycling Data\nTfL Open Data\nTidy Tuesday Data (not exclusively spatial data)\nUK Data Service\nUS Census Data\nUS City Open Data Census\nUSGS Earth Explorer\nUTD19 Multi-City Traffic Dataset\nWorldPop GitHub\nWorldPop\n\nSome other websites that could be helpful:\n\nAwesome Public Datasets; general collection of datasets, although not limited to spatial data.\nFree GIS data; long list with lots of GIS datasets on many different topics and covering many different areas.\n\n\n\n\nUndergraduate students can also apply for a Safeguarded dataset held by the Consumer Data Research Centre. There is a process to access these Safeguarded datasets, which is detailed on the CDRC website. Please be aware that it normally takes 4-5 weeks for your application to be processed.\nAs part of the process, you will need to state in your application why you want that specific dataset and what you are planning to do with it. You will also need to have at least thought about the ethical implications of using that data and provide this with your data application.\nSome of the datasets held by the CDRC that you can apply for are:\n\nBicycle Sharing System Docking Station Observations\nCDRC Modelled Ethnicity Proportions - LSOA Geography\nFCA Financial Lives Survey\nSpeedchecker Broadband Internet Speed Tests\n\n\n\n\n\n\n\nGiven that the application can take several weeks, the Safeguarded CDRC datasets may be useful for your undergraduate dissertation but probably not for the GEOG0030 coursework assignment. However, any of the CDRC datasets that are marked as Open Data do not require this application process and you can download these datasets directly after registering on the website."
+  },
+  {
+    "objectID": "11-data.html#open-data",
+    "href": "11-data.html#open-data",
+    "title": "1 Data Sources",
+    "section": "",
+    "text": "The following websites contain Open Data or link to Open Data from several respectable data providers:\n\nAfricanUrbanNetwork\nAirBnB Data\nBike Docking Data (ready for R)\nBing Maps worldwide road detections\nCamden Air Action\nConsumer Data Research Centre\nDepartment for Environment, Food & Rural Affairs\nEdina (e.g. OS mastermap)\nEU Tourism Data\nEurostat\nGeofabrik (OSM data)\nGeolytix Supermarket Retail Points\nGlobal Urban Areas dataset\nGlobal Weather Data\nGoogle Dataset Search\nGoogle Open Buildings\nKaggle Public Datasets\nKing’s College Data on Air Pollution\nLondon Data Store\nLondon Local Authority Maintained Trees\nLondon Tube PM2.5 Levels\nMicrosoft Global Building Footprints\nMicrosoft Research Open Data\nNational Public Transport Access Nodes (NaPTAN)\nNASA EARTHDATA\nNASA SocioEconomic Data and Applications Center (SEDAC)\nNHS Data (ready for R)\nnomis Official Census and Labour Market Statistics\nOffice for National Statistics Geoportal\nOffice for National Statistics\nOpen Topography\nOverture Point of Interest data for the United Kingdom\nPlanetary Computer Data Catalog\npseudo Census Output Areas 2001-2011-2021\nPublic transport accessibility indicators Great Britain\nTesco Store Data (London)\nTfL Cycling Data\nTfL Open Data\nTidy Tuesday Data (not exclusively spatial data)\nUK Data Service\nUS Census Data\nUS City Open Data Census\nUSGS Earth Explorer\nUTD19 Multi-City Traffic Dataset\nWorldPop GitHub\nWorldPop\n\nSome other websites that could be helpful:\n\nAwesome Public Datasets; general collection of datasets, although not limited to spatial data.\nFree GIS data; long list with lots of GIS datasets on many different topics and covering many different areas."
+  },
+  {
+    "objectID": "11-data.html#safeguarded-data",
+    "href": "11-data.html#safeguarded-data",
+    "title": "1 Data Sources",
+    "section": "",
+    "text": "Undergraduate students can also apply for a Safeguarded dataset held by the Consumer Data Research Centre. There is a process to access these Safeguarded datasets, which is detailed on the CDRC website. Please be aware that it normally takes 4-5 weeks for your application to be processed.\nAs part of the process, you will need to state in your application why you want that specific dataset and what you are planning to do with it. You will also need to have at least thought about the ethical implications of using that data and provide this with your data application.\nSome of the datasets held by the CDRC that you can apply for are:\n\nBicycle Sharing System Docking Station Observations\nCDRC Modelled Ethnicity Proportions - LSOA Geography\nFCA Financial Lives Survey\nSpeedchecker Broadband Internet Speed Tests\n\n\n\n\n\n\n\nGiven that the application can take several weeks, the Safeguarded CDRC datasets may be useful for your undergraduate dissertation but probably not for the GEOG0030 coursework assignment. However, any of the CDRC datasets that are marked as Open Data do not require this application process and you can download these datasets directly after registering on the website."
+  }
+]
