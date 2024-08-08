@@ -1,1 +1,5 @@
 # Transport Network Analysis
+
+::: {.callout-note}
+The Geocomputation content for the 2024-2025 academic year is currently undergoing a major update. The materials from 2023-2024 have been archived and can be accessed here: [\[Link\]](https://jtvandijk.github.io/GEOG0030_20232024)
+:::
