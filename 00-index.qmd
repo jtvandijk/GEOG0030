@@ -19,11 +19,11 @@ The topics covered over the next ten weeks are:
 
 | Week | Section  | Topic |
 | :--- |:---------|:------------------ |
-| 1    | Foundational Concepts | [Programming for Spatial Analysis]({{< var urls.w01 >}}) |
-| 2    | Foundational Concepts | [Analysing Point Data]({{< var urls.w02 >}}) | 
-| 3    | Foundational Concepts | [Spatial Queries and Geometric Operations]({{< var urls.w03 >}}) | 
-| 4    | Foundational Concepts | [Spatial Autocorrelation]({{< var urls.w04 >}}) |
-| 5    | Foundational Concepts | [Spatial Models]({{< var urls.w05 >}}) |
+| 1    | Core Spatial Analysis | [Programming for Spatial Analysis]({{< var urls.w01 >}}) |
+| 2    | Core Spatial Analysis | [Analysing Point Data]({{< var urls.w02 >}}) | 
+| 3    | Core Spatial Analysis | [Spatial Queries and Geometric Operations]({{< var urls.w03 >}}) | 
+| 4    | Core Spatial Analysis | [Spatial Autocorrelation]({{< var urls.w04 >}}) |
+| 5    | Core Spatial Analysis | [Spatial Models]({{< var urls.w05 >}}) |
 |      | **Reading week** | **Reading week** |
 | 6    | Applied Spatial Analysis | [Raster Models]({{< var urls.w06 >}})|
 | 7    | Applied Spatial Analysis | [Geodemographics]({{< var urls.w07 >}})|
