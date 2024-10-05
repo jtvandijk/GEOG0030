@@ -41,6 +41,16 @@ For specific assistance with this module, you can:
 - Attend the scheduled Geocomputation **Additional Support Hours**.
 - Book a slot during our [Academic Support and Feedback hours](https://outlook.office.com/bookwithme/user/8561a481703d4feda7a704ab81b62c8d@ucl.ac.uk?anonymous&ep=plink). 
 
+## Major updates {.unnumbered}
+::: {.callout-note}
+This year's version features the following **major** updates:
+
+- Second full rewrite of the workbook using `Quarto`.
+- Improved alignment with [GEOG0018 Methods in Human Geography](https://jtvandijk.github.io/GEOG0030).
+- New material on geocoding, spatial models, geodemographic classification, and data visualisation.
+- Introduction of package management using `renv`.
+:::
+
 ## Acknowledgements {.unnumbered}
 This year's workbook is compiled using:
 
@@ -53,13 +63,3 @@ This year's workbook also takes inspiration and design elements from:
 
 - The [Spatial Data Science for Social Geography](https://martinfleischmann.net/sds/) course by [Martin Fleischmann](https://martinfleischmann.net/)
 - The [Mapping and Modelling Geographic Data in R](https://profrichharris.github.io/MandM/) course by [Richard Harris](https://profrichharris.github.io/)
-
-## Major updates {.unnumbered}
-::: {.callout-note}
-This year's version features the following **major** updates:
-
-- Second full rewrite of the workbook using `Quarto`.
-- Improved alignment with [GEOG0018 Methods in Human Geography](https://jtvandijk.github.io/GEOG0030).
-- New material on geocoding, spatial models, geodemographic classification, and data visualisation.
-- Introduction of package management using `renv`.
-:::

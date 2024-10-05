@@ -3,3 +3,7 @@
 ::: {.callout-note}
 The Geocomputation content for the 2024-2025 academic year is currently undergoing a major update. The materials from 2023-2024 have been archived and can be accessed here: [\[Link\]](https://jtvandijk.github.io/GEOG0030_20232024)
 :::
+
+::: {.callout-warning}
+For Linux and macOS users who are new to working with spatial data in R, this installation of some of these libraries may fail since additional (non-R) libraries are required (which are automatically installed for Windows users). If this is the case, please refer to the [information pages](https://r-spatial.github.io/sf/#macos) of the `sf` library for instructions on how to install these additional libraries.
+:::
