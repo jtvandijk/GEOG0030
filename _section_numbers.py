@@ -75,8 +75,8 @@ for htmlf in html_files:
                                         '<span class="menu-text">10 Beyond the Choropleth</span>')   
     
     # update TOC chapter 11
-    html_content = html_content.replace('<span class="menu-text">Analysing Point Data</span>', \
-                                        '<span class="menu-text">11 Analysing Point Data</span>')   
+    html_content = html_content.replace('<span class="menu-text">Data Sources</span>', \
+                                        '<span class="menu-text">11 Data Sources</span>')   
 
     # write
     with open(htmlf, 'w') as file:
@@ -87,7 +87,7 @@ htmlredir = 'docs/index.html'
 with open(htmlredir) as file:
     html_content = file.read()
 
-    # update redirect / if to W01
+    # update redirect index.html
     html_content = html_content.replace('08-network.html', \
                                         '00-index.html')
 
