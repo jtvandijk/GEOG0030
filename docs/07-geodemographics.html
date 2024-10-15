@@ -342,27 +342,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">London LSOA Census 2021 Age Groups</td>
 <td style="text-align: left;"><code>csv</code></td>
-<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/tree/master/data/London-LSOA-AgeGroup.csv">Download</a></td>
+<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/London-LSOA-AgeGroup.csv">Download</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">London LSOA Census 2021 Country of Birth</td>
 <td style="text-align: left;"><code>csv</code></td>
-<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/tree/master/data/London-LSOA-Country-of-Birth.csv">Download</a></td>
+<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/London-LSOA-Country-of-Birth.csv">Download</a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">London LSOA Census 2021 Ethnicity</td>
 <td style="text-align: left;"><code>csv</code></td>
-<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/tree/master/data/London-LSOA-Ethnicity.csv">Download</a></td>
+<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/London-LSOA-Ethnicity.csv">Download</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">London LSOA Census 2021 Main Language</td>
 <td style="text-align: left;"><code>csv</code></td>
-<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/tree/master/data/London-LSOA-MainLanguage.csv">Download</a></td>
+<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/London-LSOA-MainLanguage.csv">Download</a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">London LSOA 2021 Spatial Boundaries</td>
 <td style="text-align: left;"><code>GeoPackage</code></td>
-<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/London-LSOA-2021.gpkg">Download</a></td>
+<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-LSOA-2021.gpkg">Download</a></td>
 </tr>
 </tbody>
 </table>
@@ -394,13 +394,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Next, we can load the individual <code>csv</code> files that we downloaded into R.</p>
-<div class="cell styled-output" data-hash="07-geodemographics_cache/html/07-load-data_004ffc6f4dae1dfa2ac033ccf8c0892a">
+<div class="cell styled-output" data-hash="07-geodemographics_cache/html/07-load-data_c62eebb2d5c6cbb4da9c589911356a33">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load age data</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>lsoa_age <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/London-LSOA-AgeGroup.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>lsoa_age <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/attributes/London-LSOA-AgeGroup.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 24970 Columns: 5
@@ -413,7 +413,7 @@ dbl (2): Age (5 categories) Code, Observation
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load country of birth data</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>lsoa_cob <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/London-LSOA-Country-of-Birth.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>lsoa_cob <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/attributes/London-LSOA-Country-of-Birth.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 39952 Columns: 5
 ── Column specification ────────────────────────────────────────────────────────
@@ -425,7 +425,7 @@ dbl (2): Country of birth (8 categories) Code, Observation
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load ethnicity data</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>lsoa_eth <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/London-LSOA-Ethnicity.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>lsoa_eth <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/attributes/London-LSOA-Ethnicity.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 99880 Columns: 5
 ── Column specification ────────────────────────────────────────────────────────
@@ -437,7 +437,7 @@ dbl (2): Ethnic group (20 categories) Code, Observation
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load language data</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>lsoa_lan <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/London-LSOA-MainLanguage.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>lsoa_lan <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/attributes/London-LSOA-MainLanguage.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 54934 Columns: 5
 ── Column specification ────────────────────────────────────────────────────────
@@ -1016,17 +1016,17 @@ Available components:
 </div>
 </div>
 <p>Of course, we can also map the results:</p>
-<div class="cell styled-output" data-hash="07-geodemographics_cache/html/fig-07-cluster-map_e7a399a3825661934a8b2dd732273aac">
+<div class="cell styled-output" data-hash="07-geodemographics_cache/html/fig-07-cluster-map_88bc4255d00d81f5ed962e89c0c92203">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read spatial dataset</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>lsoa21 <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/London-LSOA-2021.gpkg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>lsoa21 <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/spatial/London-LSOA-2021.gpkg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Reading layer `London-LSOA-2021' from data source 
-  `/Users/justinvandijk/Library/CloudStorage/Dropbox/UCL/Web/jtvandijk.github.io/GEOG0030/data/London-LSOA-2021.gpkg' 
+  `/Users/justinvandijk/Library/CloudStorage/Dropbox/UCL/Web/jtvandijk.github.io/GEOG0030/data/spatial/London-LSOA-2021.gpkg' 
   using driver `GPKG'
 Simple feature collection with 4994 features and 8 fields
 Geometry type: MULTIPOLYGON
@@ -1092,12 +1092,12 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 <tr class="odd">
 <td style="text-align: left;">London LSOA Census 2021 Occupation</td>
 <td style="text-align: left;"><code>csv</code></td>
-<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/tree/master/data/London-LSOA-Occupation.csv">Download</a></td>
+<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/London-LSOA-Occupation.csv">Download</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">London LSOA Census 2021 Education</td>
 <td style="text-align: left;"><code>csv</code></td>
-<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/tree/master/data/London-LSOA-Education.csv">Download</a></td>
+<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/London-LSOA-Education.csv">Download</a></td>
 </tr>
 </tbody>
 </table>

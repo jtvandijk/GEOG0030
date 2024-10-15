@@ -280,7 +280,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#reading-w08" id="toc-reading-w08" class="nav-link" data-scroll-target="#reading-w08"><span class="header-section-number">8.2</span> Reading list</a></li>
   <li><a href="#accessibility-in-lambeth" id="toc-accessibility-in-lambeth" class="nav-link" data-scroll-target="#accessibility-in-lambeth"><span class="header-section-number">8.3</span> Accessibility in Lambeth</a>
   <ul class="collapse">
-  <li><a href="#point-of-interest-data" id="toc-point-of-interest-data" class="nav-link" data-scroll-target="#point-of-interest-data"><span class="header-section-number">8.3.1</span> Point of Interest data</a></li>
+  <li><a href="#poi-data" id="toc-poi-data" class="nav-link" data-scroll-target="#poi-data"><span class="header-section-number">8.3.1</span> POI data</a></li>
   <li><a href="#network-data" id="toc-network-data" class="nav-link" data-scroll-target="#network-data"><span class="header-section-number">8.3.2</span> Network data</a></li>
   <li><a href="#network-preparation" id="toc-network-preparation" class="nav-link" data-scroll-target="#network-preparation"><span class="header-section-number">8.3.3</span> Network preparation</a></li>
   <li><a href="#accessibility-analysis-1" id="toc-accessibility-analysis-1" class="nav-link" data-scroll-target="#accessibility-analysis-1"><span class="header-section-number">8.3.4</span> Accessibility analysis</a></li>
@@ -337,22 +337,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">Lambeth Overture Points of Interest 2024</td>
 <td style="text-align: left;"><code>GeoPackage</code></td>
-<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/Lambeth-POI-2024.gpkg">Download</a></td>
+<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/Lambeth-POI-2024.gpkg">Download</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">London LSOA 2011 Spatial Boundaries</td>
 <td style="text-align: left;"><code>GeoPackage</code></td>
-<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/London-LSOA-2011.gpkg">Download</a></td>
+<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-LSOA-2011.gpkg">Download</a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">London Borough Spatial Boundaries</td>
 <td style="text-align: left;"><code>GeoPackage</code></td>
-<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/London-Boroughs.gpkg">Download</a></td>
+<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-Boroughs.gpkg">Download</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">England 2019 Index of Multiple Deprivation</td>
 <td style="text-align: left;"><code>csv</code></td>
-<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/tree/master/data/England-IMD-2019.csv">Download</a></td>
+<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/England-IMD-2019.csv">Download</a></td>
 </tr>
 </tbody>
 </table>
@@ -366,7 +366,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>Open a new script within your <code>GEOG0030</code> project and save this as <code>w08-accessibility.r</code>.</p>
+<p>Open a new script within your <code>GEOG0030</code> project and save this as <code>w08-accessibility-analysis.r</code>.</p>
 <p>We will start by loading the libraries that we will need:</p>
 <div class="cell styled-output" data-hash="08-network_cache/html/08-load-libraries_45b812f3946848321eccbcf75dd7ed5d">
 <div class="code-with-filename">
@@ -392,17 +392,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Next, we can load the spatial data into R.</p>
-<div class="cell styled-output" data-hash="08-network_cache/html/08-load-data_376946449d2551a6c3d2807274960f7e">
+<div class="cell styled-output" data-hash="08-network_cache/html/08-load-data_835707b3848ee55025191785d4a36c65">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read poi data</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>poi24 <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/Lambeth-POI-2024.gpkg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>poi24 <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/spatial/Lambeth-POI-2024.gpkg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Reading layer `Lambeth-POI-2024' from data source 
-  `/Users/justinvandijk/Library/CloudStorage/Dropbox/UCL/Web/jtvandijk.github.io/GEOG0030/data/Lambeth-POI-2024.gpkg' 
+  `/Users/justinvandijk/Library/CloudStorage/Dropbox/UCL/Web/jtvandijk.github.io/GEOG0030/data/spatial/Lambeth-POI-2024.gpkg' 
   using driver `GPKG'
 Simple feature collection with 65060 features and 11 fields
 Geometry type: MULTIPOINT
@@ -411,10 +411,10 @@ Bounding box:  xmin: 526556.6 ymin: 167827 xmax: 535640.4 ymax: 182673.8
 Projected CRS: OSGB36 / British National Grid</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read lsoa dataset</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>lsoa11 <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/London-LSOA-2011.gpkg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>lsoa11 <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/spatial/London-LSOA-2011.gpkg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Reading layer `London-LSOA-2011' from data source 
-  `/Users/justinvandijk/Library/CloudStorage/Dropbox/UCL/Web/jtvandijk.github.io/GEOG0030/data/London-LSOA-2011.gpkg' 
+  `/Users/justinvandijk/Library/CloudStorage/Dropbox/UCL/Web/jtvandijk.github.io/GEOG0030/data/spatial/London-LSOA-2011.gpkg' 
   using driver `GPKG'
 Simple feature collection with 4835 features and 10 fields
 Geometry type: MULTIPOLYGON
@@ -423,10 +423,10 @@ Bounding box:  xmin: 503574.2 ymin: 155850.8 xmax: 561956.7 ymax: 200933.6
 Projected CRS: OSGB36 / British National Grid</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read borough dataset</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>borough <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/London-Boroughs.gpkg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>borough <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/spatial/London-Boroughs.gpkg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Reading layer `london_boroughs' from data source 
-  `/Users/justinvandijk/Library/CloudStorage/Dropbox/UCL/Web/jtvandijk.github.io/GEOG0030/data/London-Boroughs.gpkg' 
+  `/Users/justinvandijk/Library/CloudStorage/Dropbox/UCL/Web/jtvandijk.github.io/GEOG0030/data/spatial/London-Boroughs.gpkg' 
   using driver `GPKG'
 Simple feature collection with 33 features and 7 fields
 Geometry type: POLYGON
@@ -521,8 +521,8 @@ Projected CRS: OSGB36 / British National Grid
 6     East POLYGON ((553564 179127.1, ...</code></pre>
 </div>
 </div>
-<section id="point-of-interest-data" class="level3" data-number="1.3.1">
-<h3 data-number="1.3.1" class="anchored" data-anchor-id="point-of-interest-data"><span class="header-section-number">8.3.1</span> Point of Interest data</h3>
+<section id="poi-data" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="poi-data"><span class="header-section-number">8.3.1</span> POI data</h3>
 <p>The inspection shows that the POI dataset contains a wide variety of location types, with each point tagged under a main and alternative category, as provided by the Overture Maps Foundation via Meta and Microsoft. However, these tags may not be consistent across the dataset, so we will need to identify specific keywords to filter the <code>main_category</code> and <code>alternate_category</code> columns.</p>
 <p>We will start by filtering out all POIs where the word <code>school</code> features in the <code>main_category</code> column:</p>
 <div class="cell styled-output" data-hash="08-network_cache/html/08-school-data_2a748336e52276ef6eb4fdfbe6b8ba68">
@@ -868,7 +868,7 @@ First 10 features:
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>In some cases, the OSM query may return an error, particularly when multiple users from the same location are executing the exact same query. If so, you can download a prepared copy of the data here: <a href="https://github.com/jtvandijk/GEOG0030/raw/master/data/London-OSM-Roads.RData">[Download]</a>.</p>
+<p>In some cases, the OSM query may return an error, particularly when multiple users from the same location are executing the exact same query. If so, you can download a prepared copy of the data here: <a href="https://github.com/jtvandijk/GEOG0030/raw/master/data/spatial/London-OSM-Roads.RData">[Download]</a>.</p>
 <p>You can load this copy into R through <code>load('data/London-OSM-Roads.RData')</code></p>
 </div>
 </div>
@@ -1031,7 +1031,7 @@ Geodetic CRS:  WGS 84
 <span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(netx_connected)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 413540</code></pre>
+<pre><code>[1] 413938</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-warning">
@@ -1126,13 +1126,13 @@ Geodetic CRS:  WGS 84
 </div>
 </div>
 <p>In the final step, we can investigate whether there is a relationship between the proximity of fast-food outlets and the relative levels of deprivation in the area. One approach is to calculate the average number of fast-food outlets within 1,000 metres of a school for each LSOA, and then compare these figures to their corresponding IMD deciles.</p>
-<div class="cell styled-output" data-hash="08-network_cache/html/08-accessibility-join-imd_2cca929a4ffcdf2ecf40dc48840b9fd8">
+<div class="cell styled-output" data-hash="08-network_cache/html/08-accessibility-join-imd_f1ceba957848beeed8f11c1f1592fb88">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read imd dataset</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>imd19 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/England-IMD-2019.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>imd19 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/attributes/England-IMD-2019.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 32844 Columns: 3
@@ -1175,8 +1175,8 @@ dbl (2): imd_rank, imd_dec
   imd_dec avg_cnt
     &lt;dbl&gt;   &lt;dbl&gt;
 1       2   20.1 
-2       3   14.4 
-3       4   17.6 
+2       3   14.3 
+3       4   17.5 
 4       5    9.83
 5       6    3   
 6       7    8.2 

@@ -22,16 +22,16 @@ You can download a subset of the POI dataset via the link provided below. A copy
 
 | File                                        | Type   | Link |
 | :------                                     | :------| :------ |
-| Lambeth Overture Points of Interest 2024    | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/Lambeth-POI-2024.gpkg) |
-| London LSOA 2011 Spatial Boundaries         | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/London-LSOA-2011.gpkg) |
-| London Borough Spatial Boundaries             | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/London-Boroughs.gpkg) |
-| England 2019 Index of Multiple Deprivation  | `csv` | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/England-IMD-2019.csv) |
+| Lambeth Overture Points of Interest 2024    | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/Lambeth-POI-2024.gpkg) |
+| London LSOA 2011 Spatial Boundaries         | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-LSOA-2011.gpkg) |
+| London Borough Spatial Boundaries           | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-Boroughs.gpkg) |
+| England 2019 Index of Multiple Deprivation  | `csv` | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/England-IMD-2019.csv) |
 
 ::: {.callout-note}
 To extract the Lambeth Overture Points of Interest data, a 2-kilometre buffer was applied around the boundaries of Lambeth. This approach ensures that points just outside the study area are included, as locations beyond the borough boundary may still be accessible to residents and could represent the nearest available options.
 :::
 
-Open a new script within your `GEOG0030` project and save this as `w08-accessibility.r`. 
+Open a new script within your `GEOG0030` project and save this as `w08-accessibility-analysis.r`. 
 
 We will start by loading the libraries that we will need:
 
@@ -74,13 +74,13 @@ Next, we can load the spatial data into R.
 #| tidy: True
 #| filename: "R code"
 # read poi data
-poi24 <- st_read('data/Lambeth-POI-2024.gpkg')
+poi24 <- st_read('data/spatial/Lambeth-POI-2024.gpkg')
 
 # read lsoa dataset
-lsoa11 <- st_read('data/London-LSOA-2011.gpkg')
+lsoa11 <- st_read('data/spatial/London-LSOA-2011.gpkg')
 
 # read borough dataset
-borough <- st_read('data/London-Boroughs.gpkg')
+borough <- st_read('data/spatial/London-Boroughs.gpkg')
 ```
 
 Now, carefully examine each individual dataframe to understand how the data is structured and what information it contains.
@@ -102,7 +102,7 @@ head(lsoa11)
 head(borough)
 ```
 
-### Point of Interest data
+### POI data
 The inspection shows that the POI dataset contains a wide variety of location types, with each point tagged under a main and alternative category, as provided by the Overture Maps Foundation via Meta and Microsoft. However, these tags may not be consistent across the dataset, so we will need to identify specific keywords to filter the `main_category` and `alternate_category` columns. 
 
 We will start by filtering out all POIs where the word `school` features in the `main_category` column:
@@ -314,7 +314,7 @@ osm_network <- opq(bbox = bbox_lambeth ) |>
 ```
 
 ::: {.callout-warning}
-In some cases, the OSM query may return an error, particularly when multiple users from the same location are executing the exact same query. If so, you can download a prepared copy of the data here: [[Download]](https://github.com/jtvandijk/GEOG0030/raw/master/data/London-OSM-Roads.RData). 
+In some cases, the OSM query may return an error, particularly when multiple users from the same location are executing the exact same query. If so, you can download a prepared copy of the data here: [[Download]](https://github.com/jtvandijk/GEOG0030/raw/master/data/spatial/London-OSM-Roads.RData). 
 
 You can load this copy into R through `load('data/London-OSM-Roads.RData')`
 :::
@@ -529,7 +529,7 @@ In the final step, we can investigate whether there is a relationship between th
 #| eval: True
 #| filename: "R code"
 # read imd dataset
-imd19 <- read_csv('data/England-IMD-2019.csv')
+imd19 <- read_csv('data/attributes/England-IMD-2019.csv')
 
 # join imd
 lsoa11 <- lsoa11 |>

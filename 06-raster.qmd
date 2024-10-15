@@ -47,12 +47,81 @@ Begin by loading the necessary libraries:
 #| filename: "R code"
 # load libraries
 library(tidyverse)
-library(sf)
-library(tmap)
+library(terra)
 library(openair)
 library(gstat)
+library(sf)
+library(tmap)
 ```
 
 ::: {.callout-warning}
 You may have to install some of these libraries if you have not used these before.
 :::
+
+#### Map algebra
+We will be using some simple map algebra to look at population change in London between 2010 and 2020. We can load the individual `GeoTiff` files that we downloaded into R and reproject them into British National Grid using the `terra` library.
+
+```{r}
+#| label: 06-load-raster
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# load data
+pop2010 <- rast('data/spatial/gbr_ppp_2010_1km_Aggregated.tif')
+pop2020 <- rast('data/spatial/gbr_ppp_2020_1km_Aggregated.tif')
+
+# transform projection
+pop2010 <- pop2010 |> project('EPSG:27700')
+pop2020 <- pop2020 |> project('EPSG:27700')
+```
+
+Carefully examine each dataframe to understand its structure and the information it contains:
+
+```{r}
+#| label: 06-inspect-raster
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# inspect 2010 data
+head(pop2010)
+
+# inspect 2020 data
+head(pop2020)
+```
+::: {.callout-note}
+A raster file is always rectangular, with areas lacking data stored as `NA`. For our population data, this means any pixels outside the land borders of Great Britain will have an `NA` values.
+:::
+
+::: {.callout-tip}
+You can further inspect the results using the `View()` function. 
+:::
+
+We can also plot the raster files for visual inspection:
+
+```{r}
+#| label: fig-06-load-raster-data-2010
+#| fig-cap: "WorldPop 2010 population estimates for Great Britain"
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# plot 2010
+plot(pop2010)
+```
+
+```{r}
+#| label: fig-06-load-raster-data-2020
+#| fig-cap: "WorldPop 2020 population estimates for Great Britain."
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# plot 2020
+plot(pop2020)
+```
