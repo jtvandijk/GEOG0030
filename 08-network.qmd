@@ -22,9 +22,9 @@ You can download a subset of the POI dataset via the link provided below. A copy
 
 | File                                        | Type   | Link |
 | :------                                     | :------| :------ |
-| Lambeth Overture Points of Interest 2024    | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/master/data/Lambeth-POI-2024.gpkg) |
-| London LSOA 2011 Spatial Boundaries         | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/master/data/London-LSOA-2011.gpkg) |
-| London Borough Spatial Boundaries             | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/master/data/London-Boroughs.gpkg) |
+| Lambeth Overture Points of Interest 2024    | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/Lambeth-POI-2024.gpkg) |
+| London LSOA 2011 Spatial Boundaries         | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/London-LSOA-2011.gpkg) |
+| London Borough Spatial Boundaries             | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/London-Boroughs.gpkg) |
 | England 2019 Index of Multiple Deprivation  | `csv` | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/England-IMD-2019.csv) |
 
 ::: {.callout-note}
