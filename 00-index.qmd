@@ -25,7 +25,7 @@ The topics covered over the next ten weeks are:
 | 4    | Core Spatial Analysis | [Spatial Autocorrelation]({{< var urls.w04 >}}) |
 | 5    | Core Spatial Analysis | [Spatial Models]({{< var urls.w05 >}}) |
 |      | **Reading week** | **Reading week** |
-| 6    | Applied Spatial Analysis | [Raster Models]({{< var urls.w06 >}})|
+| 6    | Applied Spatial Analysis | [Raster Data Analysis]({{< var urls.w06 >}})|
 | 7    | Applied Spatial Analysis | [Geodemographic Classification]({{< var urls.w07 >}})|
 | 8    | Applied Spatial Analysis | [Accessibility Analysis]({{< var urls.w08 >}}) |
 | 9    | Data Visualisation | [Complex Visualisations]({{< var urls.w09 >}}) | 

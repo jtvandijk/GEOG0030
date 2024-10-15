@@ -22,11 +22,11 @@ The data covers all usual residents, as recorded in the 2021 Census for England 
 
 | File                                        | Type   | Link |
 | :------                                     | :------| :------ |
-| London LSOA Census 2021 Age Groups          | `csv` | [Download](https://github.com/jtvandijk/GEOG0114/tree/master/data/London-LSOA-AgeGroup.csv) |
-| London LSOA Census 2021 Country of Birth    | `csv` | [Download](https://github.com/jtvandijk/GEOG0114/tree/master/data/London-LSOA-Country-of-Birth.csv) |
-| London LSOA Census 2021 Ethnicity           | `csv` | [Download](https://github.com/jtvandijk/GEOG0114/tree/master/data/London-LSOA-Ethnicity.csv) |
-| London LSOA Census 2021 Main Language       | `csv` | [Download](https://github.com/jtvandijk/GEOG0114/tree/master/data/London-LSOA-MainLanguage.csv) |
-| London LSOA 2021 Spatial Boundaries         | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0114/raw/master/data/London-LSOA-2021.gpkg) |
+| London LSOA Census 2021 Age Groups          | `csv` | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/London-LSOA-AgeGroup.csv) |
+| London LSOA Census 2021 Country of Birth    | `csv` | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/London-LSOA-Country-of-Birth.csv) |
+| London LSOA Census 2021 Ethnicity           | `csv` | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/London-LSOA-Ethnicity.csv) |
+| London LSOA Census 2021 Main Language       | `csv` | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/London-LSOA-MainLanguage.csv) |
+| London LSOA 2021 Spatial Boundaries         | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/master/data/London-LSOA-2021.gpkg) |
 
 Open a new script within your `GEOG0030` project and save this as `w07-geodemographics.r`. 
 
@@ -522,8 +522,8 @@ The creation of a geodemographic classification is an iterative process. This ty
 
 | File                                        | Type   | Link |
 | :------                                     | :------| :------ |
-| London LSOA Census 2021 Occupation          | `csv`  | [Download](https://github.com/jtvandijk/GEOG0114/tree/master/data/London-LSOA-Occupation.csv) |
-| London LSOA Census 2021 Education           | `csv`  | [Download](https://github.com/jtvandijk/GEOG0114/tree/master/data/London-LSOA-Education.csv) |
+| London LSOA Census 2021 Occupation          | `csv`  | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/London-LSOA-Occupation.csv) |
+| London LSOA Census 2021 Education           | `csv`  | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/London-LSOA-Education.csv) |
 
 ## Before you leave
 Having finished this tutorial, you should now understand the basics of a geodemographic classification. That is [all for this week](https://www.youtube.com/watch?v=8iwBM_YB1sE)! 
