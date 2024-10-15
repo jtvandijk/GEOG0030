@@ -55,16 +55,16 @@ for htmlf in html_files:
                                         '<span class="menu-text">5 Spatial Models</span>')   
   
     # update TOC chapter 6
-    html_content = html_content.replace('<span class="menu-text">Raster Models</span>', \
-                                        '<span class="menu-text">6 Raster Models</span>')   
+    html_content = html_content.replace('<span class="menu-text">Raster Data Analysis</span>', \
+                                        '<span class="menu-text">6 Raster Data Analysis</span>')   
 
     # update TOC chapter 7
-    html_content = html_content.replace('<span class="menu-text">Geodemographics</span>', \
-                                        '<span class="menu-text">7 Geodemographics</span>')   
+    html_content = html_content.replace('<span class="menu-text">Geodemographic Classification</span>', \
+                                        '<span class="menu-text">7 Geodemographic Classification</span>')   
 
     # update TOC chapter 8
-    html_content = html_content.replace('<span class="menu-text">Transport Network Analysis</span>', \
-                                        '<span class="menu-text">8 Transport Network Analysis</span>')   
+    html_content = html_content.replace('<span class="menu-text">Accessibility Analysis</span>', \
+                                        '<span class="menu-text">8 Accessibility Analysis</span>')   
 
     # update TOC chapter 9
     html_content = html_content.replace('<span class="menu-text">Complex Visualisations</span>', \
@@ -74,7 +74,7 @@ for htmlf in html_files:
     html_content = html_content.replace('<span class="menu-text">Beyond the Choropleth</span>', \
                                         '<span class="menu-text">10 Beyond the Choropleth</span>')   
     
-    # update TOC chapter 11\
+    # update TOC chapter 11
     html_content = html_content.replace('<span class="menu-text">Analysing Point Data</span>', \
                                         '<span class="menu-text">11 Analysing Point Data</span>')   
 
