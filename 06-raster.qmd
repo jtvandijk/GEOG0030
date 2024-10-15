@@ -1,5 +1,58 @@
 # Raster Data Analysis
+So far, we have exclusively focused on the use of vector and tabular data. However, depending on the nature of your research problem, you may also encounter *raster data*. This week's content introduces you to raster data, map algebra, and interpolation. 
+
+## Lecture slides {#slides-w06}
+You can download the slides of this week's lecture here: [[Link]]({{< var slides.week06 >}}).
+
+## Reading list {#reading-w06}
+#### Essential readings 
+- Gimond, M. 2021. Intro to GIS and spatial analysis. **Chapter 14**: *Spatial Interpolation*. [[Link]](https://mgimond.github.io/Spatial/spatial-interpolation.html)
+- Heris, M., Foks, N., Bagstad, K. 2020. A rasterized building footprint dataset for the United States. *Scientific Data* 7: 207. [[Link]](https://doi.org/10.1038/s41597-020-0542-3)
+- Thomson, D., Leasure, D., Bird, T. *et al*. 2022. How accurate are WorldPop-Global-Unconstrained gridded population data at the cell-level? A simulation analysis in urban Namibia. *Plos ONE* 17:7: e0271504. [[Link]](https://doi.org/10.1371/journal.pone.0271504)
+
+#### Suggested readings 
+- Mellander, C., Lobo, J., Stolarick, K. *et al*. 2015. Night-time light data: A good proxy measure for economic activity? *PLoS ONE* 10(10): e0139779. [[Link]](https://doi.org/10.1371/journal.pone.0139779)
+
+## Raster data and interpolation
+This week, we will use raster data to analyse population change in London. In the second half of the tutorial, we will apply data from air quality monitoring sites and use interpolation techniques to model air pollution across the city.
 
 ::: {.callout-note}
-The Geocomputation content for the 2024-2025 academic year is currently undergoing a major update. The materials from 2023-2024 have been archived and can be accessed here: [\[Link\]](https://jtvandijk.github.io/GEOG0030_20232024)
+The key difference between vector and raster models lies in their structure. Vectors are made up of points, lines, and polygons. In contrast, raster data consists of pixels (or grid cells), similar to an image. Each cell holds a single value representing a geographic phenomenon, such as population density at that location. Common raster data types include remote sensing imagery, such as satellite or LIDAR data.
+::: 
+
+### Population change in Great Britain
+For the first part of this week's practical material we will be using raster datasets from [WorldPop](https://hub.worldpop.org/). These population surfaces are estimates of counts of people, displayed within a regular grid raster of a spatial resolution of up to 100m. These datasets can be used to explore, for example, changes in the demographic profiles or area deprivation at small spatial scales.
+
+1. Navigate to the WorldPop Hub: [[Link]](https://hub.worldpop.org/)
+2. Go to **Population Count** -> **Unconstrained individual countries 2000-2020 (1km resolution)**.
+3. Type *United Kingdom* in the search bar.
+4. Download the [GeoTIFF](https://en.wikipedia.org/wiki/GeoTIFF) files for **2010** and **2020**: `gbr_ppp_2010_1km_Aggregated` and `gbr_ppp_2020_1km_Aggregated`.
+5. Save the files to your computer in your `data` folder.
+
+::: {.callout-note}
+A GeoTIFF is a type of raster file format that embeds geographic information, enabling the image to be georeferenced to specific real-world coordinates. It includes metadata like projection, coordinate system, and geographic extent, making it compatible with GIS software for spatial analysis.
+:::
+
+Open a new script within your `GEOG0030` project and save this as `w06-raster-data-analysis.r`. 
+
+Begin by loading the necessary libraries:
+
+```{r}
+#| label: 06-load-libraries
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| output: False
+#| tidy: True
+#| filename: "R code"
+# load libraries
+library(tidyverse)
+library(sf)
+library(tmap)
+library(openair)
+library(gstat)
+```
+
+::: {.callout-warning}
+You may have to install some of these libraries if you have not used these before.
 :::
