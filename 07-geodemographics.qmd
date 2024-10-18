@@ -367,11 +367,11 @@ lsoa_df_vis[,-1] <- sapply(lsoa_df_vis[-1], function(x){(x-min(x))/(max(x)-min(x
 ```
 
 ### Selecting the number of clusters
-Now our data are prepared we will start by creating an elbow plot. The [elbow method](https://en.wikipedia.org/wiki/Elbow_method_(clustering)#:~:text=In%20cluster%20analysis%2C%20the%20elbow,number%20of%20clusters%20to%20use%60) is a visual tool that helps determine the optimal number of clusters in a dataset. This is important because with $k$-means clustering you need to specify the numbers of clusters *a priori*. The elbow method involves running the clustering algorithm with varying numbers of clusters ($k$) and plotting the total explained variation (known as the *Within Sum of Squares*) against the number of clusters. The goal is to identify the 'elbow' point on the curve, where the rate of decrease in explained variation starts to slow. This point suggests that adding more clusters yields diminishing returns in terms of explained variation.
+Now our data are prepared we will start by creating an elbow plot. The [elbow method](https://en.wikipedia.org/wiki/Elbow_method_(clustering)#:~:text=In%20cluster%20analysis%2C%20the%20elbow,number%20of%20clusters%20to%20use%60) is a visual tool that helps determine the optimal number of clusters in a dataset. This is important because with $k$-means clustering you need to specify the numbers of clusters *a priori*. The elbow method involves running the clustering algorithm with varying numbers of clusters ($k$) and plotting the total explained variation (known as the *Within Sum of Squares*) against the number of clusters. The goal is to identify the *elbow* point on the curve, where the rate of decrease in explained variation starts to slow. This point suggests that adding more clusters yields diminishing returns in terms of explained variation.
 
 ```{r}
 #| label: fig-07-elbow-plot
-#| fig-cap: Elbow plot with 'Within Sum of Squares' against number of clusters.
+#| fig-cap: Elbow plot with *Within Sum of Squares* against number of clusters.
 #| classes: styled-output
 #| echo: True
 #| eval: True

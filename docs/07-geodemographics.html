@@ -882,7 +882,7 @@ dbl (2): Main language (11 categories) Code, Observation
 </section>
 <section id="selecting-the-number-of-clusters" class="level3" data-number="1.3.4">
 <h3 data-number="1.3.4" class="anchored" data-anchor-id="selecting-the-number-of-clusters"><span class="header-section-number">7.3.4</span> Selecting the number of clusters</h3>
-<p>Now our data are prepared we will start by creating an elbow plot. The <a href="https://en.wikipedia.org/wiki/Elbow_method_(clustering)#:~:text=In%20cluster%20analysis%2C%20the%20elbow,number%20of%20clusters%20to%20use%60">elbow method</a> is a visual tool that helps determine the optimal number of clusters in a dataset. This is important because with <span class="math inline">\(k\)</span>-means clustering you need to specify the numbers of clusters <em>a priori</em>. The elbow method involves running the clustering algorithm with varying numbers of clusters (<span class="math inline">\(k\)</span>) and plotting the total explained variation (known as the <em>Within Sum of Squares</em>) against the number of clusters. The goal is to identify the ‘elbow’ point on the curve, where the rate of decrease in explained variation starts to slow. This point suggests that adding more clusters yields diminishing returns in terms of explained variation.</p>
+<p>Now our data are prepared we will start by creating an elbow plot. The <a href="https://en.wikipedia.org/wiki/Elbow_method_(clustering)#:~:text=In%20cluster%20analysis%2C%20the%20elbow,number%20of%20clusters%20to%20use%60">elbow method</a> is a visual tool that helps determine the optimal number of clusters in a dataset. This is important because with <span class="math inline">\(k\)</span>-means clustering you need to specify the numbers of clusters <em>a priori</em>. The elbow method involves running the clustering algorithm with varying numbers of clusters (<span class="math inline">\(k\)</span>) and plotting the total explained variation (known as the <em>Within Sum of Squares</em>) against the number of clusters. The goal is to identify the <em>elbow</em> point on the curve, where the rate of decrease in explained variation starts to slow. This point suggests that adding more clusters yields diminishing returns in terms of explained variation.</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -895,7 +895,7 @@ dbl (2): Main language (11 categories) Code, Observation
 <div id="fig-07-elbow-plot" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="07-geodemographics_files/figure-html/fig-07-elbow-plot-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;3: Elbow plot with ‘Within Sum of Squares’ against number of clusters.</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;3: Elbow plot with <em>Within Sum of Squares</em> against number of clusters.</figcaption>
 </figure>
 </div>
 </div>
