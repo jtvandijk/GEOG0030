@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -240,7 +274,19 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#spatial-autocorrelation" id="toc-spatial-autocorrelation" class="nav-link active" data-scroll-target="#spatial-autocorrelation"><span class="header-section-number">4</span> Spatial Autocorrelation</a></li>
+  <li><a href="#spatial-autocorrelation" id="toc-spatial-autocorrelation" class="nav-link active" data-scroll-target="#spatial-autocorrelation"><span class="header-section-number">4</span> Spatial Autocorrelation</a>
+  <ul>
+  <li><a href="#lecture-w04" id="toc-lecture-w04" class="nav-link" data-scroll-target="#lecture-w04"><span class="header-section-number">4.1</span> Lecture slides</a></li>
+  <li><a href="#reading-w04" id="toc-reading-w04" class="nav-link" data-scroll-target="#reading-w04"><span class="header-section-number">4.2</span> Reading list</a>
+  <ul class="collapse">
+  <li><a href="#essential-readings" id="toc-essential-readings" class="nav-link" data-scroll-target="#essential-readings">Essential readings</a></li>
+  <li><a href="#suggested-readings" id="toc-suggested-readings" class="nav-link" data-scroll-target="#suggested-readings">Suggested readings</a></li>
+  </ul></li>
+  <li><a href="#population-groups-in-london" id="toc-population-groups-in-london" class="nav-link" data-scroll-target="#population-groups-in-london"><span class="header-section-number">4.3</span> Population groups in London</a>
+  <ul class="collapse">
+  <li><a href="#spatial-dependency" id="toc-spatial-dependency" class="nav-link" data-scroll-target="#spatial-dependency"><span class="header-section-number">4.3.1</span> Spatial dependency</a></li>
+  </ul></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jtvandijk/GEOG0030/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -251,18 +297,126 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="spatial-autocorrelation" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">4</span> Spatial Autocorrelation</h1>
+<p>This week, we will explore the concept of spatial dependence—the idea that the value of a variable at one location is influenced by the value of the same variable at nearby locations. This dependence can be statistically measured by assessing spatial autocorrelation, which refers to the degree of similarity between values of a variable at different locations or between multiple variables at the same location.</p>
+<section id="lecture-w04" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="lecture-w04"><span class="header-section-number">4.1</span> Lecture slides</h2>
+<p>You can download the slides of this week’s lecture here: <a href="https://github.com/jtvandijk/GEOG0030/tree/master/slides/w04-geo.pdf">[Link]</a>.</p>
+</section>
+<section id="reading-w04" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="reading-w04"><span class="header-section-number">4.2</span> Reading list</h2>
+<section id="essential-readings" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="essential-readings">Essential readings</h4>
+<ul>
+<li>Griffith, D. 2017. <em>Spatial Autocorrelation</em>. The Geographic Information Science &amp; Technology Body of Knowledge. <a href="https://doi.org/10.22224/gistbok/2020.3.10">[Link]</a></li>
+<li>Gimond, M. 2023. Intro to GIS and spatial analysis. <strong>Chapter 13</strong>: <em>Spatial autocorrelation</em>. <a href="https://mgimond.github.io/Spatial/spatial-autocorrelation.html">[Link]</a></li>
+<li>Livings, M. and Wu, A-M. 2020. <em>Local Measures of Spatial Association</em>. The Geographic Information Science &amp; Technology Body of Knowledge. <a href="https://doi.org/10.22224/gistbok/2020.3.10">[Link]</a></li>
+</ul>
+</section>
+<section id="suggested-readings" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="suggested-readings">Suggested readings</h4>
+<ul>
+<li>Lee, S. 2019. Uncertainty in the effects of the modifiable areal unit problem under different levels of spatial autocorrelation: a simulation study. <em>International Journal of Geographical Information Science</em> 33: 1135-1154. <a href="https://doi.org/10.1080/13658816.2018.1542699">[Link]</a></li>
+<li>Harris, R. 2020. Exploring the neighbourhood-level correlates of Covid-19 deaths in London using a difference across spatial boundaries method. <em>Health &amp; Place</em> 66: 102446. <a href="https://doi.org/10.1016/j.healthplace.2020.102446">[Link]</a></li>
+</ul>
+</section>
+</section>
+<section id="population-groups-in-london" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="population-groups-in-london"><span class="header-section-number">4.3</span> Population groups in London</h2>
+<p>This week, we will investigate to what extent people in London who <a href="https://www.ons.gov.uk/peoplepopulationandcommunity/culturalidentity/ethnicity/bulletins/ethnicgroupenglandandwales/census2021">self-identified</a> as <em>Asian-Bangladeshi</em> in the 2021 Census are clustered in London at the LSOA-level. The data covers all usual residents, as recorded in the 2021 Census for England and Wales, aggregated at the <a href="https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeographies/census2021geographies">Lower Super Output Area (LSOA)</a> level. The data has been extracted using the <a href="https://www.ons.gov.uk/datasets/create">Custom Dataset Tool</a> and subsequently processed to include only the proportion of individuals who self-identify as belonging to one of the Asian categories. Along with this dataset, we also have access to a <code>GeoPackage</code> that contains the LSOA boundaries. You can download both files below and save them in your project folder under <code>data/attributes</code> and <code>data/spatial</code>, respectively.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">File</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Link</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">London LSOA Census 2021 Asian Population.</td>
+<td style="text-align: left;"><code>csv</code></td>
+<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/London-LSOA-Asian.csv">Download</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">London LSOA 2021 Spatial Boundaries</td>
+<td style="text-align: left;"><code>GeoPackage</code></td>
+<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-LSOA-2021.gpkg">Download</a></td>
+</tr>
+</tbody>
+</table>
+<p>Open a new script within your <code>GEOG0030</code> project and save this as <code>w04-spatial-autocorrelation.r</code>.</p>
+<p>Begin by loading the necessary libraries:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load libraries</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spdep)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>You may have to install some of these libraries if you have not used these before.</p>
+</div>
+</div>
+</div>
+<p>Once downloaded, we can load both files into memory:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read spatial dataset</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>lsoa21 <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/spatial/London-LSOA-2021.gpkg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Reading layer `London-LSOA-2021' from data source 
+  `/Users/justinvandijk/Library/CloudStorage/Dropbox/UCL/Web/jtvandijk.github.io/GEOG0030/data/spatial/London-LSOA-2021.gpkg' 
+  using driver `GPKG'
+Simple feature collection with 4994 features and 8 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: 503574.2 ymin: 155850.8 xmax: 561956.7 ymax: 200933.6
+Projected CRS: OSGB36 / British National Grid</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load ethnicity data</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>lsoa_eth <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/attributes/London-LSOA-Asian.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 4994 Columns: 6
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (1): lower_layer_super_output_areas_code
+dbl (5): asian_asian_british_or_asian_welsh_bangladeshi, asian_asian_british...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+</div>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>The Geocomputation content for the 2024-2025 academic year is currently undergoing a major update. The materials from 2023-2024 have been archived and can be accessed here: <a href="https://jtvandijk.github.io/GEOG0030_20232024">[Link]</a></p>
+<p>You can inspect both objects using the <code>View()</code> function.</p>
 </div>
 </div>
 </div>
+<section id="spatial-dependency" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="spatial-dependency"><span class="header-section-number">4.3.1</span> Spatial dependency</h3>
+<p>As you should know by now, the first step when working with spatial data is to create a map:</p>
 
 
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->

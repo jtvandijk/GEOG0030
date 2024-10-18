@@ -36,6 +36,10 @@ To focus the analysis on London, we need to clip our dataset to the boundaries o
 | :------                                     | :------| :------ |
 | London Borough Spatial Boundaries           | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-Boroughs.gpkg) |
 
+::: {.callout-tip}
+You may have already downloaded some of these datasets in previous weeks, but for completeness, they are all provided here. Only download the datasets you do not already have or did not save.
+:::
+
 Open a new script within your `GEOG0030` project and save this as `w06-raster-data-analysis.r`. 
 
 Begin by loading the necessary libraries:

@@ -1,5 +1,68 @@
 # Spatial Autocorrelation 
+This week, we will explore the concept of spatial dependence—the idea that the value of a variable at one location is influenced by the value of the same variable at nearby locations. This dependence can be statistically measured by assessing spatial autocorrelation, which refers to the degree of similarity between values of a variable at different locations or between multiple variables at the same location.
+
+## Lecture slides {#lecture-w04}
+You can download the slides of this week's lecture here: [[Link]]({{< var slides.week04 >}}).
+
+## Reading list {#reading-w04}
+#### Essential readings {.unnumbered}
+- Griffith, D. 2017. *Spatial Autocorrelation*. The Geographic Information Science & Technology Body of Knowledge. [[Link]](https://doi.org/10.22224/gistbok/2020.3.10)
+- Gimond, M. 2023. Intro to GIS and spatial analysis. **Chapter 13**: *Spatial autocorrelation*. [[Link]](https://mgimond.github.io/Spatial/spatial-autocorrelation.html)
+- Livings, M. and Wu, A-M. 2020. *Local Measures of Spatial Association*. The Geographic Information Science & Technology Body of Knowledge. [[Link]](https://doi.org/10.22224/gistbok/2020.3.10)
+
+#### Suggested readings {.unnumbered}
+- Lee, S. 2019. Uncertainty in the effects of the modifiable areal unit problem under different levels of spatial autocorrelation: a simulation study. *International Journal of Geographical Information Science* 33: 1135-1154. [[Link]](https://doi.org/10.1080/13658816.2018.1542699)
+- Harris, R. 2020. Exploring the neighbourhood-level correlates of Covid-19 deaths in London using a difference across spatial boundaries method. *Health & Place* 66: 102446. [[Link]](https://doi.org/10.1016/j.healthplace.2020.102446)
+
+## Population groups in London
+This week, we will investigate to what extent people in London who [self-identified](https://www.ons.gov.uk/peoplepopulationandcommunity/culturalidentity/ethnicity/bulletins/ethnicgroupenglandandwales/census2021) as *Asian-Bangladeshi* in the 2021 Census are clustered in London at the LSOA-level. The data covers all usual residents, as recorded in the 2021 Census for England and Wales, aggregated at the [Lower Super Output Area (LSOA)](https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeographies/census2021geographies) level. The data has been extracted using the [Custom Dataset Tool](https://www.ons.gov.uk/datasets/create) and subsequently processed to include only the proportion of individuals who self-identify as belonging to one of the Asian categories. Along with this dataset, we also have access to a `GeoPackage` that contains the LSOA boundaries. You can download both files below and save them in your project folder under `data/attributes` and `data/spatial`, respectively.
+
+| File                                        | Type   | Link |
+| :------                                     | :------| :------ |
+| London LSOA Census 2021 Asian Population.   | `csv` | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/London-LSOA-Asian.csv) |
+| London LSOA 2021 Spatial Boundaries         | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-LSOA-2021.gpkg) |
+
+Open a new script within your `GEOG0030` project and save this as `w04-spatial-autocorrelation.r`. 
+
+Begin by loading the necessary libraries:
+
+```{r}
+#| label: 04-load-libraries
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| output: False
+#| tidy: True
+#| filename: 'R code'
+# load libraries
+library(tidyverse)
+library(sf)
+library(tmap)
+library(spdep)
+```
+
+::: {.callout-warning}
+You may have to install some of these libraries if you have not used these before.
+:::
+
+Once downloaded, we can load both files into memory:
+```{r}
+#| label: 04-load-gpkg-csv
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# read spatial dataset
+lsoa21 <- st_read('data/spatial/London-LSOA-2021.gpkg')
+
+# load ethnicity data
+lsoa_eth <- read_csv('data/attributes/London-LSOA-Asian.csv')
+``` 
 
 ::: {.callout-note}
-The Geocomputation content for the 2024-2025 academic year is currently undergoing a major update. The materials from 2023-2024 have been archived and can be accessed here: [\[Link\]](https://jtvandijk.github.io/GEOG0030_20232024)
+You can inspect both objects using the `View()` function. 
 :::
+
+### Spatial dependency
+As you should know by now, the first step when working with spatial data is to create a map:
