@@ -341,7 +341,7 @@ Let us start by loading and inspecting the data:
 #| tidy: True
 #| filename: 'R code'
 # load from zip if downloaded through the link
-pollution <- read_csv('data/attributes/London-NO2-2023.csv.zip')
+pollution <- read_csv('data/attributes/London-NO2-2023.zip')
 
 # inspect
 head(pollution)
