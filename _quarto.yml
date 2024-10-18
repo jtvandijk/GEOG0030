@@ -16,7 +16,7 @@ format:
     callout-appearance: simple
     css: assets/styles.css
     toc: true
-    toc-depth: 4
+    toc-depth: 3
     smooth-scroll: true
     highlight-style: atom-one
     number-sections: true

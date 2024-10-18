@@ -288,7 +288,7 @@ tm_shape(borough) +
   # set layout
   tm_layout(
     legend.outside = FALSE,
-    legend.position = c('right', 'bottom'),
+    legend.position = c('left', 'bottom'),
     frame = FALSE
   )
 ```
@@ -421,7 +421,7 @@ tm_shape(measurement_sites) +
   # set layout
   tm_layout(
     legend.outside = FALSE,
-    legend.position = c('right', 'bottom'),
+    legend.position = c('left', 'bottom'),
     legend.text.size = 1,
     frame = FALSE
   )
@@ -455,7 +455,7 @@ tm_shape(measurement_sites) +
   # set layout
   tm_layout(
     legend.outside = FALSE,
-    legend.position = c('right', 'bottom'),
+    legend.position = c('left', 'bottom'),
     legend.text.size = 1,
     frame = FALSE
   )
@@ -532,7 +532,7 @@ tm_shape(measurement_sites_tesselation) +
   # set layout
   tm_layout(
     legend.outside = FALSE,
-    legend.position = c('right', 'bottom'),
+    legend.position = c('left', 'bottom'),
     frame = FALSE
   )
 
@@ -599,7 +599,7 @@ tm_shape(measurement_sites_idw) +
   # set layout
   tm_layout(
     legend.outside = FALSE,
-    legend.position = c('right', 'bottom'),
+    legend.position = c('left', 'bottom'),
     frame = FALSE
   )
 ```

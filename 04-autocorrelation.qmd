@@ -113,7 +113,7 @@ tm_shape(lsoa21) +
   # set layout
   tm_layout(
     legend.outside = FALSE,
-    legend.position = c('right', 'bottom'),
+    legend.position = c('left', 'bottom'),
     frame = FALSE
   )
 ``` 
@@ -150,7 +150,7 @@ tm_shape(lsoa21) +
   # set layout
   tm_layout(
     legend.outside = FALSE,
-    legend.position = c('right', 'bottom'),
+    legend.position = c('left', 'bottom'),
     frame = FALSE
   )
 ``` 
@@ -408,6 +408,7 @@ tm_shape(lsoa21) +
   tm_layout(
     legend.outside = FALSE,
     legend.position = c('left', 'bottom'),
+    frame = FALSE
   ) 
 
 ``` 
@@ -450,6 +451,7 @@ tm_shape(lsoa21) +
   tm_layout(
     legend.outside = FALSE,
     legend.position = c('left', 'bottom'),
+    frame = FALSE
   ) 
 
 ``` 
