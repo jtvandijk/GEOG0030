@@ -466,7 +466,7 @@ In addition to Voronoi tessellation, you may encounter the term Thiessen polygon
 :::
 
 ``` {r}
-#| label: 07-create-thiessen-polygons
+#| label: 06-voronoi
 #| classes: styled-output
 #| echo: True
 #| eval: True
@@ -547,6 +547,7 @@ We will start by generating an empty grid to store the predicted values before r
 #| echo: True
 #| eval: True
 #| tidy: True
+#| cache: True
 #| filename: 'R code'
 # create regular output grid
 output_grid <- borough |>

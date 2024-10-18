@@ -139,7 +139,7 @@ This is still a very large list, and looking at the categories not all POIs cont
 
 # remove quotes for easier processing
 poi_schools <- poi_schools |>
-  mutate(main_category = str_replace_all(main_category, '\'',''))
+  mutate(main_category = str_replace_all(main_category, '\"',''))
 
 # filter school poi data
 poi_schools <- poi_schools |>
@@ -299,6 +299,7 @@ To download the Lambeth road network dataset, we first need to define our boundi
 #| eval: True
 #| tidy: True
 #| warning: False
+#| cache: True
 #| filename: 'R code'
 
 # define our bbox coordinates, use WGS84
