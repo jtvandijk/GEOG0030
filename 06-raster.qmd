@@ -13,14 +13,7 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 #### Suggested readings {.unnumbered}
 - Mellander, C., Lobo, J., Stolarick, K. *et al*. 2015. Night-time light data: A good proxy measure for economic activity? *PLoS ONE* 10(10): e0139779. [[Link]](https://doi.org/10.1371/journal.pone.0139779)
 
-## Raster data and interpolation
-This week, we will use raster data to analyse population change in London. In the second half of the tutorial, we will apply data from air quality monitoring sites and use interpolation techniques to model air pollution across the city.
-
-::: {.callout-note}
-The key difference between vector and raster models lies in their structure. Vectors are made up of points, lines, and polygons. In contrast, raster data consists of pixels (or grid cells), similar to an image. Each cell holds a single value representing a geographic phenomenon, such as population density at that location. Common raster data types include remote sensing imagery, such as satellite or LIDAR data.
-::: 
-
-### Population change in London
+## Population change in London
 For the first part of this week's practical material we will be using raster datasets from [WorldPop](https://hub.worldpop.org/). These population surfaces are estimates of counts of people, displayed within a regular grid raster of a spatial resolution of up to 100m. These datasets can be used to explore, for example, changes in the demographic profiles or area deprivation at small spatial scales.
 
 1. Navigate to the WorldPop Hub: [[Link]](https://hub.worldpop.org/)
@@ -28,6 +21,10 @@ For the first part of this week's practical material we will be using raster dat
 3. Type *United Kingdom* in the search bar.
 4. Download the [GeoTIFF](https://en.wikipedia.org/wiki/GeoTIFF) files for **2010** and **2020**: `gbr_ppp_2010_1km_Aggregated` and `gbr_ppp_2020_1km_Aggregated`.
 5. Save the files to your computer in your `data` folder.
+
+::: {.callout-note}
+The key difference between vector and raster models lies in their structure. Vectors are made up of points, lines, and polygons. In contrast, raster data consists of pixels (or grid cells), similar to an image. Each cell holds a single value representing a geographic phenomenon, such as population density at that location. Common raster data types include remote sensing imagery, such as satellite or LIDAR data.
+::: 
 
 ::: {.callout-note}
 A GeoTIFF is a type of raster file format that embeds geographic information, enabling the image to be georeferenced to specific real-world coordinates. It includes metadata like projection, coordinate system, and geographic extent, making it compatible with GIS software for spatial analysis.
@@ -50,7 +47,7 @@ Begin by loading the necessary libraries:
 #| eval: True
 #| output: False
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # load libraries
 library(tidyverse)
 library(terra)
@@ -64,7 +61,7 @@ library(tmap)
 You may have to install some of these libraries if you have not used these before.
 :::
 
-#### Map algebra
+### Map algebra
 We will be using some simple map algebra to look at population change in London between 2010 and 2020. We can load the individual `GeoTiff` files that we downloaded into R and reproject them into British National Grid using the `terra` library.
 
 ```{r}
@@ -73,7 +70,7 @@ We will be using some simple map algebra to look at population change in London 
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # load data
 pop2010 <- rast('data/spatial/gbr_ppp_2010_1km_Aggregated.tif')
 pop2020 <- rast('data/spatial/gbr_ppp_2020_1km_Aggregated.tif')
@@ -91,7 +88,7 @@ Carefully examine each dataframe to understand its structure and the information
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # inspect 2010 data
 head(pop2010)
 
@@ -115,7 +112,7 @@ We can also plot the raster files for visual inspection:
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # plot 2010
 plot(pop2010)
 ```
@@ -127,7 +124,7 @@ plot(pop2010)
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # plot 2020
 plot(pop2020)
 ```
@@ -146,7 +143,7 @@ The `terra` package does not accept `sf` objects, so after loading the London bo
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # load data, to spatvector
 borough <- st_read('data/spatial/London-Boroughs.gpkg') |>
   vect()
@@ -169,7 +166,7 @@ We should now have the raster cells that fall within the boundaries of London:
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # inspect
 plot(pop2010_london)
 ```
@@ -181,7 +178,7 @@ plot(pop2010_london)
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # inspect
 plot(pop2020_london)
 ```
@@ -195,7 +192,7 @@ Now we have our two London population rasters, we can calculate population chang
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # subtract
 lonpop_change <- pop2020_london - pop2010_london
 
@@ -203,7 +200,7 @@ lonpop_change <- pop2020_london - pop2010_london
 plot(lonpop_change)
 ```
 
-#### Zonal statistics
+### Zonal statistics
 To further analyse our population change raster, we can create a smoothed version of the `lonpop_change` raster using the `focal()` function. This function generates a raster that calculates the average (mean) value of the nearest neighbours for each cell.
 
 ```{r}
@@ -213,7 +210,7 @@ To further analyse our population change raster, we can create a smoothed versio
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # smooth
 lonpop_smooth <- focal(lonpop_change, w = matrix(1,3,3), fun = mean) 
 
@@ -230,7 +227,7 @@ The differences may not be immediately apparent, but if you subtract the smoothe
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # substract
 lonpop_chang_smooth <- lonpop_change - lonpop_smooth
 
@@ -251,7 +248,7 @@ We can resize a raster using the `aggregate() function`, setting the `factor` pa
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # aggregate
 lonpop_agg <- aggregate(lonpop_change, fact = 2, fun = mean) 
 
@@ -261,9 +258,9 @@ plot(lonpop_agg)
 
 We can also aggregate raster cells to vector geographies. For example, we can aggregate the WorldPop gridded population estimates to the London borough boundaries:
 
-```{r tidy="styler"}
+```{r tidy='styler'}
 #| label: fig-06-aggregate-the-raster-to-vector
-#| fig-cap: Aggregating raster values to a vector geography.
+#| fig-cap: Absolute population change in London boroughs 2010-2020.
 #| classes: styled-output
 #| echo: True
 #| eval: True
@@ -280,17 +277,20 @@ tm_shape(borough) +
 
   # specify column, classes
   tm_polygons(
-    col = "pop_change",
-    palette = c("#f1eef6", "#bdc9e1", "#74a9cf", "#0570b0"),
-    title = "Absolute change",
+    col = 'pop_change',
+    palette = c('#f1eef6', '#bdc9e1', '#74a9cf', '#0570b0'),
+    title = '',
   ) +
   # set layout
   tm_layout(
     legend.outside = FALSE,
-    legend.position = c("right", "bottom"),
+    legend.position = c('right', 'bottom'),
     frame = FALSE
   )
 ```
+::: {.callout-tip}
+You can further inspect the results using the `View()` function. 
+:::
 
 We now have a vector dataset, which allows us to perform many of the analyses we have explored in previous weeks. 
 
@@ -299,4 +299,315 @@ Calculating population change, particularly over decades as we have done, can be
 :::
 
 ## Air pollution in London
+In the second part of this week's practical, we will explore various methods of spatial data interpolation, focusing on air pollution in London using data from [Londonair](https://www.londonair.org.uk/). We will specifically look at Nitrogen Dioxide (NO~2~) measurements.
 
+::: {.callout-note}
+Londonair is the website of the London Air Quality Network (LAQN), which provides air pollution data for London and southeast England through the [Environmental Research Group](https://www.imperial.ac.uk/school-public-health/environmental-research-group/) at Imperial College This data is publicly available and can be accessed directly using the `openair` R package, without needing to download files.
+:::
+
+::: {.callout-note}
+Spatial interpolation predicts a phenomenon at unmeasured locations. It is often used when we want to estimate a variable across space, particularly in areas with sparse or no data.
+::: 
+
+```{r}
+#| label: 06-get-air-pollution-data
+#| classes: styled-output
+#| echo: True
+#| eval: False
+#| tidy: True
+#| filename: 'R code'
+# get list of all measurement sites 
+site_meta <- importMeta(source = 'kcl', all=TRUE, year=2023:2023)
+
+# download all data pertaining to these sites
+pollution <- importKCL(site=c(site_meta$code), year=2023:2023, pollutant='no2',meta=TRUE)
+```
+
+::: {.callout-tip}
+Not all measurements sites collect data on NO~2~ so it is normal to get some `404 Not Found` warnings.
+:::
+
+::: {.callout-warning}
+This code may take some time to run, as it will attempt to download data from all air measurement sites for an entire year, with many measurements taken hourly. If you experience too many errors or if it is taking too long, you can download a copy of the data here: [[Download]](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/attributes/London-NO2-2023.zip). Once downloaded, place the `zip` file in your `data` folder. The file is large, so you can leave it unzipped.
+:::
+
+Let us start by loading and inspecting the data:
+
+```{r}
+#| label: 06-inspect-air-pollution-data
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: 'R code'
+# load from zip if downloaded through the link
+pollution <- read_csv('data/attributes/London-Pollution-2023.csv.zip')
+
+# inspect
+head(pollution)
+```
+
+In the first five rows, we can see data from the same site, with the date field showing an observation for every hour. Given there are 24 hours in a day, 365 days in a year, and data from hundreds of sites, it is no surprise that the dataset is so large. To make the dataset more manageable, let us summarise the values by site.
+
+```{r}
+#| label: 06-mean-air-pollution-data
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: 'R code'
+# mean site values
+pollution_avg <- pollution |>
+  filter(!is.na(latitude) & !is.na(longitude) & !is.na(no2)) |>
+  group_by(code, latitude, longitude) |>
+  summarise(no2 = mean(no2))
+
+# inspect
+head(pollution_avg)
+```
+
+We now have 177 measurement sites with their corresponding latitudes, longitudes, and average NO~2~ values. Let us have a look at the spatial distribution of these measurement sites.
+
+```{r tidy='styler'}
+#| label: fig-06-air-quality-measurement-sites
+#| fig-cap: KCL NO~2~ measurement sites in London.
+#| classes: styled-output
+#| echo: True
+#| eval: True
+# load boroughs for background
+borough <- st_read('data/spatial/London-Boroughs.gpkg') |>
+  st_union()
+
+# create a point spatial dataframe
+measurement_sites <- pollution_avg |>
+  st_as_sf(coords=c('longitude','latitude'), crs=4326) |>
+  st_transform(27700)
+
+# clip measurement sites to london boundaries
+measurement_sites <- measurement_sites |>
+  st_intersection(borough)
+
+# shape, polygon
+tm_shape(borough) +
+  
+  # specify column, classes
+  tm_polygons(
+    col = '#f0f0f0', 
+  ) +
+  
+# shape, points
+tm_shape(measurement_sites) + 
+  
+  # specify column, colours
+  tm_symbols(
+    col = '#fc9272',
+    size = 0.3,
+  ) +
+  
+  # set legend
+  tm_add_legend(
+    type = 'symbol', 
+    labels = 'Measurement site', 
+    col = '#fc9272',
+    size = 0.5
+  ) +
+  
+  # set layout
+  tm_layout(
+    legend.outside = FALSE,
+    legend.position = c('right', 'bottom'),
+    legend.text.size = 1,
+    frame = FALSE
+  )
+```
+
+We can also use proportional symbols to visualise the values, helping us observe how measurements vary across London.'
+
+```{r tidy='styler'}
+#| label: fig-06-air-quality-measurement-sites-proportional-symbol
+#| fig-cap: Proportional symbol map of average KCL NO~2~ measurement in London.
+#| classes: styled-output
+#| echo: True
+#| eval: True
+# shape, polygon
+tm_shape(borough) +
+  
+  # specify column, classes
+  tm_polygons(
+    col = '#f0f0f0', 
+  ) +
+  
+# shape, points
+tm_shape(measurement_sites) + 
+  
+  # specify column
+  tm_bubbles(
+    size = 'no2',
+    title.size = 'Average reading'
+  ) +
+  
+  # set layout
+  tm_layout(
+    legend.outside = FALSE,
+    legend.position = c('right', 'bottom'),
+    legend.text.size = 1,
+    frame = FALSE
+  )
+
+```
+
+@fig-06-air-quality-measurement-sites-proportional-symbol shows heterogeneity in average NO~2~ measurements across London, both in terms of coverage and NO~2~ levels. To make reasonable assumptions about NO~2~ levels in areas without measurements, we can interpolate the missing values.
+
+### Voronoi tessellation
+A straightforward method for interpolating values across space is to create a Voronoi tessellation polygons. These polygons define the boundaries of areas closest to each unique point, meaning that each point in the dataset has a corresponding Thiessen polygon.
+
+::: {.callout-tip}
+In addition to Voronoi tessellation, you may encounter the term Thiessen polygons. These terms are often used interchangeably to describe the geometry created from point data.
+:::
+
+``` {r}
+#| label: 07-create-thiessen-polygons
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: 'R code'
+# function
+st_voronoi_points <- function(points) {
+  
+    # to multipoint
+    g = st_combine(st_geometry(points))
+
+    # to voronoi
+    v = st_voronoi(g)
+    v = st_collection_extract(v)
+
+    # return
+    return(v[unlist(st_intersects(points, v))])
+}
+
+# voronoi tessellation
+measurement_sites_voronoi <- st_voronoi_points(measurement_sites)
+
+# replace point geometry with polygon geometry
+measurement_sites_tesselation <- measurement_sites |>
+  st_set_geometry(measurement_sites_voronoi) |>
+  st_intersection(borough)
+
+# inspect
+measurement_sites_tesselation
+```
+
+::: {.callout-warning}
+Do not worry about fully understanding the code behind the function; just know that it takes a point spatial data frame as input and produces a Thiessen polygon spatial data frame as output.
+:::
+
+::: {.callout-tip}
+You can further inspect the results using the `View()` function. 
+:::
+
+We can now visualise the results of the interpolation:
+
+```{r tidy='styler'}
+#| label: fig-06-air-quality-london-thiessen
+#| fig-cap: Interpolation of average NO~2~ measurements in London using a Voronoi tessellation.
+#| classes: styled-output
+#| echo: True
+#| eval: True
+# shape, polygon
+tm_shape(measurement_sites_tesselation) +
+
+  # specify column, classes
+  tm_polygons(
+    col = 'no2',
+    palette = c('#ffffcc', '#c2e699', '#78c679', '#0570b0'),
+    title = 'Average reading',
+  ) +
+  # set layout
+  tm_layout(
+    legend.outside = FALSE,
+    legend.position = c('right', 'bottom'),
+    frame = FALSE
+  )
+
+```
+
+#### Inverse Distance Weighting
+A more sophisticated method for interpolating point data is Inverse Distance Weighting (IDW). IDW converts numerical point data into a continuous surface, allowing for visualisation of how the data is distributed across space. This technique estimates values at each location by calculating a weighted average from nearby points, with the weights inversely related to their distances.
+
+::: {.callout-note}
+The distance weighting is done by a power function: the larger the power coefficient, the stronger the weight of nearby point. The output is most commonly represented as a raster surface. 
+:::
+
+We will start by generating an empty grid to store the predicted values before running the IDW.
+
+``` {r}
+#| label: 06-idw
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: 'R code'
+# create regular output grid
+output_grid <- borough |>
+  st_make_grid(cellsize = c(1000,1000))
+
+# execute 
+measurement_sites_idw <- idw(formula = no2 ~ 1,
+                             locations = measurement_sites,
+                             newdata = output_grid,
+                             beta = 2)
+
+# clip
+measurement_sites_idw <- measurement_sites_idw |>
+  st_intersection(borough)
+```
+
+::: {.callout-warning}
+The IDW may take some time to run.
+:::
+
+Again, we can map the results for visual inspection.
+
+::: {.callout-tip}
+The values of the IDW output are stored in the raster grid as `var1.pred`.
+:::
+
+```{r tidy='styler'}
+#| label: fig-06-air-quality-idw
+#| fig-cap: Interpolation of average NO~2~ measurements in London using Inverse Distance Weighting.
+#| echo: True
+#| eval: True
+# shape, polygon
+tm_shape(measurement_sites_idw) +
+
+  # specify column, classes
+  tm_fill(
+    col = 'var1.pred',
+    style = 'cont',
+    palette = 'Oranges',
+    title = 'Average reading'
+  ) +
+  
+  # set layout
+  tm_layout(
+    legend.outside = FALSE,
+    legend.position = c('right', 'bottom'),
+    frame = FALSE
+  )
+```
+
+::: {.callout-note}
+We have set the output cell size to 1000x1000 metres. While a smaller cell size can yield a smoother IDW output, it may introduce uncertainty due to the limited number of data points available for interpolation. Additionally, reducing the cell size will exponentially increase processing time.'
+:::
+
+## Assignment 
+Having run through all the steps during the tutorial, we can conduct some more granular analysis of the NO~2~ measurements. For example, instead of examining the annual average measurements, we could compare data across different months. Please try the following tasks:
+
+1. Create monthly averages for the pollution data.
+2. For both *June* and *December*, generate a dataframe containing the London monitoring sites along with their average NO₂ readings for these months.
+3. Perform Inverse Distance Weighting (IDW) interpolation for the data from both months.
+4. Combine the results to assess the differences between these months.
+
+## Before you leave 
+This week, we have explored raster datasets and how to manage and process them using the `terra` library. While you will typically encounter vector data, particularly in relation to government statistics and administrative boundaries, there are also many use cases where raster data may be encountered. With that being said: [that is it for this week](https://www.youtube.com/watch?v=8iwBM_YB1sE)! 

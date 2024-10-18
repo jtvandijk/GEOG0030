@@ -51,7 +51,7 @@ options(max.print = 50)
 #| eval: True
 #| output: False
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # load libraries
 library(tidyverse)
 library(sf)
@@ -72,7 +72,7 @@ Next, we can load the spatial data into R.
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # read poi data
 poi24 <- st_read('data/spatial/Lambeth-POI-2024.gpkg')
 
@@ -91,7 +91,7 @@ Now, carefully examine each individual dataframe to understand how the data is s
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # inspect poi data
 head(poi24)
 
@@ -113,7 +113,7 @@ We will start by filtering out all POIs where the word `school` features in the 
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # filter school poi data
 poi_schools <- poi24 |>
   filter(str_detect(main_category, 'school'))
@@ -135,11 +135,11 @@ This is still a very large list, and looking at the categories not all POIs cont
 #| eval: True
 #| tidy: True
 #| warning: False
-#| filename: "R code"
+#| filename: 'R code'
 
 # remove quotes for easier processing
 poi_schools <- poi_schools |>
-  mutate(main_category = str_replace_all(main_category, '\"',''))
+  mutate(main_category = str_replace_all(main_category, '\'',''))
 
 # filter school poi data
 poi_schools <- poi_schools |>
@@ -174,7 +174,7 @@ You can inspect the different tags and their frequencies easily by creating a fr
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 
 # filter school poi data 
 poi_schools <- poi_schools |>
@@ -196,7 +196,7 @@ Since the POI dataset is compiled from various open sources, the data quality is
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 
 # identify duplicate postcodes
 poi_schools <- poi_schools |>
@@ -227,7 +227,7 @@ We can use a similar approach to approximate the locations of fast food outlets 
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # filter fast food poi data
 poi_fastfood <- poi24 |>
   filter(str_detect(main_category, 'fast_food_restaurant') |
@@ -247,7 +247,7 @@ Let's map both datasets to get an idea of how the data look like:
 #| classes: styled-output
 #| echo: True
 #| eval: True
-#| filename: "R code"
+#| filename: 'R code'
 # combine for mapping
 poi_schools <- poi_schools |>
   mutate(type = 'School')
@@ -278,6 +278,7 @@ tm_shape(poi_lambeth) +
   tm_layout(
     legend.outside = TRUE,
     legend.position = c('right', 'bottom'),
+    legend.text.size = 1,
     frame = FALSE
   )
 ```
@@ -298,7 +299,7 @@ To download the Lambeth road network dataset, we first need to define our boundi
 #| eval: True
 #| tidy: True
 #| warning: False
-#| filename: "R code"
+#| filename: 'R code'
 
 # define our bbox coordinates, use WGS84
 bbox_lambeth <- poi24 |>
@@ -327,13 +328,13 @@ The returned `osm_network` object contains a variety of elements with the specif
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 
 # extract the nodes, with their osm_id
-osm_network_nodes <- osm_network$osm_points[, "osm_id"]
+osm_network_nodes <- osm_network$osm_points[, 'osm_id']
 
 # extract the edges, with their osm_id and relevant columns
-osm_network_edges <- osm_network$osm_lines[, c("osm_id", "name", "highway", "maxspeed", "oneway")]
+osm_network_edges <- osm_network$osm_lines[, c('osm_id', 'name', 'highway', 'maxspeed', 'oneway')]
 
 # inspect
 head(osm_network_nodes)
@@ -350,7 +351,7 @@ We can quickly map the network edges to see how the road network looks like:
 #| classes: styled-output
 #| echo: True
 #| eval: True
-#| filename: "R code"
+#| filename: 'R code'
 # shape, polygon
 tm_shape(osm_network_edges) +
   
@@ -387,6 +388,7 @@ tm_shape(osm_network_edges) +
     frame = FALSE,
     legend.outside = TRUE,
     legend.position = c('right', 'bottom'),
+    legend.text.size = 1
   )
 ```
 
@@ -399,7 +401,7 @@ Since our focus is on schoolchildren and walking distances, we will overwrite th
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 
 # overwrite one-way default
 osm_network_edges$oneway <- 'no'
@@ -415,7 +417,7 @@ In any network analysis, the primary data structure is a graph composed of nodes
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 
 # replace missing highway tags with unclassified 
 osm_network_edges <- osm_network_edges |>
@@ -437,7 +439,7 @@ The `dodgr` package documentation explains that components are numbered in order
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 
 # extract the largest connected graph component
 netx_connected <- osm_network_graph[osm_network_graph$component == 1, ]
@@ -464,7 +466,7 @@ The `dodgr` package requires data to be projected in WGS84, so we need to reproj
 #| eval: True
 #| tidy: True
 #| message: False
-#| filename: "R code"
+#| filename: 'R code'
 
 # reproject
 poi_schools <- poi_schools |>
@@ -490,7 +492,7 @@ The result of this computation is a distance matrix that contains the network di
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 
 # inspect
 distance_matrix[1:5,1:5]
@@ -507,7 +509,7 @@ Now that we have the distance matrix, we can aggregate the data and perform acce
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 
 # fast-food outlets within 500m
 poi_schools$fastfood_500m <- rowSums(distance_matrix <= 500)
@@ -527,7 +529,7 @@ In the final step, we can investigate whether there is a relationship between th
 #| classes: styled-output
 #| echo: True
 #| eval: True
-#| filename: "R code"
+#| filename: 'R code'
 # read imd dataset
 imd19 <- read_csv('data/attributes/England-IMD-2019.csv')
 
@@ -549,7 +551,7 @@ We can use this approach to derive the average number of fast-food by IMD decile
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # average counts by imd decile
 fastfood_imd <- poi_schools |>
   group_by(imd_dec) |>

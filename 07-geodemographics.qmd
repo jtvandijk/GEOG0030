@@ -48,7 +48,7 @@ options(max.print = 50)
 #| eval: True
 #| output: False
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # load libraries
 library(tidyverse)
 library(janitor)
@@ -71,7 +71,7 @@ Next, we can load the individual `csv` files that we downloaded into R.
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # load age data
 lsoa_age <- read_csv('data/attributes/London-LSOA-AgeGroup.csv')
 
@@ -97,7 +97,7 @@ Now, carefully examine each individual dataframe to understand how the data is s
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # inspect age data
 head(lsoa_age)
 
@@ -132,7 +132,7 @@ We will begin with the `age` dataframe:
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # clean names 
 lsoa_age <- lsoa_age |>
   clean_names()
@@ -160,7 +160,7 @@ To account for the non-uniformity of the areal units, we further need to convert
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # total observations
 lsoa_age <- lsoa_age |>
   rowwise() |>
@@ -183,7 +183,7 @@ This looks much better. We can do the same for the country of `birth` data:
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # prepare country of birth data
 lsoa_cob <- lsoa_cob |>
   clean_names() |>
@@ -208,7 +208,7 @@ And we can do the same for the `ethnicity` and `language` datasets:
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # prepare ethnicity data
 lsoa_eth <- lsoa_eth |>
   clean_names() |>
@@ -262,7 +262,7 @@ For more details on `facet_wrap()`, you can refer to the [ggplot2 documentation]
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # wide to long
 lsoa_age_wd <- lsoa_age |>
   pivot_longer(cols = c(2:5), names_to = 'agegroup', values_to = 'count')
@@ -287,7 +287,7 @@ This threshold of 75% is arbitrary, and in practice, more thorough consideration
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # join
 lsoa_df <- lsoa_age |>
   left_join(lsoa_cob, by = 'lower_layer_super_output_areas_code') |>
@@ -326,7 +326,7 @@ We can subsequently check for multicollinearity of the remaining variables. The 
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # inspect variable names 
 names(lsoa_df)
 
@@ -354,7 +354,7 @@ If the input data are heavily skewed or contain outliers, $k$-means may produce 
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # inverse hyperbolic sine 
 lsoa_df_vis[,-1] <- sapply(lsoa_df_vis[-1], asinh)
   
@@ -372,7 +372,7 @@ Now our data are prepared we will start by creating an elbow plot. The [elbow me
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # elbow plot
 fviz_nbclust(lsoa_df_vis[,-1], kmeans, nstart = 100, iter.max = 100, method = 'wss') 
 ```
@@ -392,7 +392,7 @@ Now we have decided on the number of clusters, we can run our $k$-means analysis
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # set seed for reproducibility
 set.seed(999)
 
@@ -408,7 +408,7 @@ We can inspect the object to get some information about our clusters:
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # inspect
 lsoa_clus
 ```
@@ -422,7 +422,7 @@ We now need to perform some post-processing to extract useful summary data for e
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 
 # global means
 glob_means <- colMeans(lsoa_df_vis[,-1])
@@ -448,7 +448,7 @@ These comparisons can then be visualised using, for instance, a radial bar plot:
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # to long format
 cluster_diffs_long <- cluster_diffs |>
   pivot_longer(!cluster, names_to = 'vars', values_to = 'score') 
@@ -478,7 +478,7 @@ Of course, we can also map the results:
 #| classes: styled-output
 #| echo: True
 #| eval: True
-#| filename: "R code"
+#| filename: 'R code'
 # read spatial dataset
 lsoa21 <- st_read('data/spatial/London-LSOA-2021.gpkg')
 
