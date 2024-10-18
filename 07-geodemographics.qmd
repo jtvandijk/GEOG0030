@@ -5,12 +5,12 @@ This week we will turn to geodemographic classification. Geodemographic classifi
 You can download the slides of this week's lecture here: [[Link]]({{< var slides.week07 >}}).
 
 ## Reading list {#reading-w07}
-#### Essential readings 
+#### Essential readings {.unnumbered}
 - Longley, P. A. 2012. Geodemographics and the practices of geographic information science. *International Journal of Geographical Information Science* 26(12): 2227-2237. [[Link]](https://doi.org/10.1080/13658816.2012.719623)
 - Singleton, A. and Longley, P. A. 2024. Classifying and mapping residential structure through the London Output Area Classification. *Environment and Planning B: Urban Analytics and City Science* 51(5): 1153-1164. [[Link]](https://doi.org/10.1177/23998083241242913)
 - Wyszomierski, J., Longley, P. A., and Singleton, A. *et al.* 2024. A neighbourhood Output Area Classification from the 2021 and 2022 UK censuses. *The Geographical Journal*. 190(2): e12550. [[Link]](https://doi.org/10.1111/geoj.12550)
 
-#### Suggested readings
+#### Suggested readings {.unnumbered}
 - Dalton, C. M. and Thatcher. J. 2015. Inflated granularity: Spatial “Big Data” and geodemographics. *Big Data & Society* 2(2): 1-15. [[Link]](https://doi.org/10.1177/2053951715601144)
 - Fränti, P. and Sieronoja, S. 2019. How much can k-means be improved by using better initialization and repeats? *Pattern Recognition* 93: 95-112. [[Link]](https://doi.org/10.1016/j.patcog.2019.04.014)
 - Singleton, A. and Spielman, S. 2014. The past, present, and future of geodemographic research in the United States and United Kingdom. *The Professional Geographer* 66(4): 558-567. [[Link]](https://doi.org/10.1080/00330124.2013.848764)
@@ -71,7 +71,6 @@ Next, we can load the individual `csv` files that we downloaded into R.
 #| echo: True
 #| eval: True
 #| tidy: True
-#| cache: True
 #| filename: "R code"
 # load age data
 lsoa_age <- read_csv('data/attributes/London-LSOA-AgeGroup.csv')
@@ -327,7 +326,6 @@ We can subsequently check for multicollinearity of the remaining variables. The 
 #| echo: True
 #| eval: True
 #| tidy: True
-#| cache: True
 #| filename: "R code"
 # inspect variable names 
 names(lsoa_df)
@@ -374,7 +372,6 @@ Now our data are prepared we will start by creating an elbow plot. The [elbow me
 #| echo: True
 #| eval: True
 #| tidy: True
-#| cache: True
 #| filename: "R code"
 # elbow plot
 fviz_nbclust(lsoa_df_vis[,-1], kmeans, nstart = 100, iter.max = 100, method = 'wss') 
@@ -395,7 +392,6 @@ Now we have decided on the number of clusters, we can run our $k$-means analysis
 #| echo: True
 #| eval: True
 #| tidy: True
-#| cache: True
 #| filename: "R code"
 # set seed for reproducibility
 set.seed(999)

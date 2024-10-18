@@ -280,8 +280,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#reading-w06" id="toc-reading-w06" class="nav-link" data-scroll-target="#reading-w06"><span class="header-section-number">6.2</span> Reading list</a></li>
   <li><a href="#raster-data-and-interpolation" id="toc-raster-data-and-interpolation" class="nav-link" data-scroll-target="#raster-data-and-interpolation"><span class="header-section-number">6.3</span> Raster data and interpolation</a>
   <ul class="collapse">
-  <li><a href="#population-change-in-great-britain" id="toc-population-change-in-great-britain" class="nav-link" data-scroll-target="#population-change-in-great-britain"><span class="header-section-number">6.3.1</span> Population change in Great Britain</a></li>
+  <li><a href="#population-change-in-london" id="toc-population-change-in-london" class="nav-link" data-scroll-target="#population-change-in-london"><span class="header-section-number">6.3.1</span> Population change in London</a></li>
   </ul></li>
+  <li><a href="#air-pollution-in-london" id="toc-air-pollution-in-london" class="nav-link" data-scroll-target="#air-pollution-in-london"><span class="header-section-number">6.4</span> Air pollution in London</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jtvandijk/GEOG0030/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
@@ -300,16 +301,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="reading-w06" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="reading-w06"><span class="header-section-number">6.2</span> Reading list</h2>
-<section id="essential-readings" class="level4">
-<h4 class="anchored" data-anchor-id="essential-readings">Essential readings</h4>
+<section id="essential-readings" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="essential-readings">Essential readings</h4>
 <ul>
 <li>Gimond, M. 2021. Intro to GIS and spatial analysis. <strong>Chapter 14</strong>: <em>Spatial Interpolation</em>. <a href="https://mgimond.github.io/Spatial/spatial-interpolation.html">[Link]</a></li>
 <li>Heris, M., Foks, N., Bagstad, K. 2020. A rasterized building footprint dataset for the United States. <em>Scientific Data</em> 7: 207. <a href="https://doi.org/10.1038/s41597-020-0542-3">[Link]</a></li>
 <li>Thomson, D., Leasure, D., Bird, T. <em>et al</em>. 2022. How accurate are WorldPop-Global-Unconstrained gridded population data at the cell-level? A simulation analysis in urban Namibia. <em>Plos ONE</em> 17:7: e0271504. <a href="https://doi.org/10.1371/journal.pone.0271504">[Link]</a></li>
 </ul>
 </section>
-<section id="suggested-readings" class="level4">
-<h4 class="anchored" data-anchor-id="suggested-readings">Suggested readings</h4>
+<section id="suggested-readings" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="suggested-readings">Suggested readings</h4>
 <ul>
 <li>Mellander, C., Lobo, J., Stolarick, K. <em>et al</em>. 2015. Night-time light data: A good proxy measure for economic activity? <em>PLoS ONE</em> 10(10): e0139779. <a href="https://doi.org/10.1371/journal.pone.0139779">[Link]</a></li>
 </ul>
@@ -328,8 +329,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<section id="population-change-in-great-britain" class="level3" data-number="1.3.1">
-<h3 data-number="1.3.1" class="anchored" data-anchor-id="population-change-in-great-britain"><span class="header-section-number">6.3.1</span> Population change in Great Britain</h3>
+<section id="population-change-in-london" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="population-change-in-london"><span class="header-section-number">6.3.1</span> Population change in London</h3>
 <p>For the first part of this week’s practical material we will be using raster datasets from <a href="https://hub.worldpop.org/">WorldPop</a>. These population surfaces are estimates of counts of people, displayed within a regular grid raster of a spatial resolution of up to 100m. These datasets can be used to explore, for example, changes in the demographic profiles or area deprivation at small spatial scales.</p>
 <ol type="1">
 <li>Navigate to the WorldPop Hub: <a href="https://hub.worldpop.org/">[Link]</a></li>
@@ -348,6 +349,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+<p>To focus the analysis on London, we need to clip our dataset to the boundaries of the city. For this, we will use the London Borough boundaries, which can be downloaded from the link below. Be sure to save the files in the data folder within your <code>data</code> directory.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">File</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Link</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">London Borough Spatial Boundaries</td>
+<td style="text-align: left;"><code>GeoPackage</code></td>
+<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-Boroughs.gpkg">Download</a></td>
+</tr>
+</tbody>
+</table>
 <p>Open a new script within your <code>GEOG0030</code> project and save this as <code>w06-raster-data-analysis.r</code>.</p>
 <p>Begin by loading the necessary libraries:</p>
 <div class="cell styled-output" data-hash="06-raster_cache/html/06-load-libraries_9932e5440b70533ca999297a64be39af">
@@ -374,8 +392,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<section id="map-algebra" class="level4">
-<h4 class="anchored" data-anchor-id="map-algebra">Map algebra</h4>
+<section id="map-algebra" class="level4" data-number="1.3.1.1">
+<h4 data-number="1.3.1.1" class="anchored" data-anchor-id="map-algebra"><span class="header-section-number">6.3.1.1</span> Map algebra</h4>
 <p>We will be using some simple map algebra to look at population change in London between 2010 and 2020. We can load the individual <code>GeoTiff</code> files that we downloaded into R and reproject them into British National Grid using the <code>terra</code> library.</p>
 <div class="cell styled-output" data-hash="06-raster_cache/html/06-load-raster_661d6af6b52a26c4ba1b29408b4b96c4">
 <div class="code-with-filename">
@@ -429,7 +447,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>A raster file is always rectangular, with areas lacking data stored as <code>NA</code>. For our population data, this means any pixels outside the land borders of Great Britain will have an <code>NA</code> values.</p>
+<p>A raster file is always rectangular, with areas lacking data stored as <code>NA</code>. For our population data, this means any pixels outside the land borders of Great Britain will have by definition an <code>NA</code> value.</p>
 </div>
 </div>
 </div>
@@ -444,7 +462,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>We can also plot the raster files for visual inspection:</p>
-<div class="cell styled-output" data-hash="06-raster_cache/html/fig-06-load-raster-data-2010_2d1d6dcdb9330e4abbf9d44933d17f67">
+<div class="cell styled-output" data-hash="06-raster_cache/html/fig-06-load-raster-data-2010_d1a44d7e7d7e8c21eace7400d676c802">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -456,12 +474,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="fig-06-load-raster-data-2010" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="06-raster_files/figure-html/fig-06-load-raster-data-2010-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;1: WorldPop 2010 population estimates for Great Britain</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;1: WorldPop 2010 population estimates for the United Kingdom.</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<div class="cell styled-output" data-hash="06-raster_cache/html/fig-06-load-raster-data-2020_f9a3575968b0fd254fc15943507c5e8c">
+<div class="cell styled-output" data-hash="06-raster_cache/html/fig-06-load-raster-data-2020_5f26f66a88843d08b917392132464a60">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -473,15 +491,234 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="fig-06-load-raster-data-2020" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="06-raster_files/figure-html/fig-06-load-raster-data-2020-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;2: WorldPop 2020 population estimates for Great Britain.</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;2: WorldPop 2020 population estimates for the United Kingdom.</figcaption>
 </figure>
 </div>
 </div>
 </div>
-
-
+<p>You will notice that while the maps appear similar, the legend indicates a significant increase in values over the decade from 2010 to 2021, with the maximum rising from approximately 12,000 people per cell to over 14,000.</p>
+<p>Now that we have our raster data loaded, we will focus on reducing it to display only the extent of London. We will use the London borough <code>GeoPackage</code></p>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>The <code>terra</code> package does not accept <code>sf</code> objects, so after loading the London borough boundaries, we need to convert the file into a <code>SpatRaster</code> or <code>SpatVector</code>.</p>
+</div>
+</div>
+</div>
+<div class="cell styled-output" data-hash="06-raster_cache/html/06-clip-to-london_33f521b74fbe83f9cf7404005bded19a">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load data, to spatvector</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>borough <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/spatial/London-Boroughs.gpkg"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">vect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Reading layer `london_boroughs' from data source 
+  `/Users/justinvandijk/Library/CloudStorage/Dropbox/UCL/Web/jtvandijk.github.io/GEOG0030/data/spatial/London-Boroughs.gpkg' 
+  using driver `GPKG'
+Simple feature collection with 33 features and 7 fields
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: 503568.2 ymin: 155850.8 xmax: 561957.5 ymax: 200933.9
+Projected CRS: OSGB36 / British National Grid</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># crop to extent</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>pop2010_london <span class="ot">&lt;-</span> <span class="fu">crop</span>(pop2010, borough)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>pop2020_london <span class="ot">&lt;-</span> <span class="fu">crop</span>(pop2020, borough)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># mask to boundaries</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>pop2010_london <span class="ot">&lt;-</span> <span class="fu">mask</span>(pop2010_london, borough)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>pop2020_london <span class="ot">&lt;-</span> <span class="fu">mask</span>(pop2020_london, borough)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We should now have the raster cells that fall within the boundaries of London:</p>
+<div class="cell styled-output" data-hash="06-raster_cache/html/fig-06-load-raster-data-2010-lon_85ee197ec69f33200375842769be9b1f">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pop2010_london)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-06-load-raster-data-2010-lon" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="06-raster_files/figure-html/fig-06-load-raster-data-2010-lon-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;3: WorldPop 2010 population estimates for London.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell styled-output" data-hash="06-raster_cache/html/fig-06-load-raster-data-2020-lon_f2f5b01e58c5e87745e33659e1c39af3">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pop2020_london)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-06-load-raster-data-2020-lon" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="06-raster_files/figure-html/fig-06-load-raster-data-2020-lon-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;4: WorldPop 2020 population estimates for London.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Now we have our two London population rasters, we can calculate population change between the two time periods by subtracting our 2010 population raster from our 2020 population raster:</p>
+<div class="cell styled-output" data-hash="06-raster_cache/html/fig-07-subtract-london_944689119484364ee8f687581c7e9e6e">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># subtract</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>lonpop_change <span class="ot">&lt;-</span> pop2020_london <span class="sc">-</span> pop2010_london</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lonpop_change)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-07-subtract-london" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="06-raster_files/figure-html/fig-07-subtract-london-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;5: Population change in London 2010-2020.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="zonal-statistics" class="level4" data-number="1.3.1.2">
+<h4 data-number="1.3.1.2" class="anchored" data-anchor-id="zonal-statistics"><span class="header-section-number">6.3.1.2</span> Zonal statistics</h4>
+<p>To further analyse our population change raster, we can create a smoothed version of the <code>lonpop_change</code> raster using the <code>focal()</code> function. This function generates a raster that calculates the average (mean) value of the nearest neighbours for each cell.</p>
+<div class="cell styled-output" data-hash="06-raster_cache/html/fig-06-focus-on-the-hood_8081d4b4c5833c8a33eda0b2c954bcde">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># smooth</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>lonpop_smooth <span class="ot">&lt;-</span> <span class="fu">focal</span>(lonpop_change, <span class="at">w =</span> <span class="fu">matrix</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">3</span>), <span class="at">fun =</span> mean)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lonpop_change)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-06-focus-on-the-hood" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="06-raster_files/figure-html/fig-06-focus-on-the-hood-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;6: Smoothed version of population change in London 2010-2020.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The differences may not be immediately apparent, but if you subtract the smoothed raster from the original raster, you will clearly see that changes have occurred.</p>
+<div class="cell styled-output" data-hash="06-raster_cache/html/fig--6-focus-on-the-smooth_4034149412feeaabe80413e94d343ef0">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># substract</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>lonpop_chang_smooth <span class="ot">&lt;-</span> lonpop_change <span class="sc">-</span> lonpop_smooth</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lonpop_chang_smooth)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig--6-focus-on-the-smooth" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="06-raster_files/figure-html/fig--6-focus-on-the-smooth-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;7: Difference smoothed population change with original population change raster.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>We can also use zonal functions to better represent population change by aggregating the data to coarser resolutions. For example, resizing the raster’s spatial resolution to contain larger grid cells simplifies the data, making broader trends more visible. However,it may also end up obfuscating more local patterns.</p>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>We can resize a raster using the <code>aggregate() function</code>, setting the <code>factor</code> parameter to the scale of resampling desired (e.g.&nbsp;doubling both the width and height of a cell). The <code>function</code> parameter determines how to aggregate the data.</p>
+</div>
+</div>
+</div>
+<div class="cell styled-output" data-hash="06-raster_cache/html/fig-06-aggregate-the-raster_2ee5ea82c5f1658b0b028c24f320bd70">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># aggregate</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>lonpop_agg <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(lonpop_change, <span class="at">fact =</span> <span class="dv">2</span>, <span class="at">fun =</span> mean)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lonpop_agg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-06-aggregate-the-raster" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="06-raster_files/figure-html/fig-06-aggregate-the-raster-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;8: Aggregated cell values.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>We can also aggregate raster cells to vector geographies. For example, we can aggregate the WorldPop gridded population estimates to the London borough boundaries:</p>
+<div class="cell styled-output" data-hash="06-raster_cache/html/fig-06-aggregate-the-raster-to-vector_c8b2ee0de3012fa0c4db6838c477855c">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># aggregate</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>london_borough_pop <span class="ot">&lt;-</span> <span class="fu">extract</span>(lonpop_change, borough, <span class="at">fun =</span> sum)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># bind to spatial boundaries</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>borough <span class="ot">&lt;-</span> borough <span class="sc">|&gt;</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>() <span class="sc">|&gt;</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pop_change =</span> london_borough_pop<span class="sc">$</span>gbr_ppp_2020_1km_Aggregated)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co"># shape, polygon</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(borough) <span class="sc">+</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># specify column, classes</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"pop_change"</span>,</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"#f1eef6"</span>, <span class="st">"#bdc9e1"</span>, <span class="st">"#74a9cf"</span>, <span class="st">"#0570b0"</span>),</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Absolute change"</span>,</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set layout</span></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.outside =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="st">"right"</span>, <span class="st">"bottom"</span>),</span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">frame =</span> <span class="cn">FALSE</span></span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-06-aggregate-the-raster-to-vector" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="06-raster_files/figure-html/fig-06-aggregate-the-raster-to-vector-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;9: Aggregating raster values to a vector geography.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>We now have a vector dataset, which allows us to perform many of the analyses we have explored in previous weeks.</p>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Calculating population change, particularly over decades as we have done, can be challenging due to changes in administrative boundaries. Using raster data offers a helpful workaround, provided the rasters are of consistent size and extent.</p>
+</div>
+</div>
+</div>
 </section>
 </section>
+</section>
+<section id="air-pollution-in-london" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="air-pollution-in-london"><span class="header-section-number">6.4</span> Air pollution in London</h2>
+
+
 </section>
 </section>
 

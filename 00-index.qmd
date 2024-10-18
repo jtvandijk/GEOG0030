@@ -31,6 +31,10 @@ The topics covered over the next ten weeks are:
 | 9    | Data Visualisation | [Complex Visualisations]({{< var urls.w09 >}}) | 
 | 10   | Data Visualisation | [Beyond the Choropleth]({{< var urls.w10 >}}) | 
 
+::: {.callout-note}
+This GitHub resource has been updated for the 2024-2025 academic year. The content for 2023-2024 has been archived and can be found here: [[Link]](https://jtvandijk.github.io/GEOG0030_20232024)
+:::
+
 ## Troubleshooting {.unnumbered}
 For specific assistance with this module, you can:
 
@@ -44,7 +48,7 @@ For specific assistance with this module, you can:
 This year's version features the following **major** updates:
 
 - Second full rewrite of the workbook using `Quarto`.
-- Improved alignment with [GEOG0018 Methods in Human Geography](https://jtvandijk.github.io/GEOG0030).
+- Improved alignment with [GEOG0018 Methods in Human Geography](https://jtvandijk.github.io/GEOG0018).
 - New material on geographically weighted statistics, geodemographic classification, and data visualisation.
 - Fully updated material on point data analysis, spatial queries and geometric operations, spatial autocorrelation, and accessibility analysis.
 - Introduction of package management using `renv`.

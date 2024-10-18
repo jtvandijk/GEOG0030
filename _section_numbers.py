@@ -82,12 +82,12 @@ for htmlf in html_files:
     with open(htmlf, 'w') as file:
         file.write(html_content)
 
-# fix index page redirect
+# fix standard index page redirect
 htmlredir = 'docs/index.html'
 with open(htmlredir) as file:
     html_content = file.read()
 
-    # update redirect index.html
+    # update redirect
     html_content = html_content.replace('08-network.html', \
                                         '00-index.html')
 

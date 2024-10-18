@@ -5,12 +5,12 @@ So far, we have exclusively focused on the use of vector and tabular data. Howev
 You can download the slides of this week's lecture here: [[Link]]({{< var slides.week06 >}}).
 
 ## Reading list {#reading-w06}
-#### Essential readings 
+#### Essential readings {.unnumbered}
 - Gimond, M. 2021. Intro to GIS and spatial analysis. **Chapter 14**: *Spatial Interpolation*. [[Link]](https://mgimond.github.io/Spatial/spatial-interpolation.html)
 - Heris, M., Foks, N., Bagstad, K. 2020. A rasterized building footprint dataset for the United States. *Scientific Data* 7: 207. [[Link]](https://doi.org/10.1038/s41597-020-0542-3)
 - Thomson, D., Leasure, D., Bird, T. *et al*. 2022. How accurate are WorldPop-Global-Unconstrained gridded population data at the cell-level? A simulation analysis in urban Namibia. *Plos ONE* 17:7: e0271504. [[Link]](https://doi.org/10.1371/journal.pone.0271504)
 
-#### Suggested readings 
+#### Suggested readings {.unnumbered}
 - Mellander, C., Lobo, J., Stolarick, K. *et al*. 2015. Night-time light data: A good proxy measure for economic activity? *PLoS ONE* 10(10): e0139779. [[Link]](https://doi.org/10.1371/journal.pone.0139779)
 
 ## Raster data and interpolation
@@ -20,7 +20,7 @@ This week, we will use raster data to analyse population change in London. In th
 The key difference between vector and raster models lies in their structure. Vectors are made up of points, lines, and polygons. In contrast, raster data consists of pixels (or grid cells), similar to an image. Each cell holds a single value representing a geographic phenomenon, such as population density at that location. Common raster data types include remote sensing imagery, such as satellite or LIDAR data.
 ::: 
 
-### Population change in Great Britain
+### Population change in London
 For the first part of this week's practical material we will be using raster datasets from [WorldPop](https://hub.worldpop.org/). These population surfaces are estimates of counts of people, displayed within a regular grid raster of a spatial resolution of up to 100m. These datasets can be used to explore, for example, changes in the demographic profiles or area deprivation at small spatial scales.
 
 1. Navigate to the WorldPop Hub: [[Link]](https://hub.worldpop.org/)
@@ -32,6 +32,12 @@ For the first part of this week's practical material we will be using raster dat
 ::: {.callout-note}
 A GeoTIFF is a type of raster file format that embeds geographic information, enabling the image to be georeferenced to specific real-world coordinates. It includes metadata like projection, coordinate system, and geographic extent, making it compatible with GIS software for spatial analysis.
 :::
+
+To focus the analysis on London, we need to clip our dataset to the boundaries of the city. For this, we will use the London Borough boundaries, which can be downloaded from the link below. Be sure to save the files in the data folder within your `data` directory.
+
+| File                                        | Type   | Link |
+| :------                                     | :------| :------ |
+| London Borough Spatial Boundaries           | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-Boroughs.gpkg) |
 
 Open a new script within your `GEOG0030` project and save this as `w06-raster-data-analysis.r`. 
 
@@ -93,7 +99,7 @@ head(pop2010)
 head(pop2020)
 ```
 ::: {.callout-note}
-A raster file is always rectangular, with areas lacking data stored as `NA`. For our population data, this means any pixels outside the land borders of Great Britain will have an `NA` values.
+A raster file is always rectangular, with areas lacking data stored as `NA`. For our population data, this means any pixels outside the land borders of Great Britain will have by definition an `NA` value.
 :::
 
 ::: {.callout-tip}
@@ -104,7 +110,7 @@ We can also plot the raster files for visual inspection:
 
 ```{r}
 #| label: fig-06-load-raster-data-2010
-#| fig-cap: "WorldPop 2010 population estimates for Great Britain"
+#| fig-cap: WorldPop 2010 population estimates for the United Kingdom.
 #| classes: styled-output
 #| echo: True
 #| eval: True
@@ -116,7 +122,7 @@ plot(pop2010)
 
 ```{r}
 #| label: fig-06-load-raster-data-2020
-#| fig-cap: "WorldPop 2020 population estimates for Great Britain."
+#| fig-cap: WorldPop 2020 population estimates for the United Kingdom.
 #| classes: styled-output
 #| echo: True
 #| eval: True
@@ -125,3 +131,172 @@ plot(pop2010)
 # plot 2020
 plot(pop2020)
 ```
+
+You will notice that while the maps appear similar, the legend indicates a significant increase in values over the decade from 2010 to 2021, with the maximum rising from approximately 12,000 people per cell to over 14,000. 
+
+Now that we have our raster data loaded, we will focus on reducing it to display only the extent of London. We will use the London borough `GeoPackage`
+
+::: {.callout-tip}
+The `terra` package does not accept `sf` objects, so after loading the London borough boundaries, we need to convert the file into a `SpatRaster` or `SpatVector`.
+:::
+
+```{r}
+#| label: 06-clip-to-london
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# load data, to spatvector
+borough <- st_read('data/spatial/London-Boroughs.gpkg') |>
+  vect()
+
+# crop to extent
+pop2010_london <- crop(pop2010, borough)
+pop2020_london <- crop(pop2020, borough)
+
+# mask to boundaries
+pop2010_london <- mask(pop2010_london, borough)
+pop2020_london <- mask(pop2020_london, borough)
+```
+
+We should now have the raster cells that fall within the boundaries of London:
+
+```{r}
+#| label: fig-06-load-raster-data-2010-lon
+#| fig-cap: WorldPop 2010 population estimates for London.
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# inspect
+plot(pop2010_london)
+```
+
+```{r}
+#| label: fig-06-load-raster-data-2020-lon
+#| fig-cap: WorldPop 2020 population estimates for London.
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# inspect
+plot(pop2020_london)
+```
+
+Now we have our two London population rasters, we can calculate population change between the two time periods by subtracting our 2010 population raster from our 2020 population raster:
+  
+```{r}
+#| label: fig-07-subtract-london
+#| fig-cap: Population change in London 2010-2020.
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# subtract
+lonpop_change <- pop2020_london - pop2010_london
+
+# inspect
+plot(lonpop_change)
+```
+
+#### Zonal statistics
+To further analyse our population change raster, we can create a smoothed version of the `lonpop_change` raster using the `focal()` function. This function generates a raster that calculates the average (mean) value of the nearest neighbours for each cell.
+
+```{r}
+#| label: fig-06-focus-on-the-hood
+#| fig-cap: Smoothed version of population change in London 2010-2020.
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# smooth
+lonpop_smooth <- focal(lonpop_change, w = matrix(1,3,3), fun = mean) 
+
+# inspect
+plot(lonpop_change)
+```
+
+The differences may not be immediately apparent, but if you subtract the smoothed raster from the original raster, you will clearly see that changes have occurred.
+
+```{r}
+#| label: fig--6-focus-on-the-smooth
+#| fig-cap: Difference smoothed population change with original population change raster.
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# substract
+lonpop_chang_smooth <- lonpop_change - lonpop_smooth
+
+# inspect
+plot(lonpop_chang_smooth)
+```
+
+We can also use zonal functions to better represent population change by aggregating the data to coarser resolutions. For example, resizing the raster's spatial resolution to contain larger grid cells simplifies the data, making broader trends more visible. However,it may also end up obfuscating more local patterns. 
+
+::: {.callout-tip}
+We can resize a raster using the `aggregate() function`, setting the `factor` parameter to the scale of resampling desired (e.g. doubling both the width and height of a cell). The `function` parameter determines how to aggregate the data.
+:::
+
+```{r}
+#| label: fig-06-aggregate-the-raster
+#| fig-cap: Aggregated cell values. 
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# aggregate
+lonpop_agg <- aggregate(lonpop_change, fact = 2, fun = mean) 
+
+# inspect
+plot(lonpop_agg)
+```
+
+We can also aggregate raster cells to vector geographies. For example, we can aggregate the WorldPop gridded population estimates to the London borough boundaries:
+
+```{r tidy="styler"}
+#| label: fig-06-aggregate-the-raster-to-vector
+#| fig-cap: Aggregating raster values to a vector geography.
+#| classes: styled-output
+#| echo: True
+#| eval: True
+# aggregate 
+london_borough_pop <- extract(lonpop_change, borough, fun=sum)
+
+# bind to spatial boundaries
+borough <- borough |> 
+  st_as_sf() |>
+  mutate(pop_change = london_borough_pop$gbr_ppp_2020_1km_Aggregated)
+
+# shape, polygon
+tm_shape(borough) +
+
+  # specify column, classes
+  tm_polygons(
+    col = "pop_change",
+    palette = c("#f1eef6", "#bdc9e1", "#74a9cf", "#0570b0"),
+    title = "Absolute change",
+  ) +
+  # set layout
+  tm_layout(
+    legend.outside = FALSE,
+    legend.position = c("right", "bottom"),
+    frame = FALSE
+  )
+```
+
+We now have a vector dataset, which allows us to perform many of the analyses we have explored in previous weeks. 
+
+::: {.callout-tip}
+Calculating population change, particularly over decades as we have done, can be challenging due to changes in administrative boundaries. Using raster data offers a helpful workaround, provided the rasters are of consistent size and extent.
+:::
+
+## Air pollution in London
+

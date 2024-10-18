@@ -19,7 +19,7 @@ format:
     smooth-scroll: true
     highlight-style: atom-one
     number-sections: true
-    number-depth: 3
+    number-depth: 4
     pagetitle: "{{< var meta.title >}}"
 
 website:
