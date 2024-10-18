@@ -27,7 +27,7 @@ You can download a subset of the POI dataset via the link provided below. A copy
 | London Borough Spatial Boundaries           | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-Boroughs.gpkg) |
 | England 2019 Index of Multiple Deprivation  | `csv` | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/England-IMD-2019.csv) |
 
-::: {.callout-tip}
+::: {.callout-ti}
 You may have already downloaded some of these datasets in previous weeks, but for completeness, they are all provided here. Only download the datasets you do not already have or did not save.
 :::
 
