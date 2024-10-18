@@ -532,7 +532,7 @@ tm_shape(measurement_sites_tesselation) +
 
 ```
 
-#### Inverse Distance Weighting
+### Inverse Distance Weighting
 A more sophisticated method for interpolating point data is Inverse Distance Weighting (IDW). IDW converts numerical point data into a continuous surface, allowing for visualisation of how the data is distributed across space. This technique estimates values at each location by calculating a weighted average from nearby points, with the weights inversely related to their distances.
 
 ::: {.callout-note}
@@ -565,7 +565,7 @@ measurement_sites_idw <- measurement_sites_idw |>
 ```
 
 ::: {.callout-warning}
-The IDW may take some time to run.
+The IDW interpolation may take some time to run because it involves calculating the weighted average of nearby points for each location on the grid.
 :::
 
 Again, we can map the results for visual inspection.
@@ -599,7 +599,7 @@ tm_shape(measurement_sites_idw) +
 ```
 
 ::: {.callout-note}
-We have set the output cell size to 1000x1000 metres. While a smaller cell size can yield a smoother IDW output, it may introduce uncertainty due to the limited number of data points available for interpolation. Additionally, reducing the cell size will exponentially increase processing time.'
+We have set the output cell size to 1000x1000 metres. While a smaller cell size can yield a smoother IDW output, it may introduce uncertainty due to the limited number of data points available for interpolation. Moreover, reducing the cell size will exponentially increase processing time.
 :::
 
 ## Assignment 
