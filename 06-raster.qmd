@@ -16,15 +16,15 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 ## Population change in London
 For the first part of this week's practical material we will be using raster datasets from [WorldPop](https://hub.worldpop.org/). These population surfaces are estimates of counts of people, displayed within a regular grid raster of a spatial resolution of up to 100m. These datasets can be used to explore, for example, changes in the demographic profiles or area deprivation at small spatial scales.
 
+::: {.callout-note}
+The key difference between vector and raster models lies in their structure. Vectors are made up of points, lines, and polygons. In contrast, raster data consists of pixels (or grid cells), similar to an image. Each cell holds a single value representing a geographic phenomenon, such as population density at that location. Common raster data types include remote sensing imagery, such as satellite or LIDAR data.
+::: 
+
 1. Navigate to the WorldPop Hub: [[Link]](https://hub.worldpop.org/)
 2. Go to **Population Count** -> **Unconstrained individual countries 2000-2020 (1km resolution)**.
 3. Type *United Kingdom* in the search bar.
 4. Download the [GeoTIFF](https://en.wikipedia.org/wiki/GeoTIFF) files for **2010** and **2020**: `gbr_ppp_2010_1km_Aggregated` and `gbr_ppp_2020_1km_Aggregated`.
 5. Save the files to your computer in your `data` folder.
-
-::: {.callout-note}
-The key difference between vector and raster models lies in their structure. Vectors are made up of points, lines, and polygons. In contrast, raster data consists of pixels (or grid cells), similar to an image. Each cell holds a single value representing a geographic phenomenon, such as population density at that location. Common raster data types include remote sensing imagery, such as satellite or LIDAR data.
-::: 
 
 ::: {.callout-note}
 A GeoTIFF is a type of raster file format that embeds geographic information, enabling the image to be georeferenced to specific real-world coordinates. It includes metadata like projection, coordinate system, and geographic extent, making it compatible with GIS software for spatial analysis.
@@ -328,7 +328,9 @@ Not all measurements sites collect data on NO~2~ so it is normal to get some `40
 :::
 
 ::: {.callout-warning}
-This code may take some time to run, as it will attempt to download data from all air measurement sites for an entire year, with many measurements taken hourly. If you experience too many errors or if it is taking too long, you can download a copy of the data here: [[Download]](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/attributes/London-NO2-2023.zip). Once downloaded, place the `zip` file in your `data` folder. The file is large, so you can leave it unzipped.
+This code may take some time to run, as it will attempt to download data from all air measurement sites for an entire year, with many measurements taken hourly. If you experience too many errors or if it is taking too long, you can download a copy of the data here: [[Download]](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/attributes/London-NO2-2023.zip). 
+
+Once downloaded, place the `zip` file in your `data` folder. The file is large, so you can leave it unzipped.
 :::
 
 Let us start by loading and inspecting the data:
@@ -421,7 +423,7 @@ tm_shape(measurement_sites) +
   )
 ```
 
-We can also use proportional symbols to visualise the values, helping us observe how measurements vary across London.'
+We can also use proportional symbols to visualise the values, helping us observe how measurements vary across London.
 
 ```{r tidy='styler'}
 #| label: fig-06-air-quality-measurement-sites-proportional-symbol
@@ -459,9 +461,9 @@ tm_shape(measurement_sites) +
 @fig-06-air-quality-measurement-sites-proportional-symbol shows heterogeneity in average NO~2~ measurements across London, both in terms of coverage and NO~2~ levels. To make reasonable assumptions about NO~2~ levels in areas without measurements, we can interpolate the missing values.
 
 ### Voronoi tessellation
-A straightforward method for interpolating values across space is to create a Voronoi tessellation polygons. These polygons define the boundaries of areas closest to each unique point, meaning that each point in the dataset has a corresponding Thiessen polygon.
+A straightforward method for interpolating values across space is to create a Voronoi tessellation polygons. These polygons define the boundaries of areas closest to each unique point, meaning that each point in the dataset has a corresponding polygon.
 
-::: {.callout-tip}
+::: {.callout-note}
 In addition to Voronoi tessellation, you may encounter the term Thiessen polygons. These terms are often used interchangeably to describe the geometry created from point data.
 :::
 
@@ -499,7 +501,7 @@ measurement_sites_tesselation
 ```
 
 ::: {.callout-warning}
-Do not worry about fully understanding the code behind the function; just know that it takes a point spatial data frame as input and produces a Thiessen polygon spatial data frame as output.
+Do not worry about fully understanding the code behind the function; just know that it takes a point spatial data frame as input and produces a tessellated spatial data frame as output.
 :::
 
 ::: {.callout-tip}
@@ -557,7 +559,7 @@ output_grid <- borough |>
 measurement_sites_idw <- idw(formula = no2 ~ 1,
                              locations = measurement_sites,
                              newdata = output_grid,
-                             beta = 2)
+                             idp = 2)
 
 # clip
 measurement_sites_idw <- measurement_sites_idw |>
@@ -565,7 +567,7 @@ measurement_sites_idw <- measurement_sites_idw |>
 ```
 
 ::: {.callout-warning}
-The IDW interpolation may take some time to run because it involves calculating the weighted average of nearby points for each location on the grid.
+The IDW interpolation may take some time to run because it involves calculating the weighted average of nearby points for each location on the grid. In this case, `idp = 2` specifies a quadratic decay, meaning the influence of a point decreases with the square of the distance.
 :::
 
 Again, we can map the results for visual inspection.

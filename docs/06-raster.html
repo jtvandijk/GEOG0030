@@ -330,13 +330,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="population-change-in-london" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="population-change-in-london"><span class="header-section-number">6.3</span> Population change in London</h2>
 <p>For the first part of this week’s practical material we will be using raster datasets from <a href="https://hub.worldpop.org/">WorldPop</a>. These population surfaces are estimates of counts of people, displayed within a regular grid raster of a spatial resolution of up to 100m. These datasets can be used to explore, for example, changes in the demographic profiles or area deprivation at small spatial scales.</p>
-<ol type="1">
-<li>Navigate to the WorldPop Hub: <a href="https://hub.worldpop.org/">[Link]</a></li>
-<li>Go to <strong>Population Count</strong> -&gt; <strong>Unconstrained individual countries 2000-2020 (1km resolution)</strong>.</li>
-<li>Type <em>United Kingdom</em> in the search bar.</li>
-<li>Download the <a href="https://en.wikipedia.org/wiki/GeoTIFF">GeoTIFF</a> files for <strong>2010</strong> and <strong>2020</strong>: <code>gbr_ppp_2010_1km_Aggregated</code> and <code>gbr_ppp_2020_1km_Aggregated</code>.</li>
-<li>Save the files to your computer in your <code>data</code> folder.</li>
-</ol>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -347,6 +340,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+<ol type="1">
+<li>Navigate to the WorldPop Hub: <a href="https://hub.worldpop.org/">[Link]</a></li>
+<li>Go to <strong>Population Count</strong> -&gt; <strong>Unconstrained individual countries 2000-2020 (1km resolution)</strong>.</li>
+<li>Type <em>United Kingdom</em> in the search bar.</li>
+<li>Download the <a href="https://en.wikipedia.org/wiki/GeoTIFF">GeoTIFF</a> files for <strong>2010</strong> and <strong>2020</strong>: <code>gbr_ppp_2010_1km_Aggregated</code> and <code>gbr_ppp_2020_1km_Aggregated</code>.</li>
+<li>Save the files to your computer in your <code>data</code> folder.</li>
+</ol>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -784,7 +784,8 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>This code may take some time to run, as it will attempt to download data from all air measurement sites for an entire year, with many measurements taken hourly. If you experience too many errors or if it is taking too long, you can download a copy of the data here: <a href="https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/attributes/London-NO2-2023.zip">[Download]</a>. Once downloaded, place the <code>zip</code> file in your <code>data</code> folder. The file is large, so you can leave it unzipped.</p>
+<p>This code may take some time to run, as it will attempt to download data from all air measurement sites for an entire year, with many measurements taken hourly. If you experience too many errors or if it is taking too long, you can download a copy of the data here: <a href="https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/attributes/London-NO2-2023.zip">[Download]</a>.</p>
+<p>Once downloaded, place the <code>zip</code> file in your <code>data</code> folder. The file is large, so you can leave it unzipped.</p>
 </div>
 </div>
 </div>
@@ -922,7 +923,7 @@ all geometries</code></pre>
 </div>
 </div>
 </div>
-<p>We can also use proportional symbols to visualise the values, helping us observe how measurements vary across London.’</p>
+<p>We can also use proportional symbols to visualise the values, helping us observe how measurements vary across London.</p>
 <div class="cell styled-output">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># shape, polygon</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(borough) <span class="sc">+</span></span>
@@ -960,8 +961,8 @@ all geometries</code></pre>
 <p><a href="#fig-06-air-quality-measurement-sites-proportional-symbol">Figure&nbsp;11</a> shows heterogeneity in average NO<sub>2</sub> measurements across London, both in terms of coverage and NO<sub>2</sub> levels. To make reasonable assumptions about NO<sub>2</sub> levels in areas without measurements, we can interpolate the missing values.</p>
 <section id="voronoi-tessellation" class="level3" data-number="1.4.1">
 <h3 data-number="1.4.1" class="anchored" data-anchor-id="voronoi-tessellation"><span class="header-section-number">6.4.1</span> Voronoi tessellation</h3>
-<p>A straightforward method for interpolating values across space is to create a Voronoi tessellation polygons. These polygons define the boundaries of areas closest to each unique point, meaning that each point in the dataset has a corresponding Thiessen polygon.</p>
-<div class="callout callout-style-simple callout-tip">
+<p>A straightforward method for interpolating values across space is to create a Voronoi tessellation polygons. These polygons define the boundaries of areas closest to each unique point, meaning that each point in the dataset has a corresponding polygon.</p>
+<div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -1032,7 +1033,7 @@ Projected CRS: OSGB36 / British National Grid
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Do not worry about fully understanding the code behind the function; just know that it takes a point spatial data frame as input and produces a Thiessen polygon spatial data frame as output.</p>
+<p>Do not worry about fully understanding the code behind the function; just know that it takes a point spatial data frame as input and produces a tessellated spatial data frame as output.</p>
 </div>
 </div>
 </div>
@@ -1098,7 +1099,7 @@ Projected CRS: OSGB36 / British National Grid
 <span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="co"># execute</span></span>
 <span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>measurement_sites_idw <span class="ot">&lt;-</span> <span class="fu">idw</span>(<span class="at">formula =</span> no2 <span class="sc">~</span> <span class="dv">1</span>, <span class="at">locations =</span> measurement_sites, <span class="at">newdata =</span> output_grid,</span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">beta =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">idp =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[inverse distance weighted interpolation]</code></pre>
@@ -1117,7 +1118,7 @@ all geometries</code></pre>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>The IDW interpolation may take some time to run because it involves calculating the weighted average of nearby points for each location on the grid.</p>
+<p>The IDW interpolation may take some time to run because it involves calculating the weighted average of nearby points for each location on the grid. In this case, <code>idp = 2</code> specifies a quadratic decay, meaning the influence of a point decreases with the square of the distance.</p>
 </div>
 </div>
 </div>

@@ -524,4 +524,4 @@ The creation of a geodemographic classification is an iterative process. This ty
 | London LSOA Census 2021 Education           | `csv`  | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/London-LSOA-Education.csv) |
 
 ## Before you leave
-Having finished this tutorial, you should now understand the basics of a geodemographic classification. That is [all for this week](https://www.youtube.com/watch?v=8iwBM_YB1sE)! 
+Having finished this tutorial, you should now understand the basics of a geodemographic classification. That is [all for this week](https://www.youtube.com/watch?v=ArFyi_iaEdw)! 
