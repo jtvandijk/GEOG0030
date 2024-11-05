@@ -40,11 +40,11 @@ for htmlf in html_files:
                                         
     # update TOC chapter 2
     html_content = html_content.replace('<span class="menu-text">Spatial Queries and Geometric Operations</span>', \
-                                        '<span class="menu-text">3 Spatial Queries and Geometric Operations</span>')   
+                                        '<span class="menu-text">2 Spatial Queries and Geometric Operations</span>')   
 
     # update TOC chapter 3
-    html_content = html_content.replace('<span class="menu-text">Analysing Point Data</span>', \
-                                        '<span class="menu-text">2 Analysing Point Data</span>')   
+    html_content = html_content.replace('<span class="menu-text">Point Pattern Analysis</span>', \
+                                        '<span class="menu-text">3 Point Pattern Analysis</span>')   
                                       
     # update TOC chapter 4
     html_content = html_content.replace('<span class="menu-text">Spatial Autocorrelation</span>', \

@@ -26,7 +26,7 @@ Navigate to **File** -> **New Project** -> **New Directory**, and create a folde
 Please ensure that **folder names** and **file names** do not contain spaces or special characters such as `*` `.` `"` `/` `\` `[` `]` `:` `;` `|` `=` `,` `<` `?` `>` `&` `$` `#` `!` `'` `{` `}` `(` `)`. Different operating systems and programming languages deal differently with spaces and special characters and as such including these in your folder names and file names can cause many problems and unexpected errors. As an alternative to using white space you can use an underscore (`_`) or hyphen (`-`) if you like.
 :::
 
-With our project ready to go, today we will map the distribution of the share of European immigrants across London. The data covers the number of people in London that are born in a European country, as recorded in the 2021 Census for England and Wales, aggregated at the [Middle Layer Super Output Area (MSOA)](https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeographies/census2021geographies) level.
+With our project ready to go, today we will map the distribution of the share of European immigrants across London. The data covers the number of people residing in London that are born in a European country, as recorded in the 2021 Census for England and Wales, aggregated at the [Middle Layer Super Output Area (MSOA)](https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeographies/census2021geographies) level.
 
 ::: {.callout-note}
 An MSOA is a geographic unit used in the UK for statistical analysis. It typically represents small areas with populations of around 5,000 to 15,000 people and is designed to ensure consistent data reporting. MSOAs are commonly used to report on census data, deprivation indices, and other socio-economic statistics.
@@ -120,7 +120,7 @@ plot(msoa21, max.plot = 1)
 
 You should see your `msoa21` plot appear in your **Plots** window.
 
-::: {.callout-tip}
+::: {.callout-warning}
 The `plot()` function should not to be used to make publishable maps but can be used as a quick way of inspecting your spatial data.
 :::
 
@@ -270,3 +270,286 @@ We are almost ready to map the data. Only thing that is left is for us to calcul
 msoa21 <- msoa21 |>
   mutate(prop_eur21 = eur21 / pop21)
 ```
+
+### Mapping spatial data
+For our map-making, we will use one of the two primary visualisation libraries for spatial data: `tmap.` `tmap` offers a flexible, layer-based approach that makes it easy to create various types of thematic maps, such as choropleths and proportional symbol maps. One of the standout features of `tmap` is its quick plotting function, `qtm()`, which allows you to generate basic maps with minimal effort.
+
+```{r}
+#| label: fig-01-qtm
+#| fig-cap: Quick thematic map. 
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# quick thematic map
+qtm(msoa21, fill="prop_eur21")
+``` 
+
+In this case, the `fill()` argument in `tmap` is how we instruct the library to create a choropleth map based on the values in the specified column. If we set `fill()` to `NULL`, only the borders of our polygons will be drawn, without any colour fill. The `qtm()` function in tmap is versatile, allowing us to pass various parameters to customise the aesthetics of our map. By checking the function's documentation, you can explore the full list of available parameters. For instance, to set the borders of our Cape Town polygons to white, we can use the `borders` parameter:
+
+
+```{r}
+#| label: fig-01-qtm-borders
+#| fig-cap: Quick thematic map with white borders.
+#| echo: True
+#| eval: True
+#| tidy: True
+#| out.width: "100%"
+#| filename: "R code"
+# quick thematic map 
+qtm(msoa21, fill="prop_eur21", borders = "white")
+``` 
+
+The map does not look quite right yet. While we can continue tweaking parameters in the `qtm()` function to improve it, `qtm()` is somewhat limited in its functionality and is primarily intended for quickly inspecting your data and creating basic maps. For more complex and refined map-making with the `tmap` library, it is better to use the main plotting method that starts with the `tm_shape()` function. 
+
+::: {.callout-note}
+The primary approach to creating maps in `tmap` involves using a [layered grammar of graphics](https://towardsdatascience.com/a-comprehensive-guide-to-the-grammar-of-graphics-for-effective-visualization-of-multi-dimensional-1f92b4ed4149) to build up your map, starting with the `tm_shape()` function. This function, when provided with a spatial dataframe, captures the spatial information of your data, including its projection and geometry, and creates a spatial object. While you can override certain aspects of the spatial data (such as its projection) using the function's parameters, the essential role of `tm_shape()` is to instruct R to "use this object as the basis for drawing the shapes." 
+
+To actually render the shapes, you need to add a layer that specifies the type of shape you want R to draw from this spatial information—such as polygons for our data. This layer function tells R to "draw my spatial object as `X`", where `X` represents the type of shape. Within this layer, you can also provide additional details to control how R draws your shapes. Further, you can add more layers to include other spatial objects and their corresponding shapes on your map. Finally, layout options can be specified through a layout layer, allowing you to customise the overall appearance and arrangement of your map.
+:::
+
+Let us build a map using `tmap`:
+
+```{r tidy='styler'}
+#| label: fig-01-choro-0
+#| fig-cap: Building up a map layer by layer.
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: "R code"
+# shape, polygons
+tm_shape(msoa21) +
+  tm_polygons()
+```
+
+As you can now see, we have mapped the spatial polygons of our `msoa21` spatial dataframe. However, this is not quite the map we want; we need a choropleth map where the polygons are colored based on the proportion of European immigrants. To achieve this, we use the `col` parameter within the `tm_polygons()` function.
+
+::: {.callout-tip}
+The `col` parameter within `tm_polygons()` allows you to fill polygons with colours based on:
+
+- A single colour value (e.g. `red`).
+- The name of a data variable within the spatial data file. This variable can either contain specific colour values or numeric/categorical values that will be mapped to a colour palette.
+:::
+
+Let us go ahead and pass our `prop_eur21` variable within the `col()` parameter and see what we get:
+
+```{r tidy='styler'}
+#| label: fig-01-choro-1
+#| fig-cap: Building up a map layer by layer.
+#| echo: True
+#| eval: True
+#| cache: True
+#| filename: "R code"
+
+# shape, polygons
+tm_shape(msoa21) +
+  # specify column
+  tm_polygons(
+    col = "prop_eur21"
+  )
+```
+
+We are making progress, but there are two immediate issues with our map. First, the classification breaks do not adequately reflect the variation in our dataset. By default, `tmap` uses *pretty* breaks, which may not be the most effective for our data. An alternative, such as natural breaks (or jenks), might better reveal the data's variation.
+
+To customise the classification breaks, refer to the `tm_polygons()` documentation. The following parameters are relevant:
+
+| Parameter  | Description |
+| :-         | :------ |
+| `n`        | Specifies the number of classification breaks. |
+| `style`    | Defines the method for classification breaks, such as fixed, standard deviation, equal, or quantile. |
+| `breaks`   | Allows you to set specific numeric breaks when using the fixed style. |
+
+For example, if we want to adjust our choropleth map to use five classes determined by the natural breaks method, we need to add the `n` and `style` parameters to our `tm_polygons()` layer:
+
+```{r tidy='styler'} 
+#| label: fig-01-choro-2
+#| fig-cap: Building up a map layer by layer.
+#| echo: True
+#| eval: True
+#| cache: True
+#| filename: "R code"
+# shape, polygons
+tm_shape(msoa21) +
+  # specify column, classes
+  tm_polygons(
+              col = "prop_eur21", 
+              n = 5, 
+              style = "jenks"
+              )
+``` 
+
+## Styling spatial data
+Styling a map in `tmap` requires a deeper understanding and familiarity with the library, which is something you will develop best through hands-on practice. Here are the key functions to be aware of:
+
+| Function          | Description |
+| :-                | :------ |
+| `tm_layout()`     | Customise titles, fonts, legends, and other layout elements. |
+| `tm_compass()`    | Add and style a North arrow or compass. |
+| `tm_scale_bar()`  | Add and style a scale bar. |
+
+To begin styling your map, explore each of these functions and their parameters. Through trial and error, you can tweak and refine the map until you achieve the desired look:
+
+```{r tidy='styler'} 
+#| label: fig-01-choro-3
+#| fig-cap: Building up a map layer by layer.
+#| echo: True
+#| eval: True
+#| cache: True
+#| filename: "R code"
+# shape, polygons
+tm_shape(msoa21) +
+
+  # specify column, classes, labels, title
+  tm_polygons(
+          col= 'prop_eur21', n = 5, style = 'jenks',
+          border.col = '#ffffff',
+          border.alpha = 0.3,
+          palette = c('#feebe2','#fbb4b9','#f768a1','#c51b8a','#7a0177'), 
+          labels = c('Largest share', '2nd largest', '3rd largest', '4th largest', 'Smallest share'),
+          title = 'Share of population',
+          textNA = 'No population'
+  ) +
+  
+  # set layout
+  tm_layout(
+    main.title = 'Share of population born in Europe',
+    main.title.size = 0.9,
+    main.title.position = c('right', 'top'),
+    legend.outside = FALSE,
+    legend.position = c('right', 'top'),
+    legend.title.size = 0.7,
+    legend.title.fontface = 'bold',
+    legend.text.size = 0.5,
+    frame = FALSE,
+    inner.margins = c(0.05,0.05,0.05,0.05),
+    fontfamily = 'Helvetica'
+  ) +
+  
+  # add North arrow
+  tm_compass(
+    type = 'arrow',
+    position = c('left', 'top'),
+    size = 1,
+    text.size = 0.7
+  ) +
+  
+  # add scale bar
+  tm_scale_bar(
+    breaks = c(0, 5, 10, 15, 20),
+    position = c('right', 'bottom'),
+    text.size = 0.4
+  ) 
+
+``` 
+
+We can also have some map labels, if we want, by extracting centroids from selected polygons and adding these as separate map layer:
+
+```{r tidy='styler'} 
+#| label: fig-01-choro-4
+#| fig-cap: Building up a map layer by layer.
+#| echo: True
+#| eval: True
+#| cache: True
+#| filename: "R code"
+
+# map labels
+lab <- msoa21 |> 
+  filter(msoa21cd == 'E02000642' | msoa21cd == 'E02000180') |> st_centroid()
+
+# map object
+lon_eurpop <- 
+
+# shape, polygons
+tm_shape(msoa21) +
+
+  # specify column, classes, labels, title
+  tm_polygons(
+          col= 'prop_eur21', n = 5, style = 'jenks',
+          border.col = '#ffffff',
+          border.alpha = 0.3,
+          palette = c('#feebe2','#fbb4b9','#f768a1','#c51b8a','#7a0177'), 
+          labels = c('Largest share', '2nd largest', '3rd largest', '4th largest', 'Smallest share'),
+          title = 'Share of population',
+          textNA = 'No population'
+  ) +
+  
+  # label centroids
+  tm_shape(lab) +
+  
+  # add points
+  tm_dots(size = 0.4, col= '#000000') +
+  
+  # add labels
+  tm_text(text='msoa21nm', xmod = 0, ymod = -0.6, col = '#000000', size = 0.8) +
+  
+  # set layout
+  tm_layout(
+    main.title = 'Share of population born in Europe',
+    main.title.size = 0.9,
+    main.title.position = c('right', 'top'),
+    legend.outside = FALSE,
+    legend.position = c('right', 'top'),
+    legend.title.size = 0.7,
+    legend.title.fontface = 'bold',
+    legend.text.size = 0.5,
+    frame = FALSE,
+    inner.margins = c(0.05,0.05,0.05,0.05),
+    fontfamily = 'Helvetica'
+  ) +
+  
+  # add North arrow
+  tm_compass(
+    type = 'arrow',
+    position = c('left', 'top'),
+    size = 1,
+    text.size = 0.7
+  ) +
+  
+  # add scale bar
+  tm_scale_bar(
+    breaks = c(0, 5, 10, 15, 20),
+    position = c('right', 'bottom'),
+    text.size = 0.4
+  ) +
+  
+  # add credits
+  tm_credits('Data source: Census 2021, Office for National Statistics',
+             fontface = 'italic', 
+             position = c('left', 'bottom'),
+             size = 0.4)
+
+# plot
+lon_eurpop
+```
+
+In the code above, we stored the full map definition as an object. This makes it easy to export the map and save it as a `.jpg`, `.png` or `.pdf` file:
+
+```{r}
+#| label: 01-export-map
+#| classes: styled-output
+#| echo: True
+#| eval: False
+#| tidy: True
+#| filename: "R code"
+# write map
+tmap_save(tm = lon_eurpop, filename = 'london-european-population.jpg', width=15, height=15, units=c('cm'))
+```
+
+## Assignment 
+Now that we have prepared our dataset and created our initial maps in R, we can also try and map the distribution of the proportion of European immigrants across Wales and experiment with different mapping parameters. Follow these steps:
+
+1. Download the two datasets provided below and save them in the appropriate subfolder within your `data` directory. The datasets include:
+    * A `csv` file containing the number of people residing in Wales that are born in a European country, as recorded in the 2021 Census for England and Wales, aggregated at the MSOA level.
+    * A `GeoPackage` file containing the 2021 MSOA spatial boundaries for England and Wales.
+2. Load both datasets and merge them together. Make sure to only retain those MSOAs that belong to Wales.
+3. Create a map that shows the proportion of the population residing in Wales that is born in Europe.
+4. Experiment by adjusting various map parameters, such as the colour scheme, map labels, and data classification method.
+
+| File                                        | Type   | Link |
+| :------                                     | :------| :------ |
+| Wales MSOA Census 2021 European Population | `csv` | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/Wales-MSOA-European.csv) |
+| London MSOA 2021 Spatial Boundaries         | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/England-Wales-MSOA-2021.gpkg) |
+
+## Before you leave
+And that is how you use R as a GIS in its most basic form. More RGIS in the coming weeks, but [this concludes the tutorial for this week](https://www.youtube.com/watch?v=Ydg4T2MP7Z8).
