@@ -178,7 +178,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-point-pattern.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">2 Analysing Point Data</span></a>
+ <span class="menu-text">Point Pattern Analysis</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -278,7 +278,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#lecture-slides" id="toc-lecture-slides" class="nav-link" data-scroll-target="#lecture-slides"><span class="header-section-number">1.1</span> Lecture slides</a></li>
   <li><a href="#reading-list" id="toc-reading-list" class="nav-link" data-scroll-target="#reading-list"><span class="header-section-number">1.2</span> Reading list</a></li>
-  <li><a href="#europeans-in-london" id="toc-europeans-in-london" class="nav-link" data-scroll-target="#europeans-in-london"><span class="header-section-number">1.3</span> Europeans in London</a></li>
+  <li><a href="#europeans-in-london" id="toc-europeans-in-london" class="nav-link" data-scroll-target="#europeans-in-london"><span class="header-section-number">1.3</span> Europeans in London</a>
+  <ul class="collapse">
+  <li><a href="#exploring-spatial-data" id="toc-exploring-spatial-data" class="nav-link" data-scroll-target="#exploring-spatial-data"><span class="header-section-number">1.3.1</span> Exploring spatial data</a></li>
+  <li><a href="#joining-attribute-data" id="toc-joining-attribute-data" class="nav-link" data-scroll-target="#joining-attribute-data"><span class="header-section-number">1.3.2</span> Joining attribute data</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jtvandijk/GEOG0030/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
@@ -325,7 +329,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>Navigate to <strong>File</strong> -&gt; <strong>New Project</strong> -&gt; <strong>New Directory</strong>, and create a folder with the name <code>GEOG0030</code>. Tick the checkbox for <code>Use renv with this project</code> and click on <strong>Create Project</strong>. You should now see your main RStudio window switch to this new project and when you check your <strong>files</strong> pane, you should see a new <strong>R Project</strong> called <code>GEOG0030</code>.</p>
+<p>Navigate to <strong>File</strong> -&gt; <strong>New Project</strong> -&gt; <strong>New Directory</strong>, and create a folder with the name <code>GEOG0030</code>. Tick the checkbox for <em>Use renv with this project</em> and click on <strong>Create Project</strong>. You should now see your main RStudio window switch to this new project and when you check your <strong>files</strong> pane, you should see a new <strong>R Project</strong> called <code>GEOG0030</code>.</p>
 <div class="callout callout-style-simple callout-warning">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -336,25 +340,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>With our project ready to go, today we will map the distribution of European immmigrants in London. The data covers all usual residents across London that are born in Europe, as recorded in the 2021 Census for England and Wales, aggregated at the <a href="https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeographies/census2021geographies">Middle Layer Super Output Area (MSOA)</a> level.</p>
+<p>With our project ready to go, today we will map the distribution of the share of European immigrants across London. The data covers the number of people in London that are born in a European country, as recorded in the 2021 Census for England and Wales, aggregated at the <a href="https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeographies/census2021geographies">Middle Layer Super Output Area (MSOA)</a> level.</p>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>An MSOA is a geographic unit used in the UK for statistical analysis. It typically represents small areas with populations of around 5,000 to 15,000 people and is designed to ensure consistent data reporting. LSOAs are commonly used to report on census data, deprivation indices, and other socio-economic statistics.</p>
+<p>An MSOA is a geographic unit used in the UK for statistical analysis. It typically represents small areas with populations of around 5,000 to 15,000 people and is designed to ensure consistent data reporting. MSOAs are commonly used to report on census data, deprivation indices, and other socio-economic statistics.</p>
 </div>
 </div>
 </div>
-<p>The dataset has been extracted using the <a href="https://www.ons.gov.uk/datasets/create">Custom Dataset Tool</a>, and you can download the file via the link provided below. Save the files in your project folder under <code>data/attributes</code>.</p>
+<p>The dataset has been extracted using the <a href="https://www.ons.gov.uk/datasets/create">Custom Dataset Tool</a>, and you can download the file via the link provided below. Save the file in your project folder under <code>data/attributes</code>. Along with this dataset, we also have access to a <code>GeoPackage</code> that contains the MSOA boundaries. Save this file under <code>data/spatial</code>, respectively.</p>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>You will to have created a folder named <code>data</code> within your RStudio Project directory, inside which you will have to have another folder named <code>attributes</code> folder.</p>
+<p>You will to have created a folder named <code>data</code> within your RStudio Project directory, inside which you will have to have a folder named <code>attributes</code> and a folder named <code>spatial</code>.</p>
 </div>
 </div>
 </div>
@@ -368,9 +372,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">London MSOA Census 2021 Europeans</td>
+<td style="text-align: left;">London MSOA Census 2021 European Population</td>
 <td style="text-align: left;"><code>csv</code></td>
-<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0018/tree/master/data/London-MSOA-Europeans.csv">Download</a></td>
+<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/London-MSOA-European.csv">Download</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">London MSOA 2021 Spatial Boundaries</td>
+<td style="text-align: left;"><code>GeoPackage</code></td>
+<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-MSOA-2021.gpkg">Download</a></td>
 </tr>
 </tbody>
 </table>
@@ -384,7 +393,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>To get started, let us create our first script. <strong>File</strong> -&gt; <strong>New File</strong> -&gt; <strong>R Script</strong>. Save your script as <code>w01-europeans-in-london.r</code>.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>You may have used spatial data before and noticed that we did not download a collection of files known as a <code>shapefile</code> but a <code>GeoPackage</code> instead. Whilst <code>shapefiles</code> are still being used, <code>GeoPackage</code> is a more modern and portable file format. Have a look at this article on <em>towardsdatascience.com</em> for an excellent explanation on why one should use <code>GeoPackage</code> files over <code>shapefiles</code> where possible: <a href="https://towardsdatascience.com/why-you-need-to-use-geopackage-files-instead-of-shapefile-or-geojson-7cb24fe56416">[Link]</a></p>
+</div>
+</div>
+</div>
+<p>To get started, let us create our first script. <strong>File</strong> -&gt; <strong>New File</strong> -&gt; <strong>R Script</strong>. Save your script as <code>w01-european-population-london.r</code>.</p>
 <p>We will start by loading the libraries that we will need:</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
@@ -417,8 +436,330 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+<p>Once downloaded, we can load both files into memory:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read spatial dataset</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>msoa21 <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/spatial/London-MSOA-2021.gpkg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Reading layer `London-MSOA-2021' from data source 
+  `/Users/justinvandijk/Library/CloudStorage/Dropbox/UCL/Web/jtvandijk.github.io/GEOG0030/data/spatial/London-MSOA-2021.gpkg' 
+  using driver `GPKG'
+Simple feature collection with 1002 features and 8 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: 503574.2 ymin: 155850.8 xmax: 561956.7 ymax: 200933.6
+Projected CRS: OSGB36 / British National Grid</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load attribute dataset</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>msoa_eur <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/attributes/London-MSOA-European.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 1002 Columns: 3
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (1): msoa21cd
+dbl (2): eur21, pop21
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(msoa21)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 6 features and 8 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: 530966.7 ymin: 180512.6 xmax: 551943.8 ymax: 191139
+Projected CRS: OSGB36 / British National Grid
+   msoa21cd                 msoa21nm msoa21nmw  bng_e  bng_n      lat      long
+1 E02000001       City of London 001           532384 181355 51.51562 -0.093490
+2 E02000002 Barking and Dagenham 001           548267 189685 51.58652  0.138756
+3 E02000003 Barking and Dagenham 002           548259 188520 51.57606  0.138149
+4 E02000004 Barking and Dagenham 003           551004 186412 51.55639  0.176828
+5 E02000005 Barking and Dagenham 004           548733 186824 51.56069  0.144267
+6 E02000007 Barking and Dagenham 006           549698 186609 51.55851  0.158087
+                                globalid                           geom
+1 {71249043-B176-4306-BA6C-D1A993B1B741} MULTIPOLYGON (((532135.1 18...
+2 {997A80A8-0EBE-461C-91EB-3E4122571A6E} MULTIPOLYGON (((548881.6 19...
+3 {62DED9D9-F53A-454D-AF35-04404D9DBE9B} MULTIPOLYGON (((549102.4 18...
+4 {511181CD-E71F-4C63-81EE-E8E76744A627} MULTIPOLYGON (((551550.1 18...
+5 {B0C823EB-69E0-4AE7-9E1C-37715CF3FE87} MULTIPOLYGON (((549099.6 18...
+6 {A33C6ADD-D70A-4737-ADE5-3460D7016CA1} MULTIPOLYGON (((549819.9 18...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(msoa_eur)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  msoa21cd  eur21 pop21
+  &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;
+1 E02000001  1926  8582
+2 E02000002  1102  8280
+3 E02000003  1930 11542
+4 E02000004   808  6640
+5 E02000005  1541 11082
+6 E02000007  1365 10159</code></pre>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>You can further inspect both objects using the <code>View()</code> function.</p>
+</div>
+</div>
+</div>
+<section id="exploring-spatial-data" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="exploring-spatial-data"><span class="header-section-number">1.3.1</span> Exploring spatial data</h3>
+<p>The first thing we want to do when we load spatial data is to plot the data to check whether everything is in order. To do this, we can simply use the base R <code>plot()</code> function</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot data</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(msoa21, <span class="at">max.plot =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-01-plot-map-data" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="01-spatial_files/figure-html/fig-01-plot-map-data-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;1: Quick plot to inspect the MSOA spatial data.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>You should see your <code>msoa21</code> plot appear in your <strong>Plots</strong> window.</p>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>The <code>plot()</code> function should not to be used to make publishable maps but can be used as a quick way of inspecting your spatial data.</p>
+</div>
+</div>
+</div>
+<p>Just as with a tabular dataframe, we can also inspect the attributes of the spatial data frame:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect columns</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(msoa21)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 9</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect rows</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(msoa21)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1002</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect data</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(msoa21)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 6 features and 8 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: 530966.7 ymin: 180512.6 xmax: 551943.8 ymax: 191139
+Projected CRS: OSGB36 / British National Grid
+   msoa21cd                 msoa21nm msoa21nmw  bng_e  bng_n      lat      long
+1 E02000001       City of London 001           532384 181355 51.51562 -0.093490
+2 E02000002 Barking and Dagenham 001           548267 189685 51.58652  0.138756
+3 E02000003 Barking and Dagenham 002           548259 188520 51.57606  0.138149
+4 E02000004 Barking and Dagenham 003           551004 186412 51.55639  0.176828
+5 E02000005 Barking and Dagenham 004           548733 186824 51.56069  0.144267
+6 E02000007 Barking and Dagenham 006           549698 186609 51.55851  0.158087
+                                globalid                           geom
+1 {71249043-B176-4306-BA6C-D1A993B1B741} MULTIPOLYGON (((532135.1 18...
+2 {997A80A8-0EBE-461C-91EB-3E4122571A6E} MULTIPOLYGON (((548881.6 19...
+3 {62DED9D9-F53A-454D-AF35-04404D9DBE9B} MULTIPOLYGON (((549102.4 18...
+4 {511181CD-E71F-4C63-81EE-E8E76744A627} MULTIPOLYGON (((551550.1 18...
+5 {B0C823EB-69E0-4AE7-9E1C-37715CF3FE87} MULTIPOLYGON (((549099.6 18...
+6 {A33C6ADD-D70A-4737-ADE5-3460D7016CA1} MULTIPOLYGON (((549819.9 18...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect column names</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(msoa21)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "msoa21cd"  "msoa21nm"  "msoa21nmw" "bng_e"     "bng_n"     "lat"      
+[7] "long"      "globalid"  "geom"     </code></pre>
+</div>
+</div>
+<p>We can also establish the class of our data:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(msoa21)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "sf"         "data.frame"</code></pre>
+</div>
+</div>
+<p>We should see our data is an <code>sf</code> dataframe, which is what we want and we can move on.</p>
+</section>
+<section id="joining-attribute-data" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="joining-attribute-data"><span class="header-section-number">1.3.2</span> Joining attribute data</h3>
+<p>Now we have our dataset containing London’s European born population and the MSOA spatial boundaries loaded, we can join these together using an <strong>Attribute Join</strong>. Before proceeding with the join, we need to verify that a matching unique identifier exists in both datasets. Let’s look at the column names in our datasets again:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect column names</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(msoa21)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "msoa21cd"  "msoa21nm"  "msoa21nmw" "bng_e"     "bng_n"     "lat"      
+[7] "long"      "globalid"  "geom"     </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect column names</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(msoa_eur)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "msoa21cd" "eur21"    "pop21"   </code></pre>
+</div>
+</div>
+<p>The <code>msoa21cd</code> columns looks promising as it features in both datasets. We can quickly sort both columns and have a peek at the data:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect spatial dataset</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">sort</span>(msoa21<span class="sc">$</span>msoa21cd))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "E02000001" "E02000002" "E02000003" "E02000004" "E02000005" "E02000007"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect attribute dataset</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">sort</span>(msoa_eur<span class="sc">$</span>msoa21cd))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "E02000001" "E02000002" "E02000003" "E02000004" "E02000005" "E02000007"</code></pre>
+</div>
+</div>
+<p>They seem to contain similar values, so that is promising. Let us try to join the attribute data onto the spatial data:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># join attribute data onto spatial data</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>msoa21 <span class="ot">&lt;-</span> msoa21 <span class="sc">|&gt;</span> </span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(msoa_eur, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"msoa21cd"</span> <span class="ot">=</span> <span class="st">"msoa21cd"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>The code above uses a pipe function: <code>|&gt;</code>. The pipe operator allows you to pass the output of one function directly into the next, streamlining your code. While it might be a bit confusing at first, you will find that it makes your code faster to write and easier to read. More importantly, it reduces the need to create multiple intermediate variables to store outputs.</p>
+</div>
+</div>
+</div>
+<p>We can explore the joined data in usual fashion:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect columns</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(msoa21)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 11</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect rows</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(msoa21)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1002</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect data</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(msoa21)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 6 features and 10 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: 530966.7 ymin: 180512.6 xmax: 551943.8 ymax: 191139
+Projected CRS: OSGB36 / British National Grid
+   msoa21cd                 msoa21nm msoa21nmw  bng_e  bng_n      lat      long
+1 E02000001       City of London 001           532384 181355 51.51562 -0.093490
+2 E02000002 Barking and Dagenham 001           548267 189685 51.58652  0.138756
+3 E02000003 Barking and Dagenham 002           548259 188520 51.57606  0.138149
+4 E02000004 Barking and Dagenham 003           551004 186412 51.55639  0.176828
+5 E02000005 Barking and Dagenham 004           548733 186824 51.56069  0.144267
+6 E02000007 Barking and Dagenham 006           549698 186609 51.55851  0.158087
+                                globalid eur21 pop21
+1 {71249043-B176-4306-BA6C-D1A993B1B741}  1926  8582
+2 {997A80A8-0EBE-461C-91EB-3E4122571A6E}  1102  8280
+3 {62DED9D9-F53A-454D-AF35-04404D9DBE9B}  1930 11542
+4 {511181CD-E71F-4C63-81EE-E8E76744A627}   808  6640
+5 {B0C823EB-69E0-4AE7-9E1C-37715CF3FE87}  1541 11082
+6 {A33C6ADD-D70A-4737-ADE5-3460D7016CA1}  1365 10159
+                            geom
+1 MULTIPOLYGON (((532135.1 18...
+2 MULTIPOLYGON (((548881.6 19...
+3 MULTIPOLYGON (((549102.4 18...
+4 MULTIPOLYGON (((551550.1 18...
+5 MULTIPOLYGON (((549099.6 18...
+6 MULTIPOLYGON (((549819.9 18...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect column names</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(msoa21)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "msoa21cd"  "msoa21nm"  "msoa21nmw" "bng_e"     "bng_n"     "lat"      
+ [7] "long"      "globalid"  "eur21"     "pop21"     "geom"     </code></pre>
+</div>
+</div>
+<p>Always inspect your join to ensure everything looks as expected. A good way to do this is by using the <code>View()</code> function to check for any unexpected missing values, which are marked as <code>NA</code>.</p>
+<p>We can further compare the total number of rows in the spatial dataset with the total number of non-<code>NA</code> values in the joined columns:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(msoa21)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1002</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check for missing values</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(msoa21<span class="sc">$</span>eur21))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1002</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check for missing values</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(msoa21<span class="sc">$</span>pop21))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1002</code></pre>
+</div>
+</div>
+<p>No missing values. In this case we did not expect any missing values, so this confirms that all our full attribute dataset has been linked to the spatial dataset.</p>
+<p>We are almost ready to map the data. Only thing that is left is for us to calculate the share of European-born immigrants within each MSOA:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate proportion</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>msoa21 <span class="ot">&lt;-</span> msoa21 <span class="sc">|&gt;</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">prop_eur21 =</span> eur21<span class="sc">/</span>pop21)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
 
 
+</section>
 </section>
 </section>
 

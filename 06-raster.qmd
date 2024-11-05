@@ -332,9 +332,7 @@ Not all measurements sites collect data on NO~2~ so it is normal to get some `40
 :::
 
 ::: {.callout-warning}
-This code may take some time to run, as it will attempt to download data from all air measurement sites for an entire year, with many measurements taken hourly. If you experience too many errors or if it is taking too long, you can download a copy of the data here: [[Download]](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/attributes/London-NO2-2023.zip). 
-
-Once downloaded, place the `zip` file in your `data` folder. The file is large, so you can leave it unzipped.
+This code may take some time to run, as it will attempt to download data from all air measurement sites for an entire year, with many measurements taken hourly. If you experience too many errors or if it is taking too long, you can download a copy of the data here: [[Download]](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/attributes/London-NO2-2023.zip). Once downloaded, place the `zip` file in your `data` folder. The file is large, so you can leave it unzipped.
 :::
 
 Let us start by loading and inspecting the data:

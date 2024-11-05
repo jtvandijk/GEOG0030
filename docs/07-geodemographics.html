@@ -180,7 +180,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-point-pattern.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">2 Analysing Point Data</span></a>
+ <span class="menu-text">Point Pattern Analysis</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -584,16 +584,6 @@ dbl (2): Main language (11 categories) Code, Observation
 <span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co"># clean names</span></span>
 <span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>lsoa_age <span class="ot">&lt;-</span> lsoa_age <span class="sc">|&gt;</span></span>
 <span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">clean_names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-<div class="callout callout-style-simple callout-note">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>The code above uses a pipe function: <code>|&gt;</code>. The pipe operator allows you to pass the output of one function directly into the next, streamlining your code. While it might be a bit confusing at first, you will find that it makes your code faster to write and easier to read. More importantly, it reduces the need to create multiple intermediate variables to store outputs.</p>
-</div>
 </div>
 </div>
 <p>To account for the non-uniformity of the areal units, we further need to convert the observations to proportions and only retain those columns that are likely to be meaningful in the context of the classification:</p>
