@@ -65,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./05-models.html" rel="next">
-<link href="./03-operations.html" rel="prev">
+<link href="./03-point-pattern.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -168,19 +168,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./01-spatial.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1 Programming for Spatial Analysis</span></a>
+ <span class="menu-text">1 R for Spatial Analysis</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02-point-pattern.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">2 Analysing Point Data</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./03-operations.html" class="sidebar-item-text sidebar-link">
+  <a href="./02-operations.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">3 Spatial Queries and Geometric Operations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-point-pattern.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2 Analysing Point Data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -301,7 +301,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="spatial-autocorrelation" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">4</span> Spatial Autocorrelation</h1>
-<p>This week, we will explore the concept of spatial dependence—the idea that the value of a variable at one location is influenced by the value of the same variable at nearby locations. This dependence can be statistically measured by assessing spatial autocorrelation, which refers to the degree of similarity between values of a variable at different locations or between multiple variables at the same location.</p>
+<p>This week, we will explore the concept of spatial dependence: the idea that the value of a variable at one location is influenced by the value of the same variable at nearby locations. This dependence can be statistically measured by assessing spatial autocorrelation, which refers to the degree of similarity between values of a variable at different locations or between multiple variables at the same location.</p>
 <section id="lecture-w04" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="lecture-w04"><span class="header-section-number">4.1</span> Lecture slides</h2>
 <p>You can download the slides of this week’s lecture here: <a href="https://github.com/jtvandijk/GEOG0030/tree/master/slides/w04-geo.pdf">[Link]</a>.</p>
@@ -326,7 +326,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="population-groups-in-london" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="population-groups-in-london"><span class="header-section-number">4.3</span> Population groups in London</h2>
-<p>This week, we will investigate to what extent people in London who <a href="https://www.ons.gov.uk/peoplepopulationandcommunity/culturalidentity/ethnicity/bulletins/ethnicgroupenglandandwales/census2021">self-identified</a> as <em>Asian-Bangladeshi</em> in the 2021 Census are clustered in London at the LSOA-level. The data covers all usual residents, as recorded in the 2021 Census for England and Wales, aggregated at the <a href="https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeographies/census2021geographies">Lower Super Output Area (LSOA)</a> level. The data has been extracted using the <a href="https://www.ons.gov.uk/datasets/create">Custom Dataset Tool</a> and subsequently processed to include only the proportion of individuals who self-identify as belonging to one of the Asian categories. Along with this dataset, we also have access to a <code>GeoPackage</code> that contains the LSOA boundaries. You can download both files below and save them in your project folder under <code>data/attributes</code> and <code>data/spatial</code>, respectively.</p>
+<p>This week, we will investigate to what extent people in London who <a href="https://www.ons.gov.uk/peoplepopulationandcommunity/culturalidentity/ethnicity/bulletins/ethnicgroupenglandandwales/census2021">self-identified</a> as <em>Asian-Bangladeshi</em> in the 2021 Census are clustered in London at the LSOA-level. The data covers all usual residents, as recorded in the 2021 Census for England and Wales, aggregated at the <a href="https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeographies/census2021geographies">Lower Super Output Area (LSOA)</a> level. The data has been extracted using the <a href="https://www.ons.gov.uk/datasets/create">Custom Dataset Tool</a> and subsequently processed to include only the proportion of individuals who self-identify as belonging to one of the Asian groups defined in the Census. Along with this dataset, we also have access to a <code>GeoPackage</code> that contains the LSOA boundaries.</p>
+<p>You can download both files below and save them in your project folder under <code>data/attributes</code> and <code>data/spatial</code>, respectively.</p>
 <table class="table">
 <thead>
 <tr class="header">
@@ -470,7 +471,7 @@ Projected CRS: OSGB36 / British National Grid
 <section id="spatial-dependency" class="level3" data-number="1.3.1">
 <h3 data-number="1.3.1" class="anchored" data-anchor-id="spatial-dependency"><span class="header-section-number">4.3.1</span> Spatial dependency</h3>
 <p>As you should know by now, the first step when working with spatial data is to create a map:</p>
-<div class="cell styled-output" data-fig-lab="Proportions of people that self-identify as Asian-Bangladeshi.">
+<div class="cell styled-output">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -502,7 +503,7 @@ Projected CRS: OSGB36 / British National Grid
 <div id="fig-04-join-map-data" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="04-autocorrelation_files/figure-html/fig-04-join-map-data-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;1: <strong>?(caption)</strong></figcaption>
+<figcaption class="figure-caption">Figure&nbsp;1: Proportions of people that self-identify as Asian-Bangladeshi.</figcaption>
 </figure>
 </div>
 </div>
@@ -1358,8 +1359,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./03-operations.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Spatial Queries and Geometric Operations</span>
+      <a href="./03-point-pattern.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Analysing Point Data</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

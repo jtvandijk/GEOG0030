@@ -35,16 +35,16 @@ for htmlf in html_files:
     cnt += 1
     
     # update TOC chapter 1
-    html_content = html_content.replace('<span class="menu-text">Programming for Spatial Analysis</span>', \
-                                        '<span class="menu-text">1 Programming for Spatial Analysis</span>')
+    html_content = html_content.replace('<span class="menu-text">R for Spatial Analysis</span>', \
+                                        '<span class="menu-text">1 R for Spatial Analysis</span>')
                                         
     # update TOC chapter 2
-    html_content = html_content.replace('<span class="menu-text">Analysing Point Data</span>', \
-                                        '<span class="menu-text">2 Analysing Point Data</span>')   
-                                        
-    # update TOC chapter 3
     html_content = html_content.replace('<span class="menu-text">Spatial Queries and Geometric Operations</span>', \
                                         '<span class="menu-text">3 Spatial Queries and Geometric Operations</span>')   
+
+    # update TOC chapter 3
+    html_content = html_content.replace('<span class="menu-text">Analysing Point Data</span>', \
+                                        '<span class="menu-text">2 Analysing Point Data</span>')   
                                       
     # update TOC chapter 4
     html_content = html_content.replace('<span class="menu-text">Spatial Autocorrelation</span>', \

@@ -47,8 +47,8 @@ website:
       - section: "Core Spatial Analysis"
         contents:
         - 01-spatial.qmd
-        - 02-point-pattern.qmd
-        - 03-operations.qmd
+        - 02-operations.qmd
+        - 03-point-pattern.qmd
         - 04-autocorrelation.qmd
         - 05-models.qmd
       - section: "Applied Spatial Analysis"

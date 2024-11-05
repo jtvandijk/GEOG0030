@@ -1,5 +1,73 @@
-# Programming for Spatial Analysis
+# R for Spatial Analysis
+This week's lecture offered a comprehensive introduction to the Geocomputation module, highlighting how and why it differs from a traditional GIScience course. In this week's tutorial, we will introduce you to using R and RStudio for quantitative spatial data, focusing specifically on how R can be used to make maps.
+
+## Lecture slides
+You can download the slides of this week's lecture here: [[Link]]({{< var slides.week01 >}}).
+
+## Reading list 
+#### Essential readings {.unnumbered}
+- Brundson, C. and Comber, A. 2020. Opening practice: Supporting reproducibility and critical spatial data science. *Journal of Geographical Systems* 23: 477–496. [[Link]](https://doi.org/10.1007/s10109-020-00334-2)
+- Longley, P. *et al.* 2015. Geographic Information Science & Systems, **Chapter 1**: *Geographic Information: Science, Systems, and Society*, pp. 1-32. [[Link]](https://ucl.rl.talis.com/link?url=https%3A%2F%2Fapp.knovel.com%2Fhotlink%2Ftoc%2Fid%3AkpGISSE001%2Fgeographic-information-science%3Fkpromoter%3Dmarc&sig=e437927b963cc591dcb65491eccdd3869cc31aef80e1443cb2ba12d8f3bb031a)
+
+#### Suggested readings {.unnumbered}
+- Miller, H. and Goodchild, M. 2015. Data-driven geography. *GeoJournal* 80: 449–461. [[Link]](https://doi.org/10.1007/s10708-014-9602-6)
+- Goodchild, M. 2009. Geographic information systems and science: Today and tomorrow. *Annals of GIS* 15(1): 3-9. [[Link]](https://doi.org/10.1080/19475680903250715)
+
+## Europeans in London
+In RStudio, scripts allow us to build and save code that can be run repeatedly. We can organise these scripts into [RStudio projects](https://support.posit.co/hc/en-us/articles/200526207-Using-RStudio-Projects), which consolidate all files related to an analysis such as input data, R scripts, results, figures, and more. This organisation helps keep track of all data, input, and output, while enabling us to create standalone scripts for each part of our analysis. Additionally, it simplifies managing [directories and filepaths](https://en.wikipedia.org/wiki/Path_(computing)) and allows us to keep track of our installed packages through [renv](https://rstudio.github.io/renv/articles/renv.html).
+
+::: {.callout-note}
+Package management in R involves handling the installation, updating, and tracking of external libraries needed for your code. This ensures that your R scripts can run smoothly without issues related to missing or incompatible packages. Within an RStudio project, you can use `renv` to create a reproducible environment by capturing the specific package versions used in the project. This means that anyone working on or revisiting the project will have access to the same package setup, preventing problems caused by package updates or changes. 
+:::
+
+Navigate to **File** -> **New Project** -> **New Directory**, and create a folder with the name `GEOG0030`. Tick the checkbox for `Use renv with this project` and click on **Create Project**. You should now see your main RStudio window switch to this new project and when you check your **files** pane, you should see a new **R Project** called `GEOG0030`.
+  
+::: {.callout-warning}
+Please ensure that **folder names** and **file names** do not contain spaces or special characters such as `*` `.` `"` `/` `\` `[` `]` `:` `;` `|` `=` `,` `<` `?` `>` `&` `$` `#` `!` `'` `{` `}` `(` `)`. Different operating systems and programming languages deal differently with spaces and special characters and as such including these in your folder names and file names can cause many problems and unexpected errors. As an alternative to using white space you can use an underscore (`_`) or hyphen (`-`) if you like.
+:::
+
+With our project ready to go, today we will map the distribution of European immmigrants in London. The data covers all usual residents across London that are born in Europe, as recorded in the 2021 Census for England and Wales, aggregated at the [Middle Layer Super Output Area (MSOA)](https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeographies/census2021geographies) level.
+
+::: {.callout-note}
+An MSOA is a geographic unit used in the UK for statistical analysis. It typically represents small areas with populations of around 5,000 to 15,000 people and is designed to ensure consistent data reporting. LSOAs are commonly used to report on census data, deprivation indices, and other socio-economic statistics.
+:::
+
+The dataset has been extracted using the [Custom Dataset Tool](https://www.ons.gov.uk/datasets/create), and you can download the file via the link provided below. Save the files in your project folder under `data/attributes`.
+
+::: {.callout-note}
+You will to have created a folder named `data` within your RStudio Project directory, inside which you will have to have another folder named `attributes` folder.
+:::
+
+| File                                        | Type   | Link |
+| :------                                     | :------| :------ |
+| London MSOA Census 2021 Europeans           | `csv` | [Download](https://github.com/jtvandijk/GEOG0018/tree/master/data/London-MSOA-Europeans.csv) |
+
+::: {.callout-tip}
+To download a `csv` file that is hosted on GitHub, click on the `Download raw file` button on the top right of your screen and it should download directly to your computer.
+:::
+
+To get started, let us create our first script. **File** -> **New File** -> **R Script**. Save your script as `w01-europeans-in-london.r`. 
+
+We will start by loading the libraries that we will need:
+
+```{r}
+#| label: 01-load-libraries
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| output: False
+#| tidy: True
+#| filename: "R code"
+# load libraries
+library(tidyverse)
+library(sf)
+library(tmap)
+```
 
 ::: {.callout-warning}
-For Linux and macOS users who are new to working with spatial data in R, this installation of some of these libraries may fail since additional (non-R) libraries are required (which are automatically installed for Windows users). If this is the case, please refer to the [information pages](https://r-spatial.github.io/sf/#macos) of the `sf` library for instructions on how to install these additional libraries.
+You may have to install some of these libraries if you have not used these before.
+:::
+
+::: {.callout-warning}
+For Linux and macOS users who are new to working with spatial data in R, the installation of the `sf` library may fail because additional (non-R) libraries are required which are automatically installed for Windows users. If you encounter installation issues,, please refer to the [information pages](https://r-spatial.github.io/sf/#macos) of the `sf` library for instructions on how to install these additional libraries.
 :::

@@ -5,8 +5,8 @@ meta:
 
 urls:
   w01: "01-spatial.html"
-  w02: "02-point-pattern.html"
-  w03: "03-operations.html"
+  w02: "02-operations.html"
+  w03: "03-point-pattern.html"
   w04: "04-autocorrelation.html"
   w05: "05-models.html"
   w06: "06-raster.html"
