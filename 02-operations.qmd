@@ -16,7 +16,7 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 - Lovelace, R., Nowosad, J. and Muenchow, J. 2021. Geocomputation with R, **Chapter 6**: *Reprojecting geographic data*. [[Link]](https://geocompr.robinlovelace.net/reproj-geo-data.html)
 
 ## Bike theft in London I
-This week, we will examine patterns to what extent reported bicycle theft in London cluster around train and underground stations. We will be using open data from [data.police.uk](https://data.police.uk/) on reported crimes alongside [OpenStreetMap](https://www.openstreetmap.org/#map=6/54.91/-3.43) data for this analysis. We will use R to directly download the necessary data from OpenStreetMap, but the crime data will need to be manually downloaded from the data portal. We further have access to a `GeoPackage` that contains the London 2021 MSOA boundaries that we can use as reference layer. If you do not already have it on your computer, save this file in your `data/spatial` folder.
+This week, we will examine to what extent reported bicycle theft in London cluster around train and underground stations. We will be using open data from [data.police.uk](https://data.police.uk/) on reported crimes alongside [OpenStreetMap](https://www.openstreetmap.org/#map=6/54.91/-3.43) data for this analysis. We will use R to directly download the necessary data from OpenStreetMap, but the crime data will need to be manually downloaded from the data portal. We further have access to a `GeoPackage` that contains the London 2021 MSOA boundaries that we can use as reference layer. If you do not already have it on your computer, save this file in your `data/spatial` folder.
 
 | File                                        | Type   | Link |
 | :------                                     | :------| :------ |
@@ -182,6 +182,19 @@ tm_shape(theft_bike) +
   tm_layout(
     frame = FALSE,
   )
+```
+
+We can save the prepared dataset as a `GeoPackage` so that we can use it some other time:
+
+```{r}
+#| label: 02-save-crime
+#| classes: styled-output
+#| echo: True
+#| eval: False
+#| tidy: True
+#| filename: 'R code'
+# write
+st_write(theft_bike, 'data/spatial/London-BicycleTheft-2023.gpkg')
 ```
 
 ### Station data

@@ -1,10 +1,10 @@
 # Accessibility Analysis
 Accessibility is often described as the ease with which individuals can reach places and opportunities, such as employment, public services, and cultural activities. We can utilise transport network data to quantify accessibility and characterise areas based on their accessibility levels. This week, we will use the `dodgr` R library to measure accessibility between different points of interest by calculating the network distances between them.
 
-## Lecture slides {#lecture-w08}
+## Lecture slides
 You can download the slides of this week's lecture here: [[Link]]({{< var slides.week08 >}}).
 
-## Reading list {#reading-w08}
+## Reading list
 #### Essential readings {.unnumbered}
 - Geurs, K., Van Wee, B. 2004. Accessibility evaluation of land-use and transport strategies: review and research directions. *Journal of Transport Geography* 12(2): 127-140. [[Link]](https://doi.org/10.1016/j.jtrangeo.2003.10.005)
 - Higgins, C., Palm, M. DeJohn, A. *et al.* 2022. Calculating place-based transit accessibility: Methods, tools and algorithmic dependence. *Journal of Transport and Land Use* 15(1): 95-116. [[Link]](https://doi.org/10.5198/jtlu.2022.2012)
@@ -569,7 +569,7 @@ fastfood_imd
 There appears to be a weak relationship, with schools in more deprived areas having, on average, a higher number of fast-food outlets within a 1,000-metre walking distance. However, this trend is not consistent, as schools in the least deprived areas of Lambeth show the highest accessibility on average.
 
 ## Assignment 
-Accessibility analysis involves evaluating how easily people can reach essential services, destinations, or opportunities, such as schools, healthcare facilities, or workplaces, from a given location. It considers factors like distance, travel time, and transport networks, providing valuable insights for urban planning, transport policies, and social equity. The CDRC [Access to Healthy Assets & Hazards (AHAH)](https://data.cdrc.ac.uk/dataset/access-healthy-assets-hazards-ahah) dataset, for instance, uses accessibility analysis to quantify how easy it is to reach 'unhealthy' places, such as pubs and gambling outlets, for each neighbourhood in Great Britain. 
+Accessibility analysis involves evaluating how easily people can reach essential services, destinations, or opportunities, such as schools, healthcare facilities, or workplaces, from a given location. The CDRC [Access to Healthy Assets & Hazards (AHAH)](https://data.cdrc.ac.uk/dataset/access-healthy-assets-hazards-ahah) dataset, for instance, uses accessibility analysis to quantify how easy it is to reach 'unhealthy' places, such as pubs and gambling outlets, for each neighbourhood in Great Britain. 
 
 Having run through all the steps during the tutorial, we can recreate this analysis ourselves. Using Lambeth as a case study, try to complete the following tasks:
 

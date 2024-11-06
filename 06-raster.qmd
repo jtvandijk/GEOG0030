@@ -1,10 +1,10 @@
 # Raster Data Analysis
 So far, we have exclusively focused on the use of vector and tabular data. However, depending on the nature of your research problem, you may also encounter *raster data*. This week's content introduces you to raster data, map algebra, and interpolation. 
 
-## Lecture slides {#slides-w06}
+## Lecture slides
 You can download the slides of this week's lecture here: [[Link]]({{< var slides.week06 >}}).
 
-## Reading list {#reading-w06}
+## Reading list
 #### Essential readings {.unnumbered}
 - Gimond, M. 2021. Intro to GIS and spatial analysis. **Chapter 14**: *Spatial Interpolation*. [[Link]](https://mgimond.github.io/Spatial/spatial-interpolation.html)
 - Heris, M., Foks, N., Bagstad, K. 2020. A rasterized building footprint dataset for the United States. *Scientific Data* 7: 207. [[Link]](https://doi.org/10.1038/s41597-020-0542-3)

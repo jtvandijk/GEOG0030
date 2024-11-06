@@ -15,7 +15,67 @@ The slides for this week's lecture can be downloaded here: [[Link]]({{< var slid
 - Yin, P. 2020. *Kernels and density estimation*. The Geographic Information Science & Technology Body of Knowledge. [[Link]](https://doi.org/10.22224/gistbok/2020.1.12)
 
 ## Bike theft in London II
+This week, we will revisit bicycle theft in London, focusing specifically on identifying patterns and clusters of theft incidents. To do this, we will use the [bicycle theft dataset](02-operations.html#crime-data) that we prepared last week, along with the 2021 MSOA boundaries for London. If you no longer have a copy of these files on your computer, you can download them using the links provided below.
 
+| File                                        | Type   | Link |
+| :------                                     | :------| :------ |
+| London Bicycle Theft 2023                   | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-BicycleTheft-2023.gpkg) |
+| London MSOA 2021 Spatial Boundaries         | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-MSOA-2021.gpkg) |
+
+To get started, let us create our first script. **File** -> **New File** -> **R Script**. Save your script as `w03-bike-theft.r`. 
+
+We will start by loading the libraries that we will need:
+
+```{r}
+#| label: 03-load-libraries
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| output: False
+#| tidy: True
+#| filename: 'R code'
+# load libraries
+library(tidyverse)
+library(sf)
+library(tmap)
+library(spatstat)
+library(dbscan)
+```
+
+::: {.callout-warning}
+You may have to install some of these libraries if you have not used these before.
+:::
+
+As always, we will start by loading loading our files into memory:
+```{r}
+#| label: 01-load-gpkg-csv
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: 'R code'
+# load msoa dataset
+msoa21 <- st_read('data/spatial/London-MSOA-2021.gpkg')
+
+# load bicycle theft dataset
+theft_bike <- st_read('data/spatial/London-BicycleTheft-2023.gpkg')
+
+# inspect
+head(msoa21)
+
+# inspect
+head(theft_bike)
+``` 
+
+::: {.callout-note}
+You can further inspect both objects using the `View()` function. 
+:::
+
+### Point in Polygon
+
+### Density-based methods
+
+### Distance-based methods
 
 ## Before you leave
 As geographers we are keen to understand our point data's distribution and understand whether are our points clustered, randomly distributed, uniform or dispersed. We have looked at various techniques that enable us to statistically and visually assess our data's distribution and understand whether our data is randomly distributed or clustered in space. And that is [us done for this week](https://www.youtube.com/watch?v=-zxtbwGogyY). Reading list anyone?

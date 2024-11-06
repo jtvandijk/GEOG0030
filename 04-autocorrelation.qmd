@@ -1,10 +1,10 @@
 # Spatial Autocorrelation 
 This week, we will explore the concept of spatial dependence: the idea that the value of a variable at one location is influenced by the value of the same variable at nearby locations. This dependence can be statistically measured by assessing spatial autocorrelation, which refers to the degree of similarity between values of a variable at different locations or between multiple variables at the same location.
 
-## Lecture slides {#lecture-w04}
+## Lecture slides 
 You can download the slides of this week's lecture here: [[Link]]({{< var slides.week04 >}}).
 
-## Reading list {#reading-w04}
+## Reading list
 #### Essential readings {.unnumbered}
 - Griffith, D. 2017. *Spatial Autocorrelation*. The Geographic Information Science & Technology Body of Knowledge. [[Link]](https://doi.org/10.22224/gistbok/2020.3.10)
 - Gimond, M. 2023. Intro to GIS and spatial analysis. **Chapter 13**: *Spatial autocorrelation*. [[Link]](https://mgimond.github.io/Spatial/spatial-autocorrelation.html)
