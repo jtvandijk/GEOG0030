@@ -463,7 +463,17 @@ tm_shape(theft_bike_clusters) +
   )
 ```
 
-## Assignment 
+## Assignment
+Now that we know how to map the distribution of point data, we can apply a similar analysis to road crashes in London in 2022 and assess whether they cluster in specific areas. Try the following:
+
+1. Create a Kernel Density Estimation (KDE) of *all* road crashes that occurred in London in 2022.
+2. Using DBSCAN output, create a cluster map of *serious* and *fatal* road crashes in London
+
+If you no longer have a copy of the 2022 London STATS19 Road Collision dataset, you can download it using the link provided below.
+
+| File                                        | Type   | Link |
+| :------                                     | :------| :------ |
+| London STATS19 Road Collisions 2022         | `csv` | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/London-Collisions-2022.csv) |
 
 ## Before you leave
-As geographers we are keen to understand our point data's distribution and understand whether are our points clustered, randomly distributed, uniform or dispersed. We have looked at various techniques that enable us to statistically and visually assess our data's distribution and understand whether our data is randomly distributed or clustered in space. And that is [us done for this week](https://www.youtube.com/watch?v=-zxtbwGogyY). Reading list anyone?
+With access to point event data, geographers aim to identify underlying patterns. This week, we explored several techniques that help us analyse and interpret such data. That is [us done for this week](https://www.youtube.com/watch?v=-zxtbwGogyY). Reading list anyone?
