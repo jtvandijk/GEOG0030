@@ -1,5 +1,5 @@
 # Point Pattern Analysis
-This week, we will be focusing on Point Pattern Analysis, which aims to detect clusters or patterns within a set of points. Through this analysis, we can measure density, dispersion, and homogeneity in point structures. Various methods exist for calculating and identifying these clusters, and today we will explore several of these techniques using our [bike theft dataset from last week](02-operations.html).
+This week, we will be focusing on Point Pattern Analysis, which aims to detect clusters or patterns within a set of points. Through this analysis, we can measure density, dispersion, and homogeneity in point structures. Various methods exist for calculating and identifying these clusters, and today we will explore several of these techniques using our [bike theft dataset from last week](02-operations.html#crime-data).
 
 ## Lecture slides
 The slides for this week's lecture can be downloaded here: [[Link]]({{< var slides.week03 >}})
@@ -19,7 +19,7 @@ This week, we will revisit bicycle theft in London, focusing specifically on ide
 
 | File                                        | Type   | Link |
 | :------                                     | :------| :------ |
-| London Bicycle Theft 2023                   | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-BicycleTheft-2023.gpkg) |
+| London Bicycle Theft 2023                   | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-BicycleTheft-2023.gpkg) |
 | London MSOA 2021 Spatial Boundaries         | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-MSOA-2021.gpkg) |
 
 To get started, let us create our first script. **File** -> **New File** -> **R Script**. Save your script as `w03-bike-theft.r`. 
@@ -71,8 +71,73 @@ head(theft_bike)
 You can further inspect both objects using the `View()` function. 
 :::
 
-### Point in Polygon
+### Point in polygon
+Point data are particularly useful because they are scale-free, meaning they can be aggregated to any geographic level that suits the analysis. While we will work directly with point location data further on in this tutorial, we will begin by creating a simple map that shows the distribution of bicycle thefts by counting the number of incidents within each MSOA.
 
+```{r}
+#| label: 03-intersect-point-in-poly
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| message: False
+#| filename: "R code"
+# point in polygon
+msoa21 <- msoa21 |>
+  mutate(theft_bike_n = lengths(st_intersects(msoa21, theft_bike)))
+```
+
+::: {.callout-tip}
+To create a point-in-polygon count within `sf`, we use the `st_intersects()` function and keep its default `sparse = TRUE` output, which produces a list of intersecting points by index for each polygon (e.g., MSOA). We then apply the `lengths()` function to count the number of points intersecting each polygon, giving us the total number of bike thefts per MSOA.
+:::
+
+We can now calculate the area of each MSOA and, combined with the total number of bicycle thefts, determine the number of thefts per square kilometre. This involves calculating the size of each MSOA in square kilometres and then dividing the total number of thefts by this area to get a theft density measure.
+
+```{r}
+#| label: 03-thefts-per-km2
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| message: False
+#| filename: "R code"
+# msoa area size
+msoa21 <- msoa21 |>
+  mutate(km_sq = as.numeric(st_area(msoa21)) / 1e6)
+
+# theft density
+msoa21  <- msoa21 |>
+  mutate(thef_km_sq = theft_bike_n/km_sq)
+```
+
+Let's put this onto a map:
+
+```{r tidy='styler'} 
+#| label: fig-03-choro-3
+#| fig-cap: Number of reported bicycle thefts by square kilometre.
+#| echo: True
+#| eval: True
+#| cache: True
+#| filename: "R code"
+# shape, polygons
+tm_shape(msoa21) +
+
+  # specify column, classes, labels, title
+  tm_polygons(
+    col= 'thef_km_sq', n = 5, style = 'jenks',
+    border.col = '#ffffff',
+    border.alpha = 0.3,
+    palette = c('#fee5d9','#fcae91','#fb6a4a','#de2d26','#a50f15'), 
+    title = 'Thefts / Square kilometre',
+  ) +
+  
+  # set layout
+  tm_layout(
+    frame = FALSE,
+    legend.position = c('left', 'bottom'),
+  )
+
+``` 
 ### Density-based methods
 
 ### Distance-based methods

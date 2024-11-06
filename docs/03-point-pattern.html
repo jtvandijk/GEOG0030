@@ -280,7 +280,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#reading-list" id="toc-reading-list" class="nav-link" data-scroll-target="#reading-list"><span class="header-section-number">3.2</span> Reading list</a></li>
   <li><a href="#bike-theft-in-london-ii" id="toc-bike-theft-in-london-ii" class="nav-link" data-scroll-target="#bike-theft-in-london-ii"><span class="header-section-number">3.3</span> Bike theft in London II</a>
   <ul class="collapse">
-  <li><a href="#point-in-polygon" id="toc-point-in-polygon" class="nav-link" data-scroll-target="#point-in-polygon"><span class="header-section-number">3.3.1</span> Point in Polygon</a></li>
+  <li><a href="#point-in-polygon" id="toc-point-in-polygon" class="nav-link" data-scroll-target="#point-in-polygon"><span class="header-section-number">3.3.1</span> Point in polygon</a></li>
   <li><a href="#density-based-methods" id="toc-density-based-methods" class="nav-link" data-scroll-target="#density-based-methods"><span class="header-section-number">3.3.2</span> Density-based methods</a></li>
   <li><a href="#distance-based-methods" id="toc-distance-based-methods" class="nav-link" data-scroll-target="#distance-based-methods"><span class="header-section-number">3.3.3</span> Distance-based methods</a></li>
   </ul></li>
@@ -333,8 +333,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">London Bicycle Theft 2023</td>
-<td style="text-align: left;"><code>GeoPackage</code></td>
 <td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-BicycleTheft-2023.gpkg">Download</a></td>
+<td style="text-align: left;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">London MSOA 2021 Spatial Boundaries</td>
@@ -478,7 +478,76 @@ Projected CRS: OSGB36 / British National Grid
 </div>
 </div>
 <section id="point-in-polygon" class="level3" data-number="1.3.1">
-<h3 data-number="1.3.1" class="anchored" data-anchor-id="point-in-polygon"><span class="header-section-number">3.3.1</span> Point in Polygon</h3>
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="point-in-polygon"><span class="header-section-number">3.3.1</span> Point in polygon</h3>
+<p>Point data are particularly useful because they are scale-free, meaning they can be aggregated to any geographic level that suits the analysis. While we will work directly with point location data further on in this tutorial, we will begin by creating a simple map that shows the distribution of bicycle thefts by counting the number of incidents within each MSOA.</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># point in polygon</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>msoa21 <span class="ot">&lt;-</span> msoa21 <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">theft_bike_n =</span> <span class="fu">lengths</span>(<span class="fu">st_intersects</span>(msoa21, theft_bike)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>To create a point-in-polygon count within <code>sf</code>, we use the <code>st_intersects()</code> function and keep its default <code>sparse = TRUE</code> output, which produces a list of intersecting points by index for each polygon (e.g., MSOA). We then apply the <code>lengths()</code> function to count the number of points intersecting each polygon, giving us the total number of bike thefts per MSOA.</p>
+</div>
+</div>
+</div>
+<p>We can now calculate the area of each MSOA and, combined with the total number of bicycle thefts, determine the number of thefts per square kilometre. This involves calculating the size of each MSOA in square kilometres and then dividing the total number of thefts by this area to get a theft density measure.</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># msoa area size</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>msoa21 <span class="ot">&lt;-</span> msoa21 <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">km_sq =</span> <span class="fu">as.numeric</span>(<span class="fu">st_area</span>(msoa21))<span class="sc">/</span><span class="fl">1e+06</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># theft density</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>msoa21 <span class="ot">&lt;-</span> msoa21 <span class="sc">|&gt;</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">thef_km_sq =</span> theft_bike_n<span class="sc">/</span>km_sq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Let’s put this onto a map:</p>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># shape, polygons</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(msoa21) <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># specify column, classes, labels, title</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"thef_km_sq"</span>, <span class="at">n =</span> <span class="dv">5</span>, <span class="at">style =</span> <span class="st">"jenks"</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">border.col =</span> <span class="st">"#ffffff"</span>,</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">border.alpha =</span> <span class="fl">0.3</span>,</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"#fee5d9"</span>, <span class="st">"#fcae91"</span>, <span class="st">"#fb6a4a"</span>, <span class="st">"#de2d26"</span>, <span class="st">"#a50f15"</span>),</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Thefts / Square kilometre"</span>,</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set layout</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">frame =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>),</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-03-choro-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="03-point-pattern_files/figure-html/fig-03-choro-3-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;1: Number of reported bicycle thefts by square kilometre.</figcaption>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="density-based-methods" class="level3" data-number="1.3.2">
 <h3 data-number="1.3.2" class="anchored" data-anchor-id="density-based-methods"><span class="header-section-number">3.3.2</span> Density-based methods</h3>

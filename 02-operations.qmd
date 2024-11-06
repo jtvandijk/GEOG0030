@@ -175,7 +175,6 @@ tm_shape(theft_bike) +
   tm_dots(
     col = '#fdc086',
     size = 0.05,
-    title = ''
   ) +
   
   # set layout
