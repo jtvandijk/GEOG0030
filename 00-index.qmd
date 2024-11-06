@@ -53,7 +53,7 @@ This year's version features the following **major** updates:
 - Second full rewrite of the workbook using `Quarto`.
 - Improved alignment with [GEOG0018 Methods in Human Geography](https://jtvandijk.github.io/GEOG0018).
 - New material on geographically weighted statistics, geodemographic classification, and data visualisation.
-- Fully updated material on point data analysis, spatial queries and geometric operations, spatial autocorrelation, and accessibility analysis.
+- Fully updated material on spatial queries and geometric operations, point pattern analysis, spatial autocorrelation, and accessibility analysis.
 - Introduction of package management using `renv`.
 :::
 

@@ -407,7 +407,7 @@ tm_shape(msoa21) +
           border.col = '#ffffff',
           border.alpha = 0.3,
           palette = c('#feebe2','#fbb4b9','#f768a1','#c51b8a','#7a0177'), 
-          labels = c('Largest share', '2nd largest', '3rd largest', '4th largest', 'Smallest share'),
+          labels = c('Smallest share', '2nd smallest', '3rd smallest', '4th smallest', 'Largest share'),
           title = 'Share of population',
           textNA = 'No population'
   ) +
@@ -470,7 +470,7 @@ tm_shape(msoa21) +
           border.col = '#ffffff',
           border.alpha = 0.3,
           palette = c('#feebe2','#fbb4b9','#f768a1','#c51b8a','#7a0177'), 
-          labels = c('Largest share', '2nd largest', '3rd largest', '4th largest', 'Smallest share'),
+          labels = c('Smallest share', '2nd smallest', '3rd smallest', '4th smallest', 'Largest share'),
           title = 'Share of population',
           textNA = 'No population'
   ) +

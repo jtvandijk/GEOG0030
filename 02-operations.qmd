@@ -176,7 +176,12 @@ tm_shape(theft_bike) +
     col = '#fdc086',
     size = 0.05,
     title = ''
-  ) 
+  ) +
+  
+  # set layout
+  tm_layout(
+    frame = FALSE,
+  )
 ```
 
 ### Station data
@@ -202,11 +207,10 @@ osm_stations <- opq(bbox = bbox_london) |>
 ```
 
 ::: {.callout-warning}
-In some cases, the OSM query may return an error, particularly when multiple users from the same location are executing the exact same query. If so, you can download a prepared copy of the data here: [[Download]](https://github.com/jtvandijk/GEOG0030/raw/master/data/spatial/London-OSM-Stations.RData). You can load this copy into R through `load('data/London-OSM-Stations.RData')`
+In some cases, the OSM query may return an error, particularly when multiple users from the same location are executing the exact same query. If so, you can download a prepared copy of the data here: [[Download]](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-OSM-Stations.RData). You can load this copy into R through `load('data/London-OSM-Stations.RData')`
 :::
 
 The OSM query returns all data types, including lines and polygons tagged as stations. For our analysis, we only want to retain the point locations. Additionally, we need to clip the results to the outline of London to exclude points that fall within the bounding box but outside the boundaries of Greater London.
-
 
 ```{r}
 #| label: 02-station-point-data
@@ -259,7 +263,7 @@ osm_stations <- osm_stations |>
 Let's map the dataset to get an idea of how the data looks like, using the outline of London as background:
 
 ```{r tidy='styler'} 
-#| label: fig-02-statiot-map
+#| label: fig-02-station-map
 #| fig-cap: Train and underground stations in London.
 #| classes: styled-output
 #| echo: True
@@ -281,10 +285,122 @@ tm_shape(osm_stations) +
     col = '#beaed4',
     size = 0.05,
     title = ''
-  ) 
+  ) +
+  
+  # set layout
+  tm_layout(
+    frame = FALSE,
+  )
+```
+Now we have our data prepared, we can move on to analyse the extent to which bicycle theft in London cluster around stations. We can use both spatial queries and geometric operatoins to complete this analysis.
+
+### Spatial queries
+A spatial query is used to retrieve or manipulate data based on its geographic location or spatial relationships. It uses spatial information from one or more layers to find features that meet specific criteria, such as proximity, intersection, or containment. For instance, we can use a spatial query to count all the bicycle thefts that have occured within 500m of a train or underground station:
+
+```{r}
+#| label: 02-spatial-query-1
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: 'R code'
+# create a single station geometry
+osm_stations_comb <- osm_stations |>
+    st_union()
+
+# spatial query
+theft_bike$d500 <- theft_bike |>
+    st_is_within_distance(osm_stations_comb, dist = 500, sparse = FALSE)
+
+# inspect
+head(theft_bike)
+```
+::: {.callout-warning}
+The above code converts the stations dataframe into a single geometry. This step is essential for `sf` to ensure that each point in the dataset is compared to every point in the stations dataframe. Without this conversion, the comparison would be done one station point at a time, storing only the last result rather than considering all station points simultaneously.
+:::
+
+We can use the `count()` function to find out just how many thefts fall in each of these categories:
+
+```{r}
+#| label: 02-spatial-query-2
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: 'R code'
+# number of bicycle thefts within 500m of a station
+count(theft_bike, d500)
+```
+More than two-thirds of all reported bicycle thefts in London occur within 500 metres of a train or underground station. Of course, we can map the results for a visual inspection:
+
+```{r tidy='styler'} 
+#| label: fig-02-theft-map-500m
+#| fig-cap: Reported bicycle thefts in London within 500 metres from a train or underground station.
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| filename: 'R code'
+# shape, polygon
+tm_shape(outline) +
+  
+  # specify colours
+  tm_polygons(
+    col = '#f0f0f0', 
+  ) +
+
+  # shape, points
+  tm_shape(theft_bike) + 
+  
+  # specify column, colours
+  tm_dots(
+    col = 'd500',
+    size = 0.01,
+    palette = c('#f1a340','#998ec3'),
+    legend.show = FALSE
+  ) +
+
+  # set legend
+  tm_add_legend(
+    type = 'symbol',
+    labels = '< 500m',
+    col = '#f1a340'
+  ) +
+  
+  # set legend
+  tm_add_legend(
+    type = 'symbol',
+    labels = '> 500m',
+    col = '#998ec3'
+  ) +
+  
+  # shape, points
+  tm_shape(osm_stations) + 
+  
+  # specify colours
+  tm_dots(
+    col = '#636363',
+    size = 0.03,
+    title = ''
+  ) +
+  
+  # set legend
+  tm_add_legend(
+    type = 'symbol',
+    labels = 'Station',
+    col = '#636363'
+  ) +
+
+  # set layout
+  tm_layout(
+    frame = FALSE,
+    legend.position = c('left', 'bottom'),
+  )
 ```
 
+### Geometric operations
+Geometric operations are used to manipulate and analyse the shapes and spatial properties of geometric objects, such as points, lines, and polygons. These operations include tasks like calculating intersections, buffering, and determining the distance between shapes. 
 
+### Point in polygon operations
 
 ## Before you leave
 And that is how you can conduct basic geometric operations and spatial queries using R and `sf`. Yet more RGIS coming over the next couple of weeks, but [this concludes the tutorial for this week](https://www.youtube.com/watch?v=Ydg4T2MP7Z8). Time to check out that reading list?

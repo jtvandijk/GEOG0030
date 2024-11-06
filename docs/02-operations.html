@@ -282,6 +282,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#crime-data" id="toc-crime-data" class="nav-link" data-scroll-target="#crime-data"><span class="header-section-number">2.3.1</span> Crime data</a></li>
   <li><a href="#station-data" id="toc-station-data" class="nav-link" data-scroll-target="#station-data"><span class="header-section-number">2.3.2</span> Station data</a></li>
+  <li><a href="#spatial-queries" id="toc-spatial-queries" class="nav-link" data-scroll-target="#spatial-queries"><span class="header-section-number">2.3.3</span> Spatial queries</a></li>
+  <li><a href="#geometric-operations" id="toc-geometric-operations" class="nav-link" data-scroll-target="#geometric-operations"><span class="header-section-number">2.3.4</span> Geometric operations</a></li>
+  <li><a href="#point-in-polygon-operations" id="toc-point-in-polygon-operations" class="nav-link" data-scroll-target="#point-in-polygon-operations"><span class="header-section-number">2.3.5</span> Point in polygon operations</a></li>
   </ul></li>
   <li><a href="#before-you-leave" id="toc-before-you-leave" class="nav-link" data-scroll-target="#before-you-leave"><span class="header-section-number">2.4</span> Before you leave</a></li>
   </ul></li>
@@ -558,7 +561,12 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 <span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"#fdc086"</span>,</span>
 <span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.05</span>,</span>
 <span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">""</span></span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set layout</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">frame =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-02-theft-map" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -594,7 +602,7 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>In some cases, the OSM query may return an error, particularly when multiple users from the same location are executing the exact same query. If so, you can download a prepared copy of the data here: <a href="https://github.com/jtvandijk/GEOG0030/raw/master/data/spatial/London-OSM-Stations.RData">[Download]</a>. You can load this copy into R through <code>load('data/London-OSM-Stations.RData')</code></p>
+<p>In some cases, the OSM query may return an error, particularly when multiple users from the same location are executing the exact same query. If so, you can download a prepared copy of the data here: <a href="https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-OSM-Stations.RData">[Download]</a>. You can load this copy into R through <code>load('data/London-OSM-Stations.RData')</code></p>
 </div>
 </div>
 </div>
@@ -707,17 +715,172 @@ Projected CRS: OSGB36 / British National Grid
 <span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"#beaed4"</span>,</span>
 <span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.05</span>,</span>
 <span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">""</span></span>
-<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set layout</span></span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(</span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">frame =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
-<div id="fig-02-statiot-map" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-02-station-map" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="02-operations_files/figure-html/fig-02-statiot-map-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="02-operations_files/figure-html/fig-02-station-map-1.png" class="img-fluid figure-img" width="672"></p>
 <figcaption class="figure-caption">Figure&nbsp;3: Train and underground stations in London.</figcaption>
 </figure>
 </div>
 </div>
 </div>
+<p>Now we have our data prepared, we can move on to analyse the extent to which bicycle theft in London cluster around stations. We can use both spatial queries and geometric operatoins to complete this analysis.</p>
+</section>
+<section id="spatial-queries" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="spatial-queries"><span class="header-section-number">2.3.3</span> Spatial queries</h3>
+<p>A spatial query is used to retrieve or manipulate data based on its geographic location or spatial relationships. It uses spatial information from one or more layers to find features that meet specific criteria, such as proximity, intersection, or containment. For instance, we can use a spatial query to count all the bicycle thefts that have occured within 500m of a train or underground station:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a single station geometry</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>osm_stations_comb <span class="ot">&lt;-</span> osm_stations <span class="sc">|&gt;</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_union</span>()</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co"># spatial query</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>theft_bike<span class="sc">$</span>d500 <span class="ot">&lt;-</span> theft_bike <span class="sc">|&gt;</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_is_within_distance</span>(osm_stations_comb, <span class="at">dist =</span> <span class="dv">500</span>, <span class="at">sparse =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(theft_bike)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 6 features and 11 fields
+Geometry type: POINT
+Dimension:     XY
+Bounding box:  xmin: 531274.9 ymin: 180967.9 xmax: 533333.7 ymax: 181781.7
+Projected CRS: OSGB36 / British National Grid
+# A tibble: 6 × 12
+  crime_id           month reported_by falls_within location lsoa_code lsoa_name
+  &lt;chr&gt;              &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;    
+1 62b0f525fc471c062… 2023… City of Lo… City of Lon… On or n… E01000002 City of …
+2 9a078d630cf67c37c… 2023… City of Lo… City of Lon… On or n… E01032739 City of …
+3 f175a32ef7f90c67a… 2023… City of Lo… City of Lon… On or n… E01032739 City of …
+4 137ec1201fd64b578… 2023… City of Lo… City of Lon… On or n… E01032739 City of …
+5 4c3b467755a98afa3… 2023… City of Lo… City of Lon… On or n… E01032740 City of …
+6 13b5eb5ca0aef09a2… 2023… City of Lo… City of Lon… On or n… E01032740 City of …
+# ℹ 5 more variables: crime_type &lt;chr&gt;, last_outcome_category &lt;chr&gt;,
+#   context &lt;lgl&gt;, geometry &lt;POINT [m]&gt;, d500 &lt;lgl[,1]&gt;</code></pre>
+</div>
+</div>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>The above code converts the stations dataframe into a single geometry. This step is essential for <code>sf</code> to ensure that each point in the dataset is compared to every point in the stations dataframe. Without this conversion, the comparison would be done one station point at a time, storing only the last result rather than considering all station points simultaneously.</p>
+</div>
+</div>
+</div>
+<p>We can use the <code>count()</code> function to find out just how many thefts fall in each of these categories:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># number of bicycle thefts within 500m of a station</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(theft_bike, d500)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 2 features and 2 fields
+Geometry type: MULTIPOINT
+Dimension:     XY
+Bounding box:  xmin: 384035.6 ymin: 101574.6 xmax: 612801.1 ymax: 398089
+Projected CRS: OSGB36 / British National Grid
+# A tibble: 2 × 3
+  d500[,1]     n                                                        geometry
+* &lt;lgl&gt;    &lt;int&gt;                                                &lt;MULTIPOINT [m]&gt;
+1 FALSE     5507 ((384035.6 398089), (409725.4 101574.6), (494844.3 212310.1), …
+2 TRUE     10512 ((505266.1 184336.3), (505314.2 184265.3), (505323.2 184469.3)…</code></pre>
+</div>
+</div>
+<p>More than two-thirds of all reported bicycle thefts in London occur within 500 metres of a train or underground station. Of course, we can map the results for a visual inspection:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># shape, polygon</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(outline) <span class="sc">+</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># specify colours</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"#f0f0f0"</span>,</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># shape, points</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(theft_bike) <span class="sc">+</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># specify column, colours</span></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_dots</span>(</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"d500"</span>,</span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.01</span>,</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"#f1a340"</span>, <span class="st">"#998ec3"</span>),</span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.show =</span> <span class="cn">FALSE</span></span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set legend</span></span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_add_legend</span>(</span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">"symbol"</span>,</span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="st">"&lt; 500m"</span>,</span>
+<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"#f1a340"</span></span>
+<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set legend</span></span>
+<span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_add_legend</span>(</span>
+<span id="cb29-29"><a href="#cb29-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">"symbol"</span>,</span>
+<span id="cb29-30"><a href="#cb29-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="st">"&gt; 500m"</span>,</span>
+<span id="cb29-31"><a href="#cb29-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"#998ec3"</span></span>
+<span id="cb29-32"><a href="#cb29-32" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb29-33"><a href="#cb29-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-34"><a href="#cb29-34" aria-hidden="true" tabindex="-1"></a>  <span class="co"># shape, points</span></span>
+<span id="cb29-35"><a href="#cb29-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(osm_stations) <span class="sc">+</span></span>
+<span id="cb29-36"><a href="#cb29-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-37"><a href="#cb29-37" aria-hidden="true" tabindex="-1"></a>  <span class="co"># specify colours</span></span>
+<span id="cb29-38"><a href="#cb29-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_dots</span>(</span>
+<span id="cb29-39"><a href="#cb29-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"#636363"</span>,</span>
+<span id="cb29-40"><a href="#cb29-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.03</span>,</span>
+<span id="cb29-41"><a href="#cb29-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">""</span></span>
+<span id="cb29-42"><a href="#cb29-42" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb29-43"><a href="#cb29-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-44"><a href="#cb29-44" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set legend</span></span>
+<span id="cb29-45"><a href="#cb29-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_add_legend</span>(</span>
+<span id="cb29-46"><a href="#cb29-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">"symbol"</span>,</span>
+<span id="cb29-47"><a href="#cb29-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="st">"Station"</span>,</span>
+<span id="cb29-48"><a href="#cb29-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"#636363"</span></span>
+<span id="cb29-49"><a href="#cb29-49" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb29-50"><a href="#cb29-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-51"><a href="#cb29-51" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set layout</span></span>
+<span id="cb29-52"><a href="#cb29-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(</span>
+<span id="cb29-53"><a href="#cb29-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">frame =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb29-54"><a href="#cb29-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>),</span>
+<span id="cb29-55"><a href="#cb29-55" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-02-theft-map-500m" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="02-operations_files/figure-html/fig-02-theft-map-500m-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;4: Reported bicycle thefts in London within 500 metres from a train or underground station.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="geometric-operations" class="level3" data-number="1.3.4">
+<h3 data-number="1.3.4" class="anchored" data-anchor-id="geometric-operations"><span class="header-section-number">2.3.4</span> Geometric operations</h3>
+<p>Geometric operations are used to manipulate and analyse the shapes and spatial properties of geometric objects, such as points, lines, and polygons. These operations include tasks like calculating intersections, buffering, and determining the distance between shapes.</p>
+</section>
+<section id="point-in-polygon-operations" class="level3" data-number="1.3.5">
+<h3 data-number="1.3.5" class="anchored" data-anchor-id="point-in-polygon-operations"><span class="header-section-number">2.3.5</span> Point in polygon operations</h3>
 </section>
 </section>
 <section id="before-you-leave" class="level2" data-number="1.4">
