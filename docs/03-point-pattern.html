@@ -240,7 +240,13 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#point-pattern-analysis" id="toc-point-pattern-analysis" class="nav-link active" data-scroll-target="#point-pattern-analysis"><span class="header-section-number">3</span> Point Pattern Analysis</a></li>
+  <li><a href="#point-pattern-analysis" id="toc-point-pattern-analysis" class="nav-link active" data-scroll-target="#point-pattern-analysis"><span class="header-section-number">3</span> Point Pattern Analysis</a>
+  <ul class="collapse">
+  <li><a href="#lecture-slides" id="toc-lecture-slides" class="nav-link" data-scroll-target="#lecture-slides"><span class="header-section-number">3.1</span> Lecture slides</a></li>
+  <li><a href="#reading-list" id="toc-reading-list" class="nav-link" data-scroll-target="#reading-list"><span class="header-section-number">3.2</span> Reading list</a></li>
+  <li><a href="#bike-theft-in-london-ii" id="toc-bike-theft-in-london-ii" class="nav-link" data-scroll-target="#bike-theft-in-london-ii"><span class="header-section-number">3.3</span> Bike theft in London II</a></li>
+  <li><a href="#before-you-leave" id="toc-before-you-leave" class="nav-link" data-scroll-target="#before-you-leave"><span class="header-section-number">3.4</span> Before you leave</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jtvandijk/GEOG0030/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -251,18 +257,38 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="point-pattern-analysis" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">3</span> Point Pattern Analysis</h1>
-<div class="callout callout-style-simple callout-note">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>The Geocomputation content for the 2024-2025 academic year is currently undergoing a major update. The materials from 2023-2024 have been archived and can be accessed here: <a href="https://jtvandijk.github.io/GEOG0030_20232024">[Link]</a></p>
-</div>
-</div>
-</div>
+<p>This week, we will be focusing on Point Pattern Analysis, which aims to detect clusters or patterns within a set of points. Through this analysis, we can measure density, dispersion, and homogeneity in point structures. Various methods exist for calculating and identifying these clusters, and today we will explore several of these techniques using our <a href="02-operations.html">bike theft dataset from last week</a>.</p>
+<section id="lecture-slides" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="lecture-slides"><span class="header-section-number">3.1</span> Lecture slides</h2>
+<p>The slides for this week’s lecture can be downloaded here: <a href="https://github.com/jtvandijk/GEOG0030/tree/master/slides/w03-geo.pdf">[Link]</a></p>
+</section>
+<section id="reading-list" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="reading-list"><span class="header-section-number">3.2</span> Reading list</h2>
+<section id="essential-readings" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="essential-readings">Essential readings</h4>
+<ul>
+<li>Arribas-Bel, D., Garcia-López, M.-À., Viladecans-Marsal, E. 2021. Building(s and) cities: Delineating urban areas with a machine learning algorithm. <em>Journal of Urban Economics</em> 125: 103217. <a href="https://doi.org/10.1016/j.jue.2019.103217">[Link]</a></li>
+<li>Cheshire, J. and Longley, P. 2011. Identifying spatial concentrations of surnames. <em>International Journal of Geographical Information Science</em> 26(2), pp.309-325. <a href="https://doi.org/10.1080/13658816.2011.591291">[Link]</a></li>
+<li>Longley, P. <em>et al.</em> 2015. Geographic Information Science &amp; systems, <strong>Chapter 12</strong>: <em>Geovisualization</em>. <a href="https://ucl.rl.talis.com/link?url=https%3A%2F%2Fapp.knovel.com%2Fhotlink%2Ftoc%2Fid%3AkpGISSE001%2Fgeographic-information-science%3Fkpromoter%3Dmarc&amp;sig=e437927b963cc591dcb65491eccdd3869cc31aef80e1443cb2ba12d8f3bb031a">[Link]</a></li>
+</ul>
+</section>
+<section id="suggested-readings" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="suggested-readings">Suggested readings</h4>
+<ul>
+<li>Van Dijk, J. and Longley, P. 2020. Interactive display of surnames distributions in historic and contemporary Great Britain. <em>Journal of Maps</em> 16, pp.58-76. <a href="https://doi.org/10.1080/17445647.2020.1746418">[Link]</a></li>
+<li>Yin, P. 2020. <em>Kernels and density estimation</em>. The Geographic Information Science &amp; Technology Body of Knowledge. <a href="https://doi.org/10.22224/gistbok/2020.1.12">[Link]</a></li>
+</ul>
+</section>
+</section>
+<section id="bike-theft-in-london-ii" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="bike-theft-in-london-ii"><span class="header-section-number">3.3</span> Bike theft in London II</h2>
+</section>
+<section id="before-you-leave" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="before-you-leave"><span class="header-section-number">3.4</span> Before you leave</h2>
+<p>As geographers we are keen to understand our point data’s distribution and understand whether are our points clustered, randomly distributed, uniform or dispersed. We have looked at various techniques that enable us to statistically and visually assess our data’s distribution and understand whether our data is randomly distributed or clustered in space. And that is <a href="https://www.youtube.com/watch?v=-zxtbwGogyY">us done for this week</a>. Reading list anyone?</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

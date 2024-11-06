@@ -394,7 +394,7 @@ measurement_sites <- measurement_sites |>
 # shape, polygon
 tm_shape(borough) +
   
-  # specify column, classes
+  # specify colours
   tm_polygons(
     col = '#f0f0f0', 
   ) +
@@ -402,7 +402,7 @@ tm_shape(borough) +
 # shape, points
 tm_shape(measurement_sites) + 
   
-  # specify column, colours
+  # specify colours
   tm_symbols(
     col = '#fc9272',
     size = 0.3,

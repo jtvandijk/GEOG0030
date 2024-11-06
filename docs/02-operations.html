@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -240,7 +274,17 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#spatial-queries-and-geometric-operations" id="toc-spatial-queries-and-geometric-operations" class="nav-link active" data-scroll-target="#spatial-queries-and-geometric-operations"><span class="header-section-number">2</span> Spatial Queries and Geometric Operations</a></li>
+  <li><a href="#spatial-queries-and-geometric-operations" id="toc-spatial-queries-and-geometric-operations" class="nav-link active" data-scroll-target="#spatial-queries-and-geometric-operations"><span class="header-section-number">2</span> Spatial Queries and Geometric Operations</a>
+  <ul class="collapse">
+  <li><a href="#lecture-slides" id="toc-lecture-slides" class="nav-link" data-scroll-target="#lecture-slides"><span class="header-section-number">2.1</span> Lecture slides</a></li>
+  <li><a href="#reading-list" id="toc-reading-list" class="nav-link" data-scroll-target="#reading-list"><span class="header-section-number">2.2</span> Reading list</a></li>
+  <li><a href="#bike-theft-in-london-i" id="toc-bike-theft-in-london-i" class="nav-link" data-scroll-target="#bike-theft-in-london-i"><span class="header-section-number">2.3</span> Bike theft in London I</a>
+  <ul class="collapse">
+  <li><a href="#crime-data" id="toc-crime-data" class="nav-link" data-scroll-target="#crime-data"><span class="header-section-number">2.3.1</span> Crime data</a></li>
+  <li><a href="#station-data" id="toc-station-data" class="nav-link" data-scroll-target="#station-data"><span class="header-section-number">2.3.2</span> Station data</a></li>
+  </ul></li>
+  <li><a href="#before-you-leave" id="toc-before-you-leave" class="nav-link" data-scroll-target="#before-you-leave"><span class="header-section-number">2.4</span> Before you leave</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jtvandijk/GEOG0030/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -251,18 +295,437 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="spatial-queries-and-geometric-operations" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">2</span> Spatial Queries and Geometric Operations</h1>
+<p>This week, we look at geometric operations and spatial queries: the fundamental building blocks when it comes to spatial data processing and analysis. This includes operations such as calculating the distances separating one or more spatial objects, running a <em>buffer</em> analysis, and <em>intersecting</em> different spatial layers.</p>
+<section id="lecture-slides" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="lecture-slides"><span class="header-section-number">2.1</span> Lecture slides</h2>
+<p>You can download the slides of this week’s lecture here: <a href="https://github.com/jtvandijk/GEOG0030/tree/master/slides/w02-geo.pdf">[Link]</a>.</p>
+</section>
+<section id="reading-list" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="reading-list"><span class="header-section-number">2.2</span> Reading list</h2>
+<section id="essential-readings" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="essential-readings">Essential readings</h4>
+<ul>
+<li>Longley, P. <em>et al.</em> 2015. Geographic Information Science &amp; Systems, <strong>Chapter 2</strong>: <em>The Nature of Geographic Data</em>, pp.&nbsp;33-54. <a href="https://ucl.rl.talis.com/link?url=https%3A%2F%2Fapp.knovel.com%2Fhotlink%2Ftoc%2Fid%3AkpGISSE001%2Fgeographic-information-science%3Fkpromoter%3Dmarc&amp;sig=e437927b963cc591dcb65491eccdd3869cc31aef80e1443cb2ba12d8f3bb031a">[Link]</a></li>
+<li>Longley, P. <em>et al.</em> 2015. Geographic Information Science &amp; Systems, <strong>Chapter 3</strong>: <em>Representing Geography</em>, pp.&nbsp;55-76. <a href="https://ucl.rl.talis.com/link?url=https%3A%2F%2Fapp.knovel.com%2Fhotlink%2Ftoc%2Fid%3AkpGISSE001%2Fgeographic-information-science%3Fkpromoter%3Dmarc&amp;sig=e437927b963cc591dcb65491eccdd3869cc31aef80e1443cb2ba12d8f3bb031a">[Link]</a></li>
+<li>Longley, P. <em>et al.</em> 2015. Geographic Information Science &amp; Systems, <strong>Chapter 7</strong>: <em>Geographic Data Modeling</em>, pp.&nbsp;152-172. <a href="https://ucl.rl.talis.com/link?url=https%3A%2F%2Fapp.knovel.com%2Fhotlink%2Ftoc%2Fid%3AkpGISSE001%2Fgeographic-information-science%3Fkpromoter%3Dmarc&amp;sig=e437927b963cc591dcb65491eccdd3869cc31aef80e1443cb2ba12d8f3bb031a">[Link]</a></li>
+</ul>
+</section>
+<section id="suggested-readings" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="suggested-readings">Suggested readings</h4>
+<ul>
+<li>Lovelace, R., Nowosad, J. and Muenchow, J. 2021. Geocomputation with R, <strong>Chapter 4</strong>: <em>Spatial data operations</em>. <a href="https://geocompr.robinlovelace.net/spatial-operations.html">[Link]</a></li>
+<li>Lovelace, R., Nowosad, J. and Muenchow, J. 2021. Geocomputation with R, <strong>Chapter 5</strong>: <em>Geometry operations</em>. <a href="https://geocompr.robinlovelace.net/geometry-operations.html">[Link]</a></li>
+<li>Lovelace, R., Nowosad, J. and Muenchow, J. 2021. Geocomputation with R, <strong>Chapter 6</strong>: <em>Reprojecting geographic data</em>. <a href="https://geocompr.robinlovelace.net/reproj-geo-data.html">[Link]</a></li>
+</ul>
+</section>
+</section>
+<section id="bike-theft-in-london-i" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="bike-theft-in-london-i"><span class="header-section-number">2.3</span> Bike theft in London I</h2>
+<p>This week, we will examine patterns of bicycle theft in London and the extent to which these cluster around stations. We will be using open data from <a href="https://data.police.uk/">data.police.uk</a> on reported crimes alongside <a href="https://www.openstreetmap.org/#map=6/54.91/-3.43">OpenStreetMap</a> data for this analysis. We will use R to directly download the necessary data from OpenStreetMap, but the crime data will need to be manually downloaded from the data portal. We further have access to a <code>GeoPackage</code> that contains the London 2021 MSOA boundaries that we can use as reference layer. If you do not already have it on your computer, save this file under <code>data/spatial</code>.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">File</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Link</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">London MSOA 2021 Spatial Boundaries</td>
+<td style="text-align: left;"><code>GeoPackage</code></td>
+<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-MSOA-2021.gpkg">Download</a></td>
+</tr>
+</tbody>
+</table>
+<section id="crime-data" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="crime-data"><span class="header-section-number">2.3.1</span> Crime data</h3>
+<p>To download the crime data:</p>
+<ol type="1">
+<li>Start by navigating to <a href="https://data.police.uk/">data.police.uk</a>. And click on <strong>Downloads</strong>.</li>
+<li>Under the data range select <code>January 2023</code> to <code>December 2023</code>.</li>
+<li>Under the <strong>Custom download</strong> tab select <code>Metropolitan Police Service</code> and <code>City of London Police</code>. Leave the other settings unchanged and click on <strong>Generate file</strong>.</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-police-data" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/w02/police-data.png" class="img-fluid figure-img" width="1392"></p>
+<figcaption class="figure-caption">Figure&nbsp;1: Downloading data on reported crimes through <a href="https://data.police.uk/">data.police.uk</a></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<ol start="4" type="1">
+<li>It may take a few minutes for the download to be generated, so be patient. Once the <strong>Download now</strong> button appears, you can download the dataset.</li>
+<li>After downloading, unzip the file. You will find that the zip file contains 12 folders, one for each month of 2023. Each folder includes two files: one for the <code>Metropolitan Police Service</code> and one for the <code>City of London Police</code>.</li>
+<li>Create a new folder named <code>London-Crime</code> within your <code>data/attributes</code> directory, and copy all 12 folders with the data into this new folder.</li>
+</ol>
+<p>To get started, let us create our first script. <strong>File</strong> -&gt; <strong>New File</strong> -&gt; <strong>R Script</strong>. Save your script as <code>w02-bike-theft.r</code>.</p>
+<p>We will start by loading the libraries that we will need:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load libraries</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(osmdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>You may have to install some of these libraries if you have not used these before.</p>
+</div>
+</div>
+</div>
+<p>Although we could read each individual crime file into R one by one and then combine them, we can actually accomplish this in a single step:</p>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># list all csv files</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>crime_df <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="at">path =</span> <span class="st">"data/attributes/London-Crime/"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># read individual csv files</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(read_csv) <span class="sc">|&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># bind together into one</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>()</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(crime_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 12
+  `Crime ID`      Month `Reported by` `Falls within` Longitude Latitude Location
+  &lt;chr&gt;           &lt;chr&gt; &lt;chr&gt;         &lt;chr&gt;              &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;   
+1 4a14d4745da0a2… 2023… City of Lond… City of Londo…    -0.106     51.5 On or n…
+2 e6e32581c99c5b… 2023… City of Lond… City of Londo…    -0.107     51.5 On or n…
+3 7b7cb8e7debe8b… 2023… City of Lond… City of Londo…    -0.110     51.5 On or n…
+4 f7fc44e1e76332… 2023… City of Lond… City of Londo…    -0.108     51.5 On or n…
+5 8083dafd1770af… 2023… City of Lond… City of Londo…    -0.112     51.5 On or n…
+6 4587239a45f0e8… 2023… City of Lond… City of Londo…    -0.112     51.5 On or n…
+# ℹ 5 more variables: `LSOA code` &lt;chr&gt;, `LSOA name` &lt;chr&gt;, `Crime type` &lt;chr&gt;,
+#   `Last outcome category` &lt;chr&gt;, Context &lt;lgl&gt;</code></pre>
+</div>
+</div>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>The Geocomputation content for the 2024-2025 academic year is currently undergoing a major update. The materials from 2023-2024 have been archived and can be accessed here: <a href="https://jtvandijk.github.io/GEOG0030_20232024">[Link]</a></p>
+<p>Depending on your computer, processing this data may take some time due to the large volume involved. Once completed, you should have a dataframe containing <strong>1,144,329</strong> observations.</p>
 </div>
 </div>
 </div>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>You can further inspect both objects using the <code>View()</code> function.</p>
+</div>
+</div>
+</div>
+<p>The column names contain spaces and are therefore not easily referenced. We can easily clean this up using the <code>janitor</code> package:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># clean names</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>crime_df <span class="ot">&lt;-</span> crime_df <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">clean_names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>For our analysis, we are currently only interested in reported bicycle thefts, so we need to filter our data based on the <code>crime_type</code> column. We can start by examining the unique values in this column and then subset the data accordingly:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># unique types</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(crime_df<span class="sc">$</span>crime_type)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Other theft"                  "Other crime"                 
+ [3] "Theft from the person"        "Public order"                
+ [5] "Anti-social behaviour"        "Burglary"                    
+ [7] "Criminal damage and arson"    "Drugs"                       
+ [9] "Shoplifting"                  "Vehicle crime"               
+[11] "Violence and sexual offences" "Bicycle theft"               
+[13] "Robbery"                      "Possession of weapons"       </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filter</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>theft_bike <span class="ot">&lt;-</span> crime_df <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(crime_type <span class="sc">==</span> <span class="st">"Bicycle theft"</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(theft_bike)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 12
+  crime_id  month reported_by falls_within longitude latitude location lsoa_code
+  &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;            &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;    
+1 62b0f525… 2023… City of Lo… City of Lon…   -0.0916     51.5 On or n… E01000002
+2 9a078d63… 2023… City of Lo… City of Lon…   -0.0952     51.5 On or n… E01032739
+3 f175a32e… 2023… City of Lo… City of Lon…   -0.0872     51.5 On or n… E01032739
+4 137ec120… 2023… City of Lo… City of Lon…   -0.0783     51.5 On or n… E01032739
+5 4c3b4677… 2023… City of Lo… City of Lon…   -0.108      51.5 On or n… E01032740
+6 13b5eb5c… 2023… City of Lo… City of Lon…   -0.0980     51.5 On or n… E01032740
+# ℹ 4 more variables: lsoa_name &lt;chr&gt;, crime_type &lt;chr&gt;,
+#   last_outcome_category &lt;chr&gt;, context &lt;lgl&gt;</code></pre>
+</div>
+</div>
+<p>Now that we have filtered the data to only include reported bicycle thefts, we need to convert our dataframe into a spatial dataframe that maps the locations of the crimes using the recorded latitude and longitude coordinates. We can then project this spatial dataframe into the British National Grid (<code>EPSG:27700</code>).</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># to spatial data</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>theft_bike <span class="ot">&lt;-</span> theft_bike <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(longitude) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(latitude)) <span class="sc">|&gt;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"longitude"</span>, <span class="st">"latitude"</span>), <span class="at">crs =</span> <span class="dv">4236</span>) <span class="sc">|&gt;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_transform</span>(<span class="dv">27700</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(theft_bike)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 6 features and 10 fields
+Geometry type: POINT
+Dimension:     XY
+Bounding box:  xmin: 531274.9 ymin: 180967.9 xmax: 533333.7 ymax: 181781.7
+Projected CRS: OSGB36 / British National Grid
+# A tibble: 6 × 11
+  crime_id           month reported_by falls_within location lsoa_code lsoa_name
+  &lt;chr&gt;              &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;    
+1 62b0f525fc471c062… 2023… City of Lo… City of Lon… On or n… E01000002 City of …
+2 9a078d630cf67c37c… 2023… City of Lo… City of Lon… On or n… E01032739 City of …
+3 f175a32ef7f90c67a… 2023… City of Lo… City of Lon… On or n… E01032739 City of …
+4 137ec1201fd64b578… 2023… City of Lo… City of Lon… On or n… E01032739 City of …
+5 4c3b467755a98afa3… 2023… City of Lo… City of Lon… On or n… E01032740 City of …
+6 13b5eb5ca0aef09a2… 2023… City of Lo… City of Lon… On or n… E01032740 City of …
+# ℹ 4 more variables: crime_type &lt;chr&gt;, last_outcome_category &lt;chr&gt;,
+#   context &lt;lgl&gt;, geometry &lt;POINT [m]&gt;</code></pre>
+</div>
+</div>
+<p>Let’s map the dataset to get an idea of how the data looks like, using the outline of London as background:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read spatial dataset</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>msoa21 <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/spatial/London-MSOA-2021.gpkg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Reading layer `London-MSOA-2021' from data source 
+  `/Users/justinvandijk/Library/CloudStorage/Dropbox/UCL/Web/jtvandijk.github.io/GEOG0030/data/spatial/London-MSOA-2021.gpkg' 
+  using driver `GPKG'
+Simple feature collection with 1002 features and 8 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: 503574.2 ymin: 155850.8 xmax: 561956.7 ymax: 200933.6
+Projected CRS: OSGB36 / British National Grid</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># london outline</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>outline <span class="ot">&lt;-</span> msoa21 <span class="sc">|&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_union</span>()</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># shape, polygon</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(outline) <span class="sc">+</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># specify colours</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"#f0f0f0"</span>,</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># shape, points</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(theft_bike) <span class="sc">+</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># specify colours</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_dots</span>(</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"#fdc086"</span>,</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.05</span>,</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">""</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-02-theft-map" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="02-operations_files/figure-html/fig-02-theft-map-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;2: Reported bicycle thefts in London.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="station-data" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="station-data"><span class="header-section-number">2.3.2</span> Station data</h3>
+<p>OpenStreetMap (OSM) is a free, editable map of the world. Each map element (whether a point, line, or polygon) in OSM is tagged with various attribute data. To download the station data we need, we must use the appropriate tags, represented as <code>key</code> and <code>value</code> pairs, to query the OSM database. In our case, we are looking for train stations, which fall under the <em>Public Transport</em> <code>key</code>, with a <code>value</code> of <em>station</em>. Additionally, to limit our search to a specific area of interest, we can use the spatial extent of the 2021 MSOA boundaries as the bounding box for data extraction.</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define our bbox coordinates, use WGS84</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>bbox_london <span class="ot">&lt;-</span> msoa21 <span class="sc">|&gt;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="dv">4326</span>) <span class="sc">|&gt;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_bbox</span>()</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co"># osm query</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>osm_stations <span class="ot">&lt;-</span> <span class="fu">opq</span>(<span class="at">bbox =</span> bbox_london) <span class="sc">|&gt;</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_osm_feature</span>(<span class="at">key =</span> <span class="st">"public_transport"</span>, <span class="at">value =</span> <span class="st">"station"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">osmdata_sf</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>In some cases, the OSM query may return an error, particularly when multiple users from the same location are executing the exact same query. If so, you can download a prepared copy of the data here: <a href="https://github.com/jtvandijk/GEOG0030/raw/master/data/spatial/London-OSM-Stations.RData">[Download]</a>. You can load this copy into R through <code>load('data/London-OSM-Stations.RData')</code></p>
+</div>
+</div>
+</div>
+<p>The OSM query returns all data types, including lines and polygons tagged as stations. For our analysis, we only want to retain the point locations. Additionally, we need to clip the results to the outline of London to exclude points that fall within the bounding box but outside the boundaries of Greater London.</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract points</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>osm_stations <span class="ot">&lt;-</span> osm_stations<span class="sc">$</span>osm_points <span class="sc">|&gt;</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_set_crs</span>(<span class="dv">4326</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_transform</span>(<span class="dv">27700</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_intersection</span>(outline) <span class="sc">|&gt;</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="fu">c</span>(<span class="st">"osm_id"</span>, <span class="st">"name"</span>, <span class="st">"network"</span>, <span class="st">"operator"</span>, <span class="st">"public_transport"</span>, <span class="st">"railway"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: attribute variables are assumed to be spatially constant throughout
+all geometries</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(osm_stations)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 6 features and 6 fields
+Geometry type: POINT
+Dimension:     XY
+Bounding box:  xmin: 506148.8 ymin: 168292.6 xmax: 546593.8 ymax: 191714.7
+Projected CRS: OSGB36 / British National Grid
+           osm_id                   name                      network
+780856     780856 Shepherd's Bush Market           London Underground
+1256794   1256794           West Drayton National Rail;Elizabeth Line
+2013971   2013971       Finchley Central           London Underground
+9780241   9780241           St Mary Cray                National Rail
+13330343 13330343               Woodford           London Underground
+13790683 13790683               Mile End           London Underground
+                     operator public_transport railway
+780856                   &lt;NA&gt;          station station
+1256794              TfL Rail          station station
+2013971  Transport for London          station station
+9780241          Southeastern          station station
+13330343   London Underground    stop_position    stop
+13790683   London Underground    stop_position    stop
+                          geometry
+780856   POINT (523195.9 180061.9)
+1256794  POINT (506148.8 180085.4)
+2013971    POINT (525294.7 190658)
+9780241  POINT (546593.8 168292.6)
+13330343 POINT (540946.1 191714.7)
+13790683   POINT (536524.6 182545)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(osm_stations)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3865</code></pre>
+</div>
+</div>
+<p>The total number of data points seems rather high. In fact, looking at the <code>railway</code> variable, several points are not tagged as station or do not have a value at all:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect values</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(osm_stations, railway)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 5 features and 2 fields
+Geometry type: GEOMETRY
+Dimension:     XY
+Bounding box:  xmin: 505078.2 ymin: 159027.2 xmax: 556185.7 ymax: 200138.6
+Projected CRS: OSGB36 / British National Grid
+                 railway    n                       geometry
+1                station  616 MULTIPOINT ((505078.2 17673...
+2                   stop   17 MULTIPOINT ((528197.7 18571...
+3        subway_entrance   36 MULTIPOINT ((525226.4 18745...
+4 train_station_entrance    1      POINT (538196.3 184826.5)
+5                   &lt;NA&gt; 3195 MULTIPOINT ((505572.7 18421...</code></pre>
+</div>
+</div>
+<p>The number of points tagged as station in the railway field are most likely the only points in our dataset that represent actual stations, so we will only retain those points.</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract train and underground stations</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>osm_stations <span class="ot">&lt;-</span> osm_stations <span class="sc">|&gt;</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(railway <span class="sc">==</span> <span class="st">"station"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Let’s map the dataset to get an idea of how the data looks like, using the outline of London as background:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># shape, polygon</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(outline) <span class="sc">+</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># specify colours</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"#f0f0f0"</span>,</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># shape, points</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(osm_stations) <span class="sc">+</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># specify colours</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_dots</span>(</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"#beaed4"</span>,</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.05</span>,</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">""</span></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-02-statiot-map" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="02-operations_files/figure-html/fig-02-statiot-map-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;3: Train and underground stations in London.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="before-you-leave" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="before-you-leave"><span class="header-section-number">2.4</span> Before you leave</h2>
+<p>And that is how you can conduct basic geometric operations and spatial queries using R and <code>sf</code>. Yet more RGIS coming over the next couple of weeks, but <a href="https://www.youtube.com/watch?v=Ydg4T2MP7Z8">this concludes the tutorial for this week</a>. Time to check out that reading list?</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
