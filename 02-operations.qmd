@@ -485,7 +485,7 @@ The results are almost identical, with a small difference due to how the two met
 Now that we are familiar with basic spatial queries and geometric operations, we can conduct a similar analysis on the number of *serious* and *fatal* road crashed in London in 2022 and determine how many occurred on or near a main road. Try to do the following:
 
 1. Download the two datasets provided below and save them in the appropriate subfolder within your `data` directory. The datasets include:
-    * A `csv` file containing the number of road crashes that occurred in London in 2022, extracted from the UK's official road traffic casualty database using the [stas19](https://github.com/ropensci/stats19) R library.
+    * A `csv` file containing the number of road crashes that occurred in London in 2022, extracted from the UK's official road traffic casualty database using the [stats19](https://github.com/ropensci/stats19) R library.
     * A `GeoPackage` file that contains main roads in London, extracted from the [Ordnance Survey Open Roads](https://www.ordnancesurvey.co.uk/products/os-open-roads) dataset.
 2. Calculate the number of *serious* and *fatal* road crashes that occurred within 100 metres and 500 metres of a main road, respectively.
 

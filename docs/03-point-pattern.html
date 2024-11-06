@@ -679,7 +679,7 @@ all geometries</code></pre>
 </div>
 </div>
 </div>
-<p>We can see from just our KDE that there are visible clusters present within our bike theft data, particularly in and around Central London. We can go ahead and vary our bandwidth to to see how that affects the density estimate:</p>
+<p>We can see from just our KDE that there are visible clusters present within our bike theft data, particularly in and around Central London. We can go ahead and increase the bandwidth to to see how that affects the density estimate:</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -698,7 +698,7 @@ all geometries</code></pre>
 </div>
 </div>
 </div>
-<p>By increasing the bandwidth, our clusters appear larger and brighter than with a 500-metre bandwidth. A larger bandwidth considers more points, resulting in a smoother surface. However, this can lead to oversmoothing, where clusters become less defined, potentially overestimating areas of high bike theft. Smaller bandwidths offer more precision and sharper clusters but risk undersmoothing, which can cause irregularities.</p>
+<p>By increasing the bandwidth, our clusters appear larger and brighter than with the 500-metre bandwidth. A larger bandwidth considers more points, resulting in a smoother surface. However, this can lead to oversmoothing, where clusters become less defined, potentially overestimating areas of high bike theft. Smaller bandwidths offer more precision and sharper clusters but risk undersmoothing, which can cause irregularities.</p>
 <div class="callout callout-style-simple callout-tip">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -730,7 +730,7 @@ all geometries</code></pre>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rast</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-<p>We now have a standalone raster that we can use with any function in the tmap library. However, one issue is that the resulting raster lacks a Coordinate Reference System (CRS), so we need to manually assign this information to the raster object:</p>
+<p>We now have a standalone raster that we can use with any function in the <code>tmap</code> library. However, one issue is that the resulting raster lacks a Coordinate Reference System (CRS), so we need to manually assign this information to the raster object:</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -785,14 +785,14 @@ all geometries</code></pre>
 </section>
 <section id="dbscan" class="level4" data-number="1.3.2.2">
 <h4 data-number="1.3.2.2" class="anchored" data-anchor-id="dbscan"><span class="header-section-number">3.3.2.2</span> DBSCAN</h4>
-<p>Kernel Density Estimation is a useful exploratory technique for identifying spatial clusters in point data, but it does not provide precise boundaries for these clusters. To more accurately delineate clusters, we can use an algorithm called DBSCAN (Density-Based Spatial Clustering of Applications with Noise), which takes both distance and density into account. DBSCAN is effective at discovering distinct clusters by grouping together points that are close to one another while marking points that don’t belong to any cluster as noise.</p>
+<p>Kernel Density Estimation is a useful exploratory technique for identifying spatial clusters in point data, but it does not provide precise boundaries for these clusters. To more accurately delineate clusters, we can use an algorithm called DBSCAN <a href="https://cdn.aaai.org/KDD/1996/KDD96-037.pdf">(Density-Based Spatial Clustering of Applications with Noise)</a>, which takes both distance and density into account. DBSCAN is effective at discovering distinct clusters by grouping together points that are close to one another while marking points that don’t belong to any cluster as noise.</p>
 <p>DBSCAN requires two parameters:</p>
 <ul>
-<li><code>epsilon</code>: Maximum distance for points to be considered in the same cluster.</li>
-<li><code>minPts</code>: Minimum number of points for a cluster.</li>
+<li><code>epsilon</code>: The maximum distance for points to be considered in the same cluster.</li>
+<li><code>minPts</code>: Th minimum number of points for a cluster.</li>
 </ul>
-<p>The algorithm groups nearby points based on these parameters and marks low-density points as outliers. DBSCAN is useful for uncovering patterns that are difficult to detect visually, but it works best when clusters have consistent density and appropriate distance and MinPts values.</p>
-<p>Let us try this with an <code>epsilon</code> of <strong>200</strong> metres and <code>minPts</code> of <strong>20</strong> bike thefts:</p>
+<p>The algorithm groups nearby points based on these parameters and marks low-density points as outliers. DBSCAN is useful for uncovering patterns that are difficult to detect visually, but it works best when clusters have consistent densities.</p>
+<p>Let us try this with an <code>epsilon</code> of <strong>200</strong> metres and <code>minPts</code> of <strong>20</strong> bicycle thefts:</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -825,7 +825,7 @@ all geometries</code></pre>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">dbcluster =</span> bike_theft_dbscan<span class="sc">$</span>cluster)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-<p>Now that each bike theft point in London is associated with a specific cluster, we can generate a polygon representing these clusters, as seen in the plot above. To do this, we will use the <code>st_convex_hull()</code> function from the <code>sf</code> package, which creates a polygon that covers the minimum bounding area of each cluster. We will apply this function to each cluster using a for loop, which allows us to repeat the process for each group of points and create a polygon representing the geometry of each cluster.</p>
+<p>Now that each bike theft point in London is associated with a specific cluster, where appropriate, we can generate a polygon representing these clusters. To do this, we will use the <code>st_convex_hull()</code> function from the <code>sf</code> package, which creates a polygon that covers the <a href="https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/minimum-bounding-geometry.htm">minimum bounding area</a> of a collection of points. We will apply this function to each cluster using a <code>for</code> loop, which allows us to repeat the process for each group of points and create a polygon representing the geometry of each cluster.</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -861,7 +861,7 @@ all geometries</code></pre>
 <span id="cb33-28"><a href="#cb33-28" aria-hidden="true" tabindex="-1"></a>theft_bike_clusters <span class="ot">&lt;-</span> <span class="fu">st_sfc</span>(geometry_list, <span class="at">crs =</span> <span class="dv">27700</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-<p>We now have a spatial dataframe that contains the bike theft clusters in London. Let’s quickly map these:</p>
+<p>We now have a spatial dataframe that contains the bike theft clusters in London, as defined by the DBSCAN clustering algorithm. Let’s quickly map these clusters:</p>
 <div class="cell">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -911,7 +911,7 @@ all geometries</code></pre>
 </section>
 <section id="assignment" class="level2" data-number="1.4">
 <h2 data-number="1.4" class="anchored" data-anchor-id="assignment"><span class="header-section-number">3.4</span> Assignment</h2>
-<p>Now that we know how to map the distribution of point data, we can apply a similar analysis to road crashes in London in 2022 and assess whether they cluster in specific areas. Try the following:</p>
+<p>Now that we know how to work with point locatoin data, we can again apply a similar analysis to road crashes in London in 2022 <a href="02-operations.html#assignment">that we used last week</a>. This time we will use this dataset to assess whether road crashes cluster in specific areas. Try the following:</p>
 <ol type="1">
 <li>Create a Kernel Density Estimation (KDE) of <em>all</em> road crashes that occurred in London in 2022.</li>
 <li>Using DBSCAN output, create a cluster map of <em>serious</em> and <em>fatal</em> road crashes in London</li>

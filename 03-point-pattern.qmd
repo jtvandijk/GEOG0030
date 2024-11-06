@@ -252,7 +252,7 @@ par(mar = c(1, 1, 1, 1))
 plot(density.ppp(theft_bike_jitter, sigma=500), main = '')
 ```
 
-We can see from just our KDE that there are visible clusters present within our bike theft data, particularly in and around Central London. We can go ahead and vary our bandwidth to to see how that affects the density estimate:
+We can see from just our KDE that there are visible clusters present within our bike theft data, particularly in and around Central London. We can go ahead and increase the bandwidth to to see how that affects the density estimate:
 
 ```{r}
 #| label: fig-03-bike-theft-kde1000
@@ -268,7 +268,7 @@ par(mar = c(1, 1, 1, 1))
 plot(density.ppp(theft_bike_jitter, sigma=1000), main = '')
 ```
 
-By increasing the bandwidth, our clusters appear larger and brighter than with a 500-metre bandwidth. A larger bandwidth considers more points, resulting in a smoother surface. However, this can lead to oversmoothing, where clusters become less defined, potentially overestimating areas of high bike theft. Smaller bandwidths offer more precision and sharper clusters but risk undersmoothing, which can cause irregularities.
+By increasing the bandwidth, our clusters appear larger and brighter than with the 500-metre bandwidth. A larger bandwidth considers more points, resulting in a smoother surface. However, this can lead to oversmoothing, where clusters become less defined, potentially overestimating areas of high bike theft. Smaller bandwidths offer more precision and sharper clusters but risk undersmoothing, which can cause irregularities.
 
 ::: {.callout-tip} 
 While automated methods (e.g. maximum-likelihood estimation) can assist in selecting an optimal bandwidth, the choice is subjective and depends on the specific characteristics of your dataset. 
@@ -293,7 +293,7 @@ theft_bike_raster <- density.ppp(theft_bike_jitter, sigma=1000) |>
   rast()
 ```
 
-We now have a standalone raster that we can use with any function in the tmap library. However, one issue is that the resulting raster lacks a Coordinate Reference System (CRS), so we need to manually assign this information to the raster object:
+We now have a standalone raster that we can use with any function in the `tmap` library. However, one issue is that the resulting raster lacks a Coordinate Reference System (CRS), so we need to manually assign this information to the raster object:
 
 ```{r}
 #| label: 03-to-raster-crs
@@ -339,16 +339,16 @@ The values of the KDE output are stored in the raster grid as `lyr.1`.
 :::
 
 #### DBSCAN
-Kernel Density Estimation is a useful exploratory technique for identifying spatial clusters in point data, but it does not provide precise boundaries for these clusters. To more accurately delineate clusters, we can use an algorithm called DBSCAN (Density-Based Spatial Clustering of Applications with Noise), which takes both distance and density into account. DBSCAN is effective at discovering distinct clusters by grouping together points that are close to one another while marking points that don't belong to any cluster as noise.
+Kernel Density Estimation is a useful exploratory technique for identifying spatial clusters in point data, but it does not provide precise boundaries for these clusters. To more accurately delineate clusters, we can use an algorithm called DBSCAN [(Density-Based Spatial Clustering of Applications with Noise)](https://cdn.aaai.org/KDD/1996/KDD96-037.pdf), which takes both distance and density into account. DBSCAN is effective at discovering distinct clusters by grouping together points that are close to one another while marking points that don't belong to any cluster as noise.
 
 DBSCAN requires two parameters:
 
-- `epsilon`: Maximum distance for points to be considered in the same cluster.
-- `minPts`: Minimum number of points for a cluster.
+- `epsilon`: The maximum distance for points to be considered in the same cluster.
+- `minPts`: Th minimum number of points for a cluster.
 
-The algorithm groups nearby points based on these parameters and marks low-density points as outliers. DBSCAN is useful for uncovering patterns that are difficult to detect visually, but it works best when clusters have consistent density and appropriate distance and MinPts values.
+The algorithm groups nearby points based on these parameters and marks low-density points as outliers. DBSCAN is useful for uncovering patterns that are difficult to detect visually, but it works best when clusters have consistent densities.
 
-Let us try this with an `epsilon` of  **200** metres and `minPts` of **20** bike thefts:
+Let us try this with an `epsilon` of  **200** metres and `minPts` of **20** bicycle thefts:
 
 ```{r}
 #| label: 03-dbscan
@@ -383,7 +383,7 @@ theft_bike <- theft_bike |>
   mutate(dbcluster = bike_theft_dbscan$cluster)
 ```
 
-Now that each bike theft point in London is associated with a specific cluster, we can generate a polygon representing these clusters, as seen in the plot above. To do this, we will use the `st_convex_hull()` function from the `sf` package, which creates a polygon that covers the minimum bounding area of each cluster. We will apply this function to each cluster using a for loop, which allows us to repeat the process for each group of points and create a polygon representing the geometry of each cluster.
+Now that each bike theft point in London is associated with a specific cluster, where appropriate, we can generate a polygon representing these clusters. To do this, we will use the `st_convex_hull()` function from the `sf` package, which creates a polygon that covers the [minimum bounding area](https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/minimum-bounding-geometry.htm) of a collection of points. We will apply this function to each cluster using a `for` loop, which allows us to repeat the process for each group of points and create a polygon representing the geometry of each cluster.
 
 ```{r}
 #| label: 03-dbscan-for-loop
@@ -398,7 +398,7 @@ Now that each bike theft point in London is associated with a specific cluster, 
 geometry_list <- vector(mode = 'list', length = max(theft_bike$dbcluster))
 
 # create a counter to keep track
-counter <-0
+counter <- 0
 
 # begin loop
 for (cluster_index in seq(0, max(theft_bike$dbcluster))) {
@@ -423,7 +423,7 @@ for (cluster_index in seq(0, max(theft_bike$dbcluster))) {
 theft_bike_clusters <- st_sfc(geometry_list, crs = 27700)
 ```
 
-We now have a spatial dataframe that contains the bike theft clusters in London. Let's quickly map these:
+We now have a spatial dataframe that contains the bike theft clusters in London, as defined by the DBSCAN clustering algorithm. Let's quickly map these clusters:
 
 ```{r tidy="styler"}
 #| label: fig-03-map-clusters
@@ -464,7 +464,7 @@ tm_shape(theft_bike_clusters) +
 ```
 
 ## Assignment
-Now that we know how to map the distribution of point data, we can apply a similar analysis to road crashes in London in 2022 and assess whether they cluster in specific areas. Try the following:
+Now that we know how to work with point locatoin data, we can again apply a similar analysis to road crashes in London in 2022 [that we used last week](02-operations.html#assignment). This time we will use this dataset to assess whether road crashes cluster in specific areas. Try the following:
 
 1. Create a Kernel Density Estimation (KDE) of *all* road crashes that occurred in London in 2022.
 2. Using DBSCAN output, create a cluster map of *serious* and *fatal* road crashes in London
