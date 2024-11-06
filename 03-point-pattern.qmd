@@ -1,5 +1,5 @@
-# Point Pattern Analysis
-This week, we will be focusing on Point Pattern Analysis, which aims to detect clusters or patterns within a set of points. Through this analysis, we can measure density, dispersion, and homogeneity in point structures. Various methods exist for calculating and identifying these clusters, and today we will explore several of these techniques using our [bike theft dataset from last week](02-operations.html#crime-data).
+# Point pattern analysis
+This week, we will be focusing on point Pattern Analysis (PPA), which aims to detect clusters or patterns within a set of points. Through this analysis, we can measure density, dispersion, and homogeneity in point structures. Various methods exist for calculating and identifying these clusters, and today we will explore several of these techniques using our [bike theft dataset from last week](02-operations.html#crime-data).
 
 ## Lecture slides
 The slides for this week's lecture can be downloaded here: [[Link]]({{< var slides.week03 >}})
@@ -19,7 +19,7 @@ This week, we will revisit bicycle theft in London, focusing specifically on ide
 
 | File                                        | Type   | Link |
 | :------                                     | :------| :------ |
-| London Bicycle Theft 2023                   | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-BicycleTheft-2023.gpkg) |
+| London Bicycle Theft 2023                   | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-BicycleTheft-2023.gpkg)|
 | London MSOA 2021 Spatial Boundaries         | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-MSOA-2021.gpkg) |
 
 To get started, let us create our first script. **File** -> **New File** -> **R Script**. Save your script as `w03-bike-theft.r`. 
@@ -39,6 +39,7 @@ library(tidyverse)
 library(sf)
 library(tmap)
 library(spatstat)
+library(terra)
 library(dbscan)
 ```
 
@@ -71,8 +72,8 @@ head(theft_bike)
 You can further inspect both objects using the `View()` function. 
 :::
 
-### Point in polygon
-Point data are particularly useful because they are scale-free, meaning they can be aggregated to any geographic level that suits the analysis. While we will work directly with point location data further on in this tutorial, we will begin by creating a simple map that shows the distribution of bicycle thefts by counting the number of incidents within each MSOA.
+### Point aggregation
+One key advantage of point data is that it is scale-free, allowing aggregation to any geographic level for analysis. Before diving into PPA, we will aggregate the bicycle thefts to the MSOA level to map their distribution by using a point-in-polygon approach.
 
 ```{r}
 #| label: 03-intersect-point-in-poly
@@ -81,14 +82,14 @@ Point data are particularly useful because they are scale-free, meaning they can
 #| eval: True
 #| tidy: True
 #| message: False
-#| filename: "R code"
+#| filename: 'R code'
 # point in polygon
 msoa21 <- msoa21 |>
-  mutate(theft_bike_n = lengths(st_intersects(msoa21, theft_bike)))
+  mutate(theft_bike_n = lengths(st_intersects(msoa21, theft_bike, sparse = TRUE)))
 ```
 
 ::: {.callout-tip}
-To create a point-in-polygon count within `sf`, we use the `st_intersects()` function and keep its default `sparse = TRUE` output, which produces a list of intersecting points by index for each polygon (e.g., MSOA). We then apply the `lengths()` function to count the number of points intersecting each polygon, giving us the total number of bike thefts per MSOA.
+To create a point-in-polygon count within `sf`, we use the `st_intersects()` function and keep its default `sparse = TRUE` output, which produces a list of intersecting points by index for each polygon (e.g. MSOA). We then apply the `lengths()` function to count the number of points intersecting each polygon, giving us the total number of bike thefts per MSOA.
 :::
 
 We can now calculate the area of each MSOA and, combined with the total number of bicycle thefts, determine the number of thefts per square kilometre. This involves calculating the size of each MSOA in square kilometres and then dividing the total number of thefts by this area to get a theft density measure.
@@ -100,7 +101,7 @@ We can now calculate the area of each MSOA and, combined with the total number o
 #| eval: True
 #| tidy: True
 #| message: False
-#| filename: "R code"
+#| filename: 'R code'
 # msoa area size
 msoa21 <- msoa21 |>
   mutate(km_sq = as.numeric(st_area(msoa21)) / 1e6)
@@ -118,7 +119,7 @@ Let's put this onto a map:
 #| echo: True
 #| eval: True
 #| cache: True
-#| filename: "R code"
+#| filename: 'R code'
 # shape, polygons
 tm_shape(msoa21) +
 
@@ -138,9 +139,208 @@ tm_shape(msoa21) +
   )
 
 ``` 
-### Density-based methods
 
-### Distance-based methods
+### Point pattern analysis
+@fig-03-choro-3 shows that the number of bicycle thefts is clearly concentrated in parts of Central London. While this map may provide helpful insights, its representation depends on the classification and aggregation of the underlying data. Alternatively, we can directly analyse the point events themselves. For this, we will use the `spatstat` library, the primary library for point pattern analysis in R. To use `spatstat`, we need to convert our data into a `ppp` object. 
+
+::: {.callout-note}
+The `ppp` format is specific to `spatstat` but is also used in some other spatial analysis libraries. A `ppp` object represents a two-dimensional point dataset within a defined area, called the *window of observation* (`owin` in *spatstat*). We can either create a `ppp` object directly from a list of coordinates (with a specified window of observation) or convert it from another data type.
+:::
+
+We can turn our `theft_bike` dataframe into a `ppp` object as follows:
+
+```{r}
+#| label: 03-options
+#| echo: False
+#| eval: True
+#| output: False
+# margins
+par(mar = c(1, 1, 1, 1))
+```
+
+```{r}
+#| label: fig-03-bike-theft-to-ppp
+#| fig-cap: 'Bike theft in London represented as `ppp` object.'
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: 'R code'
+# london outline
+outline <- msoa21 |>
+  st_union()
+
+# clip 
+theft_bike <- theft_bike |> 
+  st_intersection(outline) 
+
+# sf to ppp
+window = as.owin(msoa21)
+theft_bike_ppp <- ppp(st_coordinates(theft_bike)[,1],
+                      st_coordinates(theft_bike)[,2],
+                      window = window)
+
+# inspect
+par(mar = c(1, 1, 1, 1))
+plot(theft_bike_ppp, main='')
+```
+
+Some statistical procedures require point events to be unique. In our bicycle theft data, duplicates are likely due to the police snapping points to protect anonymity and privacy. This can pose an issue for spatial point pattern analysis, where each theft and its location must be distinct. We can check whether we have any duplicated points as follows:
+
+```{r}
+#| label: 03-check-duplicates
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: 'R code'
+# check for duplicates
+anyDuplicated(theft_bike_ppp)
+
+# count number of duplicated points
+sum(multiplicity(theft_bike_ppp) > 1)
+```
+
+To address this, we have three options:
+
+1. Remove duplicates if the number of duplicated points is small or the exact location is less important than the overall distribution.
+2. Assign weights to points, where each has an attribute indicating the number of events at that location rather than being recorded as separate event. 
+3. Add *jitter* by slightly offsetting the points randomly, which can be useful if precise location is not crucial for the analysis.
+
+Each approach has its own trade-offs, depending on the analysis. In our case, we will use the *jitter* approach to retain all bike theft events. Since the locations are already approximated, adding a small offset (~5 metre) will not impact the analysis.
+
+```{r}
+#| label: 03-jitter-jitter-jitter
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: 'R code'
+# add ajitter
+theft_bike_jitter <- rjitter(theft_bike_ppp, radius=5, retry=TRUE, nsim=1, drop=TRUE)
+
+# check for duplicates
+anyDuplicated(theft_bike_jitter)
+
+# count number of duplicated points
+sum(multiplicity(theft_bike_jitter) > 1)
+```
+
+This seemed to have worked, so we can move forward.
+
+#### Kernel density estimation
+Instead of visualising the distribution of bike thefts at a specific geographical level, we can use Kernel Density Estimation (KDE) to display the distribution of these incidents. KDE is a statistical method that creates a smooth, continuous distribution to represent the density of the underlying pattern between data points.
+
+::: {.callout-note}
+Kernel Density Estimation (KDE) generates a raster surface that shows the estimated density of event points across space. Each cell represents the local density, highlighting areas of high or low concentration. KDE uses overlapping moving windows (defined by a kernel) and a bandwidth parameter, which controls the size of the window, influencing the smoothness of the resulting density surface. The kernel function can assign equal or weighted values to points, producing a grid of density values based on these local calculations.
+:::
+
+Let's go ahead and create a simple KDE of bike theft with our bandwidth set to 500 metres:
+
+```{r}
+#| label: fig-03-bike-theft-kde500
+#| fig-cap: 'Kernel density estimation - bandwidth 500m.'
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: 'R code'
+# kernel density estimation
+par(mar = c(1, 1, 1, 1))
+plot(density.ppp(theft_bike_jitter, sigma=500), main = '')
+```
+
+We can see from just our KDE that there are visible clusters present within our bike theft data, particularly in and around Central London. We can go ahead and vary our bandwidth to to see how that affects the density estimate:
+
+```{r}
+#| label: fig-03-bike-theft-kde1000
+#| fig-cap: 'Kernel density estimation - bandwidth 1000m.'
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: 'R code'
+# kernel density estimation
+par(mar = c(1, 1, 1, 1))
+plot(density.ppp(theft_bike_jitter, sigma=1000), main = '')
+```
+
+By increasing the bandwidth, our clusters appear larger and brighter than with a 500-metre bandwidth. A larger bandwidth considers more points, resulting in a smoother surface. However, this can lead to oversmoothing, where clusters become less defined, potentially overestimating areas of high bike theft. Smaller bandwidths offer more precision and sharper clusters but risk undersmoothing, which can cause irregularities.
+
+::: {.callout-tip} 
+While automated methods (e.g. maximum-likelihood estimation) can assist in selecting an optimal bandwidth, the final choice depends on the specific characteristics of your dataset. 
+:::
+
+::: {.callout-note}
+Although bandwidth has a greater impact on density estimation than the kernel type, the choice of kernel can still influence the results by altering how points are weighted within the window. We will explore this a little further when we [discuss spatial models in a few weeks time](05-models.html).
+:::
+
+Once we are satisfied with our KDE visualisation, we can create a proper map by converting the KDE output into raster format.
+
+```{r}
+#| label: 03-to-raster
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: 'R code'
+# to raster
+theft_bike_raster <- density.ppp(theft_bike_jitter, sigma=1000) |>
+  rast()
+```
+
+We now have a standalone raster that we can use with any function in the tmap library. However, one issue is that the resulting raster lacks a Coordinate Reference System (CRS), so we need to manually assign this information to the raster object:
+
+```{r}
+#| label: 03-to-raster-crs
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: 'R code'
+# set CRS
+crs(theft_bike_raster) <- 'epsg:27700'
+```
+
+Now we can map the KDE values.
+
+::: {.callout-tip}
+The values of the KDE output are stored in the raster grid as `lyr.1`.
+:::
+
+```{r tidy='styler'}
+#| label: fig-kde-raster-map
+#| fig-cap: Kernel Density Estimate of bicycle thefts in London. 
+#| echo: True
+#| eval: True
+#| message: False
+#| filename: 'R code'
+# shape, polygon
+tm_shape(theft_bike_raster) +
+
+  # specify column, colours
+  tm_raster(
+    col = 'lyr.1',
+    palette = 'Blues',
+    title = 'Density'
+  ) +
+
+  # set layout
+  tm_layout(
+    legend.outside = FALSE,
+    legend.position = c('left', 'bottom'),
+    frame = FALSE
+  )
+```
+
+#### DBSCAN
+
+## Assignment 
 
 ## Before you leave
 As geographers we are keen to understand our point data's distribution and understand whether are our points clustered, randomly distributed, uniform or dispersed. We have looked at various techniques that enable us to statistically and visually assess our data's distribution and understand whether our data is randomly distributed or clustered in space. And that is [us done for this week](https://www.youtube.com/watch?v=-zxtbwGogyY). Reading list anyone?
