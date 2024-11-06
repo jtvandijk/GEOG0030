@@ -1,4 +1,4 @@
-# Point pattern analysis
+# Point Pattern Analysis
 This week, we will be focusing on point Pattern Analysis (PPA), which aims to detect clusters or patterns within a set of points. Through this analysis, we can measure density, dispersion, and homogeneity in point structures. Various methods exist for calculating and identifying these clusters, and today we will explore several of these techniques using our [bike theft dataset from last week](02-operations.html#crime-data).
 
 ## Lecture slides
@@ -271,11 +271,11 @@ plot(density.ppp(theft_bike_jitter, sigma=1000), main = '')
 By increasing the bandwidth, our clusters appear larger and brighter than with a 500-metre bandwidth. A larger bandwidth considers more points, resulting in a smoother surface. However, this can lead to oversmoothing, where clusters become less defined, potentially overestimating areas of high bike theft. Smaller bandwidths offer more precision and sharper clusters but risk undersmoothing, which can cause irregularities.
 
 ::: {.callout-tip} 
-While automated methods (e.g. maximum-likelihood estimation) can assist in selecting an optimal bandwidth, the final choice depends on the specific characteristics of your dataset. 
+While automated methods (e.g. maximum-likelihood estimation) can assist in selecting an optimal bandwidth, the choice is subjective and depends on the specific characteristics of your dataset. 
 :::
 
 ::: {.callout-note}
-Although bandwidth has a greater impact on density estimation than the kernel type, the choice of kernel can still influence the results by altering how points are weighted within the window. We will explore this a little further when we [discuss spatial models in a few weeks time](05-models.html).
+Although bandwidth has a greater impact on density estimation than the kernel type, the choice of kernel can still influence the results by altering how points are weighted within the window. We will explore kernel types a little further when we [discuss spatial models in a few weeks time](05-models.html).
 :::
 
 Once we are satisfied with our KDE visualisation, we can create a proper map by converting the KDE output into raster format.
@@ -309,10 +309,6 @@ crs(theft_bike_raster) <- 'epsg:27700'
 
 Now we can map the KDE values.
 
-::: {.callout-tip}
-The values of the KDE output are stored in the raster grid as `lyr.1`.
-:::
-
 ```{r tidy='styler'}
 #| label: fig-kde-raster-map
 #| fig-cap: Kernel Density Estimate of bicycle thefts in London. 
@@ -338,7 +334,134 @@ tm_shape(theft_bike_raster) +
   )
 ```
 
+::: {.callout-tip}
+The values of the KDE output are stored in the raster grid as `lyr.1`.
+:::
+
 #### DBSCAN
+Kernel Density Estimation is a useful exploratory technique for identifying spatial clusters in point data, but it does not provide precise boundaries for these clusters. To more accurately delineate clusters, we can use an algorithm called DBSCAN (Density-Based Spatial Clustering of Applications with Noise), which takes both distance and density into account. DBSCAN is effective at discovering distinct clusters by grouping together points that are close to one another while marking points that don't belong to any cluster as noise.
+
+DBSCAN requires two parameters:
+
+- `epsilon`: Maximum distance for points to be considered in the same cluster.
+- `minPts`: Minimum number of points for a cluster.
+
+The algorithm groups nearby points based on these parameters and marks low-density points as outliers. DBSCAN is useful for uncovering patterns that are difficult to detect visually, but it works best when clusters have consistent density and appropriate distance and MinPts values.
+
+Let us try this with an `epsilon` of  **200** metres and `minPts` of **20** bike thefts:
+
+```{r}
+#| label: 03-dbscan
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: 'R code'
+# dbscan
+bike_theft_dbscan <- theft_bike |>
+  st_coordinates() |>
+  dbscan(eps = 200, minPts = 20) 
+```
+
+::: {.callout-note}
+The `dbscan()` function accepts a data matrix or dataframe of points, not a spatial dataframe. That is why, in the code above, we use the `st_coordinates()` function to extract the projected coordinates from the spatial dataframe.
+:::
+
+The DBSCAN output includes three objects, one of which is a vector detailing the cluster for each bike theft observation. To work with this output effectively, we need to add the cluster labels back to the original point dataset. Since DBSCAN does not alter the order of points, we can simply add the cluster output to the `theft_bike` spatial dataframe.
+
+```{r}
+#| label: 3-dbscan-add-clusters
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: 'R code'
+# add cluster numbers
+theft_bike <- theft_bike |>
+  mutate(dbcluster = bike_theft_dbscan$cluster)
+```
+
+Now that each bike theft point in London is associated with a specific cluster, we can generate a polygon representing these clusters, as seen in the plot above. To do this, we will use the `st_convex_hull()` function from the `sf` package, which creates a polygon that covers the minimum bounding area of each cluster. We will apply this function to each cluster using a for loop, which allows us to repeat the process for each group of points and create a polygon representing the geometry of each cluster.
+
+```{r}
+#| label: 03-dbscan-for-loop
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: 'R code'
+# create an empty list to store the resulting convex hull geometries
+# set the length of this list to the total number of clusters found
+geometry_list <- vector(mode = 'list', length = max(theft_bike$dbcluster))
+
+# create a counter to keep track
+counter <-0
+
+# begin loop
+for (cluster_index in seq(0, max(theft_bike$dbcluster))) {
+
+   # filter to only return points for belonging to cluster n
+   theft_bike_subset <- theft_bike |>
+     filter(dbcluster == cluster_index)
+
+   # union points, calculate convex hull
+   cluster_polygon <- theft_bike_subset |>
+     st_union() |>
+     st_convex_hull()
+
+   # add the geometry of the polygon to our list
+   geometry_list[counter] <- (cluster_polygon)
+
+   # update the counter
+   counter <- counter + 1
+}
+
+# combine the list
+theft_bike_clusters <- st_sfc(geometry_list, crs = 27700)
+```
+
+We now have a spatial dataframe that contains the bike theft clusters in London. Let's quickly map these:
+
+```{r tidy="styler"}
+#| label: fig-03-map-clusters
+#| fig-cap: DBSCAN-identified clusters of reported bicycle theft in London.
+#| echo: True
+#| eval: True
+#| message: False
+#| filename: "R code"
+# shape, polygon
+tm_shape(outline) +
+  
+  # specify colours
+  tm_polygons(
+    col = '#f0f0f0', 
+  ) +
+  
+  # shape, points
+  tm_shape(theft_bike) + 
+  
+  # specify colours
+  tm_dots(
+    col = '#636363',
+    size = 0.01,
+  ) +
+
+# shape, polygon
+tm_shape(theft_bike_clusters) + 
+  
+  # specify colours
+  tm_polygons(
+    col = '#fdc086',
+  ) +
+  
+  # set layout
+  tm_layout(
+    frame = FALSE,
+  )
+```
 
 ## Assignment 
 

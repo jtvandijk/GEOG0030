@@ -112,7 +112,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-spatial.html">Core Spatial Analysis</a></li><li class="breadcrumb-item"><a href="./03-point-pattern.html">Point pattern analysis</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-spatial.html">Core Spatial Analysis</a></li><li class="breadcrumb-item"><a href="./03-point-pattern.html">Point Pattern Analysis</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -178,7 +178,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-point-pattern.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Point pattern analysis</span></a>
+ <span class="menu-text">3 Point Pattern Analysis</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -274,7 +274,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#point-pattern-analysis" id="toc-point-pattern-analysis" class="nav-link active" data-scroll-target="#point-pattern-analysis"><span class="header-section-number">3</span> Point pattern analysis</a>
+  <li><a href="#point-pattern-analysis" id="toc-point-pattern-analysis" class="nav-link active" data-scroll-target="#point-pattern-analysis"><span class="header-section-number">3</span> Point Pattern Analysis</a>
   <ul class="collapse">
   <li><a href="#lecture-slides" id="toc-lecture-slides" class="nav-link" data-scroll-target="#lecture-slides"><span class="header-section-number">3.1</span> Lecture slides</a></li>
   <li><a href="#reading-list" id="toc-reading-list" class="nav-link" data-scroll-target="#reading-list"><span class="header-section-number">3.2</span> Reading list</a></li>
@@ -295,7 +295,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <section id="point-pattern-analysis" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">3</span> Point pattern analysis</h1>
+<h1 data-number="1"><span class="header-section-number">3</span> Point Pattern Analysis</h1>
 <p>This week, we will be focusing on point Pattern Analysis (PPA), which aims to detect clusters or patterns within a set of points. Through this analysis, we can measure density, dispersion, and homogeneity in point structures. Various methods exist for calculating and identifying these clusters, and today we will explore several of these techniques using our <a href="02-operations.html#crime-data">bike theft dataset from last week</a>.</p>
 <section id="lecture-slides" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="lecture-slides"><span class="header-section-number">3.1</span> Lecture slides</h2>
@@ -705,7 +705,7 @@ all geometries</code></pre>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>While automated methods (e.g.&nbsp;maximum-likelihood estimation) can assist in selecting an optimal bandwidth, the final choice depends on the specific characteristics of your dataset.</p>
+<p>While automated methods (e.g.&nbsp;maximum-likelihood estimation) can assist in selecting an optimal bandwidth, the choice is subjective and depends on the specific characteristics of your dataset.</p>
 </div>
 </div>
 </div>
@@ -715,7 +715,7 @@ all geometries</code></pre>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Although bandwidth has a greater impact on density estimation than the kernel type, the choice of kernel can still influence the results by altering how points are weighted within the window. We will explore this a little further when we <a href="05-models.html">discuss spatial models in a few weeks time</a>.</p>
+<p>Although bandwidth has a greater impact on density estimation than the kernel type, the choice of kernel can still influence the results by altering how points are weighted within the window. We will explore kernel types a little further when we <a href="05-models.html">discuss spatial models in a few weeks time</a>.</p>
 </div>
 </div>
 </div>
@@ -741,16 +741,6 @@ all geometries</code></pre>
 </div>
 </div>
 <p>Now we can map the KDE values.</p>
-<div class="callout callout-style-simple callout-tip">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>The values of the KDE output are stored in the raster grid as <code>lyr.1</code>.</p>
-</div>
-</div>
-</div>
 <div class="cell">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -782,9 +772,140 @@ all geometries</code></pre>
 </div>
 </div>
 </div>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>The values of the KDE output are stored in the raster grid as <code>lyr.1</code>.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="dbscan" class="level4" data-number="1.3.2.2">
 <h4 data-number="1.3.2.2" class="anchored" data-anchor-id="dbscan"><span class="header-section-number">3.3.2.2</span> DBSCAN</h4>
+<p>Kernel Density Estimation is a useful exploratory technique for identifying spatial clusters in point data, but it does not provide precise boundaries for these clusters. To more accurately delineate clusters, we can use an algorithm called DBSCAN (Density-Based Spatial Clustering of Applications with Noise), which takes both distance and density into account. DBSCAN is effective at discovering distinct clusters by grouping together points that are close to one another while marking points that don’t belong to any cluster as noise.</p>
+<p>DBSCAN requires two parameters:</p>
+<ul>
+<li><code>epsilon</code>: Maximum distance for points to be considered in the same cluster.</li>
+<li><code>minPts</code>: Minimum number of points for a cluster.</li>
+</ul>
+<p>The algorithm groups nearby points based on these parameters and marks low-density points as outliers. DBSCAN is useful for uncovering patterns that are difficult to detect visually, but it works best when clusters have consistent density and appropriate distance and MinPts values.</p>
+<p>Let us try this with an <code>epsilon</code> of <strong>200</strong> metres and <code>minPts</code> of <strong>20</strong> bike thefts:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dbscan</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>bike_theft_dbscan <span class="ot">&lt;-</span> theft_bike <span class="sc">|&gt;</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_coordinates</span>() <span class="sc">|&gt;</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">dbscan</span>(<span class="at">eps =</span> <span class="dv">200</span>, <span class="at">minPts =</span> <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>The <code>dbscan()</code> function accepts a data matrix or dataframe of points, not a spatial dataframe. That is why, in the code above, we use the <code>st_coordinates()</code> function to extract the projected coordinates from the spatial dataframe.</p>
+</div>
+</div>
+</div>
+<p>The DBSCAN output includes three objects, one of which is a vector detailing the cluster for each bike theft observation. To work with this output effectively, we need to add the cluster labels back to the original point dataset. Since DBSCAN does not alter the order of points, we can simply add the cluster output to the <code>theft_bike</code> spatial dataframe.</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add cluster numbers</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>theft_bike <span class="ot">&lt;-</span> theft_bike <span class="sc">|&gt;</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">dbcluster =</span> bike_theft_dbscan<span class="sc">$</span>cluster)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Now that each bike theft point in London is associated with a specific cluster, we can generate a polygon representing these clusters, as seen in the plot above. To do this, we will use the <code>st_convex_hull()</code> function from the <code>sf</code> package, which creates a polygon that covers the minimum bounding area of each cluster. We will apply this function to each cluster using a for loop, which allows us to repeat the process for each group of points and create a polygon representing the geometry of each cluster.</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create an empty list to store the resulting convex hull geometries set the</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co"># length of this list to the total number of clusters found</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>geometry_list <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">"list"</span>, <span class="at">length =</span> <span class="fu">max</span>(theft_bike<span class="sc">$</span>dbcluster))</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="co"># create a counter to keep track</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>counter <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="co"># begin loop</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (cluster_index <span class="cf">in</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fu">max</span>(theft_bike<span class="sc">$</span>dbcluster))) {</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># filter to only return points for belonging to cluster n</span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>    theft_bike_subset <span class="ot">&lt;-</span> theft_bike <span class="sc">|&gt;</span></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>        <span class="fu">filter</span>(dbcluster <span class="sc">==</span> cluster_index)</span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># union points, calculate convex hull</span></span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>    cluster_polygon <span class="ot">&lt;-</span> theft_bike_subset <span class="sc">|&gt;</span></span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>        <span class="fu">st_union</span>() <span class="sc">|&gt;</span></span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>        <span class="fu">st_convex_hull</span>()</span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># add the geometry of the polygon to our list</span></span>
+<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>    geometry_list[counter] <span class="ot">&lt;-</span> (cluster_polygon)</span>
+<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># update the counter</span></span>
+<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a>    counter <span class="ot">&lt;-</span> counter <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a><span class="co"># combine the list</span></span>
+<span id="cb33-28"><a href="#cb33-28" aria-hidden="true" tabindex="-1"></a>theft_bike_clusters <span class="ot">&lt;-</span> <span class="fu">st_sfc</span>(geometry_list, <span class="at">crs =</span> <span class="dv">27700</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>We now have a spatial dataframe that contains the bike theft clusters in London. Let’s quickly map these:</p>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># shape, polygon</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(outline) <span class="sc">+</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># specify colours</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"#f0f0f0"</span>,</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># shape, points</span></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(theft_bike) <span class="sc">+</span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># specify colours</span></span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_dots</span>(</span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"#636363"</span>,</span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.01</span>,</span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># shape, polygon</span></span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(theft_bike_clusters) <span class="sc">+</span></span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># specify colours</span></span>
+<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(</span>
+<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"#fdc086"</span>,</span>
+<span id="cb34-24"><a href="#cb34-24" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb34-25"><a href="#cb34-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-26"><a href="#cb34-26" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set layout</span></span>
+<span id="cb34-27"><a href="#cb34-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(</span>
+<span id="cb34-28"><a href="#cb34-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">frame =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb34-29"><a href="#cb34-29" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-03-map-clusters" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="03-point-pattern_files/figure-html/fig-03-map-clusters-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;6: DBSCAN-identified clusters of reported bicycle theft in London.</figcaption>
+</figure>
+</div>
+</div>
+</div>
 </section>
 </section>
 </section>
