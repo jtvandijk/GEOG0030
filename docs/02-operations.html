@@ -343,9 +343,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 <section id="crime-data" class="level3" data-number="1.3.1">
 <h3 data-number="1.3.1" class="anchored" data-anchor-id="crime-data"><span class="header-section-number">2.3.1</span> Crime data</h3>
-<p>The UK Police Data Portal allows you to access and generate tabular data for crime recorded in the UK across different the different police forces. To download recorded crime data for London:</p>
+<p>The UK Police Data Portal allows you to access and generate tabular data for crime recorded in the UK across the different police forces. To download recorded crime data for London:</p>
 <ol type="1">
-<li>Start by navigating to <a href="https://data.police.uk/">data.police.uk</a>. And click on <strong>Downloads</strong>.</li>
+<li>Navigate to <a href="https://data.police.uk/">data.police.uk</a>. And click on <strong>Downloads</strong>.</li>
 <li>Under the data range select <code>January 2023</code> to <code>December 2023</code>.</li>
 <li>Under the <strong>Custom download</strong> tab select <code>Metropolitan Police Service</code> and <code>City of London Police</code>. Leave the other settings unchanged and click on <strong>Generate file</strong>.</li>
 </ol>
@@ -579,7 +579,7 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 </section>
 <section id="station-data" class="level3" data-number="1.3.2">
 <h3 data-number="1.3.2" class="anchored" data-anchor-id="station-data"><span class="header-section-number">2.3.2</span> Station data</h3>
-<p>OpenStreetMap (OSM) is a free, editable map of the world. Each map element (whether a point, line, or polygon) in OSM is tagged with various attribute data. To download the station data we need, we must use the appropriate tags, represented as <code>key</code> and <code>value</code> pairs, to query the OSM database. In our case, we are looking for train stations, which fall under the <em>Public Transport</em> <code>key</code>, with a <code>value</code> of <em>station</em>. Additionally, to limit our search to London, we can use the spatial extent of the 2021 MSOA boundaries as the bounding box for data extraction.</p>
+<p>OpenStreetMap (OSM) is a free, editable map of the world. Each map element (whether a point, line, or polygon) in OSM is tagged with various attribute data. To download the station data we need, we must use the appropriate tags, represented as <code>key</code> and <code>value</code> pairs, to query the OSM database. In our case, we are looking for train stations, which fall under the <em>Public Transport</em> <code>key</code>, with a <code>value</code> of <em>station</em>. To limit our search to London, we can use the spatial extent of the 2021 MSOA boundaries as the bounding box for data extraction.</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -606,7 +606,7 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 </div>
 </div>
 </div>
-<p>The OSM query returns all data types, including lines and polygons tagged as stations. For our analysis, we only want to retain the point locations. Additionally, we need to clip the results to the outline of London to exclude points that fall within the bounding box but outside the boundaries of Greater London.</p>
+<p>The OSM query returns all data types, including lines and polygons tagged as stations. For our analysis, we only want to retain the point locations. In addition, we want to clip the results to the outline of London to exclude points that fall within the bounding box but outside the boundaries of Greater London.</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -734,7 +734,7 @@ Projected CRS: OSGB36 / British National Grid
 </section>
 <section id="spatial-queries" class="level3" data-number="1.3.3">
 <h3 data-number="1.3.3" class="anchored" data-anchor-id="spatial-queries"><span class="header-section-number">2.3.3</span> Spatial queries</h3>
-<p>A spatial query is used to retrieve or manipulate data based on its geographic location or spatial relationships. It uses spatial information from one or more layers to find features that meet specific criteria, such as proximity, intersection, or containment. For instance, we can use a spatial query to count all the bicycle thefts that have occured within 500 metres of a train or underground station:</p>
+<p>A spatial query is used to retrieve data based on its geographic location or spatial relationships. It uses spatial information from one or more layers to find features that meet specific criteria, such as proximity, intersection, or containment. For instance, we can use a spatial query to count all the bicycle thefts that have occurred within 500 metres of a train or underground station:</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -991,9 +991,9 @@ Projected CRS: OSGB36 / British National Grid
 <li>Download the two datasets provided below and save them in the appropriate subfolder within your <code>data</code> directory. The datasets include:
 <ul>
 <li>A <code>csv</code> file containing the number of road crashes that occurred in London in 2022, extracted from the UK’s official road traffic casualty database using the <a href="https://github.com/ropensci/stats19">stas19</a> R library.</li>
-<li>A <code>GeoPackage</code> file that contains A roads in London, extracted from the <a href="https://www.ordnancesurvey.co.uk/products/os-open-roads">Ordnance Survey Open Roads</a> dataset.</li>
+<li>A <code>GeoPackage</code> file that contains main roads in London, extracted from the <a href="https://www.ordnancesurvey.co.uk/products/os-open-roads">Ordnance Survey Open Roads</a> dataset.</li>
 </ul></li>
-<li>Calculate the number of serious and fatal road crashes that occurred within 100 metres and 500 metres of an A road, respectively.</li>
+<li>Calculate the number of serious and fatal road crashes that occurred within 100 metres and 500 metres of a main road, respectively.</li>
 </ol>
 <table class="table">
 <thead>
@@ -1010,7 +1010,7 @@ Projected CRS: OSGB36 / British National Grid
 <td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/London-Collisions-2022.csv">Download</a></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">London OS Open Roads - A Roads</td>
+<td style="text-align: left;">London OS Open Roads - Main Roads</td>
 <td style="text-align: left;"><code>GeoPackage</code></td>
 <td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-Open-Roads-Main.gpkg">Download</a></td>
 </tr>

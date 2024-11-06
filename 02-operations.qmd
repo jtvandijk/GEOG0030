@@ -23,9 +23,9 @@ This week, we will examine patterns to what extent reported bicycle theft in Lon
 | London MSOA 2021 Spatial Boundaries         | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-MSOA-2021.gpkg) |
 
 ### Crime data
-The UK Police Data Portal allows you to access and generate tabular data for crime recorded in the UK across different the different police forces. To download recorded crime data for London:
+The UK Police Data Portal allows you to access and generate tabular data for crime recorded in the UK across the different police forces. To download recorded crime data for London:
 
-1. Start by navigating to [data.police.uk](https://data.police.uk/). And click on **Downloads**.
+1. Navigate to [data.police.uk](https://data.police.uk/). And click on **Downloads**.
 2. Under the data range select `January 2023` to `December 2023`.
 3. Under the **Custom download** tab select `Metropolitan Police Service` and `City of London Police`. Leave the other settings unchanged and click on **Generate file**.
 
@@ -185,7 +185,7 @@ tm_shape(theft_bike) +
 ```
 
 ### Station data
-OpenStreetMap (OSM) is a free, editable map of the world. Each map element (whether a point, line, or polygon) in OSM is tagged with various attribute data. To download the station data we need, we must use the appropriate tags, represented as `key` and `value` pairs, to query the OSM database. In our case, we are looking for train stations, which fall under the *Public Transport* `key`, with a `value` of *station*. Additionally, to limit our search to London, we can use the spatial extent of the 2021 MSOA boundaries as the bounding box for data extraction.
+OpenStreetMap (OSM) is a free, editable map of the world. Each map element (whether a point, line, or polygon) in OSM is tagged with various attribute data. To download the station data we need, we must use the appropriate tags, represented as `key` and `value` pairs, to query the OSM database. In our case, we are looking for train stations, which fall under the *Public Transport* `key`, with a `value` of *station*. To limit our search to London, we can use the spatial extent of the 2021 MSOA boundaries as the bounding box for data extraction.
 
 ```{r tidy='styler'} 
 #| label: 02-station-data
@@ -210,7 +210,7 @@ osm_stations <- opq(bbox = bbox_london) |>
 In some cases, the OSM query may return an error, particularly when multiple users from the same location are executing the exact same query. If so, you can download a prepared copy of the data here: [[Download]](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-OSM-Stations.RData). You can load this copy into R through `load('data/spatial/London-OSM-Stations.RData')`
 :::
 
-The OSM query returns all data types, including lines and polygons tagged as stations. For our analysis, we only want to retain the point locations. Additionally, we need to clip the results to the outline of London to exclude points that fall within the bounding box but outside the boundaries of Greater London.
+The OSM query returns all data types, including lines and polygons tagged as stations. For our analysis, we only want to retain the point locations. In addition, we want to clip the results to the outline of London to exclude points that fall within the bounding box but outside the boundaries of Greater London.
 
 ```{r}
 #| label: 02-station-point-data
@@ -294,7 +294,7 @@ tm_shape(osm_stations) +
 Now we have our data prepared, we can move on to analyse the extent to which bicycle theft in London cluster around stations. We can use both spatial queries and geometric operations to complete this analysis.
 
 ### Spatial queries
-A spatial query is used to retrieve or manipulate data based on its geographic location or spatial relationships. It uses spatial information from one or more layers to find features that meet specific criteria, such as proximity, intersection, or containment. For instance, we can use a spatial query to count all the bicycle thefts that have occured within 500 metres of a train or underground station:
+A spatial query is used to retrieve data based on its geographic location or spatial relationships. It uses spatial information from one or more layers to find features that meet specific criteria, such as proximity, intersection, or containment. For instance, we can use a spatial query to count all the bicycle thefts that have occurred within 500 metres of a train or underground station:
 
 ```{r}
 #| label: 02-spatial-query-1
@@ -474,13 +474,13 @@ Now that we are familiar with basic spatial queries and geometric operations, we
 
 1. Download the two datasets provided below and save them in the appropriate subfolder within your `data` directory. The datasets include:
     * A `csv` file containing the number of road crashes that occurred in London in 2022, extracted from the UK's official road traffic casualty database using the [stas19](https://github.com/ropensci/stats19) R library.
-    * A `GeoPackage` file that contains A roads in London, extracted from the [Ordnance Survey Open Roads](https://www.ordnancesurvey.co.uk/products/os-open-roads) dataset.
-2. Calculate the number of serious and fatal road crashes that occurred within 100 metres and 500 metres of an A road, respectively.
+    * A `GeoPackage` file that contains main roads in London, extracted from the [Ordnance Survey Open Roads](https://www.ordnancesurvey.co.uk/products/os-open-roads) dataset.
+2. Calculate the number of serious and fatal road crashes that occurred within 100 metres and 500 metres of a main road, respectively.
 
 | File                                        | Type   | Link |
 | :------                                     | :------| :------ |
 | London STATS19 Road Collisions 2022         | `csv` | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/London-Collisions-2022.csv) |
-| London OS Open Roads - A Roads           | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-Open-Roads-Main.gpkg) |
+| London OS Open Roads - Main Roads           | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-Open-Roads-Main.gpkg) |
 
 ## Before you leave
 Boom. That is how you can conduct basic spatial queries and geometric operations and using R and `sf`. Yet more RGIS coming over the next couple of weeks, but [this concludes the tutorial for this week](https://www.youtube.com/watch?v=Ydg4T2MP7Z8). Time to check out that reading list?

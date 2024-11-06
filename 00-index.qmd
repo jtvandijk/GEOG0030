@@ -48,7 +48,7 @@ For specific assistance with this module, you can:
 
 ## Major updates {.unnumbered}
 ::: {.callout-note}
-This year's version features the following **major** updates:
+This year's module material features the following **major** updates:
 
 - Second full rewrite of the workbook using `Quarto`.
 - Improved alignment with [GEOG0018 Methods in Human Geography](https://jtvandijk.github.io/GEOG0018).
