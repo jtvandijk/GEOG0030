@@ -1,5 +1,5 @@
 # Spatial Queries and Geometric Operations
-This week, we look at geometric operations and spatial queries: the fundamental building blocks when it comes to spatial data processing and analysis. This includes operations such as calculating the distances separating one or more spatial objects, running a *buffer* analysis, and *intersecting* different spatial layers.
+This week, we look at geometric operations and spatial queries: the fundamental building blocks when it comes to spatial data processing and analysis. This includes operations such as aggregating point data, calculating the distances separating one or more spatial objects, running a *buffer* analysis, and *intersecting* different spatial layers.
 
 ## Lecture slides
 You can download the slides of this week's lecture here: [[Link]]({{< var slides.week02 >}}).
@@ -16,14 +16,14 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 - Lovelace, R., Nowosad, J. and Muenchow, J. 2021. Geocomputation with R, **Chapter 6**: *Reprojecting geographic data*. [[Link]](https://geocompr.robinlovelace.net/reproj-geo-data.html)
 
 ## Bike theft in London I
-This week, we will examine patterns of bicycle theft in London and the extent to which these cluster around stations. We will be using open data from [data.police.uk](https://data.police.uk/) on reported crimes alongside [OpenStreetMap](https://www.openstreetmap.org/#map=6/54.91/-3.43) data for this analysis. We will use R to directly download the necessary data from OpenStreetMap, but the crime data will need to be manually downloaded from the data portal. We further have access to a `GeoPackage` that contains the London 2021 MSOA boundaries that we can use as reference layer. If you do not already have it on your computer, save this file under `data/spatial`.
+This week, we will examine patterns to what extent reported bicycle theft in London cluster around train and underground stations. We will be using open data from [data.police.uk](https://data.police.uk/) on reported crimes alongside [OpenStreetMap](https://www.openstreetmap.org/#map=6/54.91/-3.43) data for this analysis. We will use R to directly download the necessary data from OpenStreetMap, but the crime data will need to be manually downloaded from the data portal. We further have access to a `GeoPackage` that contains the London 2021 MSOA boundaries that we can use as reference layer. If you do not already have it on your computer, save this file in your `data/spatial` folder.
 
 | File                                        | Type   | Link |
 | :------                                     | :------| :------ |
 | London MSOA 2021 Spatial Boundaries         | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-MSOA-2021.gpkg) |
 
 ### Crime data
-To download the crime data:
+The UK Police Data Portal allows you to access and generate tabular data for crime recorded in the UK across different the different police forces. To download recorded crime data for London:
 
 1. Start by navigating to [data.police.uk](https://data.police.uk/). And click on **Downloads**.
 2. Under the data range select `January 2023` to `December 2023`.
@@ -185,7 +185,7 @@ tm_shape(theft_bike) +
 ```
 
 ### Station data
-OpenStreetMap (OSM) is a free, editable map of the world. Each map element (whether a point, line, or polygon) in OSM is tagged with various attribute data. To download the station data we need, we must use the appropriate tags, represented as `key` and `value` pairs, to query the OSM database. In our case, we are looking for train stations, which fall under the *Public Transport* `key`, with a `value` of *station*. Additionally, to limit our search to a specific area of interest, we can use the spatial extent of the 2021 MSOA boundaries as the bounding box for data extraction.
+OpenStreetMap (OSM) is a free, editable map of the world. Each map element (whether a point, line, or polygon) in OSM is tagged with various attribute data. To download the station data we need, we must use the appropriate tags, represented as `key` and `value` pairs, to query the OSM database. In our case, we are looking for train stations, which fall under the *Public Transport* `key`, with a `value` of *station*. Additionally, to limit our search to London, we can use the spatial extent of the 2021 MSOA boundaries as the bounding box for data extraction.
 
 ```{r tidy='styler'} 
 #| label: 02-station-data
@@ -207,7 +207,7 @@ osm_stations <- opq(bbox = bbox_london) |>
 ```
 
 ::: {.callout-warning}
-In some cases, the OSM query may return an error, particularly when multiple users from the same location are executing the exact same query. If so, you can download a prepared copy of the data here: [[Download]](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-OSM-Stations.RData). You can load this copy into R through `load('data/London-OSM-Stations.RData')`
+In some cases, the OSM query may return an error, particularly when multiple users from the same location are executing the exact same query. If so, you can download a prepared copy of the data here: [[Download]](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-OSM-Stations.RData). You can load this copy into R through `load('data/spatial/London-OSM-Stations.RData')`
 :::
 
 The OSM query returns all data types, including lines and polygons tagged as stations. For our analysis, we only want to retain the point locations. Additionally, we need to clip the results to the outline of London to exclude points that fall within the bounding box but outside the boundaries of Greater London.
@@ -284,7 +284,6 @@ tm_shape(osm_stations) +
   tm_dots(
     col = '#beaed4',
     size = 0.05,
-    title = ''
   ) +
   
   # set layout
@@ -292,10 +291,10 @@ tm_shape(osm_stations) +
     frame = FALSE,
   )
 ```
-Now we have our data prepared, we can move on to analyse the extent to which bicycle theft in London cluster around stations. We can use both spatial queries and geometric operatoins to complete this analysis.
+Now we have our data prepared, we can move on to analyse the extent to which bicycle theft in London cluster around stations. We can use both spatial queries and geometric operations to complete this analysis.
 
 ### Spatial queries
-A spatial query is used to retrieve or manipulate data based on its geographic location or spatial relationships. It uses spatial information from one or more layers to find features that meet specific criteria, such as proximity, intersection, or containment. For instance, we can use a spatial query to count all the bicycle thefts that have occured within 500m of a train or underground station:
+A spatial query is used to retrieve or manipulate data based on its geographic location or spatial relationships. It uses spatial information from one or more layers to find features that meet specific criteria, such as proximity, intersection, or containment. For instance, we can use a spatial query to count all the bicycle thefts that have occured within 500 metres of a train or underground station:
 
 ```{r}
 #| label: 02-spatial-query-1
@@ -315,6 +314,7 @@ theft_bike$d500 <- theft_bike |>
 # inspect
 head(theft_bike)
 ```
+
 ::: {.callout-warning}
 The above code converts the stations dataframe into a single geometry. This step is essential for `sf` to ensure that each point in the dataset is compared to every point in the stations dataframe. Without this conversion, the comparison would be done one station point at a time, storing only the last result rather than considering all station points simultaneously.
 :::
@@ -362,14 +362,14 @@ tm_shape(outline) +
   # set legend
   tm_add_legend(
     type = 'symbol',
-    labels = '< 500m',
+    labels = '> 500m',
     col = '#f1a340'
   ) +
   
   # set legend
   tm_add_legend(
     type = 'symbol',
-    labels = '> 500m',
+    labels = '< 500m',
     col = '#998ec3'
   ) +
   
@@ -380,7 +380,6 @@ tm_shape(outline) +
   tm_dots(
     col = '#636363',
     size = 0.03,
-    title = ''
   ) +
   
   # set legend
@@ -398,9 +397,90 @@ tm_shape(outline) +
 ```
 
 ### Geometric operations
-Geometric operations are used to manipulate and analyse the shapes and spatial properties of geometric objects, such as points, lines, and polygons. These operations include tasks like calculating intersections, buffering, and determining the distance between shapes. 
+Geometric operations are used to manipulate and analyse the shapes and spatial properties of geometric objects, such as points, lines, and polygons. These operations include tasks like calculating intersections, buffering, and determining the distance between shapes. In this case, we can create 500-metre buffers around each station and then count how many bicycle thefts fall within these buffers.
 
-### Point in polygon operations
+```{r}
+#| label: 02-spatial-buffer
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: 'R code'
+# buffer
+osm_stations_buffer <- osm_stations |> 
+  st_buffer(dist = 500) |> 
+  st_union()
+
+# inspect
+head(osm_stations_buffer)
+```
+
+::: {.callout-tip}
+When performing buffer analysis, the buffer sizes are determined by the units of the coordinate reference system (CRS) used. For instance, with the British National Grid, where the CRS is in metres, the buffer distance must be specified in metres.
+:::
+
+We can map the results for a visual inspection:
+
+```{r tidy='styler'} 
+#| label: fig-02-buffer-map
+#| fig-cap: Train and underground stations in London with a 500 metres buffer.
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| filename: 'R code'
+# shape, polygon
+tm_shape(outline) +
+  
+  # specify colours
+  tm_polygons(
+    col = '#f0f0f0', 
+  ) +
+  
+# shape, polygon
+tm_shape(osm_stations_buffer) + 
+  
+  # specify colours
+  tm_polygons(
+    col = '#beaed4',
+  ) +
+  
+  # set layout
+  tm_layout(
+    frame = FALSE,
+  )
+```
+We can now use the `st_intersects` function to find out which reported bicycle thefts have occurred within 500 metres of a train or underground station.
+
+```{r}
+#| label: 02-intersect-buffer
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| message: False
+#| filename: 'R code'
+# intersect buffer with bicycle thefts
+theft_bike$d500_buffer <- theft_bike |> st_intersects(osm_stations_buffer, sparse = FALSE)
+
+# number of bicycle thefts within 500m of a station
+count(theft_bike, d500_buffer)
+```
+::: {.callout-warning}
+The results are almost identical, with a small difference due to how the two methods define within and handle spatial relationships and boundaries. For instance, a point on the buffer's edge will be included in the intersect method, but may not meet the distance threshold required by `st_within_distance()`.
+:::
+
+## Assignment 
+Now that we are familiar with basic spatial queries and geometric operations, we can conduct a similar analysis on the number of serious and fatal road crashed in London in 2022 and determine how many occurred on or near a main road. Try to do the following:
+
+1. Download the two datasets provided below and save them in the appropriate subfolder within your `data` directory. The datasets include:
+    * A `csv` file containing the number of road crashes that occurred in London in 2022, extracted from the UK's official road traffic casualty database using the [stas19](https://github.com/ropensci/stats19) R library.
+    * A `GeoPackage` file that contains A roads in London, extracted from the [Ordnance Survey Open Roads](https://www.ordnancesurvey.co.uk/products/os-open-roads) dataset.
+2. Calculate the number of serious and fatal road crashes that occurred within 100 metres and 500 metres of an A road, respectively.
+
+| File                                        | Type   | Link |
+| :------                                     | :------| :------ |
+| London STATS19 Road Collisions 2022         | `csv` | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/London-Collisions-2022.csv) |
+| London OS Open Roads - A Roads           | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-Open-Roads-Main.gpkg) |
 
 ## Before you leave
-And that is how you can conduct basic geometric operations and spatial queries using R and `sf`. Yet more RGIS coming over the next couple of weeks, but [this concludes the tutorial for this week](https://www.youtube.com/watch?v=Ydg4T2MP7Z8). Time to check out that reading list?
+Boom. That is how you can conduct basic spatial queries and geometric operations and using R and `sf`. Yet more RGIS coming over the next couple of weeks, but [this concludes the tutorial for this week](https://www.youtube.com/watch?v=Ydg4T2MP7Z8). Time to check out that reading list?

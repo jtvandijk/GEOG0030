@@ -320,7 +320,7 @@ osm_network <- opq(bbox = bbox_lambeth ) |>
 ```
 
 ::: {.callout-warning}
-In some cases, the OSM query may return an error, particularly when multiple users from the same location are executing the exact same query. If so, you can download a prepared copy of the data here: [[Download]](https://github.com/jtvandijk/GEOG0030/raw/master/data/spatial/London-OSM-Roads.RData). You can load this copy into R through `load('data/London-OSM-Roads.RData')`
+In some cases, the OSM query may return an error, particularly when multiple users from the same location are executing the exact same query. If so, you can download a prepared copy of the data here: [[Download]](https://github.com/jtvandijk/GEOG0030/raw/master/data/spatial/London-OSM-Roads.RData). You can load this copy into R through `load('data/spatial/London-OSM-Roads.RData')`
 :::
 
 The returned `osm_network` object contains a variety of elements with the specified tags. Our next step is to extract the spatial data from this object to create our road network dataset. Specifically, we will extract the edges of the network, which represent the lines of the roads, as well as the nodes, which represent the points where the roads start, end, or intersect.

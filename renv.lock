@@ -2627,6 +2627,20 @@
       ],
       "Hash": "379c270cf22c8394682d3acd5c62a3ef"
     },
+    "stats19": {
+      "Package": "stats19",
+      "Version": "3.2.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "methods",
+        "readr",
+        "sf",
+        "tools"
+      ],
+      "Hash": "2f3c994dec62480e0d2993b28c9e562b"
+    },
     "stringi": {
       "Package": "stringi",
       "Version": "1.8.4",
