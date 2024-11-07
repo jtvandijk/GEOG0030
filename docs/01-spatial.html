@@ -298,7 +298,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="r-for-spatial-analysis" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> R for Spatial Analysis</h1>
-<p>This week’s lecture offered a comprehensive introduction to the Geocomputation module, highlighting how and why it differs from a traditional GIScience course. In this week’s tutorial, we will introduce you to using R and RStudio for quantitative spatial data, focusing specifically on how R can be used to make maps.</p>
+<p>This week’s lecture offered a comprehensive introduction to the Geocomputation module, highlighting how and why it differs from a traditional GIScience course. In this week’s tutorial, we will introduce you to using R and RStudio for working with spatial data, focusing specifically on how R can be used to make maps.</p>
 <section id="lecture-slides" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="lecture-slides"><span class="header-section-number">1.1</span> Lecture slides</h2>
 <p>You can download the slides of this week’s lecture here: <a href="https://github.com/jtvandijk/GEOG0030/tree/master/slides/w01-geo.pdf">[Link]</a>.</p>
@@ -341,11 +341,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Please ensure that <strong>folder names</strong> and <strong>file names</strong> do not contain spaces or special characters such as <code>*</code> <code>.</code> <code>"</code> <code>/</code> <code>\</code> <code>[</code> <code>]</code> <code>:</code> <code>;</code> <code>|</code> <code>=</code> <code>,</code> <code>&lt;</code> <code>?</code> <code>&gt;</code> <code>&amp;</code> <code>$</code> <code>#</code> <code>!</code> <code>'</code> <code>{</code> <code>}</code> <code>(</code> <code>)</code>. Different operating systems and programming languages deal differently with spaces and special characters and as such including these in your folder names and file names can cause many problems and unexpected errors. As an alternative to using white space you can use an underscore (<code>_</code>) or hyphen (<code>-</code>) if you like.</p>
+<p>Please ensure that <strong>folder names</strong> and <strong>file names</strong> do not contain spaces or special characters such as <code>*</code> <code>.</code> <code>'</code> <code>/</code> <code>\</code> <code>[</code> <code>]</code> <code>:</code> <code>;</code> <code>|</code> <code>=</code> <code>,</code> <code>&lt;</code> <code>?</code> <code>&gt;</code> <code>&amp;</code> <code>$</code> <code>#</code> <code>!</code> <code>'</code> <code>{</code> <code>}</code> <code>(</code> <code>)</code>. Different operating systems and programming languages deal differently with spaces and special characters and as such including these in your folder names and file names can cause many problems and unexpected errors. As an alternative to using white space you can use an underscore (<code>_</code>) or hyphen (<code>-</code>) if you like.</p>
 </div>
 </div>
 </div>
-<p>With our project ready to go, today we will map the distribution of the share of European immigrants across London. The data covers the number of people residing in London that are born in a European country, as recorded in the 2021 Census for England and Wales, aggregated at the <a href="https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeographies/census2021geographies">Middle Layer Super Output Area (MSOA)</a> level.</p>
+<p>With our <code>GEOG0030</code> project ready to go, in this first tutorial we will look at the distribution of the share of European immigrants across London. The data covers the number of people residing in London that are born in a European country, as recorded in the 2021 Census for England and Wales, aggregated at the <a href="https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeographies/census2021geographies">Middle Layer Super Output Area (MSOA)</a> level.</p>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -394,7 +394,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>To download a <code>csv</code> file that is hosted on GitHub, click on the <code>Download raw file</code> button on the top right of your screen and it should download directly to your computer.</p>
+<p>To download a <code>csv</code> file that is hosted on GitHub, click on the <strong>Download raw file</strong> button on the top right of your screen and it should download directly to your computer.</p>
 </div>
 </div>
 </div>
@@ -431,7 +431,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div class="callout callout-style-simple callout-warning">
+<div class="callout callout-style-simple callout-important">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -528,7 +528,7 @@ Projected CRS: OSGB36 / British National Grid
 <pre><strong>R code</strong></pre>
 </div>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot data</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(msoa21, <span class="at">max.plot =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(msoa21, <span class="at">max.plot =</span> <span class="dv">1</span>, <span class="at">main =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
 <div id="fig-01-plot-map-data" class="quarto-figure quarto-figure-center anchored">
@@ -550,7 +550,7 @@ Projected CRS: OSGB36 / British National Grid
 </div>
 </div>
 </div>
-<p>Just as with a tabular dataframe, we can also inspect the attributes of the spatial data frame:</p>
+<p>Just as with a tabular dataframe, we can inspect the attributes of the spatial data frame:</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -597,7 +597,7 @@ Projected CRS: OSGB36 / British National Grid
 [7] "long"      "globalid"  "geom"     </code></pre>
 </div>
 </div>
-<p>We can also establish the class of our data:</p>
+<p>We can further establish the class of our data:</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -610,7 +610,7 @@ Projected CRS: OSGB36 / British National Grid
 <pre><code>[1] "sf"         "data.frame"</code></pre>
 </div>
 </div>
-<p>We should see our data is an <code>sf</code> dataframe, which is what we want and we can move on.</p>
+<p>We should see our data is an <code>sf</code> dataframe, which is what we want.</p>
 </section>
 <section id="joining-attribute-data" class="level3" data-number="1.3.2">
 <h3 data-number="1.3.2" class="anchored" data-anchor-id="joining-attribute-data"><span class="header-section-number">1.3.2</span> Joining attribute data</h3>
@@ -659,7 +659,7 @@ Projected CRS: OSGB36 / British National Grid
 </div>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># join attribute data onto spatial data</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>msoa21 <span class="ot">&lt;-</span> msoa21 <span class="sc">|&gt;</span> </span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(msoa_eur, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"msoa21cd"</span> <span class="ot">=</span> <span class="st">"msoa21cd"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(msoa_eur, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">'msoa21cd'</span> <span class="ot">=</span> <span class="st">'msoa21cd'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note">
@@ -727,7 +727,7 @@ Projected CRS: OSGB36 / British National Grid
 </div>
 </div>
 <p>Always inspect your join to ensure everything looks as expected. A good way to do this is by using the <code>View()</code> function to check for any unexpected missing values, which are marked as <code>NA</code>.</p>
-<p>We can further compare the total number of rows in the spatial dataset with the total number of non-<code>NA</code> values in the joined columns:</p>
+<p>We can also compare the total number of rows in the spatial dataset with the total number of non-<code>NA</code> values in the joined columns:</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -783,7 +783,7 @@ Projected CRS: OSGB36 / British National Grid
 </div>
 </div>
 </div>
-<p>In this case, the <code>fill()</code> argument in <code>tmap</code> is how we instruct the library to create a choropleth map based on the values in the specified column. If we set <code>fill()</code> to <code>NULL</code>, only the borders of our polygons will be drawn, without any colour fill. The <code>qtm()</code> function in tmap is versatile, allowing us to pass various parameters to customise the aesthetics of our map. By checking the function’s documentation, you can explore the full list of available parameters. For instance, to set the borders of our Cape Town polygons to white, we can use the <code>borders</code> parameter:</p>
+<p>In this case, the <code>fill()</code> argument in <code>tmap</code> is how we instruct the library to create a choropleth map based on the values in the specified column. If we set <code>fill()</code> to <code>NULL</code>, only the borders of our polygons will be drawn, without any colour fill. The <code>qtm()</code> function in <code>tmap</code> is versatile, allowing us to pass various parameters to customise the aesthetics of our map. By checking the function’s documentation, you can explore the full list of available parameters. For instance, to set the MSOA borders to white, we can use the <code>borders</code> parameter:</p>
 <div class="cell">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -831,7 +831,7 @@ Projected CRS: OSGB36 / British National Grid
 </div>
 </div>
 </div>
-<p>As you can now see, we have mapped the spatial polygons of our <code>msoa21</code> spatial dataframe. However, this is not quite the map we want; we need a choropleth map where the polygons are colored based on the proportion of European immigrants. To achieve this, we use the <code>col</code> parameter within the <code>tm_polygons()</code> function.</p>
+<p>As you can now see, we have mapped the spatial polygons of our <code>msoa21</code> spatial dataframe. However, this is not quite the map we want; we need a choropleth map where the polygons are coloured based on the proportion of European immigrants. To achieve this, we use the <code>col</code> parameter within the <code>tm_polygons()</code> function.</p>
 <div class="callout callout-style-simple callout-tip">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -840,7 +840,7 @@ Projected CRS: OSGB36 / British National Grid
 <div class="callout-body-container">
 <p>The <code>col</code> parameter within <code>tm_polygons()</code> allows you to fill polygons with colours based on:</p>
 <ul>
-<li>A single colour value (e.g.&nbsp;<code>red</code>).</li>
+<li>A single colour value (e.g.&nbsp;<code>red</code> or <code>#fc9272</code>).</li>
 <li>The name of a data variable within the spatial data file. This variable can either contain specific colour values or numeric/categorical values that will be mapped to a colour palette.</li>
 </ul>
 </div>
@@ -868,7 +868,7 @@ Projected CRS: OSGB36 / British National Grid
 </div>
 </div>
 </div>
-<p>We are making progress, but there are two immediate issues with our map. First, the classification breaks do not adequately reflect the variation in our dataset. By default, <code>tmap</code> uses <em>pretty</em> breaks, which may not be the most effective for our data. An alternative, such as natural breaks (or jenks), might better reveal the data’s variation.</p>
+<p>We are making progress, but there are two immediate issues with our map. First, the classification breaks do not adequately reflect the variation in our dataset. By default, <code>tmap</code> uses <em>pretty</em> breaks, which may not be the most effective for our data. An alternative, such as <em>natural breaks</em> (or <em>jenks</em>), might better reveal the data’s variation.</p>
 <p>To customise the classification breaks, refer to the <code>tm_polygons()</code> documentation. The following parameters are relevant:</p>
 <table class="table">
 <colgroup>
@@ -1137,7 +1137,7 @@ Projected CRS: OSGB36 / British National Grid
 <td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/Wales-MSOA-European.csv">Download</a></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">London MSOA 2021 Spatial Boundaries</td>
+<td style="text-align: left;">England and Wales MSOA 2021 Spatial Boundaries</td>
 <td style="text-align: left;"><code>GeoPackage</code></td>
 <td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/England-Wales-MSOA-2021.gpkg">Download</a></td>
 </tr>

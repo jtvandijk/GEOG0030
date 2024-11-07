@@ -25,7 +25,7 @@ This week, we will examine to what extent reported bicycle theft in London clust
 ### Crime data
 The UK Police Data Portal allows you to access and generate tabular data for crime recorded in the UK across the different police forces. To download recorded crime data for London:
 
-1. Navigate to [data.police.uk](https://data.police.uk/). And click on **Downloads**.
+1. Navigate to [data.police.uk](https://data.police.uk/) and click on **Downloads**.
 2. Under the data range select `January 2023` to `December 2023`.
 3. Under the **Custom download** tab select `Metropolitan Police Service` and `City of London Police`. Leave the other settings unchanged and click on **Generate file**.
 
@@ -88,7 +88,7 @@ Depending on your computer, processing this data may take some time due to the l
 :::
 
 ::: {.callout-note}
-You can further inspect both objects using the `View()` function. 
+You can further inspect the object using the `View()` function. 
 :::
 
 The column names contain spaces and are therefore not easily referenced. We can easily clean this up using the `janitor` package:
@@ -103,6 +103,9 @@ The column names contain spaces and are therefore not easily referenced. We can 
 # clean names
 crime_df <- crime_df |>
   clean_names()
+
+# inspect
+names(crime_df)
 ```
 
 For our analysis, we are currently only interested in reported bicycle thefts, so we need to filter our data based on the `crime_type` column. We can start by examining the unique values in this column and then subset the data accordingly:
@@ -477,7 +480,8 @@ theft_bike$d500_buffer <- theft_bike |> st_intersects(osm_stations_buffer, spars
 # number of bicycle thefts within 500m of a station
 count(theft_bike, d500_buffer)
 ```
-::: {.callout-warning}
+
+::: {.callout-important}
 The results are almost identical, with a small difference due to how the two methods define within and handle spatial relationships and boundaries. For instance, a point on the buffer's edge will be included in the intersect method, but may not meet the distance threshold required by `st_within_distance()`.
 :::
 

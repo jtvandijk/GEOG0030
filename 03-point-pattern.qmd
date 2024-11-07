@@ -1,5 +1,5 @@
 # Point Pattern Analysis
-This week, we will be focusing on point Pattern Analysis (PPA), which aims to detect clusters or patterns within a set of points. Through this analysis, we can measure density, dispersion, and homogeneity in point structures. Various methods exist for calculating and identifying these clusters, and today we will explore several of these techniques using our [bike theft dataset from last week](02-operations.html#crime-data).
+This week, we will be focusing on point pattern analysis (PPA), which aims to detect clusters or patterns within a set of points. Through this analysis, we can measure density, dispersion, and homogeneity in point structures. Various methods exist for calculating and identifying these clusters, and today we will explore several of these techniques using our [bike theft dataset from last week](02-operations.html#crime-data).
 
 ## Lecture slides
 The slides for this week's lecture can be downloaded here: [[Link]]({{< var slides.week03 >}})
@@ -343,8 +343,10 @@ Kernel Density Estimation is a useful exploratory technique for identifying spat
 
 DBSCAN requires two parameters:
 
-- `epsilon`: The maximum distance for points to be considered in the same cluster.
-- `minPts`: Th minimum number of points for a cluster.
+| Parameter  | Description |
+| :-         | :------ |
+| `epsilon`  | The maximum distance for points to be considered in the same cluster. |
+| `minPts`   | The minimum number of points for a cluster. |
 
 The algorithm groups nearby points based on these parameters and marks low-density points as outliers. DBSCAN is useful for uncovering patterns that are difficult to detect visually, but it works best when clusters have consistent densities.
 
@@ -368,7 +370,7 @@ bike_theft_dbscan <- theft_bike |>
 The `dbscan()` function accepts a data matrix or dataframe of points, not a spatial dataframe. That is why, in the code above, we use the `st_coordinates()` function to extract the projected coordinates from the spatial dataframe.
 :::
 
-The DBSCAN output includes three objects, one of which is a vector detailing the cluster for each bike theft observation. To work with this output effectively, we need to add the cluster labels back to the original point dataset. Since DBSCAN does not alter the order of points, we can simply add the cluster output to the `theft_bike` spatial dataframe.
+The DBSCAN output includes three objects, one of which is a vector detailing the cluster each bike theft observation has been assigned to. To work with this output effectively, we need to add the cluster labels back to the original point dataset. Since DBSCAN does not alter the order of points, we can simply add the cluster output to the `theft_bike` spatial dataframe.
 
 ```{r}
 #| label: 3-dbscan-add-clusters
@@ -423,15 +425,19 @@ for (cluster_index in seq(0, max(theft_bike$dbcluster))) {
 theft_bike_clusters <- st_sfc(geometry_list, crs = 27700)
 ```
 
+::: {.callout-tip}
+While loops in R should generally be avoided for large datasets due to inefficiency, they remain a useful tool for automating repetitive tasks and reducing the risk of errors. For smaller datasets or tasks that cannot easily be vectorised, loops can still be effective and simplify the code.
+:::
+
 We now have a spatial dataframe that contains the bike theft clusters in London, as defined by the DBSCAN clustering algorithm. Let's quickly map these clusters:
 
-```{r tidy="styler"}
+```{r tidy='styler'}
 #| label: fig-03-map-clusters
 #| fig-cap: DBSCAN-identified clusters of reported bicycle theft in London.
 #| echo: True
 #| eval: True
 #| message: False
-#| filename: "R code"
+#| filename: 'R code'
 # shape, polygon
 tm_shape(outline) +
   

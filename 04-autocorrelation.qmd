@@ -198,9 +198,11 @@ where ${N_{extreme}}$ is the number of simulated Moran's I values that were more
 ### Defining neighbours
 If the purpose of a Moran’s I test is to quantify how similar places are to their neighbours, the first step is to define what constitutes a **neighbour.** This definition is not necessarily straightforward, because 'neighbouring' observations can be determined in various ways, based on either geometry or proximity. The most common methods include:
 
-- **Contiguity**: Spatial units are considered neighbours if their polygon boundaries touch.
-- **Fixed Distance**: Spatial units are considered neighbours if they fall within a specified distance.
-- **$k$ Nearest Neighbours**: Spatial units are considered neighbours if they are among the closest neighbours.
+| Type                 | Description |
+| :-                   | :------ |
+| Contiguity           | Spatial units are considered neighbours if their polygon boundaries touch. |
+| Fixed Distance       | Spatial units are considered neighbours if they fall within a specified distance. |
+| Nearest Neighbours   | Spatial units are considered neighbours if they are among the closest neighbours. |
 
 To capture this information, we need to formalise the spatial relationships within our data by constructing a spatial weights matrix ($W_{ij}$). This matrix defines which units are neighbours based on our chosen criteria.
 
@@ -223,7 +225,7 @@ lsoa21_nb <- poly2nb(lsoa21, queen = TRUE)
 summary(lsoa21_nb)
 ``` 
 
-The `neighbour list` object is a [sparse matrix](https://en.wikipedia.org/wiki/Sparse_matrix) that lists the neighboring polygons for each municipality. This matrix represents the spatial relationships between municipalities, where each entry indicates which polygons share boundaries. These neighborhood relationships can be visualised as a graph by extracting the coordinate points of the centroids of the polygons representing each municipality:
+The `neighbour list` object is a [sparse matrix](https://en.wikipedia.org/wiki/Sparse_matrix) that lists the neighboring polygons for each LSOA. This matrix represents the spatial relationships between LSOAs, where each entry indicates which polygons share boundaries. These neighborhood relationships can be visualised as a graph by extracting the coordinate points of the centroids of the polygons representing each LSOA:
 
 ::: {.callout-warning}
 Regardless of the neighborhood definition you choose, it is important to verify the results, particularly when using contiguity-based approaches. If your spatial file has issues such as polygons that appear adjacent but do not actually share a border, your results may be inaccurate. You could increase the default value of the `snap` distance parameter in the `poly2nb()` function to include these polygons only separated by small gaps.
@@ -250,7 +252,7 @@ plot(lsoa21_nb, st_geometry(lsoa21_cent), add = TRUE)
 With nearly 5,000 LSOAs, the neighbourhood graph appears quite crowded. However, it seems acceptable, with no noticeable gaps and a dense network of neighbours in Central London, where many smaller LSOAs are located.
 
 ### Defining weights
-The neighbourhood list simply identifies which areas (polygons) are neighbours, but spatial weights take this a step further by assigning a weight to each neighbourhood connection. This is important because not all polygons have the same number of neighbours. To ensure that our spatially lagged values are comparable across neighbourhoods of different sizes, standardisation is required. The code below uses `style = 'W'` to row-standardise the values: if a municipality has five neighbours, the value of the spatially lagged variable will be the average of that variable across those five neighbours, with each neighbour receiving equal weight.
+The neighbourhood list simply identifies which areas (polygons) are neighbours, but spatial weights take this a step further by assigning a weight to each neighbourhood connection. This is important because not all polygons have the same number of neighbours. To ensure that our spatially lagged values are comparable across neighbourhoods of different sizes, standardisation is required. The code below uses `style = 'W'` to row-standardise the values: if an LSOA has five neighbours, the value of the spatially lagged variable will be the average of that variable across those five neighbours, with each neighbour receiving equal weight.
 
 ```{r}
 #| label: 04-nb-weights
@@ -307,7 +309,7 @@ moran <- moran.mc(lsoa21$asian_bangladeshi, listw = lsoa21_nb_weights, nsim = 99
 moran 
 ```
 
-The results of the [Monte Carlo](https://en.wikipedia.org/wiki/Monte_Carlo_method) simulation, visualised in @fig-04-plot-moran-permutation, suggest that there is statistically significant positive autocorrelation in our variable. This indicates that LSOAs with higher percentages of people that self-identify as Asian-Bangladeshi tend to be surrounded by other LSOAS with similarly high percentages. Likewise, LSOAs with lower percentages of people that self-identify as Asian Bangladeshi are generally surrounded by municipalities with similarly low values.
+The results of the [Monte Carlo](https://en.wikipedia.org/wiki/Monte_Carlo_method) simulation, visualised in @fig-04-plot-moran-permutation, suggest that there is statistically significant positive autocorrelation in our variable. This indicates that LSOAs with higher percentages of people that self-identify as Asian-Bangladeshi tend to be surrounded by other LSOAS with similarly high percentages. Likewise, LSOAs with lower percentages of people that self-identify as Asian Bangladeshi are generally surrounded by LSOAs with similarly low values.
 
 ```{r}
 #| label: fig-04-plot-moran-permutation
@@ -324,10 +326,12 @@ plot(moran, main = '', xlab = 'Variable: Asian-Bangladeshi')
 ### Local Moran's I
 Although we have established that there is positive spatial autocorrelation in our data, we still need to identify the specific spatial patterns. Looking back at @fig-moran-plot, you will notice that the plot is divided into four quadrants.
 
-- **Top-right quadrant**: This area represents municipalities that have a higher-than-average share of the population without schooling and are surrounded by other municipalities with similarly high shares of the population without schooling. These are known as *high-high* clusters.
-- **Bottom-left quadrant**: This area represents municipalities with a lower-than-average share of the population without schooling, surrounded by other municipalities with similarly low shares. These are *low-low* clusters.
-- **Top-left quadrant**: Municipalities with a higher-than-average share of the population without schooling surrounded by municipalities with a lower-than-average share. These are *high-low* clusters.
-- **Bottom-right quadrant**: Municipalities with a lower-than-average share of the population without schooling surrounded by municipalities with a higher-than-average share. These are *low-high* clusters.
+| Quadrant              | Description |
+| :-                    | :------ |
+| Top-right quadrant    | This area represents LSOAs that have a higher-than-average share of the population without schooling and are surrounded by other LSOAs with similarly high shares of the population without schooling. These are known as *high-high* clusters. |
+| Bottom-left quadrant  | This area represents LSOAs with a lower-than-average share of the population without schooling, surrounded by other LSOAs with similarly low shares. These are *low-low* clusters. |
+| Top-left quadrant     | LSOAs with a higher-than-average share of the population without schooling surrounded by LSOAs with a lower-than-average share. These are *high-low* clusters. |
+| Bottom-right quadrant | LSOAs with a lower-than-average share of the population without schooling surrounded by LSOAs with a higher-than-average share. These are *low-high* clusters. |
 
 We can show these area on a map by deconstructing the Moran's I into a series of [local Moran values](https://doi.org/10.1111/j.1538-4632.1995.tb00338.x), each measuring how similar each place is (individually) to its neighbours.
 
@@ -346,7 +350,7 @@ lmoran <- localmoran_perm(lsoa21$asian_bangladeshi, listw = lsoa21_nb_weights, n
 head(lmoran) 
 ```
 
-We are not given a single statistic as we did with our global Moran's I, but rather we get a table of different statistics that are all related back to each of the municipalities in our dataset. If we refer to the help page for the `localmoran()` function, we can find detailed explanations of these statistics. The most relevant ones include:
+We are not given a single statistic as we did with our global Moran's I, but rather we get a table of different statistics that are all related back to each of the LSOAs in our dataset. If we refer to the help page for the `localmoran()` function, we can find detailed explanations of these statistics. The most relevant ones include:
 
 | Name                | Description |
 | :-----              | :---------------|
@@ -466,7 +470,7 @@ This new map may still not fully address the issue of statistical significance d
 Any statistic that includes spatial weights is dependent upon how those weights are defined. We have so far used first order contiguity, i.e. polygons that share a boundary, but there is no particular reason why we should not include second order contiguity polygons (i.e. neighbours of neighbours), use a fixed distance neighbours definitions, or adopt a $k$ nearest neighbours definition. Try to do the following:
 
 1. Extract the centroids from the `lsoa21` file.
-2. Identify the `5` nearest neighbours for each municipalities, using the `knearneigh()` function.
+2. Identify the `5` nearest neighbours for each LSOA, using the `knearneigh()` function.
 3. Create a neigbhour list of these nearest neighbours, using the `knn2nb()` function.
 4. Compute the Global Moran’s I of the `asian_indian` variable using this new neighbourhood definition.
 5. Map the statistically significant clusters of Local Moran's I based on this new neighbourhood definition.
@@ -474,4 +478,3 @@ Any statistic that includes spatial weights is dependent upon how those weights 
 
 ## Before you leave 
 And that is how you can measure spatial dependence in your dataset through different spatial autocorrelation measures. Next week we will focus on the last topic within our set of core spatial analysis methods and techniques, but [this week we have covered enough](https://www.youtube.com/watch?v=fCZVL_8D048)! Probably time to get back to that pesky reading list.
-

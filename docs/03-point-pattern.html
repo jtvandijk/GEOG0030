@@ -296,7 +296,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="point-pattern-analysis" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">3</span> Point Pattern Analysis</h1>
-<p>This week, we will be focusing on point Pattern Analysis (PPA), which aims to detect clusters or patterns within a set of points. Through this analysis, we can measure density, dispersion, and homogeneity in point structures. Various methods exist for calculating and identifying these clusters, and today we will explore several of these techniques using our <a href="02-operations.html#crime-data">bike theft dataset from last week</a>.</p>
+<p>This week, we will be focusing on point pattern analysis (PPA), which aims to detect clusters or patterns within a set of points. Through this analysis, we can measure density, dispersion, and homogeneity in point structures. Various methods exist for calculating and identifying these clusters, and today we will explore several of these techniques using our <a href="02-operations.html#crime-data">bike theft dataset from last week</a>.</p>
 <section id="lecture-slides" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="lecture-slides"><span class="header-section-number">3.1</span> Lecture slides</h2>
 <p>The slides for this week’s lecture can be downloaded here: <a href="https://github.com/jtvandijk/GEOG0030/tree/master/slides/w03-geo.pdf">[Link]</a></p>
@@ -787,10 +787,28 @@ all geometries</code></pre>
 <h4 data-number="1.3.2.2" class="anchored" data-anchor-id="dbscan"><span class="header-section-number">3.3.2.2</span> DBSCAN</h4>
 <p>Kernel Density Estimation is a useful exploratory technique for identifying spatial clusters in point data, but it does not provide precise boundaries for these clusters. To more accurately delineate clusters, we can use an algorithm called DBSCAN <a href="https://cdn.aaai.org/KDD/1996/KDD96-037.pdf">(Density-Based Spatial Clustering of Applications with Noise)</a>, which takes both distance and density into account. DBSCAN is effective at discovering distinct clusters by grouping together points that are close to one another while marking points that don’t belong to any cluster as noise.</p>
 <p>DBSCAN requires two parameters:</p>
-<ul>
-<li><code>epsilon</code>: The maximum distance for points to be considered in the same cluster.</li>
-<li><code>minPts</code>: Th minimum number of points for a cluster.</li>
-</ul>
+<table class="table">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 77%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>epsilon</code></td>
+<td style="text-align: left;">The maximum distance for points to be considered in the same cluster.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>minPts</code></td>
+<td style="text-align: left;">The minimum number of points for a cluster.</td>
+</tr>
+</tbody>
+</table>
 <p>The algorithm groups nearby points based on these parameters and marks low-density points as outliers. DBSCAN is useful for uncovering patterns that are difficult to detect visually, but it works best when clusters have consistent densities.</p>
 <p>Let us try this with an <code>epsilon</code> of <strong>200</strong> metres and <code>minPts</code> of <strong>20</strong> bicycle thefts:</p>
 <div class="cell styled-output">
@@ -814,7 +832,7 @@ all geometries</code></pre>
 </div>
 </div>
 </div>
-<p>The DBSCAN output includes three objects, one of which is a vector detailing the cluster for each bike theft observation. To work with this output effectively, we need to add the cluster labels back to the original point dataset. Since DBSCAN does not alter the order of points, we can simply add the cluster output to the <code>theft_bike</code> spatial dataframe.</p>
+<p>The DBSCAN output includes three objects, one of which is a vector detailing the cluster each bike theft observation has been assigned to. To work with this output effectively, we need to add the cluster labels back to the original point dataset. Since DBSCAN does not alter the order of points, we can simply add the cluster output to the <code>theft_bike</code> spatial dataframe.</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -859,6 +877,16 @@ all geometries</code></pre>
 <span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a><span class="co"># combine the list</span></span>
 <span id="cb33-28"><a href="#cb33-28" aria-hidden="true" tabindex="-1"></a>theft_bike_clusters <span class="ot">&lt;-</span> <span class="fu">st_sfc</span>(geometry_list, <span class="at">crs =</span> <span class="dv">27700</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>While loops in R should generally be avoided for large datasets due to inefficiency, they remain a useful tool for automating repetitive tasks and reducing the risk of errors. For smaller datasets or tasks that cannot easily be vectorised, loops can still be effective and simplify the code.</p>
+</div>
 </div>
 </div>
 <p>We now have a spatial dataframe that contains the bike theft clusters in London, as defined by the DBSCAN clustering algorithm. Let’s quickly map these clusters:</p>
