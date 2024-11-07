@@ -114,7 +114,7 @@ The first thing we want to do when we load spatial data is to plot the data to c
 #| echo: True
 #| eval: True
 #| tidy: True
-#| cache: True
+#| cache: False
 #| filename: 'R code'
 # plot data
 plot(msoa21, max.plot = 1, main = '')
@@ -318,7 +318,7 @@ Let us build a map using `tmap`:
 #| echo: True
 #| eval: True
 #| tidy: True
-#| cache: True
+#| cache: False
 #| filename: 'R code'
 # shape, polygons
 tm_shape(msoa21) +
@@ -341,7 +341,7 @@ Let us go ahead and pass our `prop_eur21` variable within the `col()` parameter 
 #| fig-cap: Building up a map layer by layer.
 #| echo: True
 #| eval: True
-#| cache: True
+#| cache: False
 #| filename: 'R code'
 
 # shape, polygons
@@ -369,7 +369,7 @@ For example, if we want to adjust our choropleth map to use five classes determi
 #| fig-cap: Building up a map layer by layer.
 #| echo: True
 #| eval: True
-#| cache: True
+#| cache: False
 #| filename: 'R code'
 # shape, polygons
 tm_shape(msoa21) +
@@ -397,7 +397,7 @@ To begin styling your map, explore each of these functions and their parameters.
 #| fig-cap: Building up a map layer by layer.
 #| echo: True
 #| eval: True
-#| cache: True
+#| cache: False
 #| filename: 'R code'
 # shape, polygons
 tm_shape(msoa21) +
@@ -452,7 +452,7 @@ We can also have some map labels, if we want, by extracting centroids from selec
 #| fig-cap: Building up a map layer by layer.
 #| echo: True
 #| eval: True
-#| cache: True
+#| cache: False
 #| filename: 'R code'
 
 # map labels
