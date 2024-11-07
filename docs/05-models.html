@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -240,7 +274,12 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#spatial-models" id="toc-spatial-models" class="nav-link active" data-scroll-target="#spatial-models"><span class="header-section-number">5</span> Spatial Models</a></li>
+  <li><a href="#spatial-models" id="toc-spatial-models" class="nav-link active" data-scroll-target="#spatial-models"><span class="header-section-number">5</span> Spatial Models</a>
+  <ul class="collapse">
+  <li><a href="#lecture-slides" id="toc-lecture-slides" class="nav-link" data-scroll-target="#lecture-slides"><span class="header-section-number">5.1</span> Lecture slides</a></li>
+  <li><a href="#reading-list" id="toc-reading-list" class="nav-link" data-scroll-target="#reading-list"><span class="header-section-number">5.2</span> Reading list</a></li>
+  <li><a href="#elections-results-in-england-and-wales" id="toc-elections-results-in-england-and-wales" class="nav-link" data-scroll-target="#elections-results-in-england-and-wales"><span class="header-section-number">5.3</span> Elections results in England and Wales</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jtvandijk/GEOG0030/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -251,18 +290,164 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="spatial-models" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">5</span> Spatial Models</h1>
+<p>Last week, we explored spatial dependency and methods for measuring it. This week, we will examine how spatial autocorrelation can impact our analyses, especially in models where independence assumptions are crucial. To address these dependencies, we will use the <code>GWmodel</code> library to calculate local summary statistics for geographical areas and to fit basic spatially explicit models to our data.</p>
+<section id="lecture-slides" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="lecture-slides"><span class="header-section-number">5.1</span> Lecture slides</h2>
+<p>You can download the slides of this week’s lecture here: <a href="https://github.com/jtvandijk/GEOG0030/tree/master/slides/w05-geo.pdf">[Link]</a>.</p>
+</section>
+<section id="reading-list" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="reading-list"><span class="header-section-number">5.2</span> Reading list</h2>
+<section id="essential-readings" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="essential-readings">Essential readings</h4>
+<ul>
+<li>Harris, R. 2019. <strong>Chapter 8</strong>: <em>Not just nuisance: Spatialising social statistics.</em> In: Whitworth, A. (ed) Towards a Spatial Social Policy: Bridging the Gap Between Geography and Social Policy. Bristol: Policy Press. <a href="https://www-jstor-org.libproxy.ucl.ac.uk/stable/j.ctvs1g92b.12?socuuid=53116c87-882d-4070-b1dc-45854bbedbfe">[Link]</a></li>
+</ul>
+</section>
+<section id="suggested-readings" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="suggested-readings">Suggested readings</h4>
+<ul>
+<li>Brundson, C., Fotheringham, M., and Charlton, M. 2002. Geographically Weighted Regression. <em>Journal of the Royal Statistical Society: Series D (The Statistician)</em> 47(3): 431-443. <a href="https://doi.org/10.1111/1467-9884.00145">[Link]</a></li>
+<li>Comber, A., Brundson, C., Charlton, M. <em>et al.</em>. 2022. A route map for successful applications of Geographically Weighted Regression. <em>Geographical Analysis</em> 55(1): 155-178. <a href="https://doi.org/10.1111/gean.12316">[Link]</a></li>
+</ul>
+</section>
+</section>
+<section id="elections-results-in-england-and-wales" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="elections-results-in-england-and-wales"><span class="header-section-number">5.3</span> Elections results in England and Wales</h2>
+<p>This week we will investigate the political geography of England and Wales, focusing on the results of the July 2024 General Election, which was won by the Labour Party led by Keir Starmer. You will work with data extracted from two data sources: the <a href="https://commonslibrary.parliament.uk/research-briefings/cbp-10009/">constituency results from the election</a> and socio-demographic information relating to age groups, economic status, and ethnic background from the 2021 Census, extracted using the <a href="https://www.ons.gov.uk/datasets/create">Custom Dataset Tool</a>. These datasets have been prepared and merged. Along with this dataset, we also have access to a <code>GeoPackage</code> that contains the boundaries of the parliamentary constituencies.</p>
+<p>You can download both files below and save them in your project folder under <code>data/attributes</code> and <code>data/spatial</code>, respectively.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">File</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Link</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">England and Wales Parliamentary Constituencies GE2024</td>
+<td style="text-align: left;"><code>csv</code></td>
+<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/England-Wales-GE2024-Constituency-Vars.csv">Download</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">England and Wales Parliamentary Constituencies Boundaries</td>
+<td style="text-align: left;"><code>GeoPackage</code></td>
+<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/tree/master/data/spatial/England-Wales-GE2024-Boundaries.gpkg">Download</a></td>
+</tr>
+</tbody>
+</table>
+<p>Open a new script within your <code>GEOG0030</code> project and save this as <code>w05-election-analysis.r</code>.</p>
+<p>Begin by loading the necessary libraries:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load libraries</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GWmodel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>You may have to install some of these libraries if you have not used these before.</p>
+</div>
+</div>
+</div>
+<p>Once downloaded, we can load both files into memory:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load election dataset</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>elec_24 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/attributes/England-Wales-GE2024-Constituency-Vars.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 575 Columns: 28
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr  (6): constituency_code, constituency_name, region_name, winning_party, ...
+dbl (22): eligible_voters, valid_votes, conservative_votes, labour_votes, li...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load constituency boundaries</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>cons_24 <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/spatial/England-Wales-GE2024-Boundaries.gpkg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Reading layer `England-Wales-GE2024-Boundaries' from data source 
+  `/Users/justinvandijk/Library/CloudStorage/Dropbox/UCL/Web/jtvandijk.github.io/GEOG0030/data/spatial/England-Wales-GE2024-Boundaries.gpkg' 
+  using driver `GPKG'
+Simple feature collection with 575 features and 8 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: 85713.71 ymin: 7054.1 xmax: 655644.8 ymax: 657536.5
+Projected CRS: OSGB36 / British National Grid</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(elec_24)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 28
+  constituency_code constituency_name  region_name winning_party eligible_voters
+  &lt;chr&gt;             &lt;chr&gt;              &lt;chr&gt;       &lt;chr&gt;                   &lt;dbl&gt;
+1 W07000081         Aberafan Maesteg   Wales       Lab                     72580
+2 E14001063         Aldershot          South East  Lab                     78553
+3 E14001064         Aldridge-Brownhil… West Midla… Con                     70268
+4 E14001065         Altrincham and Sa… North West  Lab                     74025
+5 W07000082         Alyn and Deeside   Wales       Lab                     75790
+6 E14001066         Amber Valley       East Midla… Lab                     71546
+# ℹ 23 more variables: valid_votes &lt;dbl&gt;, conservative_votes &lt;dbl&gt;,
+#   labour_votes &lt;dbl&gt;, libdem_votes &lt;dbl&gt;, conservative_vote_share &lt;dbl&gt;,
+#   labour_vote_share &lt;dbl&gt;, libdem_vote_share &lt;dbl&gt;,
+#   aged_15_years_and_under &lt;dbl&gt;, aged_16_to_24_years &lt;dbl&gt;,
+#   aged_25_to_34_years &lt;dbl&gt;, aged_35_to_49_years &lt;dbl&gt;,
+#   aged_50_years_and_over &lt;dbl&gt;, eco_not_applicable &lt;dbl&gt;,
+#   eco_active_employed &lt;dbl&gt;, eco_active_unemployed &lt;dbl&gt;, …</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cons_24)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 6 features and 8 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: 368283 ymin: 100922.9 xmax: 524969.7 ymax: 393552.1
+Projected CRS: OSGB36 / British National Grid
+   pcon24cd                 pcon24nm pcon24nmw  bng_e  bng_n     long      lat
+1 E14001063                Aldershot           484716 155270 -0.78648 51.29027
+2 E14001064      Aldridge-Brownhills           404720 301030 -1.93172 52.60704
+3 E14001065 Altrincham and Sale West           374132 389051 -2.39049 53.39766
+4 E14001066             Amber Valley           440478 349674 -1.39771 53.04282
+5 E14001067  Arundel and South Downs           497309 118530 -0.61584 50.95798
+6 E14001068                 Ashfield           450035 356564 -1.25410 53.10395
+                                globalid                           geom
+1 {3F742659-208E-4859-8905-1CE5E2B87AAC} MULTIPOLYGON (((485406.9 15...
+2 {4668E55F-5248-45E4-9927-30562A6812D5} MULTIPOLYGON (((406519.1 30...
+3 {56FDBCDF-25DA-4EE5-AB66-6FC9C71D2927} MULTIPOLYGON (((379104.1 39...
+4 {9F9742E9-AD8C-4878-9841-1DF40BBA2619} MULTIPOLYGON (((444868.4 35...
+5 {4AFD2380-5BB7-4A01-8712-8637117E96D4} MULTIPOLYGON (((523813.2 11...
+6 {E0D1319E-FD1E-43AF-B809-79127FB22B22} MULTIPOLYGON (((455809 3579...</code></pre>
+</div>
+</div>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>The Geocomputation content for the 2024-2025 academic year is currently undergoing a major update. The materials from 2023-2024 have been archived and can be accessed here: <a href="https://jtvandijk.github.io/GEOG0030_20232024">[Link]</a></p>
+<p>You can inspect both objects using the <code>View()</code> function.</p>
 </div>
 </div>
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

@@ -1,5 +1,71 @@
 # Spatial Models 
+Last week, we explored spatial dependency and methods for measuring it. This week, we will examine how spatial autocorrelation can impact our analyses, especially in models where independence assumptions are crucial. To address these dependencies, we will use the `GWmodel` library to calculate local summary statistics for geographical areas and to fit basic spatially explicit models to our data.
+
+## Lecture slides 
+You can download the slides of this week's lecture here: [[Link]]({{< var slides.week05 >}}).
+
+## Reading list
+#### Essential readings {.unnumbered}
+- Harris, R. 2019. **Chapter 8**: *Not just nuisance: Spatialising social statistics.* In: Whitworth, A. (ed) Towards a Spatial Social Policy: Bridging the Gap Between Geography and Social Policy. Bristol: Policy Press. [[Link]](https://www-jstor-org.libproxy.ucl.ac.uk/stable/j.ctvs1g92b.12?socuuid=53116c87-882d-4070-b1dc-45854bbedbfe)
+
+#### Suggested readings {.unnumbered}
+- Brundson, C., Fotheringham, M., and Charlton, M. 2002. Geographically Weighted Regression. *Journal of the Royal Statistical Society: Series D (The Statistician)* 47(3): 431-443. [[Link]](https://doi.org/10.1111/1467-9884.00145)
+- Comber, A., Brundson, C., Charlton, M. *et al.*. 2022. A route map for successful applications of Geographically Weighted Regression. *Geographical Analysis* 55(1): 155-178. [[Link]](https://doi.org/10.1111/gean.12316)
+
+## Elections results in England and Wales
+This week we will investigate the political geography of England and Wales, focusing on the results of the July 2024 General Election, which was won by the Labour Party led by Keir Starmer. You will work with data extracted from two data sources: the [constituency results from the election](https://commonslibrary.parliament.uk/research-briefings/cbp-10009/) and socio-demographic information relating to age groups, economic status, and ethnic background from the 2021 Census, extracted using the [Custom Dataset Tool](https://www.ons.gov.uk/datasets/create). These datasets have been prepared and merged. Along with this dataset, we also have access to a `GeoPackage` that contains the boundaries of the parliamentary constituencies. 
+
+You can download both files below and save them in your project folder under `data/attributes` and `data/spatial`, respectively.
+
+| File                                                        | Type   | Link |
+| :------                                                     | :------| :------ |
+| England and Wales Parliamentary Constituencies GE2024       | `csv` | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/England-Wales-GE2024-Constituency-Vars.csv) |
+| England and Wales Parliamentary Constituencies Boundaries   | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/spatial/England-Wales-GE2024-Boundaries.gpkg) |
+
+Open a new script within your `GEOG0030` project and save this as `w05-election-analysis.r`. 
+
+Begin by loading the necessary libraries:
+
+```{r}
+#| label: 05-load-libraries
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| output: False
+#| tidy: True
+#| filename: "R code"
+# load libraries
+library(tidyverse)
+library(sf)
+library(tmap)
+library(GWmodel)
+```
+
+::: {.callout-warning}
+You may have to install some of these libraries if you have not used these before.
+:::
+
+Once downloaded, we can load both files into memory:
+```{r}
+#| label: 5-load-gpkg-csv
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: 'R code'
+# load election dataset
+elec_24 <- read_csv('data/attributes/England-Wales-GE2024-Constituency-Vars.csv')
+
+# load constituency boundaries
+cons_24 <- st_read('data/spatial/England-Wales-GE2024-Boundaries.gpkg')
+
+# inspect
+head(elec_24)
+
+# inspect
+head(cons_24)
+``` 
 
 ::: {.callout-note}
-The Geocomputation content for the 2024-2025 academic year is currently undergoing a major update. The materials from 2023-2024 have been archived and can be accessed here: [\[Link\]](https://jtvandijk.github.io/GEOG0030_20232024)
+You can inspect both objects using the `View()` function. 
 :::
