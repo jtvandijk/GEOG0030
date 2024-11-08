@@ -31,8 +31,8 @@ The topics covered over the next ten weeks are:
 | 6    | Applied Spatial Analysis | [Raster Data Analysis]({{< var urls.w06 >}})|
 | 7    | Applied Spatial Analysis | [Geodemographic Classification]({{< var urls.w07 >}})|
 | 8    | Applied Spatial Analysis | [Accessibility Analysis]({{< var urls.w08 >}}) |
-| 9    | Data Visualisation | [Complex Visualisations]({{< var urls.w09 >}}) | 
-| 10   | Data Visualisation | [Beyond the Choropleth]({{< var urls.w10 >}}) | 
+| 9    | Data Visualisation | [Beyond the Choropleth]({{< var urls.w09 >}}) | 
+| 10   | Data Visualisation | [Complex Visualisations]({{< var urls.w10 >}}) | 
 
 ::: {.callout-note}
 This GitHub resource has been updated for the 2024-2025 academic year. The content for 2023-2024 has been archived and can be found here: [[Link]](https://jtvandijk.github.io/GEOG0030_20232024)
@@ -52,7 +52,7 @@ This year's module material features the following **major** updates:
 
 - Second full rewrite of the workbook using `Quarto`.
 - Improved alignment with [GEOG0018 Methods in Human Geography](https://jtvandijk.github.io/GEOG0018).
-- New material on geographically weighted statistics, geodemographic classification, and data visualisation.
+- New material covering geographically weighted regression, geodemographic classification, and data visualisation.
 - Fully updated material on spatial queries and geometric operations, point pattern analysis, spatial autocorrelation, and accessibility analysis.
 - Introduction of package management using `renv`.
 :::

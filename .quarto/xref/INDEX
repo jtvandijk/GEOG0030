@@ -40,5 +40,11 @@
   },
   "02-operations.qmd": {
     "02-operations.html": "ecf08469"
+  },
+  "10-datavis.qmd": {
+    "10-datavis.html": "5a2fd298"
+  },
+  "09-maps.qmd": {
+    "09-maps.html": "b48ac364"
   }
 }

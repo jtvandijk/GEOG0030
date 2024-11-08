@@ -58,8 +58,8 @@ website:
         - 08-network.qmd
       - section: "Data visualisation"
         contents:
-        - 09-datavis.qmd
-        - 10-maps.qmd
+        - 09-maps.qmd
+        - 10-datavis.qmd
       - section: "Additional Resources"
         contents:
         - 11-data.qmd

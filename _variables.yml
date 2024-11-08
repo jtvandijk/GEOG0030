@@ -12,8 +12,8 @@ urls:
   w06: "06-raster.html"
   w07: "07-geodemographics.html"
   w08: "08-network.html"
-  w09: "09-datavis.html"
-  w10: "10-maps.html"
+  w09: "09-maps.html"
+  w10: "10-datavis.html"
   
 slides:
   week01: "https://github.com/jtvandijk/GEOG0030/tree/master/slides/w01-geo.pdf"

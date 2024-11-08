@@ -237,14 +237,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./09-datavis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">9 Complex Visualisations</span></a>
+  <a href="./09-maps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">10 Beyond the Choropleth</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./10-maps.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">10 Beyond the Choropleth</span></a>
+  <a href="./10-datavis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">9 Complex Visualisations</span></a>
   </div>
 </li>
       </ul>
@@ -354,7 +354,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td style="text-align: left;">England and Wales Parliamentary Constituencies Boundaries</td>
 <td style="text-align: left;"><code>GeoPackage</code></td>
-<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/tree/master/data/spatial/England-Wales-GE2024-Boundaries.gpkg">Download</a></td>
+<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/England-Wales-GE2024-Boundaries.gpkg">Download</a></td>
 </tr>
 </tbody>
 </table>
@@ -992,7 +992,7 @@ Adaptive bandwidth: 108 CV score: 1.938444 </code></pre>
 <pre><code>   ***********************************************************************
    *                       Package   GWmodel                             *
    ***********************************************************************
-   Program starts at: 2024-11-08 14:47:12.687624 
+   Program starts at: 2024-11-08 15:30:19.276738 
    Call:
    gwr.basic(formula = conservative_vote_share ~ eco_active_employed + 
     eco_active_unemployed + eth_white + eth_black + aged_25_to_34_years + 
@@ -1066,7 +1066,7 @@ Adaptive bandwidth: 108 CV score: 1.938444 </code></pre>
    Adjusted R-square value:  0.7001241 
 
    ***********************************************************************
-   Program stops at: 2024-11-08 14:47:12.782585 </code></pre>
+   Program stops at: 2024-11-08 15:30:19.382044 </code></pre>
 </div>
 </div>
 <p>The global regression results are derived from the standard OLS model, representing a single regression for the entire study area without accounting for spatial variation. In contrast, the geographically weighted regression (GWR) results stem from 575 separate but spatially overlapping regression models, each fitted with geographic weighting to different spatial subsets of the data, allowing for local variation in the regression estimates. We can also see that the model fit (adjusted <span class="math inline">\(R^2\)</span>) has increased to 70%.</p>

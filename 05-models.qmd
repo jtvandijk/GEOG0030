@@ -20,7 +20,7 @@ You can download both files below and save them in your project folder under `da
 | File                                                        | Type   | Link |
 | :------                                                     | :------| :------ |
 | England and Wales Parliamentary Constituencies GE2024       | `csv` | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/England-Wales-GE2024-Constituency-Vars.csv) |
-| England and Wales Parliamentary Constituencies Boundaries   | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/spatial/England-Wales-GE2024-Boundaries.gpkg) |
+| England and Wales Parliamentary Constituencies Boundaries   | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/England-Wales-GE2024-Boundaries.gpkg) |
 
 Open a new script within your `GEOG0030` project and save this as `w05-election-analysis.r`. 
 
