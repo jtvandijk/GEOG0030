@@ -39,6 +39,7 @@ library(tidyverse)
 library(sf)
 library(tmap)
 library(GWmodel)
+library(easystats)
 ```
 
 ::: {.callout-warning}
@@ -88,7 +89,7 @@ cor.test(elec_24$aged_50_years_and_over, elec_24$conservative_vote_share, method
 plot(elec_24$aged_50_years_and_over, elec_24$conservative_vote_share, xlab = 'Proportion of population over 50 years old', ylab = 'Proportion of votes for the Conservative party')
 ```
 
-However, as you should know by now, the first step when working with spatial data is to create a map:
+However, as you should know by now, the first step when working with spatial data is to map your variables:
 
 ```{r tidy='styler'} 
 #| label: fig-05-map-vote-share
@@ -150,14 +151,12 @@ tm_shape(cons_24) +
   )
 ``` 
 
-Looking at the maps, the spatial distribution of Conservative vote share and the proportion of the population over 50 appears neither random nor uniform. This contextualises the observed correlation between these variables (see @fig-05-plot-data-scatter): to what extent does this association hold consistently across different areas? 
+Looking at the maps, the spatial distribution of Conservative vote share and the proportion of the population over 50 appears neither random nor uniform. This raises the question to what extent the observed correlation in @fig-05-plot-data-scatter holds consistently across different constituencies? To answer this we can run a Geographically Weighted Correlation using the `GWmodel` library.
+
+Geographically Weighted Correlation (GWC) allows us to investigate whether the strength and direction of the association between variables vary across space. By applying a localised correlation technique, GWC calculates the correlation coefficient within specified spatial windows or *kernels* across the study area. This can reveal geographic areas where the relationship is stronger or weaker, providing more insight than a single global correlation and helping us to understand spatial heterogeneity in the data.
 
 ::: {.callout-note}
-The `GWmodel` library allows us to calculate local statistics, such as means, standard deviations, variances, and correlations. But [as with spatial autocorrelation](04-autocorrelation.html#defining-neighbours), we must define what *local* means. One approach is to use a kernel function to select which values contribute to each local estimate. Kernels operate on point locations (e.g. polygon centroids) and apply a window with a specified shape and bandwidth. The bandwidth, which defines the kernel’s size, can be set in absolute terms (e.g. within 10 km) or in relative terms (e.g. the 10 nearest centroids), the latter known as an adaptive kernel.
-:::
-
-::: {.callout-tip}
-Sometimes heteroscedasticity is indicative of a geographically varying relationship and it is worth considering calculating a geographically weighted correlation.
+The `GWmodel` library allows us to calculate local statistics, such as means, standard deviations, variances, and correlations. But [as with spatial autocorrelation](04-autocorrelation.html#defining-neighbours), we must define what *local* means. One approach is to use a kernel function to select which values contribute to each local estimate. Kernels operate on point locations (e.g. polygon centroids) and apply a window with a specified shape and bandwidth. The bandwidth, which defines the kernel's size, can be set in absolute terms (e.g. within 10 km) or in relative terms (e.g. the 10 nearest centroids), the latter known as an adaptive kernel.
 :::
 
 The `GWmodel` library uses the older `sp` data format for handling spatial data. We therefore need to convert our current `sf` object to `sp` before continuing:
@@ -175,10 +174,10 @@ cons_24_sp <- as_Spatial(cons_24)
 ```
 
 ::: {.callout-note}
-The `sf` package in R is now favoured over the `sp` package due to its more modern and efficient handling of spatial data. `sf` uses simple features, which are a standardised way to store and manipulate spatial geometries, making it more compatible with other geospatial tools and software. It also integrates more seamlessly with the `tidyverse` ecosystem, allowing for easier data manipulation and analysis.
+The `sf` package is now preferred over `sp` in R for its modern, efficient handling of spatial data. By using simple features, a standardised format for spatial geometries, `sf` is more compatible with other geospatial tools and integrates smoothly with the tidyverse, simplifying data manipulation and analysis. However, some libraries still rely on `sp` and have not yet transitioned to `sf.`
 :::
 
-We can now calculate a geographically weighted correlation. We will use an adaptive bandwidth of the 10 nearest constituencies bandwidth of 50 kilometres:
+We can now calculate a geographically weighted correlation. We will use an adaptive bandwidth that estimates the local correlation using the 25 nearest constituencies:
 
 ```{r}
 #| label: 05-gwc
@@ -244,10 +243,11 @@ tm_shape(cons_24) +
   )
 ``` 
 
-While the map illustrates correlations, it does not indicate their statistical significance. We can assess this using a Monte Carlo simulation via the `gwss.montecarlo()` function. However, with a large dataset like ours, this is computationally very expensive and takes a long time to run, especially if the number of simulations is increased beyond the default of `99`.
+While the map shows correlation patterns, it doesn not indicate statistical significance. To evaluate this, we can use a Monte Carlo simulation with the `gwss.montecarlo()` function. However, for a large dataset like ours, this process is computationally intensive and time-consuming, especially with more than the default `99` simulations.
+
 
 ::: {.callout-important} 
-Although we will not run a Monte Carlo simulation right now, the code below *demonstrates* how a Monte Carlo simulation could be used to evaluate the significance of the local correlation coefficients and link them back to the `cons_24` spatial dataframe.
+Although we will not run a Monte Carlo simulation here, the code below *demonstrates* how to run this and link the results back to the *cons_24* spatial dataframe
 :::
 
 ```{r}
@@ -257,9 +257,9 @@ Although we will not run a Monte Carlo simulation right now, the code below *dem
 #| eval: False
 #| tidy: True
 #| cache: True
-#| filename: "R code"
+#| filename: 'R code'
 # geographically weighted correlation, monte carlo simulation
-cons_24_cor_sig <- gwss.montecarlo(cons_24_sp , vars = c('conservative_vote_share', 'aged_50_years_and_over'), bw = 2, adaptive = TRUE, nsim = 1000) |>
+cons_24_cor_sig <- gwss.montecarlo(cons_24_sp , vars = c('conservative_vote_share', 'aged_50_years_and_over'), bw = 2, adaptive = TRUE, nsim = 99) |>
   as_tibble() |>
   select(Corr_conservative_vote_share.aged_50_years_and_over) 
 
@@ -273,10 +273,14 @@ cons_24 <- cons_24 |>
                        if_else(cons_age_cor_p > 0.975, cons_age_cor_p, NA)))
 ```
 
-### Geographically weighted regression
-Geographically weighted regression (GWR) is used when the relationship between a dependent and set of independent variables is not constant across space, meaning the model coefficients vary by location. This is useful when you suspect that the relationship between variables may change depending on the geographic context. GWR provides a localised understanding of the relationships by allowing each observation to have its own set of regression coefficients, which can provide insights into how relationships differ across the study area. 
+::: {.callout-note}
+It took more than **2 minutes** to run the Monte Carlo simulation on an Apple MacBook Pro M1 (16GB RAM) with the default of `99` simulations. 
+:::
 
-GWR fits a separate regression equation at each location in the study area, weighting nearby observations more heavily than those farther away. The weighting is typically based on a kernel function. The basic GWR equation is:
+### Geographically weighted regression
+A correlation describes the strength and direction of a linear relationship, but if we want to quantify the change in a dependent variable (`y`) for a one-unit change in the independent variable(s) (`x`) we need to run a regression. Geographically weighted regression (GWR) is used when the relationship between a dependent and set of independent variables is not constant across space, meaning the model coefficients vary by location. This is useful when you suspect that the relationship between variables may change depending on the geographic context. GWR provides a localised understanding of the relationships by allowing each observation to have its own set of regression coefficients, which can provide insights into how relationships differ across the study area. 
+
+GWR fits a separate regression equation at each location in the study area, weighting nearby observations more heavily than those farther away. Again, the weighting is typically based on a kernel function. The basic GWR equation is:
 
 $$
 y_{i} = \beta_{0}(\upsilon_{i}, v_{i}) + \sum_{k=1}^{p}\beta_{k}(\upsilon_{i}, v_{i})x_{ik} + \epsilon_{i}
@@ -284,12 +288,118 @@ $$
 
 where $(\upsilon_{i}, v_{i})$ are the coordinates of location $i$ and $\beta_{k}(\upsilon_{i}, v_{i})$ are the location-specific coefficients. 
 
-::: {.callout-important}
-The geographically weighted correlation that we calculated above is therefore essentially a *univariate* GWR.
+### Multivariate regression
+To predict the Conservative voter share, we hypothesise that certain socio-demographic variables may play a significant role. These independent variables include:
+
+| Variable                  | Description |
+| :-                        | :------ |
+| `eco_active_employed`     | Proportion of economically active employed individuals. |
+| `eth_white`               | Proportion of the population identifying as white. |
+| `eth_black`               | Proportion of the population identifying as black. |
+| `aged_25_to_34_years`     | Proportion of the population between ages 25 and 34. |
+| `aged_50_years_and_over`  | Proportion of the population over age 50. |
+
+We can run the multivariate regression as follows: 
+
+```{r}
+#| label: 05-regression-multi
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# regression
+lm_voteshare <- lm(conservative_vote_share ~ eco_active_employed + eth_white + eth_black + aged_25_to_34_years + aged_50_years_and_over, data = cons_24)
+
+# summary
+summary(lm_voteshare)
+```
+
+The model summary indicates that all variables are statistically significant predictors of Conservative vote share. The resuls suggest that older and employed populations are linked to higher Conservative support, while younger age groups and certain ethnic proportions show a negative relationship.
+
+We can now run the diagnostics to see whether the regression assumptions are met. Check for normality of the residuals:
+
+```{r}
+#| label: fig-05-diagnose-normality
+#| fig-cap: Check for normality of residuals.
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# run diagnostics 
+performance::check_model(lm_voteshare, check = c('qq', 'normality'))
+```
+
+```{r}
+#| label: fig-05-diagnose-linearity
+#| fig-cap: Check for linearity and homogeneity
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# run diagnostics 
+performance::check_model(lm_voteshare, check = c('linearity', 'homogeneity'))
+```
+
+```{r}
+#| label: fig-05-diagnose-vif
+#| fig-cap: Check for influential observations and multicollinearity.
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# run diagnostics 
+performance::check_model(lm_voteshare, check = c('vif', 'outliers')) 
+```
+
+### Spatial dependence
+The model diagnostics seem generally fine, perhaps except for the linearity check. This could indicate a curved relationship or, alternatively, suggest spatial dependence in the relationship. If spatial dependence is present, it may imply that the observations are not independent. We can examine this by assessing whether the model residuals display spatial dependence. Let us begin with a map:
+
+```{r tidy='styler'} 
+#| label: fig-05-map-residuals
+#| fig-cap: Regression model residuals.
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| cache: True
+#| filename: 'R code'
+# join model residuals onto spatial data
+cons_24 <- cons_24 |> 
+  mutate(lm_residuals = lm_voteshare$residuals)
+
+# shape, polygons
+tm_shape(cons_24) +
+  
+  # specify column, colours
+  tm_fill(
+    col = 'lm_residuals',
+    style = 'jenks',
+    n = '5',
+    palette = c('#ffffb2', '#fecc5c', '#fd8d3c', '#f03b20', '#f03b20'),
+    title = 'Regression residuals'
+  ) +
+  
+  # set layout
+  tm_layout(
+    legend.outside = FALSE,
+    legend.position = c('left', 'top'),
+    frame = FALSE
+  )
+``` 
+
+Looking at @fig-05-map-residuals there appears to be some spatial structure in the model residuals. We can test this more formally using Moran's I test to assess spatial autocorrelation:
+
+
+
+::: {.callout-tip}
+For a more comprehensive dive into Geographically Weighted Regression, the [Spatial Modelling for Data Scientists](https://gdsl-ul.github.io/san/09-gwr.html) course by Liverpool-based Professors [Francisco Rowe](https://www.franciscorowe.com/) and [Dani Arribas-Bel](https://darribas.org/) provides an excellent introduction. 
 :::
 
 ### Spatial models
-We have looked at geographically weighted statistics, including geographically weighted correlation and regression. However, whilst out of the scope of this module, there are many other approaches to account for space in statistical models. Examples of such models are the spatial error model and the spatial lag model.
+In this tutorial, we have looked at geographically weighted correlation and regression. However, whilst out of the scope of this module, there are many other approaches to account for space in statistical models. Examples of such models are the spatial error model and the spatial lag model.
 
 #### Spatial error model
 The spatial error model is used when the error terms in a regression model exhibit spatial autocorrelation, meaning the error terms are not independent across space. This can happen due to omitted variables that have a spatial pattern or unmeasured factors that affect the dependent variable similarly across nearby locations.

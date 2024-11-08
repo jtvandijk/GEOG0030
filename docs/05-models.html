@@ -284,7 +284,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#geographically-weighted-correlation" id="toc-geographically-weighted-correlation" class="nav-link" data-scroll-target="#geographically-weighted-correlation"><span class="header-section-number">5.3.1</span> Geographically weighted correlation</a></li>
   <li><a href="#geographically-weighted-regression" id="toc-geographically-weighted-regression" class="nav-link" data-scroll-target="#geographically-weighted-regression"><span class="header-section-number">5.3.2</span> Geographically weighted regression</a></li>
-  <li><a href="#spatial-models-1" id="toc-spatial-models-1" class="nav-link" data-scroll-target="#spatial-models-1"><span class="header-section-number">5.3.3</span> Spatial models</a></li>
+  <li><a href="#multivariate-regression" id="toc-multivariate-regression" class="nav-link" data-scroll-target="#multivariate-regression"><span class="header-section-number">5.3.3</span> Multivariate regression</a></li>
+  <li><a href="#spatial-dependence" id="toc-spatial-dependence" class="nav-link" data-scroll-target="#spatial-dependence"><span class="header-section-number">5.3.4</span> Spatial dependence</a></li>
+  <li><a href="#spatial-models-1" id="toc-spatial-models-1" class="nav-link" data-scroll-target="#spatial-models-1"><span class="header-section-number">5.3.5</span> Spatial models</a></li>
   </ul></li>
   <li><a href="#assignment" id="toc-assignment" class="nav-link" data-scroll-target="#assignment"><span class="header-section-number">5.4</span> Assignment</a></li>
   <li><a href="#before-you-leave" id="toc-before-you-leave" class="nav-link" data-scroll-target="#before-you-leave"><span class="header-section-number">5.5</span> Before you leave</a></li>
@@ -356,7 +358,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GWmodel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GWmodel)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(easystats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="callout callout-style-simple callout-warning">
@@ -490,7 +493,7 @@ sample estimates:
 </div>
 </div>
 </div>
-<p>However, as you should know by now, the first step when working with spatial data is to create a map:</p>
+<p>However, as you should know by now, the first step when working with spatial data is to map your variables:</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -561,7 +564,8 @@ sample estimates:
 </div>
 </div>
 </div>
-<p>Looking at the maps, the spatial distribution of Conservative vote share and the proportion of the population over 50 appears neither random nor uniform. This contextualises the observed correlation between these variables (see <a href="#fig-05-plot-data-scatter">Figure&nbsp;1</a>): to what extent does this association hold consistently across different areas?</p>
+<p>Looking at the maps, the spatial distribution of Conservative vote share and the proportion of the population over 50 appears neither random nor uniform. This raises the question to what extent the observed correlation in <a href="#fig-05-plot-data-scatter">Figure&nbsp;1</a> holds consistently across different constituencies? To answer this we can run a Geographically Weighted Correlation using the <code>GWmodel</code> library.</p>
+<p>Geographically Weighted Correlation (GWC) allows us to investigate whether the strength and direction of the association between variables vary across space. By applying a localised correlation technique, GWC calculates the correlation coefficient within specified spatial windows or <em>kernels</em> across the study area. This can reveal geographic areas where the relationship is stronger or weaker, providing more insight than a single global correlation and helping us to understand spatial heterogeneity in the data.</p>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -569,16 +573,6 @@ sample estimates:
 </div>
 <div class="callout-body-container">
 <p>The <code>GWmodel</code> library allows us to calculate local statistics, such as means, standard deviations, variances, and correlations. But <a href="04-autocorrelation.html#defining-neighbours">as with spatial autocorrelation</a>, we must define what <em>local</em> means. One approach is to use a kernel function to select which values contribute to each local estimate. Kernels operate on point locations (e.g.&nbsp;polygon centroids) and apply a window with a specified shape and bandwidth. The bandwidth, which defines the kernel’s size, can be set in absolute terms (e.g.&nbsp;within 10 km) or in relative terms (e.g.&nbsp;the 10 nearest centroids), the latter known as an adaptive kernel.</p>
-</div>
-</div>
-</div>
-<div class="callout callout-style-simple callout-tip">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>Sometimes heteroscedasticity is indicative of a geographically varying relationship and it is worth considering calculating a geographically weighted correlation.</p>
 </div>
 </div>
 </div>
@@ -598,11 +592,11 @@ sample estimates:
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>The <code>sf</code> package in R is now favoured over the <code>sp</code> package due to its more modern and efficient handling of spatial data. <code>sf</code> uses simple features, which are a standardised way to store and manipulate spatial geometries, making it more compatible with other geospatial tools and software. It also integrates more seamlessly with the <code>tidyverse</code> ecosystem, allowing for easier data manipulation and analysis.</p>
+<p>The <code>sf</code> package is now preferred over <code>sp</code> in R for its modern, efficient handling of spatial data. By using simple features, a standardised format for spatial geometries, <code>sf</code> is more compatible with other geospatial tools and integrates smoothly with the tidyverse, simplifying data manipulation and analysis. However, some libraries still rely on <code>sp</code> and have not yet transitioned to <code>sf.</code></p>
 </div>
 </div>
 </div>
-<p>We can now calculate a geographically weighted correlation. We will use an adaptive bandwidth of the 10 nearest constituencies bandwidth of 50 kilometres:</p>
+<p>We can now calculate a geographically weighted correlation. We will use an adaptive bandwidth that estimates the local correlation using the 25 nearest constituencies:</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -675,14 +669,14 @@ sample estimates:
 </div>
 </div>
 </div>
-<p>While the map illustrates correlations, it does not indicate their statistical significance. We can assess this using a Monte Carlo simulation via the <code>gwss.montecarlo()</code> function. However, with a large dataset like ours, this is computationally very expensive and takes a long time to run, especially if the number of simulations is increased beyond the default of <code>99</code>.</p>
+<p>While the map shows correlation patterns, it doesn not indicate statistical significance. To evaluate this, we can use a Monte Carlo simulation with the <code>gwss.montecarlo()</code> function. However, for a large dataset like ours, this process is computationally intensive and time-consuming, especially with more than the default <code>99</code> simulations.</p>
 <div class="callout callout-style-simple callout-important">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Although we will not run a Monte Carlo simulation right now, the code below <em>demonstrates</em> how a Monte Carlo simulation could be used to evaluate the significance of the local correlation coefficients and link them back to the <code>cons_24</code> spatial dataframe.</p>
+<p>Although we will not run a Monte Carlo simulation here, the code below <em>demonstrates</em> how to run this and link the results back to the <em>cons_24</em> spatial dataframe</p>
 </div>
 </div>
 </div>
@@ -693,7 +687,7 @@ sample estimates:
 </div>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># geographically weighted correlation, monte carlo simulation</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>cons_24_cor_sig <span class="ot">&lt;-</span> <span class="fu">gwss.montecarlo</span>(cons_24_sp, <span class="at">vars =</span> <span class="fu">c</span>(<span class="st">"conservative_vote_share"</span>,</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"aged_50_years_and_over"</span>), <span class="at">bw =</span> <span class="dv">2</span>, <span class="at">adaptive =</span> <span class="cn">TRUE</span>, <span class="at">nsim =</span> <span class="dv">1000</span>) <span class="sc">|&gt;</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"aged_50_years_and_over"</span>), <span class="at">bw =</span> <span class="dv">2</span>, <span class="at">adaptive =</span> <span class="cn">TRUE</span>, <span class="at">nsim =</span> <span class="dv">99</span>) <span class="sc">|&gt;</span></span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(Corr_conservative_vote_share.aged_50_years_and_over)</span>
 <span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
@@ -707,31 +701,214 @@ sample estimates:
 <span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.975</span>, cons_age_cor_p, <span class="cn">NA</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-</section>
-<section id="geographically-weighted-regression" class="level3" data-number="1.3.2">
-<h3 data-number="1.3.2" class="anchored" data-anchor-id="geographically-weighted-regression"><span class="header-section-number">5.3.2</span> Geographically weighted regression</h3>
-<p>Geographically weighted regression (GWR) is used when the relationship between a dependent and set of independent variables is not constant across space, meaning the model coefficients vary by location. This is useful when you suspect that the relationship between variables may change depending on the geographic context. GWR provides a localised understanding of the relationships by allowing each observation to have its own set of regression coefficients, which can provide insights into how relationships differ across the study area.</p>
-<p>GWR fits a separate regression equation at each location in the study area, weighting nearby observations more heavily than those farther away. The weighting is typically based on a kernel function. The basic GWR equation is:</p>
-<p><span class="math display">\[
-y_{i} = \beta_{0}(\upsilon_{i}, v_{i}) + \sum_{k=1}^{p}\beta_{k}(\upsilon_{i}, v_{i})x_{ik} + \epsilon_{i}
-\]</span></p>
-<p>where <span class="math inline">\((\upsilon_{i}, v_{i})\)</span> are the coordinates of location <span class="math inline">\(i\)</span> and <span class="math inline">\(\beta_{k}(\upsilon_{i}, v_{i})\)</span> are the location-specific coefficients.</p>
-<div class="callout callout-style-simple callout-important">
+<div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>The geographically weighted correlation that we calculated above is therefore essentially a <em>univariate</em> GWR.</p>
+<p>It took more than <strong>2 minutes</strong> to run the Monte Carlo simulation on an Apple MacBook Pro M1 (16GB RAM) with the default of <code>99</code> simulations.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="spatial-models-1" class="level3" data-number="1.3.3">
-<h3 data-number="1.3.3" class="anchored" data-anchor-id="spatial-models-1"><span class="header-section-number">5.3.3</span> Spatial models</h3>
-<p>We have looked at geographically weighted statistics, including geographically weighted correlation and regression. However, whilst out of the scope of this module, there are many other approaches to account for space in statistical models. Examples of such models are the spatial error model and the spatial lag model.</p>
-<section id="spatial-error-model" class="level4" data-number="1.3.3.1">
-<h4 data-number="1.3.3.1" class="anchored" data-anchor-id="spatial-error-model"><span class="header-section-number">5.3.3.1</span> Spatial error model</h4>
+<section id="geographically-weighted-regression" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="geographically-weighted-regression"><span class="header-section-number">5.3.2</span> Geographically weighted regression</h3>
+<p>A correlation describes the strength and direction of a linear relationship, but if we want to quantify the change in a dependent variable (<code>y</code>) for a one-unit change in the independent variable(s) (<code>x</code>) we need to run a regression. Geographically weighted regression (GWR) is used when the relationship between a dependent and set of independent variables is not constant across space, meaning the model coefficients vary by location. This is useful when you suspect that the relationship between variables may change depending on the geographic context. GWR provides a localised understanding of the relationships by allowing each observation to have its own set of regression coefficients, which can provide insights into how relationships differ across the study area.</p>
+<p>GWR fits a separate regression equation at each location in the study area, weighting nearby observations more heavily than those farther away. Again, the weighting is typically based on a kernel function. The basic GWR equation is:</p>
+<p><span class="math display">\[
+y_{i} = \beta_{0}(\upsilon_{i}, v_{i}) + \sum_{k=1}^{p}\beta_{k}(\upsilon_{i}, v_{i})x_{ik} + \epsilon_{i}
+\]</span></p>
+<p>where <span class="math inline">\((\upsilon_{i}, v_{i})\)</span> are the coordinates of location <span class="math inline">\(i\)</span> and <span class="math inline">\(\beta_{k}(\upsilon_{i}, v_{i})\)</span> are the location-specific coefficients.</p>
+</section>
+<section id="multivariate-regression" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="multivariate-regression"><span class="header-section-number">5.3.3</span> Multivariate regression</h3>
+<p>To predict the Conservative voter share, we hypothesise that certain socio-demographic variables may play a significant role. These independent variables include:</p>
+<table class="table">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 77%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>eco_active_employed</code></td>
+<td style="text-align: left;">Proportion of economically active employed individuals.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>eth_white</code></td>
+<td style="text-align: left;">Proportion of the population identifying as white.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>eth_black</code></td>
+<td style="text-align: left;">Proportion of the population identifying as black.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>aged_25_to_34_years</code></td>
+<td style="text-align: left;">Proportion of the population between ages 25 and 34.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>aged_50_years_and_over</code></td>
+<td style="text-align: left;">Proportion of the population over age 50.</td>
+</tr>
+</tbody>
+</table>
+<p>We can run the multivariate regression as follows:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># regression</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>lm_voteshare <span class="ot">&lt;-</span> <span class="fu">lm</span>(conservative_vote_share <span class="sc">~</span> eco_active_employed <span class="sc">+</span> eth_white <span class="sc">+</span> eth_black <span class="sc">+</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    aged_25_to_34_years <span class="sc">+</span> aged_50_years_and_over, <span class="at">data =</span> cons_24)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co"># summary</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm_voteshare)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = conservative_vote_share ~ eco_active_employed + 
+    eth_white + eth_black + aged_25_to_34_years + aged_50_years_and_over, 
+    data = cons_24)
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.286246 -0.040816  0.001879  0.044295  0.220002 
+
+Coefficients:
+                       Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)            -0.18723    0.05152  -3.634 0.000304 ***
+eco_active_employed     1.39643    0.08731  15.993  &lt; 2e-16 ***
+eth_white              -0.27968    0.03560  -7.856 2.00e-14 ***
+eth_black              -0.31216    0.09303  -3.356 0.000845 ***
+aged_25_to_34_years    -1.56288    0.18314  -8.534  &lt; 2e-16 ***
+aged_50_years_and_over  0.60938    0.09187   6.633 7.66e-11 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.06792 on 569 degrees of freedom
+Multiple R-squared:  0.5536,    Adjusted R-squared:  0.5496 
+F-statistic: 141.1 on 5 and 569 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>The model summary indicates that all variables are statistically significant predictors of Conservative vote share. The resuls suggest that older and employed populations are linked to higher Conservative support, while younger age groups and certain ethnic proportions show a negative relationship.</p>
+<p>We can now run the diagnostics to see whether the regression assumptions are met. Check for normality of the residuals:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run diagnostics</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">check_model</span>(lm_voteshare, <span class="at">check =</span> <span class="fu">c</span>(<span class="st">"qq"</span>, <span class="st">"normality"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-05-diagnose-normality" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="05-models_files/figure-html/fig-05-diagnose-normality-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;5: Check for normality of residuals.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run diagnostics</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">check_model</span>(lm_voteshare, <span class="at">check =</span> <span class="fu">c</span>(<span class="st">"linearity"</span>, <span class="st">"homogeneity"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-05-diagnose-linearity" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="05-models_files/figure-html/fig-05-diagnose-linearity-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;6: Check for linearity and homogeneity</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run diagnostics</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">check_model</span>(lm_voteshare, <span class="at">check =</span> <span class="fu">c</span>(<span class="st">"vif"</span>, <span class="st">"outliers"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-05-diagnose-vif" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="05-models_files/figure-html/fig-05-diagnose-vif-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;7: Check for influential observations and multicollinearity.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="spatial-dependence" class="level3" data-number="1.3.4">
+<h3 data-number="1.3.4" class="anchored" data-anchor-id="spatial-dependence"><span class="header-section-number">5.3.4</span> Spatial dependence</h3>
+<p>his could indicate a curved relationship or, alternatively, suggest spatial dependence in the relationship. If spatial dependence is present, it may imply that the observations are not independent. We can examine this by assessing whether the model residuals display spatial dependence. Let us begin with a map:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># join model residuals onto spatial data</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>cons_24 <span class="ot">&lt;-</span> cons_24 <span class="sc">|&gt;</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lm_residuals =</span> lm_voteshare<span class="sc">$</span>residuals)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co"># shape, polygons</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(cons_24) <span class="sc">+</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># specify column, colours</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_fill</span>(</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"lm_residuals"</span>,</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> <span class="st">"jenks"</span>,</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="st">"5"</span>,</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"#ffffb2"</span>, <span class="st">"#fecc5c"</span>, <span class="st">"#fd8d3c"</span>, <span class="st">"#f03b20"</span>, <span class="st">"#f03b20"</span>),</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Regression residuals"</span></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set layout</span></span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(</span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.outside =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"top"</span>),</span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">frame =</span> <span class="cn">FALSE</span></span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-05-map-residuals" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="05-models_files/figure-html/fig-05-map-residuals-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;8: Regression model residuals.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>There appears to be some spatial structure in the model residuals. We can test this more formally using Moran’s I test to assess spatial autocorrelation:</p>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>For a more comprehensive dive into Geographically Weighted Regression, the <a href="https://gdsl-ul.github.io/san/09-gwr.html">Spatial Modelling for Data Scientists</a> course by Liverpool-based Professors <a href="https://www.franciscorowe.com/">Francisco Rowe</a> and <a href="https://darribas.org/">Dani Arribas-Bel</a> provides an excellent introduction.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="spatial-models-1" class="level3" data-number="1.3.5">
+<h3 data-number="1.3.5" class="anchored" data-anchor-id="spatial-models-1"><span class="header-section-number">5.3.5</span> Spatial models</h3>
+<p>In this tutorial, we have looked at geographically weighted correlation and regression. However, whilst out of the scope of this module, there are many other approaches to account for space in statistical models. Examples of such models are the spatial error model and the spatial lag model.</p>
+<section id="spatial-error-model" class="level4" data-number="1.3.5.1">
+<h4 data-number="1.3.5.1" class="anchored" data-anchor-id="spatial-error-model"><span class="header-section-number">5.3.5.1</span> Spatial error model</h4>
 <p>The spatial error model is used when the error terms in a regression model exhibit spatial autocorrelation, meaning the error terms are not independent across space. This can happen due to omitted variables that have a spatial pattern or unmeasured factors that affect the dependent variable similarly across nearby locations.</p>
 <p>The model adjusts for spatial autocorrelation by adding a spatially lagged error term (a weighted sum of the errors from neighbouring locations) to the regression equation:</p>
 <p><span class="math display">\[
@@ -749,8 +926,8 @@ y = X\beta + \upsilon, \upsilon = \lambda W \upsilon + \epsilon
 </div>
 </div>
 </section>
-<section id="spatial-lag-model" class="level4" data-number="1.3.3.2">
-<h4 data-number="1.3.3.2" class="anchored" data-anchor-id="spatial-lag-model"><span class="header-section-number">5.3.3.2</span> Spatial lag model</h4>
+<section id="spatial-lag-model" class="level4" data-number="1.3.5.2">
+<h4 data-number="1.3.5.2" class="anchored" data-anchor-id="spatial-lag-model"><span class="header-section-number">5.3.5.2</span> Spatial lag model</h4>
 <p>The spatial lag model is appropriate when the dependent variable itself exhibits spatial dependence. This means the value of the dependent variable in one location depends on the values in neighbouring locations. This model is used to capture the spillover effects or diffusion processes, where the outcome in one area is influenced by outcomes in nearby areas (e.g.&nbsp;house prices, crime rates).</p>
 <p>The model incorporates a spatially lagged dependent variable, which is the weighted sum of the dependent variable values in neighbouring locations, into the regression equation:</p>
 <p><span class="math display">\[
@@ -768,8 +945,8 @@ y = \rho Wy + X\beta + \epsilon
 </div>
 </div>
 </section>
-<section id="to-note" class="level4" data-number="1.3.3.3">
-<h4 data-number="1.3.3.3" class="anchored" data-anchor-id="to-note"><span class="header-section-number">5.3.3.3</span> To note</h4>
+<section id="to-note" class="level4" data-number="1.3.5.3">
+<h4 data-number="1.3.5.3" class="anchored" data-anchor-id="to-note"><span class="header-section-number">5.3.5.3</span> To note</h4>
 <p>The spatial error model adjusts for spatial autocorrelation in the error terms, whereas the spatial lag model adjusts for spatial dependence in the dependent variable itself. The spatial error model does not alter the interpretation of the coefficients of the independent variables, while the spatial lag model introduces a feedback loop where changes in one area can influence neighbouring areas.</p>
 <p>Both the spatial error and spatial lag models assume that the relationships between variables are the same across the study area, with adjustments made only for spatial dependencies. GWR, on the other hand, allows the relationships themselves to vary across space. GWR is more flexible but also more complex and computationally intensive, providing local instead of global estimates of coefficients.</p>
 </section>
