@@ -40,6 +40,7 @@ library(sf)
 library(tmap)
 library(GWmodel)
 library(easystats)
+library(spdep)
 ```
 
 ::: {.callout-warning}
@@ -288,12 +289,13 @@ $$
 
 where $(\upsilon_{i}, v_{i})$ are the coordinates of location $i$ and $\beta_{k}(\upsilon_{i}, v_{i})$ are the location-specific coefficients. 
 
-### Multivariate regression
+#### Multivariate regression
 To predict the Conservative voter share, we hypothesise that certain socio-demographic variables may play a significant role. These independent variables include:
 
 | Variable                  | Description |
 | :-                        | :------ |
 | `eco_active_employed`     | Proportion of economically active employed individuals. |
+| `eco_active_unemployed`   | Proportion of economically active unemployed individuals. |
 | `eth_white`               | Proportion of the population identifying as white. |
 | `eth_black`               | Proportion of the population identifying as black. |
 | `aged_25_to_34_years`     | Proportion of the population between ages 25 and 34. |
@@ -309,15 +311,15 @@ We can run the multivariate regression as follows:
 #| tidy: True
 #| filename: "R code"
 # regression
-lm_voteshare <- lm(conservative_vote_share ~ eco_active_employed + eth_white + eth_black + aged_25_to_34_years + aged_50_years_and_over, data = cons_24)
+lm_voteshare <- lm(conservative_vote_share ~ eco_active_employed + eco_active_unemployed + eth_white + eth_black + aged_25_to_34_years + aged_50_years_and_over, data = cons_24)
 
 # summary
 summary(lm_voteshare)
 ```
 
-The model summary indicates that all variables are statistically significant predictors of Conservative vote share. The resuls suggest that older and employed populations are linked to higher Conservative support, while younger age groups and certain ethnic proportions show a negative relationship.
+The model summary indicates that most variables are statistically significant predictors of Conservative vote share. The results suggest that older and employed populations are linked to higher Conservative support, while younger age groups and certain ethnic proportions show a negative relationship.
 
-We can now run the diagnostics to see whether the regression assumptions are met. Check for normality of the residuals:
+We can now run the diagnostics to see whether the regression assumptions are met:
 
 ```{r}
 #| label: fig-05-diagnose-normality
@@ -355,7 +357,7 @@ performance::check_model(lm_voteshare, check = c('linearity', 'homogeneity'))
 performance::check_model(lm_voteshare, check = c('vif', 'outliers')) 
 ```
 
-### Spatial dependence
+#### Geographically weighted regression
 The model diagnostics seem generally fine, perhaps except for the linearity check. This could indicate a curved relationship or, alternatively, suggest spatial dependence in the relationship. If spatial dependence is present, it may imply that the observations are not independent. We can examine this by assessing whether the model residuals display spatial dependence. Let us begin with a map:
 
 ```{r tidy='styler'} 
@@ -392,13 +394,158 @@ tm_shape(cons_24) +
 
 Looking at @fig-05-map-residuals there appears to be some spatial structure in the model residuals. We can test this more formally using Moran's I test to assess spatial autocorrelation:
 
+```{r}
+#| label: 05-spatial-autocorrelation
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: 'R code'
+# create neighbour list
+cons_24_nb <- poly2nb(cons_24, queen = TRUE)
 
+# create spatial weights matrix
+cons_24_nb_weights <- cons_24_nb |>
+    nb2listw(style = 'W', zero.policy = TRUE)
 
-::: {.callout-tip}
+# moran's test
+moran <- moran.mc(cons_24$lm_residuals, listw = cons_24_nb_weights, nsim = 999)
+
+# results
+moran 
+```
+The Moran's I test indicates significant spatial autocorrelation in our model residuals, suggesting that the observations are not independent. As a result, we can proceed with a Geographically Weighted Regression to account for spatial variation in the relationship between the variables. 
+
+We will first estimate the 'optimal' bandwidth using an automated bandwidth selection procedure:
+
+```{r}
+#| label: 05-gwr-bw-sel
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: 'R code'
+# bandwidth selection
+cons_24_bw <- bw.gwr(conservative_vote_share ~ eco_active_employed + eco_active_unemployed + eth_white + eth_black + aged_25_to_34_years + aged_50_years_and_over, data = cons_24, adaptive = TRUE)
+```
+The model can then be fitted.
+
+```{r}
+#| label: 05-gwr-run
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: 'R code'
+# run gwr
+cons_24_gwr <- gwr.basic(conservative_vote_share ~ eco_active_employed + eco_active_unemployed + eth_white + eth_black + aged_25_to_34_years + aged_50_years_and_over, data = cons_24, adaptive = TRUE, bw = cons_24_bw)
+
+# inspect
+cons_24_gwr
+```
+
+The global regression results are derived from the standard OLS model, representing a single regression for the entire study area without accounting for spatial variation. In contrast, the geographically weighted regression (GWR) results stem from 575 separate but spatially overlapping regression models, each fitted with geographic weighting to different spatial subsets of the data, allowing for local variation in the regression estimates. We can also see that the model fit (adjusted $R^2$) has increased to 70%.
+
+::: {.callout-important}
+All the local estimates are contained in the spatial data frame `cons_24_gwr$SDF`. You can inspect the results using the `View()` function.
+:::
+
+We can now also map all the local $R^2$ values to get an idea of how well the model fit varies spatially:
+
+```{r tidy='styler'} 
+#| label: fig-05-map-local-r-squared
+#| fig-cap: Model performance of the Geographically Weighted Regression.
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| cache: True
+#| filename: 'R code'
+# join local r squared values onto spatial data
+cons_24 <- cons_24 |> 
+  mutate(gwr_r2 = cons_24_gwr$SDF$Local_R2)
+
+# shape, polygons
+tm_shape(cons_24) +
+  
+  # specify column, colours
+  tm_fill(
+    col = 'gwr_r2',
+    style = 'jenks',
+    n = '5',
+    palette = c('#fee5d9', '#fcae91', '#fb6a4a', '#de2d26', '#a50f15'),
+    title = 'Local R-squared'
+  ) +
+  
+  # set layout
+  tm_layout(
+    legend.outside = FALSE,
+    legend.position = c('left', 'top'),
+    frame = FALSE
+  )
+``` 
+
+In similar fashion, and with some data wrangling, we can map the individual local coefficients of our independent variables:
+
+```{r tidy='styler'} 
+#| label: fig-05-map-local-coefficients
+#| fig-cap: Local coefficients of the Geographically Weighted Regression.
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| cache: True
+#| filename: 'R code'
+# join local coefficient values onto spatial data, select, pivot
+cons_24_coef <- cons_24 |> 
+  mutate(eco_active_employed_coef = cons_24_gwr$SDF$eco_active_employed,
+         eco_active_unemployed_coef = cons_24_gwr$SDF$eco_active_unemployed,
+         eth_white_coef = cons_24_gwr$SDF$eth_white,
+         eth_black_coef = cons_24_gwr$SDF$eth_black,
+         aged_25_to_34_years_coef = cons_24_gwr$SDF$aged_25_to_34_years,
+         aged_50_years_and_over_coef = cons_24_gwr$SDF$aged_50_years_and_over) |>
+  select(40:45) |>
+  pivot_longer(cols = !geom, names_to = 'variable', values_to = 'coefficient')
+
+# shape, polygons
+tm_shape(cons_24_coef) +
+  
+  # specify column, colours
+  tm_fill(
+    col = 'coefficient',
+    style = 'jenks',
+    n = 9,
+    palette = c('#e66101', '#fdb863', '#cccccc', '#b2abd2', '#5e3c99'),
+    title = 'Local GWR coefficient'
+  ) +
+  
+  # facet
+  tm_facets(
+    by = 'variable',
+    ncol = 2
+  ) +
+  
+  # set layout
+  tm_layout(
+    legend.show = TRUE,
+    legend.outside = FALSE,
+    frame = FALSE,
+    panel.labels = c('Age: 25-34', 'Age: >50','Employed','Unemployed','Ethnicity: Black','Ethnicity: White'),
+  )
+``` 
+
+Mapping these local estimates reveals an interesting geography, where, for example, the proportion of the population over 50 years old is a better predictor for the Conservative vote share in regions like the South West, Greater London, and parts of the North West and Yorkshire and the Humber.
+
+::: {.callout-warning}
+Not all of the local regression estimates may be statistically significant. We can use use the estimated $t$-values, as indicated by the `_TV` suffix in the `SDF` data frame of the GWR results, to filter out those are not.  For example, to filter at 95% confidence, remove $t$-values outside the range of `-1.96` to `+1.96`.
+:::
+
+::: {.callout-tip}    
 For a more comprehensive dive into Geographically Weighted Regression, the [Spatial Modelling for Data Scientists](https://gdsl-ul.github.io/san/09-gwr.html) course by Liverpool-based Professors [Francisco Rowe](https://www.franciscorowe.com/) and [Dani Arribas-Bel](https://darribas.org/) provides an excellent introduction. 
 :::
 
-### Spatial models
+### More spatial models
 In this tutorial, we have looked at geographically weighted correlation and regression. However, whilst out of the scope of this module, there are many other approaches to account for space in statistical models. Examples of such models are the spatial error model and the spatial lag model.
 
 #### Spatial error model
@@ -437,6 +584,19 @@ The spatial error model adjusts for spatial autocorrelation in the error terms, 
 Both the spatial error and spatial lag models assume that the relationships between variables are the same across the study area, with adjustments made only for spatial dependencies. GWR, on the other hand, allows the relationships themselves to vary across space. GWR is more flexible but also more complex and computationally intensive, providing local instead of global estimates of coefficients.
 
 ## Assignment
+The Geographically Weighted Regression (GWR) reveals some varying patterns in the sign and directiion of the Conservative voter share, but it is likely that other factors are at play. One could hypothesise that another potential predictor of the Conservative vote share is the proportion of the population employed in a particular industry. Try to do the following:
+
+1. Download the dataset provided below and save it to the appropriate subfolder within your `data` directory. The `csv`, extracted using the [Custom Dataset Tool](https://www.ons.gov.uk/datasets/create), contains the number of employed individuals as recorded in the 2021 Census by their [Standard Industrial Classification (SIC)](https://www.ons.gov.uk/census/census2021dictionary/variablesbytopic/labourmarketvariablescensus2021/industrycurrent#:~:text=Type%3A%20Derived%20variable-,Definition,firm%20or%20organisation's%20main%20activity.) code.
+2. Formulate a hypothesis regarding which of the nine main industries presented in the dataset might help predict the Conservative vote share.
+3. For the chosen industry variable:
+    * Calculate the share of individuals employed in that industry.
+    * [Extend the Geographically Weighted Regression (GWR)](05-models.html#geographically-weighted-regression-1) by including this new variable.
+4. What do the results suggest? Is this variable associated with any changes in Conservative vote share?
+5. Create a map of the local coefficients for this variable.
+
+| File                                                                  | Type   | Link |
+| :------                                                               | :------| :------ |
+| England and Wales Parliamentary Constituencies Employed by Industry   | `csv` | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/England-Wales-PC2024-Industry.csv) |
 
 ## Before you leave
-
+This week, we explored decomposing global measures to account for non-stationarity in spatial variables. Geographically Weighted Regression (GWR) is particularly useful when the relationship between variables varies across space, as it allows for localised regression coefficients and helps identify spatial heterogeneity that might be overlooked in global models. This was [a rather heavy one](https://www.youtube.com/watch?v=Le5AGYxPCLI), time for some light reading?

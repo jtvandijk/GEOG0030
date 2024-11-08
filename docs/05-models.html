@@ -277,16 +277,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#spatial-models" id="toc-spatial-models" class="nav-link active" data-scroll-target="#spatial-models"><span class="header-section-number">5</span> Spatial Models</a>
-  <ul class="collapse">
+  <ul>
   <li><a href="#lecture-slides" id="toc-lecture-slides" class="nav-link" data-scroll-target="#lecture-slides"><span class="header-section-number">5.1</span> Lecture slides</a></li>
-  <li><a href="#reading-list" id="toc-reading-list" class="nav-link" data-scroll-target="#reading-list"><span class="header-section-number">5.2</span> Reading list</a></li>
+  <li><a href="#reading-list" id="toc-reading-list" class="nav-link" data-scroll-target="#reading-list"><span class="header-section-number">5.2</span> Reading list</a>
+  <ul class="collapse">
+  <li><a href="#essential-readings" id="toc-essential-readings" class="nav-link" data-scroll-target="#essential-readings">Essential readings</a></li>
+  <li><a href="#suggested-readings" id="toc-suggested-readings" class="nav-link" data-scroll-target="#suggested-readings">Suggested readings</a></li>
+  </ul></li>
   <li><a href="#elections-results-in-england-and-wales" id="toc-elections-results-in-england-and-wales" class="nav-link" data-scroll-target="#elections-results-in-england-and-wales"><span class="header-section-number">5.3</span> Elections results in England and Wales</a>
   <ul class="collapse">
   <li><a href="#geographically-weighted-correlation" id="toc-geographically-weighted-correlation" class="nav-link" data-scroll-target="#geographically-weighted-correlation"><span class="header-section-number">5.3.1</span> Geographically weighted correlation</a></li>
-  <li><a href="#geographically-weighted-regression" id="toc-geographically-weighted-regression" class="nav-link" data-scroll-target="#geographically-weighted-regression"><span class="header-section-number">5.3.2</span> Geographically weighted regression</a></li>
-  <li><a href="#multivariate-regression" id="toc-multivariate-regression" class="nav-link" data-scroll-target="#multivariate-regression"><span class="header-section-number">5.3.3</span> Multivariate regression</a></li>
-  <li><a href="#spatial-dependence" id="toc-spatial-dependence" class="nav-link" data-scroll-target="#spatial-dependence"><span class="header-section-number">5.3.4</span> Spatial dependence</a></li>
-  <li><a href="#spatial-models-1" id="toc-spatial-models-1" class="nav-link" data-scroll-target="#spatial-models-1"><span class="header-section-number">5.3.5</span> Spatial models</a></li>
+  <li><a href="#geographically-weighted-regression" id="toc-geographically-weighted-regression" class="nav-link" data-scroll-target="#geographically-weighted-regression"><span class="header-section-number">5.3.2</span> Geographically weighted regression</a>
+  <ul class="collapse">
+  <li><a href="#multivariate-regression" id="toc-multivariate-regression" class="nav-link" data-scroll-target="#multivariate-regression"><span class="header-section-number">5.3.2.1</span> Multivariate regression</a></li>
+  <li><a href="#geographically-weighted-regression-1" id="toc-geographically-weighted-regression-1" class="nav-link" data-scroll-target="#geographically-weighted-regression-1"><span class="header-section-number">5.3.2.2</span> Geographically weighted regression</a></li>
+  </ul></li>
+  <li><a href="#more-spatial-models" id="toc-more-spatial-models" class="nav-link" data-scroll-target="#more-spatial-models"><span class="header-section-number">5.3.3</span> More spatial models</a>
+  <ul class="collapse">
+  <li><a href="#spatial-error-model" id="toc-spatial-error-model" class="nav-link" data-scroll-target="#spatial-error-model"><span class="header-section-number">5.3.3.1</span> Spatial error model</a></li>
+  <li><a href="#spatial-lag-model" id="toc-spatial-lag-model" class="nav-link" data-scroll-target="#spatial-lag-model"><span class="header-section-number">5.3.3.2</span> Spatial lag model</a></li>
+  <li><a href="#to-note" id="toc-to-note" class="nav-link" data-scroll-target="#to-note"><span class="header-section-number">5.3.3.3</span> To note</a></li>
+  </ul></li>
   </ul></li>
   <li><a href="#assignment" id="toc-assignment" class="nav-link" data-scroll-target="#assignment"><span class="header-section-number">5.4</span> Assignment</a></li>
   <li><a href="#before-you-leave" id="toc-before-you-leave" class="nav-link" data-scroll-target="#before-you-leave"><span class="header-section-number">5.5</span> Before you leave</a></li>
@@ -359,7 +370,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GWmodel)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(easystats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(easystats)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spdep)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="callout callout-style-simple callout-warning">
@@ -720,9 +732,8 @@ sample estimates:
 y_{i} = \beta_{0}(\upsilon_{i}, v_{i}) + \sum_{k=1}^{p}\beta_{k}(\upsilon_{i}, v_{i})x_{ik} + \epsilon_{i}
 \]</span></p>
 <p>where <span class="math inline">\((\upsilon_{i}, v_{i})\)</span> are the coordinates of location <span class="math inline">\(i\)</span> and <span class="math inline">\(\beta_{k}(\upsilon_{i}, v_{i})\)</span> are the location-specific coefficients.</p>
-</section>
-<section id="multivariate-regression" class="level3" data-number="1.3.3">
-<h3 data-number="1.3.3" class="anchored" data-anchor-id="multivariate-regression"><span class="header-section-number">5.3.3</span> Multivariate regression</h3>
+<section id="multivariate-regression" class="level4" data-number="1.3.2.1">
+<h4 data-number="1.3.2.1" class="anchored" data-anchor-id="multivariate-regression"><span class="header-section-number">5.3.2.1</span> Multivariate regression</h4>
 <p>To predict the Conservative voter share, we hypothesise that certain socio-demographic variables may play a significant role. These independent variables include:</p>
 <table class="table">
 <colgroup>
@@ -741,18 +752,22 @@ y_{i} = \beta_{0}(\upsilon_{i}, v_{i}) + \sum_{k=1}^{p}\beta_{k}(\upsilon_{i}, v
 <td style="text-align: left;">Proportion of economically active employed individuals.</td>
 </tr>
 <tr class="even">
+<td style="text-align: left;"><code>eco_active_unemployed</code></td>
+<td style="text-align: left;">Proportion of economically active unemployed individuals.</td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;"><code>eth_white</code></td>
 <td style="text-align: left;">Proportion of the population identifying as white.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"><code>eth_black</code></td>
 <td style="text-align: left;">Proportion of the population identifying as black.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"><code>aged_25_to_34_years</code></td>
 <td style="text-align: left;">Proportion of the population between ages 25 and 34.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"><code>aged_50_years_and_over</code></td>
 <td style="text-align: left;">Proportion of the population over age 50.</td>
 </tr>
@@ -765,8 +780,8 @@ y_{i} = \beta_{0}(\upsilon_{i}, v_{i}) + \sum_{k=1}^{p}\beta_{k}(\upsilon_{i}, v
 <pre><strong>R code</strong></pre>
 </div>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># regression</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>lm_voteshare <span class="ot">&lt;-</span> <span class="fu">lm</span>(conservative_vote_share <span class="sc">~</span> eco_active_employed <span class="sc">+</span> eth_white <span class="sc">+</span> eth_black <span class="sc">+</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    aged_25_to_34_years <span class="sc">+</span> aged_50_years_and_over, <span class="at">data =</span> cons_24)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>lm_voteshare <span class="ot">&lt;-</span> <span class="fu">lm</span>(conservative_vote_share <span class="sc">~</span> eco_active_employed <span class="sc">+</span> eco_active_unemployed <span class="sc">+</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    eth_white <span class="sc">+</span> eth_black <span class="sc">+</span> aged_25_to_34_years <span class="sc">+</span> aged_50_years_and_over, <span class="at">data =</span> cons_24)</span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co"># summary</span></span>
 <span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm_voteshare)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -775,31 +790,32 @@ y_{i} = \beta_{0}(\upsilon_{i}, v_{i}) + \sum_{k=1}^{p}\beta_{k}(\upsilon_{i}, v
 <pre><code>
 Call:
 lm(formula = conservative_vote_share ~ eco_active_employed + 
-    eth_white + eth_black + aged_25_to_34_years + aged_50_years_and_over, 
-    data = cons_24)
+    eco_active_unemployed + eth_white + eth_black + aged_25_to_34_years + 
+    aged_50_years_and_over, data = cons_24)
 
 Residuals:
       Min        1Q    Median        3Q       Max 
--0.286246 -0.040816  0.001879  0.044295  0.220002 
+-0.286730 -0.040843  0.001182  0.044496  0.220419 
 
 Coefficients:
                        Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)            -0.18723    0.05152  -3.634 0.000304 ***
-eco_active_employed     1.39643    0.08731  15.993  &lt; 2e-16 ***
-eth_white              -0.27968    0.03560  -7.856 2.00e-14 ***
-eth_black              -0.31216    0.09303  -3.356 0.000845 ***
-aged_25_to_34_years    -1.56288    0.18314  -8.534  &lt; 2e-16 ***
-aged_50_years_and_over  0.60938    0.09187   6.633 7.66e-11 ***
+(Intercept)            -0.16210    0.08779  -1.846  0.06535 .  
+eco_active_employed     1.36140    0.13208  10.308  &lt; 2e-16 ***
+eco_active_unemployed  -0.32339    0.91429  -0.354  0.72369    
+eth_white              -0.28028    0.03567  -7.857 1.97e-14 ***
+eth_black              -0.29751    0.10190  -2.920  0.00364 ** 
+aged_25_to_34_years    -1.52695    0.20954  -7.287 1.07e-12 ***
+aged_50_years_and_over  0.59711    0.09827   6.076 2.26e-09 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 0.06792 on 569 degrees of freedom
-Multiple R-squared:  0.5536,    Adjusted R-squared:  0.5496 
-F-statistic: 141.1 on 5 and 569 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 0.06797 on 568 degrees of freedom
+Multiple R-squared:  0.5537,    Adjusted R-squared:  0.5489 
+F-statistic: 117.4 on 6 and 568 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
-<p>The model summary indicates that all variables are statistically significant predictors of Conservative vote share. The resuls suggest that older and employed populations are linked to higher Conservative support, while younger age groups and certain ethnic proportions show a negative relationship.</p>
-<p>We can now run the diagnostics to see whether the regression assumptions are met. Check for normality of the residuals:</p>
+<p>The model summary indicates that most variables are statistically significant predictors of Conservative vote share. The results suggest that older and employed populations are linked to higher Conservative support, while younger age groups and certain ethnic proportions show a negative relationship.</p>
+<p>We can now run the diagnostics to see whether the regression assumptions are met:</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -852,9 +868,9 @@ F-statistic: 141.1 on 5 and 569 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </section>
-<section id="spatial-dependence" class="level3" data-number="1.3.4">
-<h3 data-number="1.3.4" class="anchored" data-anchor-id="spatial-dependence"><span class="header-section-number">5.3.4</span> Spatial dependence</h3>
-<p>his could indicate a curved relationship or, alternatively, suggest spatial dependence in the relationship. If spatial dependence is present, it may imply that the observations are not independent. We can examine this by assessing whether the model residuals display spatial dependence. Let us begin with a map:</p>
+<section id="geographically-weighted-regression-1" class="level4" data-number="1.3.2.2">
+<h4 data-number="1.3.2.2" class="anchored" data-anchor-id="geographically-weighted-regression-1"><span class="header-section-number">5.3.2.2</span> Geographically weighted regression</h4>
+<p>The model diagnostics seem generally fine, perhaps except for the linearity check. This could indicate a curved relationship or, alternatively, suggest spatial dependence in the relationship. If spatial dependence is present, it may imply that the observations are not independent. We can examine this by assessing whether the model residuals display spatial dependence. Let us begin with a map:</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -892,7 +908,287 @@ F-statistic: 141.1 on 5 and 569 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </div>
-<p>There appears to be some spatial structure in the model residuals. We can test this more formally using Moran’s I test to assess spatial autocorrelation:</p>
+<p>Looking at <a href="#fig-05-map-residuals">Figure&nbsp;8</a> there appears to be some spatial structure in the model residuals. We can test this more formally using Moran’s I test to assess spatial autocorrelation:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create neighbour list</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>cons_24_nb <span class="ot">&lt;-</span> <span class="fu">poly2nb</span>(cons_24, <span class="at">queen =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in poly2nb(cons_24, queen = TRUE): some observations have no neighbours;
+if this seems unexpected, try increasing the snap argument.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in poly2nb(cons_24, queen = TRUE): neighbour object has 3 sub-graphs;
+if this sub-graph count seems unexpected, try increasing the snap argument.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create spatial weights matrix</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>cons_24_nb_weights <span class="ot">&lt;-</span> cons_24_nb <span class="sc">|&gt;</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nb2listw</span>(<span class="at">style =</span> <span class="st">"W"</span>, <span class="at">zero.policy =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="co"># moran's test</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>moran <span class="ot">&lt;-</span> <span class="fu">moran.mc</span>(cons_24<span class="sc">$</span>lm_residuals, <span class="at">listw =</span> cons_24_nb_weights, <span class="at">nsim =</span> <span class="dv">999</span>)</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="co"># results</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>moran</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Monte-Carlo simulation of Moran I
+
+data:  cons_24$lm_residuals 
+weights: cons_24_nb_weights  
+number of simulations + 1: 1000 
+
+statistic = 0.4155, observed rank = 1000, p-value = 0.001
+alternative hypothesis: greater</code></pre>
+</div>
+</div>
+<p>The Moran’s I test indicates significant spatial autocorrelation in our model residuals, suggesting that the observations are not independent. As a result, we can proceed with a Geographically Weighted Regression to account for spatial variation in the relationship between the variables.</p>
+<p>We will first estimate the ‘optimal’ bandwidth using an automated bandwidth selection procedure:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># bandwidth selection</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>cons_24_bw <span class="ot">&lt;-</span> <span class="fu">bw.gwr</span>(conservative_vote_share <span class="sc">~</span> eco_active_employed <span class="sc">+</span> eco_active_unemployed <span class="sc">+</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    eth_white <span class="sc">+</span> eth_black <span class="sc">+</span> aged_25_to_34_years <span class="sc">+</span> aged_50_years_and_over, <span class="at">data =</span> cons_24,</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">adaptive =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Adaptive bandwidth: 363 CV score: 2.208986 
+Adaptive bandwidth: 232 CV score: 2.105893 
+Adaptive bandwidth: 151 CV score: 1.973309 
+Adaptive bandwidth: 100 CV score: 1.940199 
+Adaptive bandwidth: 70 CV score: 2.008461 
+Adaptive bandwidth: 120 CV score: 1.945603 
+Adaptive bandwidth: 89 CV score: 1.942555 
+Adaptive bandwidth: 108 CV score: 1.938444 
+Adaptive bandwidth: 112 CV score: 1.942082 
+Adaptive bandwidth: 104 CV score: 1.938601 
+Adaptive bandwidth: 109 CV score: 1.940144 
+Adaptive bandwidth: 106 CV score: 1.939139 
+Adaptive bandwidth: 108 CV score: 1.938444 </code></pre>
+</div>
+</div>
+<p>The model can then be fitted.</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run gwr</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>cons_24_gwr <span class="ot">&lt;-</span> <span class="fu">gwr.basic</span>(conservative_vote_share <span class="sc">~</span> eco_active_employed <span class="sc">+</span> eco_active_unemployed <span class="sc">+</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    eth_white <span class="sc">+</span> eth_black <span class="sc">+</span> aged_25_to_34_years <span class="sc">+</span> aged_50_years_and_over, <span class="at">data =</span> cons_24,</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">adaptive =</span> <span class="cn">TRUE</span>, <span class="at">bw =</span> cons_24_bw)</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>cons_24_gwr</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   ***********************************************************************
+   *                       Package   GWmodel                             *
+   ***********************************************************************
+   Program starts at: 2024-11-08 14:47:12.687624 
+   Call:
+   gwr.basic(formula = conservative_vote_share ~ eco_active_employed + 
+    eco_active_unemployed + eth_white + eth_black + aged_25_to_34_years + 
+    aged_50_years_and_over, data = cons_24, bw = cons_24_bw, 
+    adaptive = TRUE)
+
+   Dependent (y) variable:  conservative_vote_share
+   Independent variables:  eco_active_employed eco_active_unemployed eth_white eth_black aged_25_to_34_years aged_50_years_and_over
+   Number of data points: 575
+   ***********************************************************************
+   *                    Results of Global Regression                     *
+   ***********************************************************************
+
+   Call:
+    lm(formula = formula, data = data)
+
+   Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.286730 -0.040843  0.001182  0.044496  0.220419 
+
+   Coefficients:
+                          Estimate Std. Error t value Pr(&gt;|t|)    
+   (Intercept)            -0.16210    0.08779  -1.846  0.06535 .  
+   eco_active_employed     1.36140    0.13208  10.308  &lt; 2e-16 ***
+   eco_active_unemployed  -0.32339    0.91429  -0.354  0.72369    
+   eth_white              -0.28028    0.03567  -7.857 1.97e-14 ***
+   eth_black              -0.29751    0.10190  -2.920  0.00364 ** 
+   aged_25_to_34_years    -1.52695    0.20954  -7.287 1.07e-12 ***
+   aged_50_years_and_over  0.59711    0.09827   6.076 2.26e-09 ***
+
+   ---Significance stars
+   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+   Residual standard error: 0.06797 on 568 degrees of freedom
+   Multiple R-squared: 0.5537
+   Adjusted R-squared: 0.5489 
+   F-statistic: 117.4 on 6 and 568 DF,  p-value: &lt; 2.2e-16 
+   ***Extra Diagnostic information
+   Residual sum of squares: 2.624389
+   Sigma(hat): 0.06767633
+   AIC:  -1451.196
+   AICc:  -1450.941
+   BIC:  -1940.526
+   ***********************************************************************
+   *          Results of Geographically Weighted Regression              *
+   ***********************************************************************
+
+   *********************Model calibration information*********************
+   Kernel function: bisquare 
+   Adaptive bandwidth: 108 (number of nearest neighbours)
+   Regression points: the same locations as observations are used.
+   Distance metric: Euclidean distance metric is used.
+
+   ****************Summary of GWR coefficient estimates:******************
+                                Min.    1st Qu.     Median    3rd Qu.   Max.
+   Intercept               -1.089291  -0.441131  -0.160803   0.209568 1.1375
+   eco_active_employed     -1.045077   0.151632   0.930912   1.498222 2.8325
+   eco_active_unemployed  -10.747683  -4.837597   0.830042   3.163451 9.8531
+   eth_white               -1.411777  -0.365168  -0.230988  -0.109584 0.1738
+   eth_black               -3.276551  -0.308415  -0.121533   0.071703 1.1200
+   aged_25_to_34_years     -3.659487  -1.575036  -1.288467  -0.342851 1.9350
+   aged_50_years_and_over  -0.287576   0.503695   1.075497   1.383006 2.1875
+   ************************Diagnostic information*************************
+   Number of data points: 575 
+   Effective number of parameters (2trace(S) - trace(S'S)): 103.6449 
+   Effective degrees of freedom (n-2trace(S) + trace(S'S)): 471.3551 
+   AICc (GWR book, Fotheringham, et al. 2002, p. 61, eq 2.33): -1622.807 
+   AIC (GWR book, Fotheringham, et al. 2002,GWR p. 96, eq. 4.22): -1730.89 
+   BIC (GWR book, Fotheringham, et al. 2002,GWR p. 61, eq. 2.34): -1880.236 
+   Residual sum of squares: 1.444834 
+   R-square value:  0.7542715 
+   Adjusted R-square value:  0.7001241 
+
+   ***********************************************************************
+   Program stops at: 2024-11-08 14:47:12.782585 </code></pre>
+</div>
+</div>
+<p>The global regression results are derived from the standard OLS model, representing a single regression for the entire study area without accounting for spatial variation. In contrast, the geographically weighted regression (GWR) results stem from 575 separate but spatially overlapping regression models, each fitted with geographic weighting to different spatial subsets of the data, allowing for local variation in the regression estimates. We can also see that the model fit (adjusted <span class="math inline">\(R^2\)</span>) has increased to 70%.</p>
+<div class="callout callout-style-simple callout-important">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>All the local estimates are contained in the spatial data frame <code>cons_24_gwr$SDF</code>. You can inspect the results using the <code>View()</code> function.</p>
+</div>
+</div>
+</div>
+<p>We can now also map all the local <span class="math inline">\(R^2\)</span> values to get an idea of how well the model fit varies spatially:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># join local r squared values onto spatial data</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>cons_24 <span class="ot">&lt;-</span> cons_24 <span class="sc">|&gt;</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gwr_r2 =</span> cons_24_gwr<span class="sc">$</span>SDF<span class="sc">$</span>Local_R2)</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="co"># shape, polygons</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(cons_24) <span class="sc">+</span></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># specify column, colours</span></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_fill</span>(</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"gwr_r2"</span>,</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> <span class="st">"jenks"</span>,</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="st">"5"</span>,</span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"#fee5d9"</span>, <span class="st">"#fcae91"</span>, <span class="st">"#fb6a4a"</span>, <span class="st">"#de2d26"</span>, <span class="st">"#a50f15"</span>),</span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Local R-squared"</span></span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set layout</span></span>
+<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(</span>
+<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.outside =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"top"</span>),</span>
+<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">frame =</span> <span class="cn">FALSE</span></span>
+<span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-05-map-local-r-squared" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="05-models_files/figure-html/fig-05-map-local-r-squared-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;9: Model performance of the Geographically Weighted Regression.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>In similar fashion, and with some data wrangling, we can map the individual local coefficients of our independent variables:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># join local coefficient values onto spatial data, select, pivot</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>cons_24_coef <span class="ot">&lt;-</span> cons_24 <span class="sc">|&gt;</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">eco_active_employed_coef =</span> cons_24_gwr<span class="sc">$</span>SDF<span class="sc">$</span>eco_active_employed,</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">eco_active_unemployed_coef =</span> cons_24_gwr<span class="sc">$</span>SDF<span class="sc">$</span>eco_active_unemployed,</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">eth_white_coef =</span> cons_24_gwr<span class="sc">$</span>SDF<span class="sc">$</span>eth_white,</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">eth_black_coef =</span> cons_24_gwr<span class="sc">$</span>SDF<span class="sc">$</span>eth_black,</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">aged_25_to_34_years_coef =</span> cons_24_gwr<span class="sc">$</span>SDF<span class="sc">$</span>aged_25_to_34_years,</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">aged_50_years_and_over_coef =</span> cons_24_gwr<span class="sc">$</span>SDF<span class="sc">$</span>aged_50_years_and_over</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="dv">40</span><span class="sc">:</span><span class="dv">45</span>) <span class="sc">|&gt;</span></span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">!</span>geom, <span class="at">names_to =</span> <span class="st">"variable"</span>, <span class="at">values_to =</span> <span class="st">"coefficient"</span>)</span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a><span class="co"># shape, polygons</span></span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(cons_24_coef) <span class="sc">+</span></span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># specify column, colours</span></span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_fill</span>(</span>
+<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"coefficient"</span>,</span>
+<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> <span class="st">"jenks"</span>,</span>
+<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="dv">9</span>,</span>
+<span id="cb37-22"><a href="#cb37-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"#e66101"</span>, <span class="st">"#fdb863"</span>, <span class="st">"#cccccc"</span>, <span class="st">"#b2abd2"</span>, <span class="st">"#5e3c99"</span>),</span>
+<span id="cb37-23"><a href="#cb37-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Local GWR coefficient"</span></span>
+<span id="cb37-24"><a href="#cb37-24" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb37-25"><a href="#cb37-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-26"><a href="#cb37-26" aria-hidden="true" tabindex="-1"></a>  <span class="co"># facet</span></span>
+<span id="cb37-27"><a href="#cb37-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_facets</span>(</span>
+<span id="cb37-28"><a href="#cb37-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"variable"</span>,</span>
+<span id="cb37-29"><a href="#cb37-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">ncol =</span> <span class="dv">2</span></span>
+<span id="cb37-30"><a href="#cb37-30" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb37-31"><a href="#cb37-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-32"><a href="#cb37-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set layout</span></span>
+<span id="cb37-33"><a href="#cb37-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(</span>
+<span id="cb37-34"><a href="#cb37-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.show =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb37-35"><a href="#cb37-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.outside =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb37-36"><a href="#cb37-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">frame =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb37-37"><a href="#cb37-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.labels =</span> <span class="fu">c</span>(<span class="st">"Age: 25-34"</span>, <span class="st">"Age: &gt;50"</span>, <span class="st">"Employed"</span>, <span class="st">"Unemployed"</span>, <span class="st">"Ethnicity: Black"</span>, <span class="st">"Ethnicity: White"</span>),</span>
+<span id="cb37-38"><a href="#cb37-38" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Use "fisher" instead of "jenks" for larger data sets</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Variable(s) "coefficient" contains positive and negative values, so midpoint is set to 0. Set midpoint = NA to show the full spectrum of the color palette.</code></pre>
+</div>
+<div class="cell-output-display">
+<div id="fig-05-map-local-coefficients" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="05-models_files/figure-html/fig-05-map-local-coefficients-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;10: Local coefficients of the Geographically Weighted Regression.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Mapping these local estimates reveals an interesting geography, where, for example, the proportion of the population over 50 years old is a better predictor for the Conservative vote share in regions like the South West, Greater London, and parts of the North West and Yorkshire and the Humber.</p>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Not all of the local regression estimates may be statistically significant. We can use use the estimated <span class="math inline">\(t\)</span>-values, as indicated by the <code>_TV</code> suffix in the <code>SDF</code> data frame of the GWR results, to filter out those are not. For example, to filter at 95% confidence, remove <span class="math inline">\(t\)</span>-values outside the range of <code>-1.96</code> to <code>+1.96</code>.</p>
+</div>
+</div>
+</div>
 <div class="callout callout-style-simple callout-tip">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -904,11 +1200,12 @@ F-statistic: 141.1 on 5 and 569 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </section>
-<section id="spatial-models-1" class="level3" data-number="1.3.5">
-<h3 data-number="1.3.5" class="anchored" data-anchor-id="spatial-models-1"><span class="header-section-number">5.3.5</span> Spatial models</h3>
+</section>
+<section id="more-spatial-models" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="more-spatial-models"><span class="header-section-number">5.3.3</span> More spatial models</h3>
 <p>In this tutorial, we have looked at geographically weighted correlation and regression. However, whilst out of the scope of this module, there are many other approaches to account for space in statistical models. Examples of such models are the spatial error model and the spatial lag model.</p>
-<section id="spatial-error-model" class="level4" data-number="1.3.5.1">
-<h4 data-number="1.3.5.1" class="anchored" data-anchor-id="spatial-error-model"><span class="header-section-number">5.3.5.1</span> Spatial error model</h4>
+<section id="spatial-error-model" class="level4" data-number="1.3.3.1">
+<h4 data-number="1.3.3.1" class="anchored" data-anchor-id="spatial-error-model"><span class="header-section-number">5.3.3.1</span> Spatial error model</h4>
 <p>The spatial error model is used when the error terms in a regression model exhibit spatial autocorrelation, meaning the error terms are not independent across space. This can happen due to omitted variables that have a spatial pattern or unmeasured factors that affect the dependent variable similarly across nearby locations.</p>
 <p>The model adjusts for spatial autocorrelation by adding a spatially lagged error term (a weighted sum of the errors from neighbouring locations) to the regression equation:</p>
 <p><span class="math display">\[
@@ -926,8 +1223,8 @@ y = X\beta + \upsilon, \upsilon = \lambda W \upsilon + \epsilon
 </div>
 </div>
 </section>
-<section id="spatial-lag-model" class="level4" data-number="1.3.5.2">
-<h4 data-number="1.3.5.2" class="anchored" data-anchor-id="spatial-lag-model"><span class="header-section-number">5.3.5.2</span> Spatial lag model</h4>
+<section id="spatial-lag-model" class="level4" data-number="1.3.3.2">
+<h4 data-number="1.3.3.2" class="anchored" data-anchor-id="spatial-lag-model"><span class="header-section-number">5.3.3.2</span> Spatial lag model</h4>
 <p>The spatial lag model is appropriate when the dependent variable itself exhibits spatial dependence. This means the value of the dependent variable in one location depends on the values in neighbouring locations. This model is used to capture the spillover effects or diffusion processes, where the outcome in one area is influenced by outcomes in nearby areas (e.g.&nbsp;house prices, crime rates).</p>
 <p>The model incorporates a spatially lagged dependent variable, which is the weighted sum of the dependent variable values in neighbouring locations, into the regression equation:</p>
 <p><span class="math display">\[
@@ -945,8 +1242,8 @@ y = \rho Wy + X\beta + \epsilon
 </div>
 </div>
 </section>
-<section id="to-note" class="level4" data-number="1.3.5.3">
-<h4 data-number="1.3.5.3" class="anchored" data-anchor-id="to-note"><span class="header-section-number">5.3.5.3</span> To note</h4>
+<section id="to-note" class="level4" data-number="1.3.3.3">
+<h4 data-number="1.3.3.3" class="anchored" data-anchor-id="to-note"><span class="header-section-number">5.3.3.3</span> To note</h4>
 <p>The spatial error model adjusts for spatial autocorrelation in the error terms, whereas the spatial lag model adjusts for spatial dependence in the dependent variable itself. The spatial error model does not alter the interpretation of the coefficients of the independent variables, while the spatial lag model introduces a feedback loop where changes in one area can influence neighbouring areas.</p>
 <p>Both the spatial error and spatial lag models assume that the relationships between variables are the same across the study area, with adjustments made only for spatial dependencies. GWR, on the other hand, allows the relationships themselves to vary across space. GWR is more flexible but also more complex and computationally intensive, providing local instead of global estimates of coefficients.</p>
 </section>
@@ -954,9 +1251,38 @@ y = \rho Wy + X\beta + \epsilon
 </section>
 <section id="assignment" class="level2" data-number="1.4">
 <h2 data-number="1.4" class="anchored" data-anchor-id="assignment"><span class="header-section-number">5.4</span> Assignment</h2>
+<p>The Geographically Weighted Regression (GWR) reveals some varying patterns in the sign and directiion of the Conservative voter share, but it is likely that other factors are at play. One could hypothesise that another potential predictor of the Conservative vote share is the proportion of the population employed in a particular industry. Try to do the following:</p>
+<ol type="1">
+<li>Download the dataset provided below and save it to the appropriate subfolder within your <code>data</code> directory. The <code>csv</code>, extracted using the <a href="https://www.ons.gov.uk/datasets/create">Custom Dataset Tool</a>, contains the number of employed individuals as recorded in the 2021 Census by their <a href="https://www.ons.gov.uk/census/census2021dictionary/variablesbytopic/labourmarketvariablescensus2021/industrycurrent#:~:text=Type%3A%20Derived%20variable-,Definition,firm%20or%20organisation's%20main%20activity.">Standard Industrial Classification (SIC)</a> code.</li>
+<li>Formulate a hypothesis regarding which of the nine main industries presented in the dataset might help predict the Conservative vote share.</li>
+<li>For the chosen industry variable:
+<ul>
+<li>Calculate the share of individuals employed in that industry.</li>
+<li><a href="05-models.html#geographically-weighted-regression-1">Extend the Geographically Weighted Regression (GWR)</a> by including this new variable.</li>
+</ul></li>
+<li>What do the results suggest? Is this variable associated with any changes in Conservative vote share?</li>
+<li>Create a map of the local coefficients for this variable.</li>
+</ol>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">File</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Link</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">England and Wales Parliamentary Constituencies Employed by Industry</td>
+<td style="text-align: left;"><code>csv</code></td>
+<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/England-Wales-PC2024-Industry.csv">Download</a></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="before-you-leave" class="level2" data-number="1.5">
 <h2 data-number="1.5" class="anchored" data-anchor-id="before-you-leave"><span class="header-section-number">5.5</span> Before you leave</h2>
+<p>This week, we explored decomposing global measures to account for non-stationarity in spatial variables. Geographically Weighted Regression (GWR) is particularly useful when the relationship between variables varies across space, as it allows for localised regression coefficients and helps identify spatial heterogeneity that might be overlooked in global models. This was <a href="https://www.youtube.com/watch?v=Le5AGYxPCLI">a rather heavy one</a>, time for some light reading?</p>
 
 
 </section>

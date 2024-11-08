@@ -554,4 +554,4 @@ Now that we have prepared our dataset and created our initial maps in R, we can 
 | England and Wales MSOA 2021 Spatial Boundaries  | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/England-Wales-MSOA-2021.gpkg) |
 
 ## Before you leave
-And that is how you use R as a GIS in its most basic form. More RGIS in the coming weeks, but [this concludes the tutorial for this week](https://www.youtube.com/watch?v=Ydg4T2MP7Z8).
+And that is how you use R as a GIS in its most basic form. More RGIS in the coming weeks, but [this concludes the tutorial for this week](https://www.youtube.com/watch?v=3wxyN3z9PL4).
