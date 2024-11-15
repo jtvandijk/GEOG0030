@@ -1,5 +1,88 @@
 # Beyond the Choropleth
+So far, we have primarily created univariate choropleth maps to visualise data across defined spatial areas, such as LSOAs. This week, we will expand on this by exploring bivariate maps, which illustrate the relationship between two variables within a single visualisation. We will also introduce you to the `ggplot2` library. 
+
+## Lecture slides
+You can download the slides of this week's lecture here: [[Link]]({{< var slides.week09 >}}).
+
+## Reading list
+#### Essential readings {.unnumbered}
+- Longley, P. *et al.* 2015. Geographic Information Science & Systems, **Chapter 11**: *Cartography and Map Production*, pp. 1-32. [[Link]](https://ucl.rl.talis.com/link?url=https%3A%2F%2Fapp.knovel.com%2Fhotlink%2Ftoc%2Fid%3AkpGISSE001%2Fgeographic-information-science%3Fkpromoter%3Dmarc&sig=e437927b963cc591dcb65491eccdd3869cc31aef80e1443cb2ba12d8f3bb031a)
+
+#### Suggested readings {.unnumbered}
+- Cheshire, J. and Uberti, O. 2021. *Atlas of the invisible: maps and graphics that will change how you see the world.* London: Particular Books.
+- Wickham, H., Çetinkaya-Rundel, M., and Grolemund, G. R for Data Science. 2nd edition. **Chapter 1: Data visualization**. [[Link]](https://r4ds.hadley.nz/data-visualize)
+
+## Unemployment in London
+This week, we will look at the change in unemployment across London between 2011 and 2021. Specifically, we will try to reconcile 2011 Census data with 2021 Census data and present the results on a bivariate map. The data cover all usual residents, as recorded in the 2011 and 2021 Census for England and Wales, aggregated at the [Lower Super Output Area (LSOA)](https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeographies/census2021geographies) level. 
+
+::: {.callout-warning}
+Administrative geographies, such as LSOAs, are periodically updated to reflect changes in population and other factors, resulting in occasional boundary adjustments. Consequently, it is essential to use the 2011 LSOA boundaries when mapping 2011 Census data and the 2021 LSOA boundaries for 2021 Census data. To facilitate mapping changes over time, we have access to a `csv` file containing a best-fit lookup table. This table provides a correspondence between 2011 LSOAs and their equivalent 2021 LSOAs, enabling consistent comparison across census periods.
+:::
+
+You can download all three files below and save them in your project folder under `data/attributes`.
+
+| File                                        | Type   | Link |
+| :------                                     | :------| :------ |
+| London LSOA Census 2011 Unemployment        | `csv` | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/London-LSOA-Unemployment-2011.csv) | 
+| London LSOA Census 2021 Unemployment        | `csv` | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/London-LSOA-Unemployment-2021.csv) | 
+| England and Wales LSOA 2011-2021 Lookup     | `csv` | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/England-Wales-LSOA-2011-2021.csv) | 
+
+Open a new script within your `GEOG0030` project and save this as `w09-unemployment-change.r`. 
+
+Begin by loading the necessary libraries:
+
+```{r}
+#| label: 09-load-libraries
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| output: False
+#| tidy: True
+#| filename: 'R code'
+# load libraries
+library(tidyverse)
+library(sf)
+```
+
+::: {.callout-warning}
+You may have to install some of these libraries if you have not used these before.
+:::
+
+Once downloaded, we can load all three files into memory:
+```{r}
+#| label: 09-load-csv
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: 'R code'
+# read 2011 data
+lsoa11 <- read_csv('data/attributes/London-LSOA-Unemployment-2011.csv')
+
+# read 2011 data
+lsoa21 <- read_csv('data/attributes/London-LSOA-Unemployment-2021.csv')
+
+# read lookup data
+lookup <- read_csv('data/attributes/England-Wales-LSOA-2011-2021.csv')
+
+# inspect
+head(lsoa11)
+
+# inspect
+head(lsoa21)
+
+# inspect
+head(lookup)
+``` 
 
 ::: {.callout-note}
-The Geocomputation content for the 2024-2025 academic year is currently undergoing a major update. The materials from 2023-2024 have been archived and can be accessed here: [\[Link\]](https://jtvandijk.github.io/GEOG0030_20232024)
+You can inspect both objects using the `View()` function. 
 :::
+
+### Using lookup tables
+
+### Creating bivariate maps
+
+## Assignment
+
+## Before you leave 

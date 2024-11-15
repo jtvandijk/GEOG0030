@@ -15,7 +15,13 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 - Harris, R. 2020. Exploring the neighbourhood-level correlates of Covid-19 deaths in London using a difference across spatial boundaries method. *Health & Place* 66: 102446. [[Link]](https://doi.org/10.1016/j.healthplace.2020.102446)
 
 ## Population groups in London
-This week, we will investigate to what extent people in London who [self-identified](https://www.ons.gov.uk/peoplepopulationandcommunity/culturalidentity/ethnicity/bulletins/ethnicgroupenglandandwales/census2021) as *Asian-Bangladeshi* in the 2021 Census are clustered in London at the LSOA-level. The data covers all usual residents, as recorded in the 2021 Census for England and Wales, aggregated at the [Lower Super Output Area (LSOA)](https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeographies/census2021geographies) level. The data has been extracted using the [Custom Dataset Tool](https://www.ons.gov.uk/datasets/create) and subsequently processed to include only the proportion of individuals who self-identify as belonging to one of the Asian groups defined in the Census. Along with this dataset, we also have access to a `GeoPackage` that contains the LSOA boundaries. 
+This week, we will investigate to what extent people in London who [self-identified](https://www.ons.gov.uk/peoplepopulationandcommunity/culturalidentity/ethnicity/bulletins/ethnicgroupenglandandwales/census2021) as *Asian-Bangladeshi* in the 2021 Census are clustered in London at the LSOA-level. The data covers all usual residents, as recorded in the 2021 Census for England and Wales, aggregated at the [Lower Super Output Area (LSOA)](https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeographies/census2021geographies) level. 
+
+::: {.callout-note}
+An LSOA is a geographic unit used in the UK for statistical analysis. It typically represents small areas with populations of around 1,000 to 3,000 people and is designed to ensure consistent data reporting. LSOAs are commonly used to report on census data, deprivation indices, and other socio-economic statistics.
+:::
+
+The data has been extracted using the [Custom Dataset Tool](https://www.ons.gov.uk/datasets/create) and subsequently processed to include only the proportion of individuals who self-identify as belonging to one of the Asian groups defined in the Census. Along with this dataset, we also have access to a `GeoPackage` that contains the LSOA boundaries. 
 
 You can download both files below and save them in your project folder under `data/attributes` and `data/spatial`, respectively.
 
