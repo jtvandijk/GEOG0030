@@ -15,17 +15,18 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 ## Unemployment in London
 This week, we will look at the change in unemployment across London between 2011 and 2021. Specifically, we will try to reconcile 2011 Census data with 2021 Census data and present the results on a bivariate map. The data cover all usual residents, as recorded in the 2011 and 2021 Census for England and Wales, aggregated at the [Lower Super Output Area (LSOA)](https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeographies/census2021geographies) level. 
 
-::: {.callout-warning}
+::: {.callout-note}
 Administrative geographies, such as LSOAs, are periodically updated to reflect changes in population and other factors, resulting in occasional boundary adjustments. Consequently, it is essential to use the 2011 LSOA boundaries when mapping 2011 Census data and the 2021 LSOA boundaries for 2021 Census data. To facilitate mapping changes over time, we have access to a `csv` file containing a best-fit lookup table. This table provides a correspondence between 2011 LSOAs and their equivalent 2021 LSOAs, enabling consistent comparison across census periods.
 :::
 
-You can download all three files below and save them in your project folder under `data/attributes`.
+You can download three files below and save them in your project folder under `data/attributes`. Along with these dataset, we also have access to a `GeoPackage` that contains the 2021 LSOA boundaries. 
 
 | File                                        | Type   | Link |
 | :------                                     | :------| :------ |
 | London LSOA Census 2011 Unemployment        | `csv` | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/London-LSOA-Unemployment-2011.csv) | 
 | London LSOA Census 2021 Unemployment        | `csv` | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/London-LSOA-Unemployment-2021.csv) | 
-| England and Wales LSOA 2011-2021 Lookup     | `csv` | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/England-Wales-LSOA-2011-2021.csv) | 
+| England and Wales LSOA 2011-2021 Lookup     | `csv` | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/England-Wales-LSOA-2011-2021.csv) | ]
+| London LSOA 2021 Spatial Boundaries         | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-LSOA-2021.gpkg) |
 
 Open a new script within your `GEOG0030` project and save this as `w09-unemployment-change.r`. 
 
@@ -80,6 +81,71 @@ You can inspect both objects using the `View()` function.
 :::
 
 ### Using lookup tables
+To analyse changes in unemployment over time, we need to combine the 2011 and 2021 unemployment data. Previously, we have joined datasets using a unique identifier found in both, assuming the identifiers match exactly and represent the same geographies. However, when comparing the unique identifiers from (`lsoa11cd` and `lsoa21cd`) these datasets, we can see some clear differences:
+
+```{r}
+#| label: 09-lsoa-differnces
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: 'R code'
+# inspect
+length(unique(lsoa11$lsoa11cd))
+
+# inspect
+length(unique(lsoa21$lsoa21cd))
+``` 
+
+The number of LSOAs has increased between the 2011 and 2021 Census due to boundary changes. Specifically, some 2011 LSOAs have been split into multiple 2021 LSOAs, while others have been merged into a single 2021 LSOA polygon. The relationship between 2011 and 2021 LSOAs is captured in the `chgind` column of the lookup table, which flags the type of change for each case.
+
+| Type  | Description |
+| :-:   | :-----------|
+| `U`   | *Unchanged*: The LSOA boundaries remain the same from 2011 to 2021, allowing direct comparisons between data for these years. |
+| `S`   | *Split*: A 2011 LSOA has been divided into two or more 2021 LSOAs. Each split 2021 LSOA will have a corresponding record in the table, enabling comparisons by aggregating the 2021 LSOA data back to the 2011 boundary.
+|
+| `M`   | *Merged*: Two or more 2011 LSOAs have been combined into a single 2021 LSOA. Comparisons can be made by aggregating the 2011 LSOA data to match the new 2021 boundary. |
+| `X`   | *Irregular/Fragmented*: The relationship between 2011 and 2021 LSOAs is complex due to redesigns from local authority boundary changes or efforts to improve social homogeneity. These cases do not allow straightforward comparisons between 2011 and 2021 data. |
+
+Although there are different approaches to handling this, today we will:
+
+1. Divide the total crimes for 2011 LSOAs that have been split equally across the corresponding 2021 LSOAs.
+2. Combine the total crimes for 2011 LSOAs that have been merged into a single 2021 LSOA.
+3. Remove values for 2021 LSOAs where the relationship with 2011 LSOAs is irregular or fragmented, as these cannot be directly compared.
+
+This means we will apply weightings to the values based on their relationships. We can prepare these weightings as follows:
+
+```{r}
+#| label: 09-adjust weightings
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: "R code"
+# for unchanged LSOAs keep weighting the same 
+lsoa_lookup_same  <- lookup |> filter(chgind == 'U') |>
+  group_by(lsoa11cd) |>
+  mutate(n=n())
+
+# for merged LSOAs: keep weighting the same
+lsoa_lookup_merge <- lookup |> filter(chgind == 'M') |>
+  group_by(lsoa11cd) |>
+  mutate(n=n())
+
+# for split LSOAs: weigh proportionally to the number of 2021 LSOAs 
+lsoa_lookup_split <- lookup |> filter(chgind == 'S') |>
+  group_by(lsoa11cd) |>
+  mutate(n=1/n())
+
+# re-combine the lookup with updated weightings
+lsoa_lookup <- rbind(lsoa_lookup_same,
+                     lsoa_lookup_merge,
+                     lsoa_lookup_split)
+
+# inspect
+lsoa_lookup
+```
 
 ### Creating bivariate maps
 
