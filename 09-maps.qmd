@@ -6,11 +6,11 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 
 ## Reading list
 #### Essential readings {.unnumbered}
-- Longley, P. *et al.* 2015. Geographic Information Science & Systems, **Chapter 11**: *Cartography and Map Production*, pp. 1-32. [[Link]](https://ucl.rl.talis.com/link?url=https%3A%2F%2Fapp.knovel.com%2Fhotlink%2Ftoc%2Fid%3AkpGISSE001%2Fgeographic-information-science%3Fkpromoter%3Dmarc&sig=e437927b963cc591dcb65491eccdd3869cc31aef80e1443cb2ba12d8f3bb031a)
+- Longley, P. *et al.* 2015. *Geographic Information Science & Systems*, **Chapter 11**: *Cartography and Map Production*, pp. 1-32. [[Link]](https://ucl.rl.talis.com/link?url=https%3A%2F%2Fapp.knovel.com%2Fhotlink%2Ftoc%2Fid%3AkpGISSE001%2Fgeographic-information-science%3Fkpromoter%3Dmarc&sig=e437927b963cc591dcb65491eccdd3869cc31aef80e1443cb2ba12d8f3bb031a)
 
 #### Suggested readings {.unnumbered}
 - Cheshire, J. and Uberti, O. 2021. *Atlas of the invisible: maps and graphics that will change how you see the world.* London: Particular Books.
-- Wickham, H., Çetinkaya-Rundel, M., and Grolemund, G. R for Data Science. 2nd edition. **Chapter 1: Data visualization**. [[Link]](https://r4ds.hadley.nz/data-visualize)
+- Wickham, H., Çetinkaya-Rundel, M., and Grolemund, G. *R for Data Science*. 2nd edition. **Chapter 1: Data visualization**. [[Link]](https://r4ds.hadley.nz/data-visualize)
 
 ## Unemployment in London
 This week, we will look at the change in unemployment across London between 2011 and 2021. Specifically, we will try to reconcile 2011 Census data with 2021 Census data and present the results on a bivariate map. The data cover all usual residents, as recorded in the 2011 and 2021 Census for England and Wales, aggregated at the [Lower Super Output Area (LSOA)](https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeographies/census2021geographies) level. 
@@ -60,8 +60,9 @@ Once downloaded, we can load all three files into memory:
 # read 2011 data
 lsoa11 <- read_csv('data/attributes/London-LSOA-Unemployment-2011.csv')
 
-# read 2011 data
-lsoa21 <- read_csv('data/attributes/London-LSOA-Unemployment-2021.csv')
+# read 2021 data
+lsoa21 <- read_csv('data/attributes/London-LSOA-Unemployment-2021.csv') |>
+  select(-lsoa21nm)
 
 # read lookup data
 lookup <- read_csv('data/attributes/England-Wales-LSOA-2011-2021.csv')
@@ -97,13 +98,12 @@ length(unique(lsoa11$lsoa11cd))
 length(unique(lsoa21$lsoa21cd))
 ``` 
 
-The number of LSOAs has increased between the 2011 and 2021 Census due to boundary changes. Specifically, some 2011 LSOAs have been split into multiple 2021 LSOAs, while others have been merged into a single 2021 LSOA polygon. The relationship between 2011 and 2021 LSOAs is captured in the `chgind` column of the lookup table, which flags the type of change for each case.
+The number of LSOAs increased between the 2011 and 2021 Census due to boundary changes. Specifically, some 2011 LSOAs have been split into multiple 2021 LSOAs, while others have been merged into a single 2021 LSOA polygon. The relationship between 2011 and 2021 LSOAs is captured in the `chgind` column of the lookup table, which flags the type of change for each case.
 
 | Type  | Description |
 | :-:   | :-----------|
 | `U`   | *Unchanged*: The LSOA boundaries remain the same from 2011 to 2021, allowing direct comparisons between data for these years. |
-| `S`   | *Split*: A 2011 LSOA has been divided into two or more 2021 LSOAs. Each split 2021 LSOA will have a corresponding record in the table, enabling comparisons by aggregating the 2021 LSOA data back to the 2011 boundary.
-|
+| `S`   | *Split*: A 2011 LSOA has been divided into two or more 2021 LSOAs. Each split 2021 LSOA will have a corresponding record in the table, enabling comparisons by aggregating the 2021 LSOA data back to the 2011 boundary.|
 | `M`   | *Merged*: Two or more 2011 LSOAs have been combined into a single 2021 LSOA. Comparisons can be made by aggregating the 2011 LSOA data to match the new 2021 boundary. |
 | `X`   | *Irregular/Fragmented*: The relationship between 2011 and 2021 LSOAs is complex due to redesigns from local authority boundary changes or efforts to improve social homogeneity. These cases do not allow straightforward comparisons between 2011 and 2021 data. |
 
@@ -111,7 +111,10 @@ Although there are different approaches to handling this, today we will:
 
 1. Divide the total crimes for 2011 LSOAs that have been split equally across the corresponding 2021 LSOAs.
 2. Combine the total crimes for 2011 LSOAs that have been merged into a single 2021 LSOA.
-3. Remove values for 2021 LSOAs where the relationship with 2011 LSOAs is irregular or fragmented, as these cannot be directly compared.
+
+::: {.callout-note}
+The LSOA boundary changes in London between 2011 and 2021 did not result in any irregular or fragmented boundaries. Therefore, we only need to address the merged and split LSOAs.
+:::
 
 This means we will apply weightings to the values based on their relationships. We can prepare these weightings as follows:
 
@@ -146,6 +149,102 @@ lsoa_lookup <- rbind(lsoa_lookup_same,
 # inspect
 lsoa_lookup
 ```
+
+::: {.callout-note}
+You can inspect both objects using the `View()` function. 
+:::
+
+We can now join the lookup table on the 2011 LSOA data:
+
+```{r tidy='styler'}
+#| label: 09-lsoa-lookup-join
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| filename: "R code"
+# join to lsoa data
+lsoa11_21 <- lsoa11 |> 
+  select(-lsoa11nm) |>
+  left_join(lsoa_lookup, by = c("lsoa11cd" = "lsoa11cd"))
+``` 
+
+If we now compare the number of records in our `lsoa11_21` dataset with the original 2011 and 2021 LSOA datasets, we notice some differences:
+
+```{r}
+#| label: 09-lsoa-increase
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# lsoa 2011
+nrow(lsoa11)
+
+# lsoa 2021
+nrow(lsoa21)
+
+# lookup
+nrow(lsoa11_21)
+``` 
+
+Somehow, the number of our LSOAs seem to have increased. However, this is not an actual increase in LSOAs; rather, the change in the number of LSOAs is due to *our one-to-many* relationships. A single 2011 LSOA can correspond to multiple 2021 LSOAs, which causes the data for that 2011 LSOA to be duplicated in the join operation. Fortunately, we anticipated this and have already created the necessary weightings. We can now apply these weightings to assign our 2011 population estimates to the 2021 LSOA boundaries as follows:
+
+```{r}
+#| label: 09-2011-2021
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: "R code"
+# weigh data
+lsoa11_21 <- lsoa11_21 |>
+  mutate(eco_active_unemployed11 = eco_active_unemployed11 * n) |>
+  mutate(pop11 = pop11 * n)
+
+# assign 2011 to 2021
+lsoa11_21 <- lsoa11_21 |>
+  group_by(lsoa21cd) |>
+  mutate(eco_active_unemployed11_lsoa21 = sum(eco_active_unemployed11)) |>
+  mutate(pop11_lsoa21 = sum(pop11)) |>
+  distinct(lsoa21cd, eco_active_unemployed11_lsoa21, pop11_lsoa21)
+```
+
+We should now be left with all 2021 LSOAs, each containing the corresponding 2011 values, adjusted according to the merged and split LSOA relationships. We can quickly check this by comparing the original values with the re-assigned values:
+
+```{r}
+#| label: 09-2011-2021-check
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: "R code"
+# inspect number
+nrow(lsoa21)
+
+# inspect number
+nrow(lsoa11_21)
+
+# inspect count original data
+sum(lsoa11$pop11)
+
+# inspect count re-assigned data
+sum(lsoa11_21$pop11_lsoa21)
+
+```
+We can now join the 2011 and 2021 population data together:
+
+```{r tidy='styler'}
+#| label: 09-lsoa-join-data
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| filename: "R code"
+# join 2011 data with 2021 data
+lsoa11_21 <- lsoa11_21 |> 
+  left_join(lsoa21, by = c("lsoa21cd" = "lsoa21cd"))
+``` 
 
 ### Creating bivariate maps
 
