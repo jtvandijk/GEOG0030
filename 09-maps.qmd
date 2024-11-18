@@ -375,6 +375,8 @@ ggdraw() +
   draw_plot(legend, 0.1, 0.1, 0.3, 0.3)
 ```
 
+
+
 ## Assignment
 
 ## Before you leave 
