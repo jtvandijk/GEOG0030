@@ -375,10 +375,13 @@ legend <- bi_legend(pal = 'DkBlue2', dim = 3, xlab = 'Higher Unemployment 2021',
 bivmap <- ggdraw() +
   draw_plot(map, 0, 0, 1, 1) +
   draw_plot(legend, 0.1, 0.1, 0.3, 0.3)
+
+# plot
+bivmap
 ```
 
 ### Writing functions
-So we have now created a map of Lambeth. But what if we need to create a map for every borough in London? In R, you can create a basic function using the `function()` keyword, which allows you to encapsulate reusable code. A function can take arguments (inputs), perform operations, and return a result. A simple example of a function that combines two values:
+So we have now created a map of Lambeth. But what if we need to create a map for every borough in London? In R, you can create a basic function using the `function()` keyword, which allows you to encapsulate reusable code. A function can take arguments (inputs), perform operations, and return a result. A simple example of a function that adds two values together:
 
 ```{r}
 #| label: 09-simple-function
@@ -398,7 +401,7 @@ add_numbers <- function(a, b) {
 add_numbers(5, 3)
 ```
 
-We can use the same logical to construct a very basic function that takes the name of a borough as input and then creates a bivarate map as output:
+We can use the same logic to construct a basic function that takes a spatial dataframe and the name of a borough as input and subsequently creates a bivarate map as output:
 
 ```{r tidy='styler'} 
 #| label: 09-map-function
@@ -453,7 +456,7 @@ We can now use this function to quickly recreate maps for individual boroughs. L
 create_bivariate_map(lsoa21_sf, 'Hammersmith')
 ```
 
-What about Kensington and Chelsea?
+What about Kensington and Chelsea? Or Wandsworth?
 
 ```{r} 
 #| label: fig-09-biv-map-legend-kensington-chelsea
@@ -468,6 +471,19 @@ What about Kensington and Chelsea?
 create_bivariate_map(lsoa21_sf, 'Kensington and Chelsea')
 ```
 
+```{r} 
+#| label: fig-09-biv-map-legend-richmond
+#| fig-cap: Bivariate map of relative changes in unemployment rates in Wandsworth 2011-2021.
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: 'R code'
+# run function
+create_bivariate_map(lsoa21_sf, 'Wandsworth')
+```
+
 ## Assignment
 When the same action, such as mapping a particular variable, needs to be repeated across different datasets or regions, a function ensures that the process is consistent and can be applied easily without rewriting code. This not only saves time but also reduces the risk of errors, as you can simply call the function with different inputs, ensuring the same analysis steps are followed each time.
 
@@ -478,7 +494,7 @@ Having created a function to generate bivariate maps, we can now create a functi
 3. Add a fourth parameter to define the colour palette to be used for the map.
 
 ::: {.callout-tip}
-If you would like a more comprehensive introduction to writing your own functions in R, refer to Chapter 19: Functions in [R for Data Science](https://r4ds.had.co.nz/functions.html). This chapter provides a detailed explanation of how to create and use functions, along with best practices for making your code more efficient and reusable.
+If you would like a more comprehensive introduction to writing your own functions in R, refer to **Chapter 19: Functions** in [R for Data Science](https://r4ds.had.co.nz/functions.html). This chapter provides a detailed explanation of how to create and use functions, along with best practices for making your code more efficient and reusable.
 :::
 
 ## Before you leave 
