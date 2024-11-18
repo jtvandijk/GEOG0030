@@ -31,7 +31,7 @@ The topics covered over the next ten weeks are:
 | 6    | Applied Spatial Analysis | [Raster Data Analysis]({{< var urls.w06 >}})|
 | 7    | Applied Spatial Analysis | [Geodemographic Classification]({{< var urls.w07 >}})|
 | 8    | Applied Spatial Analysis | [Accessibility Analysis]({{< var urls.w08 >}}) |
-| 9    | Data Visualisation | [Beyond the Choropleth]({{< var urls.w09 >}}) | 
+| 9    | Data Visualisation | [Bivariate Maps]({{< var urls.w09 >}}) | 
 | 10   | Data Visualisation | [Complex Visualisations]({{< var urls.w10 >}}) | 
 
 ::: {.callout-note}

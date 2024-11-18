@@ -499,4 +499,4 @@ Now that we are familiar with basic spatial queries and geometric operations, we
 | London OS Open Roads - Main Roads           | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-Open-Roads-Main.gpkg) |
 
 ## Before you leave
-Boom. That is how you can conduct basic spatial queries and geometric operations and using R and `sf`. Yet more RGIS coming over the next couple of weeks, but [this concludes the tutorial for this week](https://www.youtube.com/watch?v=Ydg4T2MP7Z8). Time to check out that reading list?
+Boom. That is how you can conduct basic spatial queries and geometric operations and using R and `sf`. Yet more RGIS coming over the next couple of weeks, but [this concludes the tutorial for this week](https://www.youtube.com/watch?v=Xyt810Ahbxk). Time to check out that reading list?

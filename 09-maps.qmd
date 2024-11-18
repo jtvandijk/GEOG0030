@@ -1,5 +1,5 @@
-# Beyond the Choropleth
-So far, we have primarily created univariate choropleth maps to visualise data across defined spatial areas, such as LSOAs. This week, we will expand on this by exploring bivariate maps, which illustrate the relationship between two variables within a single visualisation. We will also introduce you to the `ggplot2` library. 
+# Bivariate Maps
+So far, we have primarily created univariate choropleth maps to visualise data across defined spatial areas, such as LSOAs. This week, we will expand on this by exploring bivariate maps, which illustrate the relationship between two variables within a single visualisation. We will also introduce you to the `ggplot2` library and pay some attention to creating functions to automate and repeat analyses for different spatial units, allowing for more efficient and consistent workflows
 
 ## Lecture slides
 You can download the slides of this week's lecture here: [[Link]]({{< var slides.week09 >}}).
@@ -11,6 +11,7 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 #### Suggested readings {.unnumbered}
 - Cheshire, J. and Uberti, O. 2021. *Atlas of the invisible: maps and graphics that will change how you see the world.* London: Particular Books.
 - Wickham, H., Çetinkaya-Rundel, M., and Grolemund, G. *R for Data Science*. 2nd edition. **Chapter 1: Data visualization**. [[Link]](https://r4ds.hadley.nz/data-visualize)
+- Wickham, H., Çetinkaya-Rundel, M., and Grolemund, G. *R for Data Science*. 2nd edition. **Chapter 19: Functions**. [[Link]](https://r4ds.had.co.nz/functions.html)
 
 ## Unemployment in London
 This week, we will look at the change in unemployment across London between 2011 and 2021. Specifically, we will try to reconcile 2011 Census data with 2021 Census data and present the results on a bivariate map. The data cover all usual residents, as recorded in the 2011 and 2021 Census for England and Wales, aggregated at the [Lower Super Output Area (LSOA)](https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeographies/census2021geographies) level. 
@@ -247,7 +248,7 @@ lsoa11_21 <- lsoa11_21 |>
   left_join(lsoa21, by = c('lsoa21cd' = 'lsoa21cd'))
 ``` 
 
-### Bivariate maps
+### Making bivariate maps
 Bivariate maps are visualisations that represent two different variables simultaneously on a single map, using combinations of colours, patterns, or symbols to convey relationships between them. They are commonly used to explore spatial correlations or patterns, such as comparing population density with income levels across a region. We will use a bivariate map to illustrate changes in unemployment between 2011 and 2021 in London. 
 
 We will start by calculating unemployment rates for both years and classifing them into categories using the `biscale` library:
@@ -314,7 +315,7 @@ We have set `show.legend = FALSE` to allow us to manually add our own bivariate 
 
 ```{r tidy='styler'} 
 #| label: fig-09-biv-map-legend
-#| fig-cap: Bivariate map change of unemployment rates in London 2011-2021.
+#| fig-cap: Bivariate map of relative changes in unemployment rates in London 2011-2021.
 #| classes: styled-output
 #| echo: True
 #| eval: True
@@ -345,7 +346,7 @@ We have used LSOA data to create a bivariate map illustrating changes in unemplo
 
 ```{r tidy='styler'} 
 #| label: fig-09-biv-map-legend-lambeth
-#| fig-cap: Bivariate map change of unemployment rates in Lambeth 2011-2021.
+#| fig-cap: Bivariate map of relative changes in unemployment rates in Lambeth 2011-2021.
 #| classes: styled-output
 #| echo: True
 #| eval: True
@@ -361,7 +362,8 @@ lsoa21_lambeth <- lsoa21_lambeth |>
 
 # bivariate map object
 map <- ggplot() +
-  geom_sf(data = lsoa21_lambeth, mapping = aes(fill = bi_class), color = NA, show.legend = FALSE) +
+  geom_sf(data = lsoa21_lambeth, mapping = aes(fill = bi_class), 
+          color = NA, show.legend = FALSE) +
   bi_scale_fill(pal = 'DkBlue2', dim = 3) +
   bi_theme()
 
@@ -370,13 +372,114 @@ legend <- bi_legend(pal = 'DkBlue2', dim = 3, xlab = 'Higher Unemployment 2021',
                     ylab = 'Higher Unemployment 2011', size = 6)
 
 # combine, draw
-ggdraw() +
+bivmap <- ggdraw() +
   draw_plot(map, 0, 0, 1, 1) +
   draw_plot(legend, 0.1, 0.1, 0.3, 0.3)
 ```
 
+### Writing functions
+So we have now created a map of Lambeth. But what if we need to create a map for every borough in London? In R, you can create a basic function using the `function()` keyword, which allows you to encapsulate reusable code. A function can take arguments (inputs), perform operations, and return a result. A simple example of a function that combines two values:
 
+```{r}
+#| label: 09-simple-function
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: 'R code'
+# define function to add two numbers
+add_numbers <- function(a, b) {
+  result <- a + b
+  return(result)
+}
+
+# use function
+add_numbers(5, 3)
+```
+
+We can use the same logical to construct a very basic function that takes the name of a borough as input and then creates a bivarate map as output:
+
+```{r tidy='styler'} 
+#| label: 09-map-function
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| cache: True
+#| filename: 'R code'
+# define function to create bivariate unemployment maps
+create_bivariate_map <- function(spatial_df, borough_name) {
+
+  # select lambeth
+  spatial_df_filter <- spatial_df |>
+    filter(str_detect(lsoa21nm, borough_name))
+  
+  # add classes
+  spatial_df_filter <- spatial_df_filter |>
+    bi_class(x = unemp21, y = unemp11, style = 'quantile', dim = 3)
+  
+  # bivariate map object
+  map <- ggplot() +
+    geom_sf(data = spatial_df_filter, mapping = aes(fill = bi_class), color = NA, show.legend = FALSE) +
+    bi_scale_fill(pal = 'DkBlue2', dim = 3) +
+    bi_theme()
+
+  # legend object
+  legend <- bi_legend(pal = 'DkBlue2', dim = 3, xlab = 'Higher Unemployment 2021',
+                      ylab = 'Higher Unemployment 2011', size = 6)
+
+  # combine 
+  bivariate_map <- ggdraw() +
+    draw_plot(map, 0, 0, 1, 1) +
+    draw_plot(legend, 0.1, 0.1, 0.3, 0.3)
+
+  # return value
+  return(bivariate_map)
+}
+```
+
+We can now use this function to quickly recreate maps for individual boroughs. Let's try it for the London Borough of Hammersmith:
+
+```{r} 
+#| label: fig-09-biv-map-legend-hammersmith
+#| fig-cap: Bivariate map of relative changes in unemployment rates in Hammersmith 2011-2021.
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: 'R code'
+# run function
+create_bivariate_map(lsoa21_sf, 'Hammersmith')
+```
+
+What about Kensington and Chelsea?
+
+```{r} 
+#| label: fig-09-biv-map-legend-kensington-chelsea
+#| fig-cap: Bivariate map of relative changes in unemployment rates in Kensington and Chelsea 2011-2021.
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: 'R code'
+# run function
+create_bivariate_map(lsoa21_sf, 'Kensington and Chelsea')
+```
 
 ## Assignment
+When the same action, such as mapping a particular variable, needs to be repeated across different datasets or regions, a function ensures that the process is consistent and can be applied easily without rewriting code. This not only saves time but also reduces the risk of errors, as you can simply call the function with different inputs, ensuring the same analysis steps are followed each time.
+
+Having created a function to generate bivariate maps, we can now create a function for univariate maps. Using the dataset from the tutorial, try to:
+
+1. Write a function with two parameters that uses the standard `tmap` library to map unemployment rates at the LSOA-level for a specified borough.
+2. Add a third parameter that specifies which variable should be mapped (e.g., unemployment rates in 2011 or 2021).
+3. Add a fourth parameter to define the colour palette to be used for the map.
+
+::: {.callout-tip}
+If you would like a more comprehensive introduction to writing your own functions in R, refer to Chapter 19: Functions in [R for Data Science](https://r4ds.had.co.nz/functions.html). This chapter provides a detailed explanation of how to create and use functions, along with best practices for making your code more efficient and reusable.
+:::
 
 ## Before you leave 
+That is it for today. You should now be able to use lookup tables, create bivariate maps with the `ggplot2` library, and build [basic reproducible functions](https://raw.githubusercontent.com/jtvandijk/GEOG0030/refs/heads/main/images/w09/hackerman.gif). Next week, we will dive deeper into the `ggplot2` library, but for now [that is this week's Geocompuation done](https://www.youtube.com/watch?v=Ydg4T2MP7Z8)!
