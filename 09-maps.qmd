@@ -43,6 +43,8 @@ Begin by loading the necessary libraries:
 # load libraries
 library(tidyverse)
 library(sf)
+library(biscale)
+library(cowplot)
 ```
 
 ::: {.callout-warning}
@@ -61,8 +63,7 @@ Once downloaded, we can load all three files into memory:
 lsoa11 <- read_csv('data/attributes/London-LSOA-Unemployment-2011.csv')
 
 # read 2021 data
-lsoa21 <- read_csv('data/attributes/London-LSOA-Unemployment-2021.csv') |>
-  select(-lsoa21nm)
+lsoa21 <- read_csv('data/attributes/London-LSOA-Unemployment-2021.csv')
 
 # read lookup data
 lookup <- read_csv('data/attributes/England-Wales-LSOA-2011-2021.csv')
@@ -125,7 +126,7 @@ This means we will apply weightings to the values based on their relationships. 
 #| eval: True
 #| tidy: True
 #| cache: True
-#| filename: "R code"
+#| filename: 'R code'
 # for unchanged LSOAs keep weighting the same 
 lsoa_lookup_same  <- lookup |> filter(chgind == 'U') |>
   group_by(lsoa11cd) |>
@@ -161,11 +162,11 @@ We can now join the lookup table on the 2011 LSOA data:
 #| classes: styled-output
 #| echo: True
 #| eval: True
-#| filename: "R code"
+#| filename: 'R code'
 # join to lsoa data
 lsoa11_21 <- lsoa11 |> 
   select(-lsoa11nm) |>
-  left_join(lsoa_lookup, by = c("lsoa11cd" = "lsoa11cd"))
+  left_join(lsoa_lookup, by = c('lsoa11cd' = 'lsoa11cd'))
 ``` 
 
 If we now compare the number of records in our `lsoa11_21` dataset with the original 2011 and 2021 LSOA datasets, we notice some differences:
@@ -176,7 +177,7 @@ If we now compare the number of records in our `lsoa11_21` dataset with the orig
 #| echo: True
 #| eval: True
 #| tidy: True
-#| filename: "R code"
+#| filename: 'R code'
 # lsoa 2011
 nrow(lsoa11)
 
@@ -196,7 +197,7 @@ Somehow, the number of our LSOAs seem to have increased. However, this is not an
 #| eval: True
 #| tidy: True
 #| cache: True
-#| filename: "R code"
+#| filename: 'R code'
 # weigh data
 lsoa11_21 <- lsoa11_21 |>
   mutate(eco_active_unemployed11 = eco_active_unemployed11 * n) |>
@@ -219,7 +220,7 @@ We should now be left with all 2021 LSOAs, each containing the corresponding 201
 #| eval: True
 #| tidy: True
 #| cache: True
-#| filename: "R code"
+#| filename: 'R code'
 # inspect number
 nrow(lsoa21)
 
@@ -240,13 +241,139 @@ We can now join the 2011 and 2021 population data together:
 #| classes: styled-output
 #| echo: True
 #| eval: True
-#| filename: "R code"
+#| filename: 'R code'
 # join 2011 data with 2021 data
 lsoa11_21 <- lsoa11_21 |> 
-  left_join(lsoa21, by = c("lsoa21cd" = "lsoa21cd"))
+  left_join(lsoa21, by = c('lsoa21cd' = 'lsoa21cd'))
 ``` 
 
-### Creating bivariate maps
+### Bivariate maps
+Bivariate maps are visualisations that represent two different variables simultaneously on a single map, using combinations of colours, patterns, or symbols to convey relationships between them. They are commonly used to explore spatial correlations or patterns, such as comparing population density with income levels across a region. We will use a bivariate map to illustrate changes in unemployment between 2011 and 2021 in London. 
+
+We will start by calculating unemployment rates for both years and classifing them into categories using the `biscale` library:
+
+```{r}
+#| label: 09-2011-2021-biv-classes
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: 'R code'
+# unemployment rates
+lsoa11_21 <- lsoa11_21 |>
+  mutate(unemp11 = eco_active_unemployed11_lsoa21 / pop11_lsoa21) |>
+  mutate(unemp21 = eco_active_unemployed21 / pop21) |>
+  select(-lsoa21nm)
+
+# add classes
+lsoa11_21 <- lsoa11_21 |>
+  bi_class(x = unemp21, y = unemp11, style = 'quantile', dim = 3)
+
+# inspect
+head(lsoa11_21$bi_class)
+```
+
+::: {.callout-note}
+The `dim` argument is used to control the extent of the legend. For instance, `dim = 2` will produce a two-by-two map where `dim = 3` will produce a three-by-three map.
+:::
+
+Instead of using `tmap` to create our map, we will need to use the  `ggplot2` library. Like `tmap`, `ggplot2` is based on the grammar of graphics, allowing you to build a graphic step by step by layering components such as data, aesthetics, and geometries. While we will explore `ggplot2` in more detail [next week](10-datavis.html), for now, we will use it to create a bivariate map by adding the necessary layers one at a time.
+
+::: {.callout-tip}
+Bivariate maps are not supported in Version 3 of `tmap.` However, Version 4, which is currently under development, will include functionality for creating bivariate maps. This new version is expected to be released on CRAN soon
+:::
+
+Once breaks are created, we can use `bi_scale_fill()` as part of our `ggplot()` call:
+
+```{r tidy='styler'} 
+#| label: fig-09-biv-map
+#| fig-cap: Bivariate map change of unemployment rates in London 2011-2021.
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| cache: True
+#| filename: 'R code'
+# load spatial data
+lsoa21_sf <- st_read('data/spatial/London-LSOA-2021.gpkg')
+
+# join unemployment data
+lsoa21_sf <- lsoa21_sf |>
+  left_join(lsoa11_21, by = c('lsoa21cd'='lsoa21cd'))
+
+# bivariate map using ggplot
+ggplot() +
+  geom_sf(data = lsoa21_sf, mapping = aes(fill = bi_class), color = NA, show.legend = FALSE) +
+  bi_scale_fill(pal = 'DkBlue2', dim = 3) +
+  bi_theme()
+```
+
+Shades closer to grey indicate areas with relative low unemployment rates in both years, while shades closer to blue represent areas with high unemployment rates in both years. Mixed tones suggest areas where unemployment rates have changed between 2011 and 2021, with the specific colour intensity reflecting the degree and direction of this change.
+
+We have set `show.legend = FALSE` to allow us to manually add our own bivariate legend. The palette and dimensions should align with those used in `bi_class()` for dimensions and `bi_scale_fill()` for both dimensions and palette to ensure consistency. We can create a legend and combine it with a map object as follows:
+
+```{r tidy='styler'} 
+#| label: fig-09-biv-map-legend
+#| fig-cap: Bivariate map change of unemployment rates in London 2011-2021.
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| cache: True
+#| filename: 'R code'
+
+# bivariate map object
+map <- ggplot() +
+  geom_sf(data = lsoa21_sf, mapping = aes(fill = bi_class), color = NA, show.legend = FALSE) +
+  bi_scale_fill(pal = 'DkBlue2', dim = 3) +
+  bi_theme()
+
+# legend object
+legend <- bi_legend(pal = 'DkBlue2', dim = 3, xlab = 'Higher Unemployment 2021',
+                    ylab = 'Higher Unemployment 2011', size = 6)
+
+# combine, draw
+ggdraw() +
+  draw_plot(map, 0, 0, 1, 1) +
+  draw_plot(legend, 0, 0, .3, 0.3)
+```
+
+::: {.callout-note}
+The values in the `draw_plot()` function specify the relative location and size of each map object on the canvas. Adjusting these values often requires some trial and error to achieve the desired positioning, as they control the `x` and `y` coordinates for placement and the width and height proportions of each object.
+:::
+
+We have used LSOA data to create a bivariate map illustrating changes in unemployment rates. However, with nearly 5,000 LSOAs in London, this map can be challenging to interpret due to the high level of detail. Let's zoom in to Lambeth:
+
+```{r tidy='styler'} 
+#| label: fig-09-biv-map-legend-lambeth
+#| fig-cap: Bivariate map change of unemployment rates in Lambeth 2011-2021.
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| cache: True
+#| filename: 'R code'
+# select lambeth
+lsoa21_lambeth <- lsoa21_sf |>
+  filter(str_detect(lsoa21nm, 'Lambeth'))
+
+# add classes
+lsoa21_lambeth <- lsoa21_lambeth |>
+  bi_class(x = unemp21, y = unemp11, style = 'quantile', dim = 3)
+
+# bivariate map object
+map <- ggplot() +
+  geom_sf(data = lsoa21_lambeth, mapping = aes(fill = bi_class), color = NA, show.legend = FALSE) +
+  bi_scale_fill(pal = 'DkBlue2', dim = 3) +
+  bi_theme()
+
+# legend object
+legend <- bi_legend(pal = 'DkBlue2', dim = 3, xlab = 'Higher Unemployment 2021',
+                    ylab = 'Higher Unemployment 2011', size = 6)
+
+# combine, draw
+ggdraw() +
+  draw_plot(map, 0, 0, 1, 1) +
+  draw_plot(legend, 0.1, 0.1, 0.3, 0.3)
+```
 
 ## Assignment
 
