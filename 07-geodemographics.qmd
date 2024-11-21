@@ -152,6 +152,10 @@ lsoa_age <- lsoa_age |>
   clean_names()
 ```
 
+::: {.callout-note}
+If your `clean_names()` function returns an error, it is likely due to a conflict with another library that also includes a `clean_names()` function. In such cases, R cannot determine which one to use. To resolve this, you can specify the library explicitly by using `janitor::clean_names()`.
+:::
+
 To account for the non-uniformity of the areal units, we further need to convert the observations to proportions and only retain those columns that are likely to be meaningful in the context of the classification:
 
 ```{r}

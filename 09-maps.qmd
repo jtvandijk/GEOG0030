@@ -10,7 +10,7 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 
 #### Suggested readings {.unnumbered}
 - Cheshire, J. and Uberti, O. 2021. *Atlas of the invisible: maps and graphics that will change how you see the world.* London: Particular Books.
-- Wickham, H., Çetinkaya-Rundel, M., and Grolemund, G. *R for Data Science*. 2nd edition. **Chapter 1: Data visualization**. [[Link]](https://r4ds.hadley.nz/data-visualize)
+- Wickham, H., Çetinkaya-Rundel, M., and Grolemund, G. *R for Data Science*. 2nd edition. **Chapter 3: Data visualisation**. [[Link]](https://r4ds.had.co.nz/data-visualisation.html)
 - Wickham, H., Çetinkaya-Rundel, M., and Grolemund, G. *R for Data Science*. 2nd edition. **Chapter 19: Functions**. [[Link]](https://r4ds.had.co.nz/functions.html)
 
 ## Unemployment in London
@@ -413,7 +413,7 @@ We can use the same logic to construct a basic function that takes a spatial dat
 # define function to create bivariate unemployment maps
 create_bivariate_map <- function(spatial_df, borough_name) {
 
-  # select lambeth
+  # select borough
   spatial_df_filter <- spatial_df |>
     filter(str_detect(lsoa21nm, borough_name))
   

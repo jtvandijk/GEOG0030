@@ -108,6 +108,10 @@ crime_df <- crime_df |>
 names(crime_df)
 ```
 
+::: {.callout-note}
+If your `clean_names()` function returns an error, it is likely due to a conflict with another library that also includes a `clean_names()` function. In such cases, R cannot determine which one to use. To resolve this, you can specify the library explicitly by using `janitor::clean_names()`.
+:::
+
 For our analysis, we are currently only interested in reported bicycle thefts, so we need to filter our data based on the `crime_type` column. We can start by examining the unique values in this column and then subset the data accordingly:
 
 ```{r}

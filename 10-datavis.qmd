@@ -1,5 +1,147 @@
 # Complex Visualisations
+Most of the visualisations we have created over the past weeks have been maps. However, you will often need to use other types of visualisations for your data, such as histograms, scatterplots, dendrograms, and boxplots. While `base` R can be used for simple visualisations, it is best suited for quick data inspections. For publication-worthy and more complex visualisations, the `ggplot2` library, which we used last week to create bivariate maps, offers a unified and effective approach to data visualisation based on the grammar of graphics. 
+
+## Lecture slides
+You can download the slides of this week's lecture here: [[Link]]({{< var slides.week10 >}}).
+
+## Reading list
+#### Essential readings {.unnumbered}
+- Wickham, H. 2010. A layered grammar of graphics. *Journal of Computational and Graphical Statistics* 19(1): 3-28. [[Link]](https://doi.org/10.1198/jcgs.2009.07098)
+
+#### Suggested readings {.unnumbered}
+- Cheshire, J. and Uberti, O. 2014. *London, The Information Capital: 100 Maps & Graphics That Will Change How You View the City.* London: Particular Books.
+- Wickham, H., Çetinkaya-Rundel, M., and Grolemund, G. *R for Data Science*. 2nd edition. **Chapter 3: Data visualisation**. [[Link]](https://r4ds.had.co.nz/data-visualisation.html)
+
+## Europeans in London
+Today, we will use the same dataset that we used in [Week 8](07-geodemographics.html) on self-identified ethnicity. We will visualise the distribution of the self-identified White-British population across the 12 Inner London Boroughs. The LSOA data covers all usual residents, as recorded in the 2021 Census for England and Wales, aggregated at the Lower Super Output Area (LSOA) level. A copy of the 2021 London LSOAs spatial boundaries is also available. If you do not already have it on your computer, save these file in your `data/attribues` and `data/spatial` folders.
+
+| File                                        | Type   | Link |
+| :------                                     | :------| :------ |
+| London LSOA Census 2021 Ethnicity           | `csv` | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/London-LSOA-Ethnicity.csv) | 
+| London LSOA 2021 Spatial Boundaries         | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-LSOA-2021.gpkg) |
+
+To get started, let us create our first script. **File** -> **New File** -> **R Script**. Save your script as `w10-ethnicity-london.r`. 
+
+We will start by loading the libraries that we will need:
+
+```{r}
+#| label: 10-load-libraries
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| output: False
+#| tidy: True
+#| filename: 'R code'
+# load libraries
+library(tidyverse)
+library(sf)
+library(janitor)
+library(treemapify)
+```
+
+::: {.callout-warning}
+You may have to install some of these libraries if you have not used these before.
+:::
+
+Once downloaded, we can load the files in the usual fashion:
+
+```{r}
+#| label: 10-load-csv
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: 'R code'
+# load attribute dataset
+lsoa_eth <- read_csv('data/attributes/London-LSOA-Ethnicity.csv')
+
+# load spatial dataset
+lsoa21 <- st_read('data/spatial/London-LSOA-2021.gpkg')
+
+# inspect
+head(lsoa_eth)
+
+# inspect
+head(lsoa21)
+``` 
 
 ::: {.callout-note}
-The Geocomputation content for the 2024-2025 academic year is currently undergoing a major update. The materials from 2023-2024 have been archived and can be accessed here: [\[Link\]](https://jtvandijk.github.io/GEOG0030_20232024)
+You can further inspect both objects using the `View()` function. 
 :::
+
+We will start by pivoting the data and transforming the raw counts into proportions:
+
+```{r}
+#| label: 10-reformat-eth-data
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: 'R code'
+# prepare ethnicity data
+lsoa_eth <- lsoa_eth |>
+  clean_names() |>
+  pivot_wider(id_cols = 'lower_layer_super_output_areas_code',
+              names_from = 'ethnic_group_20_categories',
+              values_from = 'observation') |>
+  clean_names()
+
+# proportions, select columns
+lsoa_eth <- lsoa_eth |>
+  rowwise() |>
+  mutate(eth_pop = sum(across(2:21))) |>
+  mutate(across(2:21, ~ . / eth_pop )) |>
+  select(-2,-22)
+
+# inspect
+lsoa_eth
+```
+
+::: {.callout-note}
+If your `clean_names()` function returns an error, it is likely due to a conflict with another library that also includes a `clean_names()` function. In such cases, R cannot determine which one to use. To resolve this, you can specify the library explicitly by using `janitor::clean_names()`.
+:::
+
+The column names are rather long, so let's rename these manually:
+
+```{r}
+#| label: 10-rename-columns
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: 'R code'
+# rename columns
+names(lsoa_eth)[2:20] <- c('Asian - Bangladeshi', 'Asian - Chinese', 'Asian - Indian', 'Asian - Pakistani', 'Asian - Other', 'Black - African', 'Black - Caribbean', 'Black - Other', 'Mixed - Asian', 'Mixed - Black African', 'Mixed - Black Carribean', 'Mixed - Other', 'White - British', 'White - Irish', 'White - Traveller', 'White -Roma', 'White - Other', 'Arab - Other', 'Any Other Group')
+```
+
+The last thing we need to do is extract the LSOAs that fall within the 12 Inner London Boroughs. We can do this by using the LSOA names that are inside the spatial dataframe:
+
+```{r}
+#| label: 10-filter-LSOAs
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: 'R code'
+# boroughs
+inner_boroughs <- c('Camden', 'Greenwich', 'Hackney', 'Hammersmith and Fulham', 'Islington', 'Kensington and Chelsea', 'Lambeth', 'Lewisham', 'Southwark', 'Tower Hamlets', 'Wandsworth', 'Westminster')
+
+# filter spatial data
+lsoa21_inner <- lsoa21 |>
+  filter(str_detect(lsoa21nm, paste(inner_boroughs, collapse = '|')))
+
+# filter attribute data
+lsoa_eth <- lsoa_eth |>
+  filter(lower_layer_super_output_areas_code %in% lsoa21_inner$lsoa21cd)
+
+# inspect
+lsoa_eth
+```
+
+::: {.callout-tip}
+If you want to know what the `paste(inner_boroughs, collapse = "|")` code does, you can run it separately in the console to find out.
+:::
+
+### Using `ggplot2`
+The ggplot2 library is built [on the layered grammar of graphics](https://www.tandfonline.com/doi/abs/10.1198/jcgs.2009.07098), which provides a structured approach to creating visualisations. This means that plots are constructed by adding layers, such as data, aesthetic mappings (e.g., axes, colours, sizes), geometric shapes (e.g., points, lines, bars), and optional elements like themes or statistical transformations. This modular design allows users to build complex and customisable plots step by step, ensuring flexibility and clarity in the visualisation process.
+

@@ -318,7 +318,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h4 class="unnumbered anchored" data-anchor-id="suggested-readings">Suggested readings</h4>
 <ul>
 <li>Cheshire, J. and Uberti, O. 2021. <em>Atlas of the invisible: maps and graphics that will change how you see the world.</em> London: Particular Books.</li>
-<li>Wickham, H., Çetinkaya-Rundel, M., and Grolemund, G. <em>R for Data Science</em>. 2nd edition. <strong>Chapter 1: Data visualization</strong>. <a href="https://r4ds.hadley.nz/data-visualize">[Link]</a></li>
+<li>Wickham, H., Çetinkaya-Rundel, M., and Grolemund, G. <em>R for Data Science</em>. 2nd edition. <strong>Chapter 3: Data visualisation</strong>. <a href="https://r4ds.had.co.nz/data-visualisation.html">[Link]</a></li>
 <li>Wickham, H., Çetinkaya-Rundel, M., and Grolemund, G. <em>R for Data Science</em>. 2nd edition. <strong>Chapter 19: Functions</strong>. <a href="https://r4ds.had.co.nz/functions.html">[Link]</a></li>
 </ul>
 </section>
@@ -905,7 +905,7 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define function to create bivariate unemployment maps</span></span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>create_bivariate_map <span class="ot">&lt;-</span> <span class="cf">function</span>(spatial_df, borough_name) {</span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># select lambeth</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># select borough</span></span>
 <span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  spatial_df_filter <span class="ot">&lt;-</span> spatial_df <span class="sc">|&gt;</span></span>
 <span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">str_detect</span>(lsoa21nm, borough_name))</span>
 <span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a></span>

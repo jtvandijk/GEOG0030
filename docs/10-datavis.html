@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -240,7 +274,19 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#complex-visualisations" id="toc-complex-visualisations" class="nav-link active" data-scroll-target="#complex-visualisations"><span class="header-section-number">10</span> Complex Visualisations</a></li>
+  <li><a href="#complex-visualisations" id="toc-complex-visualisations" class="nav-link active" data-scroll-target="#complex-visualisations"><span class="header-section-number">10</span> Complex Visualisations</a>
+  <ul>
+  <li><a href="#lecture-slides" id="toc-lecture-slides" class="nav-link" data-scroll-target="#lecture-slides"><span class="header-section-number">10.1</span> Lecture slides</a></li>
+  <li><a href="#reading-list" id="toc-reading-list" class="nav-link" data-scroll-target="#reading-list"><span class="header-section-number">10.2</span> Reading list</a>
+  <ul class="collapse">
+  <li><a href="#essential-readings" id="toc-essential-readings" class="nav-link" data-scroll-target="#essential-readings">Essential readings</a></li>
+  <li><a href="#suggested-readings" id="toc-suggested-readings" class="nav-link" data-scroll-target="#suggested-readings">Suggested readings</a></li>
+  </ul></li>
+  <li><a href="#europeans-in-london" id="toc-europeans-in-london" class="nav-link" data-scroll-target="#europeans-in-london"><span class="header-section-number">10.3</span> Europeans in London</a>
+  <ul class="collapse">
+  <li><a href="#using-ggplot2" id="toc-using-ggplot2" class="nav-link" data-scroll-target="#using-ggplot2"><span class="header-section-number">10.3.1</span> Using <code>ggplot2</code></a></li>
+  </ul></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jtvandijk/GEOG0030/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -251,18 +297,290 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="complex-visualisations" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">10</span> Complex Visualisations</h1>
+<p>Most of the visualisations we have created over the past weeks have been maps. However, you will often need to use other types of visualisations for your data, such as histograms, scatterplots, dendrograms, and boxplots. While <code>base</code> R can be used for simple visualisations, it is best suited for quick data inspections. For publication-worthy and more complex visualisations, the <code>ggplot2</code> library, which we used last week to create bivariate maps, offers a unified and effective approach to data visualisation based on the grammar of graphics.</p>
+<section id="lecture-slides" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="lecture-slides"><span class="header-section-number">10.1</span> Lecture slides</h2>
+<p>You can download the slides of this week’s lecture here: <a href="https://github.com/jtvandijk/GEOG0030/tree/master/slides/w10-geo.pdf">[Link]</a>.</p>
+</section>
+<section id="reading-list" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="reading-list"><span class="header-section-number">10.2</span> Reading list</h2>
+<section id="essential-readings" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="essential-readings">Essential readings</h4>
+<ul>
+<li>Wickham, H. 2010. A layered grammar of graphics. <em>Journal of Computational and Graphical Statistics</em> 19(1): 3-28. <a href="https://doi.org/10.1198/jcgs.2009.07098">[Link]</a></li>
+</ul>
+</section>
+<section id="suggested-readings" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="suggested-readings">Suggested readings</h4>
+<ul>
+<li>Cheshire, J. and Uberti, O. 2014. <em>London, The Information Capital: 100 Maps &amp; Graphics That Will Change How You View the City.</em> London: Particular Books.</li>
+<li>Wickham, H., Çetinkaya-Rundel, M., and Grolemund, G. <em>R for Data Science</em>. 2nd edition. <strong>Chapter 3: Data visualisation</strong>. <a href="https://r4ds.had.co.nz/data-visualisation.html">[Link]</a></li>
+</ul>
+</section>
+</section>
+<section id="europeans-in-london" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="europeans-in-london"><span class="header-section-number">10.3</span> Europeans in London</h2>
+<p>Today, we will use the same dataset that we used in <a href="07-geodemographics.html">Week 8</a> on self-identified ethnicity. We will visualise the distribution of the self-identified White-British population across the 12 Inner London Boroughs. The LSOA data covers all usual residents, as recorded in the 2021 Census for England and Wales, aggregated at the Lower Super Output Area (LSOA) level. A copy of the 2021 London LSOAs spatial boundaries is also available. If you do not already have it on your computer, save these file in your <code>data/attribues</code> and <code>data/spatial</code> folders.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">File</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Link</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">London LSOA Census 2021 Ethnicity</td>
+<td style="text-align: left;"><code>csv</code></td>
+<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/London-LSOA-Ethnicity.csv">Download</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">London LSOA 2021 Spatial Boundaries</td>
+<td style="text-align: left;"><code>GeoPackage</code></td>
+<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-LSOA-2021.gpkg">Download</a></td>
+</tr>
+</tbody>
+</table>
+<p>To get started, let us create our first script. <strong>File</strong> -&gt; <strong>New File</strong> -&gt; <strong>R Script</strong>. Save your script as <code>w10-ethnicity-london.r</code>.</p>
+<p>We will start by loading the libraries that we will need:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load libraries</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(treemapify)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>You may have to install some of these libraries if you have not used these before.</p>
+</div>
+</div>
+</div>
+<p>Once downloaded, we can load the files in the usual fashion:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load attribute dataset</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>lsoa_eth <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/attributes/London-LSOA-Ethnicity.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 99880 Columns: 5
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (3): Lower layer Super Output Areas Code, Lower layer Super Output Areas...
+dbl (2): Ethnic group (20 categories) Code, Observation
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load spatial dataset</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>lsoa21 <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/spatial/London-LSOA-2021.gpkg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Reading layer `London-LSOA-2021' from data source 
+  `/Users/justinvandijk/Library/CloudStorage/Dropbox/UCL/Web/jtvandijk.github.io/GEOG0030/data/spatial/London-LSOA-2021.gpkg' 
+  using driver `GPKG'
+Simple feature collection with 4994 features and 8 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: 503574.2 ymin: 155850.8 xmax: 561956.7 ymax: 200933.6
+Projected CRS: OSGB36 / British National Grid</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(lsoa_eth)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 5
+  Lower layer Super Output Areas…¹ Lower layer Super Ou…² Ethnic group (20 cat…³
+  &lt;chr&gt;                            &lt;chr&gt;                                   &lt;dbl&gt;
+1 E01000001                        City of London 001A                        -8
+2 E01000001                        City of London 001A                         1
+3 E01000001                        City of London 001A                         2
+4 E01000001                        City of London 001A                         3
+5 E01000001                        City of London 001A                         4
+6 E01000001                        City of London 001A                         5
+# ℹ abbreviated names: ¹​`Lower layer Super Output Areas Code`,
+#   ²​`Lower layer Super Output Areas`, ³​`Ethnic group (20 categories) Code`
+# ℹ 2 more variables: `Ethnic group (20 categories)` &lt;chr&gt;, Observation &lt;dbl&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(lsoa21)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 6 features and 8 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: 531948.3 ymin: 180733.9 xmax: 545296.2 ymax: 184700.6
+Projected CRS: OSGB36 / British National Grid
+   lsoa21cd                  lsoa21nm  bng_e  bng_n      long      lat
+1 E01000001       City of London 001A 532123 181632 -0.097140 51.51816
+2 E01000002       City of London 001B 532480 181715 -0.091970 51.51882
+3 E01000003       City of London 001C 532239 182033 -0.095320 51.52174
+4 E01000005       City of London 001E 533581 181283 -0.076270 51.51468
+5 E01000006 Barking and Dagenham 016A 544994 184274  0.089317 51.53875
+6 E01000007 Barking and Dagenham 015A 544187 184455  0.077763 51.54058
+                                globalid pop2021                           geom
+1 {1A259A13-A525-4858-9CB0-E4952BA01AF6}    1473 MULTIPOLYGON (((532105.3 18...
+2 {1233E433-0B0D-4807-8117-17A83C23960D}    1384 MULTIPOLYGON (((532634.5 18...
+3 {5163B7CB-4FFE-4F41-95B9-AA6CFC0508A3}    1613 MULTIPOLYGON (((532135.1 18...
+4 {2AF8015E-386E-456D-A45A-D0A223C340DF}    1101 MULTIPOLYGON (((533808 1807...
+5 {B492B45E-175E-4E77-B0B5-5B2FD6993EF4}    1842 MULTIPOLYGON (((545122 1843...
+6 {4A374975-B1D0-40CE-BF6E-6305623E5F7E}    2904 MULTIPOLYGON (((544180.3 18...</code></pre>
+</div>
+</div>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>The Geocomputation content for the 2024-2025 academic year is currently undergoing a major update. The materials from 2023-2024 have been archived and can be accessed here: <a href="https://jtvandijk.github.io/GEOG0030_20232024">[Link]</a></p>
+<p>You can further inspect both objects using the <code>View()</code> function.</p>
 </div>
 </div>
 </div>
+<p>We will start by pivoting the data and transforming the raw counts into proportions:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># prepare ethnicity data</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>lsoa_eth <span class="ot">&lt;-</span> lsoa_eth <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> <span class="st">"lower_layer_super_output_areas_code"</span>, <span class="at">names_from =</span> <span class="st">"ethnic_group_20_categories"</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">values_from =</span> <span class="st">"observation"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">clean_names</span>()</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co"># proportions, select columns</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>lsoa_eth <span class="ot">&lt;-</span> lsoa_eth <span class="sc">|&gt;</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rowwise</span>() <span class="sc">|&gt;</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">eth_pop =</span> <span class="fu">sum</span>(<span class="fu">across</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">21</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">21</span>, <span class="sc">~</span>.<span class="sc">/</span>eth_pop)) <span class="sc">|&gt;</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">22</span>)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>lsoa_eth</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4,994 × 20
+# Rowwise: 
+   lower_layer_super_output_area…¹ asian_asian_british_…² asian_asian_british_…³
+   &lt;chr&gt;                                            &lt;dbl&gt;                  &lt;dbl&gt;
+ 1 E01000001                                      0.00271                0.0448 
+ 2 E01000002                                      0.00505                0.0736 
+ 3 E01000003                                      0.00682                0.0323 
+ 4 E01000005                                      0.239                  0.0318 
+ 5 E01000006                                      0.116                  0.00596
+ 6 E01000007                                      0.113                  0.0148 
+ 7 E01000008                                      0.110                  0.00445
+ 8 E01000009                                      0.119                  0.0122 
+ 9 E01000011                                      0.146                  0.00469
+10 E01000012                                      0.122                  0.00298
+# ℹ 4,984 more rows
+# ℹ abbreviated names: ¹​lower_layer_super_output_areas_code,
+#   ²​asian_asian_british_or_asian_welsh_bangladeshi,
+#   ³​asian_asian_british_or_asian_welsh_chinese
+# ℹ 17 more variables: asian_asian_british_or_asian_welsh_indian &lt;dbl&gt;,
+#   asian_asian_british_or_asian_welsh_pakistani &lt;dbl&gt;,
+#   asian_asian_british_or_asian_welsh_other_asian &lt;dbl&gt;, …</code></pre>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>If your <code>clean_names()</code> function returns an error, it is likely due to a conflict with another library that also includes a <code>clean_names()</code> function. In such cases, R cannot determine which one to use. To resolve this, you can specify the library explicitly by using <code>janitor::clean_names()</code>.</p>
+</div>
+</div>
+</div>
+<p>The column names are rather long, so let’s rename these manually:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rename columns</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(lsoa_eth)[<span class="dv">2</span><span class="sc">:</span><span class="dv">20</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Asian - Bangladeshi"</span>, <span class="st">"Asian - Chinese"</span>, <span class="st">"Asian - Indian"</span>,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Asian - Pakistani"</span>, <span class="st">"Asian - Other"</span>, <span class="st">"Black - African"</span>, <span class="st">"Black - Caribbean"</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Black - Other"</span>, <span class="st">"Mixed - Asian"</span>, <span class="st">"Mixed - Black African"</span>, <span class="st">"Mixed - Black Carribean"</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Mixed - Other"</span>, <span class="st">"White - British"</span>, <span class="st">"White - Irish"</span>, <span class="st">"White - Traveller"</span>, <span class="st">"White -Roma"</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"White - Other"</span>, <span class="st">"Arab - Other"</span>, <span class="st">"Any Other Group"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>The last thing we need to do is extract the LSOAs that fall within the 12 Inner London Boroughs. We can do this by using the LSOA names that are inside the spatial dataframe:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># boroughs</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>inner_boroughs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Camden"</span>, <span class="st">"Greenwich"</span>, <span class="st">"Hackney"</span>, <span class="st">"Hammersmith and Fulham"</span>, <span class="st">"Islington"</span>,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Kensington and Chelsea"</span>, <span class="st">"Lambeth"</span>, <span class="st">"Lewisham"</span>, <span class="st">"Southwark"</span>, <span class="st">"Tower Hamlets"</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Wandsworth"</span>, <span class="st">"Westminster"</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># filter spatial data</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>lsoa21_inner <span class="ot">&lt;-</span> lsoa21 <span class="sc">|&gt;</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">str_detect</span>(lsoa21nm, <span class="fu">paste</span>(inner_boroughs, <span class="at">collapse =</span> <span class="st">"|"</span>)))</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co"># filter attribute data</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>lsoa_eth <span class="ot">&lt;-</span> lsoa_eth <span class="sc">|&gt;</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(lower_layer_super_output_areas_code <span class="sc">%in%</span> lsoa21_inner<span class="sc">$</span>lsoa21cd)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>lsoa_eth</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,792 × 20
+# Rowwise: 
+   lower_layer_super_output_areas_code `Asian - Bangladeshi` `Asian - Chinese`
+   &lt;chr&gt;                                               &lt;dbl&gt;             &lt;dbl&gt;
+ 1 E01000842                                         0.00209            0.0265
+ 2 E01000843                                         0.00167            0.0301
+ 3 E01000844                                         0.00614            0.0258
+ 4 E01000845                                         0.0193             0.0273
+ 5 E01000846                                         0.0586             0.0179
+ 6 E01000847                                         0.0506             0.0312
+ 7 E01000848                                         0.00269            0.0249
+ 8 E01000849                                         0.0125             0.0249
+ 9 E01000850                                         0.0218             0.113 
+10 E01000851                                         0.0216             0.0824
+# ℹ 1,782 more rows
+# ℹ 17 more variables: `Asian - Indian` &lt;dbl&gt;, `Asian - Pakistani` &lt;dbl&gt;,
+#   `Asian - Other` &lt;dbl&gt;, `Black - African` &lt;dbl&gt;, `Black - Caribbean` &lt;dbl&gt;,
+#   `Black - Other` &lt;dbl&gt;, `Mixed - Asian` &lt;dbl&gt;,
+#   `Mixed - Black African` &lt;dbl&gt;, `Mixed - Black Carribean` &lt;dbl&gt;,
+#   `Mixed - Other` &lt;dbl&gt;, `White - British` &lt;dbl&gt;, `White - Irish` &lt;dbl&gt;,
+#   `White - Traveller` &lt;dbl&gt;, `White -Roma` &lt;dbl&gt;, `White - Other` &lt;dbl&gt;, …</code></pre>
+</div>
+</div>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>If you want to know what the <code>paste(inner_boroughs, collapse = "|")</code> code does, you can run it separately in the console to find out.</p>
+</div>
+</div>
+</div>
+<section id="using-ggplot2" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="using-ggplot2"><span class="header-section-number">10.3.1</span> Using <code>ggplot2</code></h3>
+<p>The ggplot2 library is built <a href="https://www.tandfonline.com/doi/abs/10.1198/jcgs.2009.07098">on the layered grammar of graphics</a>, which provides a structured approach to creating visualisations. This means that plots are constructed by adding layers, such as data, aesthetic mappings (e.g., axes, colours, sizes), geometric shapes (e.g., points, lines, bars), and optional elements like themes or statistical transformations. This modular design allows users to build complex and customisable plots step by step, ensuring flexibility and clarity in the visualisation process.</p>
 
 
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->

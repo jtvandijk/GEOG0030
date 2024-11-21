@@ -590,6 +590,16 @@ dbl (2): Main language (11 categories) Code, Observation
 <span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">clean_names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>If your <code>clean_names()</code> function returns an error, it is likely due to a conflict with another library that also includes a <code>clean_names()</code> function. In such cases, R cannot determine which one to use. To resolve this, you can specify the library explicitly by using <code>janitor::clean_names()</code>.</p>
+</div>
+</div>
+</div>
 <p>To account for the non-uniformity of the areal units, we further need to convert the observations to proportions and only retain those columns that are likely to be meaningful in the context of the classification:</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
