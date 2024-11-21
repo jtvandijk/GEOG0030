@@ -139,9 +139,86 @@ lsoa_eth
 ```
 
 ::: {.callout-tip}
-If you want to know what the `paste(inner_boroughs, collapse = "|")` code does, you can run it separately in the console to find out.
+If you want to know what the `paste(inner_boroughs, collapse = '|')` code does, you can run it separately in the console to find out.
 :::
 
-### Using `ggplot2`
+### Building boxplots
 The ggplot2 library is built [on the layered grammar of graphics](https://www.tandfonline.com/doi/abs/10.1198/jcgs.2009.07098), which provides a structured approach to creating visualisations. This means that plots are constructed by adding layers, such as data, aesthetic mappings (e.g., axes, colours, sizes), geometric shapes (e.g., points, lines, bars), and optional elements like themes or statistical transformations. This modular design allows users to build complex and customisable plots step by step, ensuring flexibility and clarity in the visualisation process.
 
+Let's try to use this approach by making a boxplot on the distribution of people that self-identify as White British across all Inner London Boroughs. With `ggplot2`, every plot begins with the `ggplot()` function, which creates a coordinate system to which layers can be added. The first argument of `ggplot()` specifies the dataset to use:
+
+```{r tidy} 
+#| label: fig-10-boxplot-canvas
+#| classes: styled-output
+#| echo: True
+#| eval: False
+#| tidy: True
+#| cache: True
+#| filename: 'R code'
+# initiate ggplot
+ggplot(data = lsoa_eth)
+```
+
+To build your graph, you add one or more layers to `ggplot()`. For instance, `geom_point()` adds a layer of points to create a scatterplot. `ggplot2` provides many geom functions, each adding a different type of layer to your plot. To create a boxplot, you add the `geom_boxplot()` layer. For boxplots, the `mapping` argument defines how dataset variables are linked to visual properties, such as the grouping or value axes. The mapping is paired with `aes()`, where `y` specifies the numeric variable:
+
+
+```{r tidy='styler'} 
+#| label: fig-10-boxplot-basic
+#| fig-cap: Basic boxplot using `ggplot2`.
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| cache: True
+#| filename: 'R code'
+# initiate ggplot
+ggplot(data = lsoa_eth, aes(x = `White - British`)) +
+  # add geometry
+  geom_boxplot()
+```
+
+::: {.callout-tip}
+An aesthetic is a visual property of the elements in your plot. Aesthetics include attributes like size, shape, or colour of points. By modifying the values of these aesthetic properties, you can display a point in various ways, allowing for greater customisation and clarity in your visualisation.
+:::
+
+Just like with `tmap`, we can customise the basic plot by styling the boxplot, adding labels, and adjusting its overall appearance.
+
+```{r tidy='styler'} 
+#| label: fig-10-boxplot-pretty
+#| fig-cap: Stylised boxplot using `ggplot2`.
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| cache: True
+#| filename: 'R code'
+# initiate ggplot
+ggplot(data = lsoa_eth, aes(x = `White - British`)) +
+  # add geometry
+  geom_boxplot(fill = '#f7f7f7', color = '#252525', outlier.color = '#ef3b2c', linewidth = 1, outlier.shape = 16, outlier.size = 3) +
+  # add labels
+  labs(
+    title = 'Population self-identifying as White British',
+    x = ''
+  ) +
+  # set basic theme
+  theme_light() +
+  # customise theme
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 14, face = 'bold'), 
+    axis.title = element_text(size = 12, face = 'bold', colour = '#34495e'),
+    axis.text = element_text(size = 10, colour = '#34495e'),
+    axis.text.y = element_blank(),
+    axis.title.x = element_blank(),
+    panel.grid.major = element_line(linewidth = 0.5, colour = '#969696'),
+    panel.grid.minor = element_line(linewidth = 0.2, colour = '#d9d9d9')
+  )
+
+```
+
+### Creating panels
+
+### Maknig treemaps
+
+## Assignment
+
+## Before you leave 
+The ggplot2 library supports a wide variety of chart types, all built using the same principles of layering elements such as data, aesthetics, and geometric shapes. It takes some time to learn how to work with this but you can use the `esquisse` library allows you to [interactively create plots and generate the corresponding `ggplot2` code](https://dreamrs.github.io/esquisse/). That is it not only for today, [but you have now reached the end of Geocomputation](https://www.youtube.com/watch?v=fFw7q-BLxLA)! It is now inevitable: time for that reading list.

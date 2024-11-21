@@ -284,8 +284,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#europeans-in-london" id="toc-europeans-in-london" class="nav-link" data-scroll-target="#europeans-in-london"><span class="header-section-number">10.3</span> Europeans in London</a>
   <ul class="collapse">
-  <li><a href="#using-ggplot2" id="toc-using-ggplot2" class="nav-link" data-scroll-target="#using-ggplot2"><span class="header-section-number">10.3.1</span> Using <code>ggplot2</code></a></li>
+  <li><a href="#building-boxplots" id="toc-building-boxplots" class="nav-link" data-scroll-target="#building-boxplots"><span class="header-section-number">10.3.1</span> Building boxplots</a></li>
+  <li><a href="#creating-panels" id="toc-creating-panels" class="nav-link" data-scroll-target="#creating-panels"><span class="header-section-number">10.3.2</span> Creating panels</a></li>
+  <li><a href="#maknig-treemaps" id="toc-maknig-treemaps" class="nav-link" data-scroll-target="#maknig-treemaps"><span class="header-section-number">10.3.3</span> Maknig treemaps</a></li>
   </ul></li>
+  <li><a href="#assignment" id="toc-assignment" class="nav-link" data-scroll-target="#assignment"><span class="header-section-number">10.4</span> Assignment</a></li>
+  <li><a href="#before-you-leave" id="toc-before-you-leave" class="nav-link" data-scroll-target="#before-you-leave"><span class="header-section-number">10.5</span> Before you leave</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jtvandijk/GEOG0030/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
@@ -570,16 +574,106 @@ Projected CRS: OSGB36 / British National Grid
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>If you want to know what the <code>paste(inner_boroughs, collapse = "|")</code> code does, you can run it separately in the console to find out.</p>
+<p>If you want to know what the <code>paste(inner_boroughs, collapse = '|')</code> code does, you can run it separately in the console to find out.</p>
 </div>
 </div>
 </div>
-<section id="using-ggplot2" class="level3" data-number="1.3.1">
-<h3 data-number="1.3.1" class="anchored" data-anchor-id="using-ggplot2"><span class="header-section-number">10.3.1</span> Using <code>ggplot2</code></h3>
+<section id="building-boxplots" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="building-boxplots"><span class="header-section-number">10.3.1</span> Building boxplots</h3>
 <p>The ggplot2 library is built <a href="https://www.tandfonline.com/doi/abs/10.1198/jcgs.2009.07098">on the layered grammar of graphics</a>, which provides a structured approach to creating visualisations. This means that plots are constructed by adding layers, such as data, aesthetic mappings (e.g., axes, colours, sizes), geometric shapes (e.g., points, lines, bars), and optional elements like themes or statistical transformations. This modular design allows users to build complex and customisable plots step by step, ensuring flexibility and clarity in the visualisation process.</p>
-
-
+<p>Let’s try to use this approach by making a boxplot on the distribution of people that self-identify as White British across all Inner London Boroughs. With <code>ggplot2</code>, every plot begins with the <code>ggplot()</code> function, which creates a coordinate system to which layers can be added. The first argument of <code>ggplot()</code> specifies the dataset to use:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># initiate ggplot</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> lsoa_eth)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>To build your graph, you add one or more layers to <code>ggplot()</code>. For instance, <code>geom_point()</code> adds a layer of points to create a scatterplot. <code>ggplot2</code> provides many geom functions, each adding a different type of layer to your plot. To create a boxplot, you add the <code>geom_boxplot()</code> layer. For boxplots, the <code>mapping</code> argument defines how dataset variables are linked to visual properties, such as the grouping or value axes. The mapping is paired with <code>aes()</code>, where <code>y</code> specifies the numeric variable:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># initiate ggplot</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> lsoa_eth, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">White - British</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add geometry</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-10-boxplot-basic" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="10-datavis_files/figure-html/fig-10-boxplot-basic-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;1: Basic boxplot using <code>ggplot2</code>.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>An aesthetic is a visual property of the elements in your plot. Aesthetics include attributes like size, shape, or colour of points. By modifying the values of these aesthetic properties, you can display a point in various ways, allowing for greater customisation and clarity in your visualisation.</p>
+</div>
+</div>
+</div>
+<p>Just like with <code>tmap</code>, we can customise the basic plot by styling the boxplot, adding labels, and adjusting its overall appearance.</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># initiate ggplot</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> lsoa_eth, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">White - British</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add geometry</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"#f7f7f7"</span>, <span class="at">color =</span> <span class="st">"#252525"</span>, <span class="at">outlier.color =</span> <span class="st">"#ef3b2c"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">outlier.shape =</span> <span class="dv">16</span>, <span class="at">outlier.size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add labels</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Population self-identifying as White British"</span>,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">""</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set basic theme</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>() <span class="sc">+</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># customise theme</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">14</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">colour =</span> <span class="st">"#34495e"</span>),</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">colour =</span> <span class="st">"#34495e"</span>),</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">linewidth =</span> <span class="fl">0.5</span>, <span class="at">colour =</span> <span class="st">"#969696"</span>),</span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_line</span>(<span class="at">linewidth =</span> <span class="fl">0.2</span>, <span class="at">colour =</span> <span class="st">"#d9d9d9"</span>)</span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-10-boxplot-pretty" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="10-datavis_files/figure-html/fig-10-boxplot-pretty-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;2: Stylised boxplot using <code>ggplot2</code>.</figcaption>
+</figure>
+</div>
+</div>
+</div>
 </section>
+<section id="creating-panels" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="creating-panels"><span class="header-section-number">10.3.2</span> Creating panels</h3>
+</section>
+<section id="maknig-treemaps" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="maknig-treemaps"><span class="header-section-number">10.3.3</span> Maknig treemaps</h3>
+</section>
+</section>
+<section id="assignment" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="assignment"><span class="header-section-number">10.4</span> Assignment</h2>
+</section>
+<section id="before-you-leave" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="before-you-leave"><span class="header-section-number">10.5</span> Before you leave</h2>
+<p>The ggplot2 library supports a wide variety of chart types, all built using the same principles of layering elements such as data, aesthetics, and geometric shapes. It takes some time to learn how to work with this but you can use the <code>esquisse</code> library allows you to <a href="https://dreamrs.github.io/esquisse/">interactively create plots and generate the corresponding <code>ggplot2</code> code</a>. That is it not only for today, <a href="https://www.youtube.com/watch?v=fFw7q-BLxLA">but you have now reached the end of Geocomputation</a>! It is now inevitable: time for that reading list.</p>
+
+
 </section>
 </section>
 
