@@ -9,7 +9,7 @@ knitr::include_graphics('images/w00/geocomputation-welcome.png')
 ```
 
 ## Welcome {.unnumbered}
-Welcome to **Geocomputation**. This module offers a deep dive into the principles of spatial analysis while providing a thorough introduction to reproducible research. Over the next ten weeks, you will explore the theory, methods, and tools of spatial analysis through engaging case studies. You will gain hands-on experience in sourcing, managing, and cleaning spatial, demographic, and socioeconomic datasets, and apply core spatial analysis techniques to interpret them.
+Welcome to **Geocomputation**. This module offers a deep dive into the principles of spatial analysis and data visualisation while providing a thorough introduction to reproducible research. Over the next ten weeks, you will explore the theory, methods, and tools of spatial analysis through engaging case studies. You will gain hands-on experience in sourcing, managing, cleaning, analysing and presenting spatial, demographic, and socioeconomic datasets.
 
 ## Prerequisites {.unnumbered}
 Please be aware that for this module you are expected to have access to a working **R v4.4** installation and have a basic level of proficiency in programming with R. This includes skills such as installing libraries, loading data, calculating variables, and reshaping data. For installation instructions and a refresher, please refer to the *Getting started* and *R for Data Analysis* tutorials in the [GEOG0018: Methods in Human Geography](https://jtvandijk.github.io/GEOG0018/00-index.html) workbook.

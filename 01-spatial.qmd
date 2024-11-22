@@ -22,11 +22,17 @@ In RStudio, scripts allow us to build and save code that can be run repeatedly. 
 Package management in R involves handling the installation, updating, and tracking of external libraries needed for your code. This ensures that your R scripts can run smoothly without issues related to missing or incompatible packages. Within an RStudio project, you can use `renv` to create a reproducible environment by capturing the specific package versions used in the project. This means that anyone working on or revisiting the project will have access to the same package setup, preventing problems caused by package updates or changes. 
 :::
 
-Navigate to **File** -> **New Project** -> **New Directory**, and create a folder with the name `GEOG0030`. Tick the checkbox for *Use renv with this project* and click on **Create Project**. You should now see your main RStudio window switch to this new project and when you check your **files** pane, you should see a new **R Project** called `GEOG0030`.
-  
-::: {.callout-warning}
-Please ensure that **folder names** and **file names** do not contain spaces or special characters such as `*` `.` `'` `/` `\` `[` `]` `:` `;` `|` `=` `,` `<` `?` `>` `&` `$` `#` `!` `'` `{` `}` `(` `)`. Different operating systems and programming languages deal differently with spaces and special characters and as such including these in your folder names and file names can cause many problems and unexpected errors. As an alternative to using white space you can use an underscore (`_`) or hyphen (`-`) if you like.
+Navigate to **File** -> **New Project** -> **New Directory**. Choose a directory name, such as `GEOG0030`, and select the location on your computer where you want to save this project by clicking on **Browse...**. 
+
+::: {.callout-important}
+Ensure you select an appropriate folder to store your `GEOG0030` project. For example, you might use your *Geocomputation* folder, if you have one, or another location within your `Documents` directory on your computer.
 :::
+
+::: {.callout-warning}
+Please ensure that **folder names** and **file names** do not contain spaces or special characters such as `*` `.` `"` `/` `\` `[` `]` `:` `;` `|` `=` `,` `<` `?` `>` `&` `$` `#` `!` `'` `{` `}` `(` `)`. Different operating systems and programming languages deal differently with spaces and special characters and as such including these in your folder names and file names can cause many problems and unexpected errors. As an alternative to using white space you can use an underscore (`_`) or hyphen (`-`) if you like.
+:::
+
+Tick the checkbox for *Use renv with this project* and click on **Create Project**. You should now see your main RStudio window switch to this new project and when you check your **files** pane, you should see a new **R Project** called `GEOG0030`.
 
 With our `GEOG0030` project ready to go, in this first tutorial we will look at the distribution of the share of European immigrants across London. The data covers the number of people residing in London that are born in a European country, as recorded in the 2021 Census for England and Wales, aggregated at the [Middle Layer Super Output Area (MSOA)](https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeographies/census2021geographies) level.
 

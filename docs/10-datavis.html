@@ -286,7 +286,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#building-boxplots" id="toc-building-boxplots" class="nav-link" data-scroll-target="#building-boxplots"><span class="header-section-number">10.3.1</span> Building boxplots</a></li>
   <li><a href="#creating-panels" id="toc-creating-panels" class="nav-link" data-scroll-target="#creating-panels"><span class="header-section-number">10.3.2</span> Creating panels</a></li>
-  <li><a href="#maknig-treemaps" id="toc-maknig-treemaps" class="nav-link" data-scroll-target="#maknig-treemaps"><span class="header-section-number">10.3.3</span> Maknig treemaps</a></li>
+  <li><a href="#making-treemaps" id="toc-making-treemaps" class="nav-link" data-scroll-target="#making-treemaps"><span class="header-section-number">10.3.3</span> Making treemaps</a></li>
   </ul></li>
   <li><a href="#assignment" id="toc-assignment" class="nav-link" data-scroll-target="#assignment"><span class="header-section-number">10.4</span> Assignment</a></li>
   <li><a href="#before-you-leave" id="toc-before-you-leave" class="nav-link" data-scroll-target="#before-you-leave"><span class="header-section-number">10.5</span> Before you leave</a></li>
@@ -390,7 +390,8 @@ dbl (2): Ethnic group (20 categories) Code, Observation
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load spatial dataset</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>lsoa21 <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/spatial/London-LSOA-2021.gpkg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>lsoa21 <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/spatial/London-LSOA-2021.gpkg"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_drop_geometry</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Reading layer `London-LSOA-2021' from data source 
   `/Users/justinvandijk/Library/CloudStorage/Dropbox/UCL/Web/jtvandijk.github.io/GEOG0030/data/spatial/London-LSOA-2021.gpkg' 
@@ -420,25 +421,20 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(lsoa21)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Simple feature collection with 6 features and 8 fields
-Geometry type: MULTIPOLYGON
-Dimension:     XY
-Bounding box:  xmin: 531948.3 ymin: 180733.9 xmax: 545296.2 ymax: 184700.6
-Projected CRS: OSGB36 / British National Grid
-   lsoa21cd                  lsoa21nm  bng_e  bng_n      long      lat
+<pre><code>   lsoa21cd                  lsoa21nm  bng_e  bng_n      long      lat
 1 E01000001       City of London 001A 532123 181632 -0.097140 51.51816
 2 E01000002       City of London 001B 532480 181715 -0.091970 51.51882
 3 E01000003       City of London 001C 532239 182033 -0.095320 51.52174
 4 E01000005       City of London 001E 533581 181283 -0.076270 51.51468
 5 E01000006 Barking and Dagenham 016A 544994 184274  0.089317 51.53875
 6 E01000007 Barking and Dagenham 015A 544187 184455  0.077763 51.54058
-                                globalid pop2021                           geom
-1 {1A259A13-A525-4858-9CB0-E4952BA01AF6}    1473 MULTIPOLYGON (((532105.3 18...
-2 {1233E433-0B0D-4807-8117-17A83C23960D}    1384 MULTIPOLYGON (((532634.5 18...
-3 {5163B7CB-4FFE-4F41-95B9-AA6CFC0508A3}    1613 MULTIPOLYGON (((532135.1 18...
-4 {2AF8015E-386E-456D-A45A-D0A223C340DF}    1101 MULTIPOLYGON (((533808 1807...
-5 {B492B45E-175E-4E77-B0B5-5B2FD6993EF4}    1842 MULTIPOLYGON (((545122 1843...
-6 {4A374975-B1D0-40CE-BF6E-6305623E5F7E}    2904 MULTIPOLYGON (((544180.3 18...</code></pre>
+                                globalid pop2021
+1 {1A259A13-A525-4858-9CB0-E4952BA01AF6}    1473
+2 {1233E433-0B0D-4807-8117-17A83C23960D}    1384
+3 {5163B7CB-4FFE-4F41-95B9-AA6CFC0508A3}    1613
+4 {2AF8015E-386E-456D-A45A-D0A223C340DF}    1101
+5 {B492B45E-175E-4E77-B0B5-5B2FD6993EF4}    1842
+6 {4A374975-B1D0-40CE-BF6E-6305623E5F7E}    2904</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note">
@@ -469,13 +465,13 @@ Projected CRS: OSGB36 / British National Grid
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rowwise</span>() <span class="sc">|&gt;</span></span>
 <span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">eth_pop =</span> <span class="fu">sum</span>(<span class="fu">across</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">21</span>))) <span class="sc">|&gt;</span></span>
 <span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">21</span>, <span class="sc">~</span>.<span class="sc">/</span>eth_pop)) <span class="sc">|&gt;</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">22</span>)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span><span class="dv">2</span>)</span>
 <span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
 <span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>lsoa_eth</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4,994 × 20
+<pre><code># A tibble: 4,994 × 21
 # Rowwise: 
    lower_layer_super_output_area…¹ asian_asian_british_…² asian_asian_british_…³
    &lt;chr&gt;                                            &lt;dbl&gt;                  &lt;dbl&gt;
@@ -493,7 +489,7 @@ Projected CRS: OSGB36 / British National Grid
 # ℹ abbreviated names: ¹​lower_layer_super_output_areas_code,
 #   ²​asian_asian_british_or_asian_welsh_bangladeshi,
 #   ³​asian_asian_british_or_asian_welsh_chinese
-# ℹ 17 more variables: asian_asian_british_or_asian_welsh_indian &lt;dbl&gt;,
+# ℹ 18 more variables: asian_asian_british_or_asian_welsh_indian &lt;dbl&gt;,
 #   asian_asian_british_or_asian_welsh_pakistani &lt;dbl&gt;,
 #   asian_asian_british_or_asian_welsh_other_asian &lt;dbl&gt;, …</code></pre>
 </div>
@@ -518,7 +514,7 @@ Projected CRS: OSGB36 / British National Grid
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(lsoa_eth)[<span class="dv">2</span><span class="sc">:</span><span class="dv">20</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Asian - Bangladeshi"</span>, <span class="st">"Asian - Chinese"</span>, <span class="st">"Asian - Indian"</span>,</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Asian - Pakistani"</span>, <span class="st">"Asian - Other"</span>, <span class="st">"Black - African"</span>, <span class="st">"Black - Caribbean"</span>,</span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Black - Other"</span>, <span class="st">"Mixed - Asian"</span>, <span class="st">"Mixed - Black African"</span>, <span class="st">"Mixed - Black Carribean"</span>,</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Mixed - Other"</span>, <span class="st">"White - British"</span>, <span class="st">"White - Irish"</span>, <span class="st">"White - Traveller"</span>, <span class="st">"White -Roma"</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Mixed - Other"</span>, <span class="st">"White - British"</span>, <span class="st">"White - Irish"</span>, <span class="st">"White - Traveller"</span>, <span class="st">"White - Roma"</span>,</span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"White - Other"</span>, <span class="st">"Arab - Other"</span>, <span class="st">"Any Other Group"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
@@ -529,23 +525,25 @@ Projected CRS: OSGB36 / British National Grid
 <pre><strong>R code</strong></pre>
 </div>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># boroughs</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>inner_boroughs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Camden"</span>, <span class="st">"Greenwich"</span>, <span class="st">"Hackney"</span>, <span class="st">"Hammersmith and Fulham"</span>, <span class="st">"Islington"</span>,</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Kensington and Chelsea"</span>, <span class="st">"Lambeth"</span>, <span class="st">"Lewisham"</span>, <span class="st">"Southwark"</span>, <span class="st">"Tower Hamlets"</span>,</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Wandsworth"</span>, <span class="st">"Westminster"</span>)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># filter spatial data</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>lsoa21_inner <span class="ot">&lt;-</span> lsoa21 <span class="sc">|&gt;</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">str_detect</span>(lsoa21nm, <span class="fu">paste</span>(inner_boroughs, <span class="at">collapse =</span> <span class="st">"|"</span>)))</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co"># filter attribute data</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>lsoa_eth <span class="ot">&lt;-</span> lsoa_eth <span class="sc">|&gt;</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(lower_layer_super_output_areas_code <span class="sc">%in%</span> lsoa21_inner<span class="sc">$</span>lsoa21cd)</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>lsoa_eth</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>inner_boroughs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Camden"</span>, <span class="st">"Greenwich"</span>, <span class="st">"Hackney"</span>, <span class="st">"Hammersmith and Fulham"</span>, <span class="st">"Islington"</span>, <span class="st">"Kensington and Chelsea"</span>, <span class="st">"Lambeth"</span>, <span class="st">"Lewisham"</span>, <span class="st">"Southwark"</span>, <span class="st">"Tower Hamlets"</span>, <span class="st">"Wandsworth"</span>, <span class="st">"Westminster"</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># filter spatial data</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>lsoa21_inner <span class="ot">&lt;-</span> lsoa21 <span class="sc">|&gt;</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(lsoa21nm, <span class="fu">paste</span>(inner_boroughs, <span class="at">collapse =</span> <span class="st">"|"</span>)))</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co"># filter attribute data, add lsoa names</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>lsoa_eth <span class="ot">&lt;-</span> lsoa_eth <span class="sc">|&gt;</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(lower_layer_super_output_areas_code <span class="sc">%in%</span> lsoa21_inner<span class="sc">$</span>lsoa21cd)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co"># add lsoa names</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>lsoa_eth <span class="ot">&lt;-</span> lsoa_eth <span class="sc">|&gt;</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(lsoa21[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"lower_layer_super_output_areas_code"</span> <span class="ot">=</span> <span class="st">"lsoa21cd"</span>))</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>lsoa_eth</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1,792 × 20
+<pre><code># A tibble: 1,792 × 22
 # Rowwise: 
    lower_layer_super_output_areas_code `Asian - Bangladeshi` `Asian - Chinese`
    &lt;chr&gt;                                               &lt;dbl&gt;             &lt;dbl&gt;
@@ -560,12 +558,12 @@ Projected CRS: OSGB36 / British National Grid
  9 E01000850                                         0.0218             0.113 
 10 E01000851                                         0.0216             0.0824
 # ℹ 1,782 more rows
-# ℹ 17 more variables: `Asian - Indian` &lt;dbl&gt;, `Asian - Pakistani` &lt;dbl&gt;,
+# ℹ 19 more variables: `Asian - Indian` &lt;dbl&gt;, `Asian - Pakistani` &lt;dbl&gt;,
 #   `Asian - Other` &lt;dbl&gt;, `Black - African` &lt;dbl&gt;, `Black - Caribbean` &lt;dbl&gt;,
 #   `Black - Other` &lt;dbl&gt;, `Mixed - Asian` &lt;dbl&gt;,
 #   `Mixed - Black African` &lt;dbl&gt;, `Mixed - Black Carribean` &lt;dbl&gt;,
 #   `Mixed - Other` &lt;dbl&gt;, `White - British` &lt;dbl&gt;, `White - Irish` &lt;dbl&gt;,
-#   `White - Traveller` &lt;dbl&gt;, `White -Roma` &lt;dbl&gt;, `White - Other` &lt;dbl&gt;, …</code></pre>
+#   `White - Traveller` &lt;dbl&gt;, `White - Roma` &lt;dbl&gt;, `White - Other` &lt;dbl&gt;, …</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-tip">
@@ -621,7 +619,7 @@ Projected CRS: OSGB36 / British National Grid
 </div>
 </div>
 </div>
-<p>Just like with <code>tmap</code>, we can customise the basic plot by styling the boxplot, adding labels, and adjusting its overall appearance.</p>
+<p>Just like with <code>tmap</code>, we can customise the basic plot by styling the boxplot, adding labels, and adjusting its overall appearancs:</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -630,7 +628,7 @@ Projected CRS: OSGB36 / British National Grid
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># initiate ggplot</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> lsoa_eth, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">White - British</span><span class="st">`</span>)) <span class="sc">+</span></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add geometry</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"#f7f7f7"</span>, <span class="at">color =</span> <span class="st">"#252525"</span>, <span class="at">outlier.color =</span> <span class="st">"#ef3b2c"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">outlier.shape =</span> <span class="dv">16</span>, <span class="at">outlier.size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"#f0f0f0"</span>, <span class="at">color =</span> <span class="st">"#252525"</span>, <span class="at">outlier.color =</span> <span class="st">"#ef3b2c"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>, <span class="at">staplewidth =</span> <span class="fl">0.5</span>, <span class="at">outlier.shape =</span> <span class="dv">16</span>, <span class="at">outlier.size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add labels</span></span>
 <span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
 <span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Population self-identifying as White British"</span>,</span>
@@ -640,8 +638,8 @@ Projected CRS: OSGB36 / British National Grid
 <span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>() <span class="sc">+</span></span>
 <span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># customise theme</span></span>
 <span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">14</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">colour =</span> <span class="st">"#34495e"</span>),</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">14</span>),</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">colour =</span> <span class="st">"#34495e"</span>),</span>
 <span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">colour =</span> <span class="st">"#34495e"</span>),</span>
 <span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),</span>
 <span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
@@ -658,20 +656,344 @@ Projected CRS: OSGB36 / British National Grid
 </div>
 </div>
 </div>
+<p>But what if we wwant to create a boxplot for all Inner London Boroughs? We can do this by adding a grouping variable:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add borough names</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>lsoa_eth <span class="ot">&lt;-</span> lsoa_eth <span class="sc">|&gt;</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">borough_name =</span> <span class="fu">substr</span>(lsoa21nm, <span class="dv">1</span>, <span class="fu">nchar</span>(lsoa21nm) <span class="sc">-</span> <span class="dv">5</span>))</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># initiate ggplot</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> lsoa_eth, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">White - British</span><span class="st">`</span>, <span class="at">y =</span> borough_name)) <span class="sc">+</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add geometry</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"#f0f0f0"</span>, <span class="at">color =</span> <span class="st">"#252525"</span>, <span class="at">outlier.color =</span> <span class="st">"#ef3b2c"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>, <span class="at">staplewidth =</span> <span class="fl">0.5</span>, <span class="at">outlier.shape =</span> <span class="dv">16</span>, <span class="at">outlier.size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add labels</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Population self-identifying as White British"</span>,</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Borough"</span>,</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">""</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set basic theme</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>() <span class="sc">+</span></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># customise theme</span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">14</span>),</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">colour =</span> <span class="st">"#34495e"</span>),</span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">colour =</span> <span class="st">"#34495e"</span>),</span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">linewidth =</span> <span class="fl">0.5</span>, <span class="at">colour =</span> <span class="st">"#969696"</span>),</span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_line</span>(<span class="at">linewidth =</span> <span class="fl">0.2</span>, <span class="at">colour =</span> <span class="st">"#d9d9d9"</span>)</span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-10-boxplot-pretty-boroughs" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="10-datavis_files/figure-html/fig-10-boxplot-pretty-boroughs-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;3: Stylised boxplot using <code>ggplot2</code>.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The boroughs are drawn in alphabetical order by default. To change this we need to adjust the order by creating a factor. For instance, we can sort the boroughs by their median values.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>In R, a factor is a data structure used to represent categorical variables with a specific order or grouping. Factors allow you to define and manipulate the order of categories, which is especially useful for plotting or analysis.</p>
+</div>
+</div>
+</div>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># median values</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>lsoa_med <span class="ot">&lt;-</span> lsoa_eth <span class="sc">|&gt;</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(borough_name) <span class="sc">|&gt;</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">median =</span> <span class="fu">median</span>(<span class="st">`</span><span class="at">White - British</span><span class="st">`</span>))</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co"># create factor</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>lsoa_eth <span class="ot">&lt;-</span> lsoa_eth <span class="sc">|&gt;</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">borough_name_factor =</span> <span class="fu">factor</span>(borough_name, <span class="at">levels =</span> lsoa_med<span class="sc">$</span>borough_name[<span class="fu">order</span>(lsoa_med<span class="sc">$</span>median, <span class="at">decreasing =</span> <span class="cn">TRUE</span>)]))</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="co"># initiate ggplot</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> lsoa_eth, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">White - British</span><span class="st">`</span>, <span class="at">y =</span> borough_name_factor)) <span class="sc">+</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add geometry</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"#f0f0f0"</span>, <span class="at">color =</span> <span class="st">"#252525"</span>, <span class="at">outlier.color =</span> <span class="st">"#ef3b2c"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>, <span class="at">staplewidth =</span> <span class="fl">0.5</span>, <span class="at">outlier.shape =</span> <span class="dv">16</span>, <span class="at">outlier.size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add labels</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Population self-identifying as White British"</span>,</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Borough"</span>,</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">""</span></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set basic theme</span></span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>() <span class="sc">+</span></span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># customise theme</span></span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">14</span>),</span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">colour =</span> <span class="st">"#34495e"</span>),</span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">colour =</span> <span class="st">"#34495e"</span>),</span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">linewidth =</span> <span class="fl">0.5</span>, <span class="at">colour =</span> <span class="st">"#969696"</span>),</span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_line</span>(<span class="at">linewidth =</span> <span class="fl">0.2</span>, <span class="at">colour =</span> <span class="st">"#d9d9d9"</span>)</span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-10-boxplot-pretty-boroughs-ordered" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="10-datavis_files/figure-html/fig-10-boxplot-pretty-boroughs-ordered-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;4: Stylised boxplot using <code>ggplot2</code>.</figcaption>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="creating-panels" class="level3" data-number="1.3.2">
 <h3 data-number="1.3.2" class="anchored" data-anchor-id="creating-panels"><span class="header-section-number">10.3.2</span> Creating panels</h3>
+<p>Boxplots are effective for visualising distributions, but histograms offer another way to explore the same data by showing the frequency of values. While histograms cannot be displayed alongside boxplots in the same image, we can create a series of histograms, each displayed in a separate panel. These panels can show the distributions for different groups, such as individual boroughs.</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># initiate ggplot</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> lsoa_eth, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">White - British</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add geometry</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># create panels</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>borough_name, <span class="at">ncol =</span> <span class="dv">4</span>, <span class="at">nrow =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add labels</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Population self-identifying as White British"</span>,</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Number of LSOAs"</span>,</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">""</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set basic theme</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>() <span class="sc">+</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># customise theme</span></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">14</span>),</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">colour =</span> <span class="st">"#34495e"</span>),</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">colour =</span> <span class="st">"#34495e"</span>),</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output-display">
+<div id="fig-10-histogram-panel" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="10-datavis_files/figure-html/fig-10-histogram-panel-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;5: Histograms presented in individual panels.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>We could use the same approach to create a series of scatterplots to show the relationship between two variables:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># initiate ggplot</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> lsoa_eth, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">White - British</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">White - Other</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add geometry</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># create panels</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>borough_name, <span class="at">ncol =</span> <span class="dv">4</span>, <span class="at">nrow =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set basic theme</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>() <span class="sc">+</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># customise theme</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">14</span>),</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">colour =</span> <span class="st">"#34495e"</span>),</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">colour =</span> <span class="st">"#34495e"</span>),</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-10-scatter-panel" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="10-datavis_files/figure-html/fig-10-scatter-panel-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;6: Scatterplots presented in individual panels.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>To export a ggplot, first assign your plot to an object. Then, use the <code>ggsave()</code> function to save the plot to a file, specifying the desired filename and format (e.g.&nbsp;<code>.png</code> or <code>.pdf</code>). You can specify the dimensions of the output using the <code>width</code> and <code>height</code> arguments.</p>
+</div>
+</div>
+</div>
 </section>
-<section id="maknig-treemaps" class="level3" data-number="1.3.3">
-<h3 data-number="1.3.3" class="anchored" data-anchor-id="maknig-treemaps"><span class="header-section-number">10.3.3</span> Maknig treemaps</h3>
+<section id="making-treemaps" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="making-treemaps"><span class="header-section-number">10.3.3</span> Making treemaps</h3>
+<p>The flexibility of <code>ggplot2</code> extends beyond traditional plots through additional libraries that expand its functionality, allowing you to create specialised visualisations. For instance, we can use the <code>treemapify</code> library to create a treemap.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>A treemap is a data visualization that displays hierarchical data as nested rectangles, with each rectangle representing a category or subcategory. The size of each rectangle is proportional to a specific variable, often reflecting values such as frequency or proportion, making it easier to compare the relative sizes of different elements. Treemaps are particularly useful for visualising large datasets with multiple categories or subcategories in a compact, space-efficient layout.</p>
+</div>
+</div>
+</div>
+<p>Let’s try to create a treemap of the mean share of different population groups in the borough of Lambeth. We first need to calculate the mean of each population group in Lambeth and then transform the data from a <a href="https://towardsdatascience.com/long-and-wide-formats-in-data-explained-e48d7c9a06cb">wide format</a> to a <a href="https://towardsdatascience.com/long-and-wide-formats-in-data-explained-e48d7c9a06cb">long format</a> so that all proportions are in the same column.</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mean group values lambeth</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>lambeth_mean <span class="ot">&lt;-</span> lsoa_eth <span class="sc">|&gt;</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(borough_name <span class="sc">==</span> <span class="st">"Lambeth"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(borough_name) <span class="sc">|&gt;</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">20</span>, mean))</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co"># wide to long</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>lambeth_mean <span class="ot">&lt;-</span> lambeth_mean <span class="sc">|&gt;</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">20</span>, <span class="at">names_to =</span> <span class="st">"population_group"</span>, <span class="at">values_to =</span> <span class="st">"proportion"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>We can now visualise the share of each population group in Lambeth using a treemap:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># initiate ggplot</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> lambeth_mean, <span class="fu">aes</span>(<span class="at">area =</span> proportion, <span class="at">fill =</span> population_group, <span class="at">label =</span> population_group)) <span class="sc">+</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add geometry</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_treemap</span>() <span class="sc">+</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add text</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_treemap_text</span>(</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"white"</span>,</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">place =</span> <span class="st">"centre"</span>,</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">grow =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">min.size =</span> <span class="dv">8</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set basic theme</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># customise theme</span></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"none"</span></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-10-treemap" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="10-datavis_files/figure-html/fig-10-treemap-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;7: Treemap of relative share of population groups in Lambeth.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>We could create facets for these treemaps, but we can also use subgroups to create a nested representation of our data - weighted by the total population in each London borough.</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mean group values london</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>london_mean <span class="ot">&lt;-</span> lsoa_eth <span class="sc">|&gt;</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(borough_name) <span class="sc">|&gt;</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">20</span>, mean))</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co"># total group values london</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>london_sum <span class="ot">&lt;-</span> lsoa_eth <span class="sc">|&gt;</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(borough_name) <span class="sc">|&gt;</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">borough_population =</span> <span class="fu">sum</span>(eth_pop))</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="co"># wide to long,</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>london_mean <span class="ot">&lt;-</span> london_mean <span class="sc">|&gt;</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">20</span>, <span class="at">names_to =</span> <span class="st">"population_group"</span>, <span class="at">values_to =</span> <span class="st">"proportion"</span>)</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a><span class="co"># add total population, weigh</span></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>london_mean <span class="ot">&lt;-</span> london_mean <span class="sc">|&gt;</span></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(london_sum, <span class="at">by =</span> <span class="fu">c</span>(<span class="at">borough_name =</span> <span class="st">"borough_name"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">proportion_weighted =</span> proportion <span class="sc">*</span> borough_population)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Now the data have been prepared, we can create a treemap again as follows:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># initiate ggplot</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> london_mean, <span class="fu">aes</span>(<span class="at">area =</span> proportion_weighted, <span class="at">fill =</span> population_group, <span class="at">label =</span> population_group, <span class="at">subgroup =</span> borough_name)) <span class="sc">+</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add geometry</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_treemap</span>() <span class="sc">+</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add text</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_treemap_text</span>(</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"#f0f0f0"</span>,</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">place =</span> <span class="st">"centre"</span>,</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">grow =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">min.size =</span> <span class="dv">8</span>,</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add border</span></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_treemap_subgroup_border</span>(</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"#000000"</span></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add text</span></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_treemap_subgroup_text</span>(</span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"#636363"</span>,</span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">place =</span> <span class="st">"bottomleft"</span>,</span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">14</span>,</span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">fontface =</span> <span class="st">"bold"</span>,</span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">padding.x =</span> grid<span class="sc">::</span><span class="fu">unit</span>(<span class="dv">2</span>, <span class="st">"mm"</span>),</span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">padding.y =</span> grid<span class="sc">::</span><span class="fu">unit</span>(<span class="dv">2</span>, <span class="st">"mm"</span>),</span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set basic theme</span></span>
+<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a>  <span class="co"># customise theme</span></span>
+<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
+<span id="cb26-30"><a href="#cb26-30" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-10-treemap-subgroups" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="10-datavis_files/figure-html/fig-10-treemap-subgroups-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;8: Treemap of relative share of population groups in London, organised by borough</figcaption>
+</figure>
+</div>
+</div>
+</div>
 </section>
 </section>
 <section id="assignment" class="level2" data-number="1.4">
 <h2 data-number="1.4" class="anchored" data-anchor-id="assignment"><span class="header-section-number">10.4</span> Assignment</h2>
+<p>The <code>ggplot2</code> library supports a wide variety of chart types, all based on the same core principles of layering elements such as data, aesthetics, and geometric shapes. So far, we have worked with boxplots, scatterplots, histograms, and treemaps. However, <code>ggplot2</code> also offers many other geometries, including spatial geometries, that you can use to create more diverse visualisations.</p>
+<p>Using the <code>lsoa_eth</code> dataset try to to complete the following tasks:</p>
+<ol type="1">
+<li>Create a <a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">violin plot</a>: A violin plot combines aspects of a boxplot and a density plot, offering a compact view of the distribution of continuous data. Use the <code>geom_violin()</code> function to visualise the distribution of the self-identified <em>Asian Bangladeshi</em> population for each of the Inner London boroughs.</li>
+<li>Create a map: Use the <code>geom_sf()</code> function to map the distribution of the self-identified <em>Black Caribbean</em> population across Greater London.</li>
+<li>Create a faceted map: Create a faceted map showing the distribution of the self-identified <em>Asian Bangladeshi</em>, <em>Asian Chinese</em>, <em>Black African</em>, and <em>White British</em> populations across London.</li>
+</ol>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>To help you get familiar with ggplot2 and its principles, you can use the <code>esquisse</code> library, which allows you to <a href="https://dreamrs.github.io/esquisse/">interactively create plots and generate the corresponding <code>ggplot2</code> code</a>.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="before-you-leave" class="level2" data-number="1.5">
 <h2 data-number="1.5" class="anchored" data-anchor-id="before-you-leave"><span class="header-section-number">10.5</span> Before you leave</h2>
-<p>The ggplot2 library supports a wide variety of chart types, all built using the same principles of layering elements such as data, aesthetics, and geometric shapes. It takes some time to learn how to work with this but you can use the <code>esquisse</code> library allows you to <a href="https://dreamrs.github.io/esquisse/">interactively create plots and generate the corresponding <code>ggplot2</code> code</a>. That is it not only for today, <a href="https://www.youtube.com/watch?v=fFw7q-BLxLA">but you have now reached the end of Geocomputation</a>! It is now inevitable: time for that reading list.</p>
+<p>That is it for today, and indeed, <a href="https://www.youtube.com/watch?v=fFw7q-BLxLA">you have now reached the end of Geocomputation</a>! Over the course of this module, we have explored the fundamental principles of spatial analysis, data visualisation, and reproducible research. It is now inevitable: time for that reading list.</p>
 
 
 </section>
