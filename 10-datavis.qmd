@@ -12,7 +12,7 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 - Cheshire, J. and Uberti, O. 2014. *London, The Information Capital: 100 Maps & Graphics That Will Change How You View the City.* London: Particular Books.
 - Wickham, H., Çetinkaya-Rundel, M., and Grolemund, G. *R for Data Science*. 2nd edition. **Chapter 3: Data visualisation**. [[Link]](https://r4ds.had.co.nz/data-visualisation.html)
 
-## Europeans in London
+## Population groups in London
 Today, we will use the same dataset that we used in [Week 8](07-geodemographics.html) on self-identified ethnicity. We will visualise the distribution of the self-identified White-British population across the 12 Inner London Boroughs. The LSOA data covers all usual residents, as recorded in the 2021 Census for England and Wales, aggregated at the Lower Super Output Area (LSOA) level. A copy of the 2021 London LSOAs spatial boundaries is also available. If you do not already have it on your computer, save these file in your `data/attribues` and `data/spatial` folders.
 
 | File                                        | Type   | Link |
@@ -196,7 +196,14 @@ Just like with `tmap`, we can customise the basic plot by styling the boxplot, a
 # initiate ggplot
 ggplot(data = lsoa_eth, aes(x = `White - British`)) +
   # add geometry
-  geom_boxplot(fill = '#f0f0f0', color = '#252525', outlier.color = '#ef3b2c', linewidth = 0.5, staplewidth = 0.5, outlier.shape = 16, outlier.size = 2) +
+  geom_boxplot(
+    fill = '#f0f0f0', 
+    color = '#252525', 
+    outlier.color = '#ef3b2c', 
+    linewidth = 0.5, 
+    staplewidth = 0.5, 
+    outlier.shape = 16, 
+    outlier.size = 2) +
   # add labels
   labs(
     title = 'Population self-identifying as White British',
@@ -234,7 +241,14 @@ lsoa_eth <- lsoa_eth |>
 # initiate ggplot
 ggplot(data = lsoa_eth, aes(x = `White - British`, y = borough_name)) +
   # add geometry
-  geom_boxplot(fill = '#f0f0f0', color = '#252525', outlier.color = '#ef3b2c', linewidth = 0.5, staplewidth = 0.5, outlier.shape = 16, outlier.size = 2) +
+  geom_boxplot(
+    fill = '#f0f0f0', 
+    color = '#252525', 
+    outlier.color = '#ef3b2c', 
+    linewidth = 0.5, 
+    staplewidth = 0.5, 
+    utlier.shape = 16, 
+    outlier.size = 2) +
   # add labels
   labs(
     title = 'Population self-identifying as White British',
@@ -280,7 +294,14 @@ lsoa_eth <- lsoa_eth |>
 # initiate ggplot
 ggplot(data = lsoa_eth, aes(x = `White - British`, y = borough_name_factor)) +
   # add geometry
-  geom_boxplot(fill = '#f0f0f0', color = '#252525', outlier.color = '#ef3b2c', linewidth = 0.5, staplewidth = 0.5, outlier.shape = 16, outlier.size = 2) +
+  geom_boxplot(
+    fill = '#f0f0f0', 
+    color = '#252525', 
+    outlier.color = '#ef3b2c', 
+    linewidth = 0.5, 
+    staplewidth = 0.5, 
+    outlier.shape = 16, 
+    outlier.size = 2) +
   # add labels
   labs(
     title = 'Population self-identifying as White British',
@@ -315,7 +336,11 @@ ggplot(data = lsoa_eth, aes(x = `White - British`)) +
   # add geometry
   geom_histogram() +
   # create panels
-  facet_wrap(~ borough_name, ncol = 4, nrow= 3) +
+  facet_wrap(
+    ~ borough_name, 
+    ncol = 4, 
+    nrow= 3
+  ) +
   # add labels
   labs(
     title = 'Population self-identifying as White British',
@@ -346,7 +371,10 @@ ggplot(data = lsoa_eth, aes(x = `White - British`, y = `White - Other`)) +
   # add geometry
   geom_point() +
   # create panels
-  facet_wrap(~ borough_name, ncol = 4, nrow= 3) +
+  facet_wrap(
+    ~ borough_name, 
+    ncol = 4, 
+    nrow= 3) +
   # set basic theme
   theme_light() +
   # customise theme

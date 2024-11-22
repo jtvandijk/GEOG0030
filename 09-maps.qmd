@@ -303,8 +303,14 @@ lsoa21_sf <- lsoa21_sf |>
 
 # bivariate map using ggplot
 ggplot() +
-  geom_sf(data = lsoa21_sf, mapping = aes(fill = bi_class), color = NA, show.legend = FALSE) +
-  bi_scale_fill(pal = 'DkBlue2', dim = 3) +
+  geom_sf(
+    data = lsoa21_sf, 
+    mapping = aes(fill = bi_class), 
+    color = NA, 
+    show.legend = FALSE) +
+  bi_scale_fill(
+    pal = 'DkBlue2', 
+    dim = 3) +
   bi_theme()
 ```
 
@@ -323,13 +329,24 @@ We have set `show.legend = FALSE` to allow us to manually add our own bivariate 
 
 # bivariate map object
 map <- ggplot() +
-  geom_sf(data = lsoa21_sf, mapping = aes(fill = bi_class), color = NA, show.legend = FALSE) +
-  bi_scale_fill(pal = 'DkBlue2', dim = 3) +
+  geom_sf(
+    data = lsoa21_sf, 
+    mapping = aes(fill = bi_class), 
+    color = NA, 
+    show.legend = FALSE) +
+  bi_scale_fill(
+    pal = 'DkBlue2', 
+    dim = 3) +
   bi_theme()
 
 # legend object
-legend <- bi_legend(pal = 'DkBlue2', dim = 3, xlab = 'Higher Unemployment 2021',
-                    ylab = 'Higher Unemployment 2011', size = 6)
+legend <- bi_legend(
+  pal = 'DkBlue2', 
+  dim = 3, 
+  xlab = 'Higher Unemployment 2021',
+  ylab = 'Higher Unemployment 2011', 
+  size = 6
+  )
 
 # combine, draw
 ggdraw() +
@@ -361,14 +378,24 @@ lsoa21_lambeth <- lsoa21_lambeth |>
 
 # bivariate map object
 map <- ggplot() +
-  geom_sf(data = lsoa21_lambeth, mapping = aes(fill = bi_class), 
-          color = NA, show.legend = FALSE) +
-  bi_scale_fill(pal = 'DkBlue2', dim = 3) +
+  geom_sf(
+    data = lsoa21_lambeth, 
+    mapping = aes(fill = bi_class), 
+    color = NA, 
+    show.legend = FALSE) +
+  bi_scale_fill(
+    pal = 'DkBlue2', 
+    dim = 3) +
   bi_theme()
 
 # legend object
-legend <- bi_legend(pal = 'DkBlue2', dim = 3, xlab = 'Higher Unemployment 2021',
-                    ylab = 'Higher Unemployment 2011', size = 6)
+legend <- bi_legend(
+  pal = 'DkBlue2', 
+  dim = 3, 
+  xlab = 'Higher Unemployment 2021',
+  ylab = 'Higher Unemployment 2011', 
+  size = 6
+  )
 
 # combine, draw
 bivmap <- ggdraw() +
@@ -422,13 +449,25 @@ create_bivariate_map <- function(spatial_df, borough_name) {
   
   # bivariate map object
   map <- ggplot() +
-    geom_sf(data = spatial_df_filter, mapping = aes(fill = bi_class), color = NA, show.legend = FALSE) +
-    bi_scale_fill(pal = 'DkBlue2', dim = 3) +
+    geom_sf(
+      data = spatial_df_filter, 
+      mapping = aes(fill = bi_class), 
+      color = NA, 
+      show.legend = FALSE
+      ) +
+    bi_scale_fill(
+      pal = 'DkBlue2', 
+      dim = 3) +
     bi_theme()
 
   # legend object
-  legend <- bi_legend(pal = 'DkBlue2', dim = 3, xlab = 'Higher Unemployment 2021',
-                      ylab = 'Higher Unemployment 2011', size = 6)
+  legend <- bi_legend(
+    pal = 'DkBlue2', 
+    dim = 3, 
+    xlab = 'Higher Unemployment 2021',
+    ylab = 'Higher Unemployment 2011', 
+    size = 6
+    )
 
   # combine 
   bivariate_map <- ggdraw() +
