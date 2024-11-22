@@ -7,6 +7,7 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 ## Reading list
 #### Essential readings {.unnumbered}
 - Harris, R. 2019. **Chapter 8**: *Not just nuisance: Spatialising social statistics.* In: Whitworth, A. (ed). Towards a Spatial Social Policy: Bridging the Gap Between Geography and Social Policy. Bristol: Policy Press. [[Link]](https://www-jstor-org.libproxy.ucl.ac.uk/stable/j.ctvs1g92b.12?socuuid=53116c87-882d-4070-b1dc-45854bbedbfe)
+- Franklin, R. 2022. Quantitative methods I: Reckoning with uncertainty. *Progress in Human Geography* 46(2): 689-697. [[Link]](https://doi.org/10.1177/03091325211063635)
 
 #### Suggested readings {.unnumbered}
 - Brundson, C., Fotheringham, M., and Charlton, M. 2002. Geographically Weighted Regression. *Journal of the Royal Statistical Society: Series D (The Statistician)* 47(3): 431-443. [[Link]](https://doi.org/10.1111/1467-9884.00145)
