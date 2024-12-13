@@ -249,7 +249,7 @@ While the map shows correlation patterns, it doesn not indicate statistical sign
 
 
 ::: {.callout-important} 
-Although we will not run a Monte Carlo simulation here, the code below *demonstrates* how to run this and link the results back to the *cons_24* spatial dataframe
+Although we will not run a Monte Carlo simulation here, the code below *demonstrates* how to run this and link the results back to the `cons_24` spatial dataframe
 :::
 
 ```{r}

@@ -1,4 +1,4 @@
-# Complex Visualisations
+# Beyond the Choropleth
 Most of the visualisations we have created over the past weeks have been maps. However, you will often need to use other types of visualisations for your data, such as histograms, scatterplots, dendrograms, and boxplots. While `base` R can be used for simple visualisations, it is best suited for quick data inspections. For publication-worthy and more complex visualisations, the `ggplot2` library, which we used last week to create bivariate maps, offers a unified and effective approach to data visualisation based on the grammar of graphics. 
 
 ## Lecture slides

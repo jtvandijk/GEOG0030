@@ -511,6 +511,10 @@ tm_shape(lsoa21) +
   )
 ```
 
+::: {.callout-important}
+The reason we can use `cbind()` to join the cluster outputs to the `lsoa21` spatial file is that the LSOAs in both files are recorded in the same order. It is essential to verify that the LSOAs are indeed in the same order in both datasets, as any discrepancy will result in clusters being assigned to the wrong polygons.
+:::
+
 ## Assignment
 The creation of a geodemographic classification is an iterative process. This typically includes adding or removing variables, adjusting the number of clusters, and grouping data in different ways to achieve the most meaningful segmentation. Try to do the following:
 

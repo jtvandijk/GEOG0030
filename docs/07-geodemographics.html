@@ -244,7 +244,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10-datavis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">10 Complex Visualisations</span></a>
+ <span class="menu-text">Beyond the Choropleth</span></a>
   </div>
 </li>
       </ul>
@@ -1075,6 +1075,16 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 <p><img src="07-geodemographics_files/figure-html/fig-07-cluster-map-1.png" class="img-fluid figure-img" width="672"></p>
 <figcaption class="figure-caption">Figure&nbsp;5: Classification of London LSOAs based on several demographic variables.</figcaption>
 </figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-important">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>The reason we can use <code>cbind()</code> to join the cluster outputs to the <code>lsoa21</code> spatial file is that the LSOAs in both files are recorded in the same order. It is essential to verify that the LSOAs are indeed in the same order in both datasets, as any discrepancy will result in clusters being assigned to the wrong polygons.</p>
 </div>
 </div>
 </div>

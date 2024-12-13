@@ -244,7 +244,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10-datavis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">10 Complex Visualisations</span></a>
+ <span class="menu-text">Beyond the Choropleth</span></a>
   </div>
 </li>
       </ul>
@@ -689,7 +689,7 @@ sample estimates:
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Although we will not run a Monte Carlo simulation here, the code below <em>demonstrates</em> how to run this and link the results back to the <em>cons_24</em> spatial dataframe</p>
+<p>Although we will not run a Monte Carlo simulation here, the code below <em>demonstrates</em> how to run this and link the results back to the <code>cons_24</code> spatial dataframe</p>
 </div>
 </div>
 </div>
@@ -993,7 +993,7 @@ Adaptive bandwidth: 108 CV score: 1.938444 </code></pre>
 <pre><code>   ***********************************************************************
    *                       Package   GWmodel                             *
    ***********************************************************************
-   Program starts at: 2024-11-22 18:07:55.179033 
+   Program starts at: 2024-12-13 16:57:06.938805 
    Call:
    gwr.basic(formula = conservative_vote_share ~ eco_active_employed + 
     eco_active_unemployed + eth_white + eth_black + aged_25_to_34_years + 
@@ -1067,7 +1067,7 @@ Adaptive bandwidth: 108 CV score: 1.938444 </code></pre>
    Adjusted R-square value:  0.7001241 
 
    ***********************************************************************
-   Program stops at: 2024-11-22 18:07:55.272881 </code></pre>
+   Program stops at: 2024-12-13 16:57:07.032556 </code></pre>
 </div>
 </div>
 <p>The global regression results are derived from the standard OLS model, representing a single regression for the entire study area without accounting for spatial variation. In contrast, the geographically weighted regression (GWR) results stem from 575 separate but spatially overlapping regression models, each fitted with geographic weighting to different spatial subsets of the data, allowing for local variation in the regression estimates. We can also see that the model fit (adjusted <span class="math inline">\(R^2\)</span>) has increased to 70%.</p>
