@@ -71,8 +71,8 @@ for htmlf in html_files:
                                         '<span class="menu-text">9 Bivariate Maps</span>')   
                                         
     # update TOC chapter 10
-    html_content = html_content.replace('<span class="menu-text">Complex Visualisations</span>', \
-                                        '<span class="menu-text">10 Complex Visualisations</span>')   
+    html_content = html_content.replace('<span class="menu-text">Beyond the Choropleth</span>', \
+                                        '<span class="menu-text">10 Beyond the Choropleth</span>')   
     
     # update TOC chapter 11
     html_content = html_content.replace('<span class="menu-text">Data Sources</span>', \
