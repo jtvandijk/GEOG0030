@@ -67,12 +67,12 @@ for htmlf in html_files:
                                         '<span class="menu-text">8 Accessibility Analysis</span>')   
 
     # update TOC chapter 9
-    html_content = html_content.replace('<span class="menu-text">Bivariate Maps</span>', \
-                                        '<span class="menu-text">9 Bivariate Maps</span>')   
+    html_content = html_content.replace('<span class="menu-text">Beyond the Choropleth</span>', \
+                                        '<span class="menu-text">9 Beyond the Choropleth</span>')   
                                         
     # update TOC chapter 10
-    html_content = html_content.replace('<span class="menu-text">Beyond the Choropleth</span>', \
-                                        '<span class="menu-text">10 Beyond the Choropleth</span>')   
+    html_content = html_content.replace('<span class="menu-text">Complex Visualisations</span>', \
+                                        '<span class="menu-text">10 Complex Visualisations</span>')   
     
     # update TOC chapter 11
     html_content = html_content.replace('<span class="menu-text">Data Sources</span>', \

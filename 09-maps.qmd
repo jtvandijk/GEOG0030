@@ -1,4 +1,4 @@
-# Bivariate Maps
+# Beyond the Choropleth
 So far, we have primarily created univariate choropleth maps to visualise data across defined spatial areas, such as LSOAs. This week, we will expand on this by exploring bivariate maps, which illustrate the relationship between two variables within a single visualisation. We will also introduce you to the `ggplot2` library and pay some attention to creating functions to automate and repeat analyses for different spatial units, allowing for more efficient and consistent workflows
 
 ## Lecture slides
