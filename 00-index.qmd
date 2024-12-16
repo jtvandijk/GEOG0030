@@ -22,7 +22,7 @@ The topics covered over the next ten weeks are:
 
 | Week | Section  | Topic |
 | :--- |:---------|:------------------ |
-| 1    | Core Spatial Analysis | [R for Spatial Analysis]({{< var urls.w01 >}}) |
+| 1    | Core Spatial Analysis | [Reproducible Spatial Analysis]({{< var urls.w01 >}}) |
 | 2    | Core Spatial Analysis | [Spatial Queries and Geometric Operations]({{< var urls.w02 >}}) | 
 | 3    | Core Spatial Analysis | [Point Pattern Analysis]({{< var urls.w03 >}}) | 
 | 4    | Core Spatial Analysis | [Spatial Autocorrelation]({{< var urls.w04 >}}) |

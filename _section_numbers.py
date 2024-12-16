@@ -35,8 +35,8 @@ for htmlf in html_files:
     cnt += 1
     
     # update TOC chapter 1
-    html_content = html_content.replace('<span class="menu-text">R for Spatial Analysis</span>', \
-                                        '<span class="menu-text">1 R for Spatial Analysis</span>')
+    html_content = html_content.replace('<span class="menu-text">Reproducible Spatial Analysis</span>', \
+                                        '<span class="menu-text">1 Reproducible Spatial Analysis</span>')
                                         
     # update TOC chapter 2
     html_content = html_content.replace('<span class="menu-text">Spatial Queries and Geometric Operations</span>', \
