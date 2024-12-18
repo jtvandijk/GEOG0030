@@ -330,8 +330,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="suggested-readings" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="suggested-readings">Suggested readings</h4>
 <ul>
-<li>Brundson, C., Fotheringham, M., and Charlton, M. 2002. Geographically Weighted Regression. <em>Journal of the Royal Statistical Society: Series D (The Statistician)</em> 47(3): 431-443. <a href="https://doi.org/10.1111/1467-9884.00145">[Link]</a></li>
-<li>Comber, A., Brundson, C., Charlton, M. <em>et al.</em>. 2022. A route map for successful applications of Geographically Weighted Regression. <em>Geographical Analysis</em> 55(1): 155-178. <a href="https://doi.org/10.1111/gean.12316">[Link]</a></li>
+<li>Brunsdon, C., Fotheringham, M., and Charlton, M. 2002. Geographically Weighted Regression. <em>Journal of the Royal Statistical Society: Series D (The Statistician)</em> 47(3): 431-443. <a href="https://doi.org/10.1111/1467-9884.00145">[Link]</a></li>
+<li>Comber, A., Brunsdon, C., Charlton, M. <em>et al.</em>. 2022. A route map for successful applications of Geographically Weighted Regression. <em>Geographical Analysis</em> 55(1): 155-178. <a href="https://doi.org/10.1111/gean.12316">[Link]</a></li>
 </ul>
 </section>
 </section>
@@ -994,7 +994,7 @@ Adaptive bandwidth: 108 CV score: 1.938444 </code></pre>
 <pre><code>   ***********************************************************************
    *                       Package   GWmodel                             *
    ***********************************************************************
-   Program starts at: 2024-12-18 13:24:24.601137 
+   Program starts at: 2024-12-18 13:54:34.132594 
    Call:
    gwr.basic(formula = conservative_vote_share ~ eco_active_employed + 
     eco_active_unemployed + eth_white + eth_black + aged_25_to_34_years + 
@@ -1068,7 +1068,7 @@ Adaptive bandwidth: 108 CV score: 1.938444 </code></pre>
    Adjusted R-square value:  0.7001241 
 
    ***********************************************************************
-   Program stops at: 2024-12-18 13:24:24.707355 </code></pre>
+   Program stops at: 2024-12-18 13:54:34.226044 </code></pre>
 </div>
 </div>
 <p>The global regression results are derived from the standard OLS model, representing a single regression for the entire study area without accounting for spatial variation. In contrast, the geographically weighted regression (GWR) results stem from 575 separate but spatially overlapping regression models, each fitted with geographic weighting to different spatial subsets of the data, allowing for local variation in the regression estimates. We can also see that the model fit (adjusted <span class="math inline">\(R^2\)</span>) has increased to 70%.</p>
