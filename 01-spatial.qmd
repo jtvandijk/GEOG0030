@@ -44,7 +44,7 @@ An MSOA is a geographic unit used in the UK for statistical analysis. It typical
 The dataset has been extracted using the [Custom Dataset Tool](https://www.ons.gov.uk/datasets/create), and you can download the file via the link provided below. Save the file in your project folder under `data/attributes`. Along with this dataset, we also have access to a `GeoPackage` that contains the MSOA boundaries. Save this file under `data/spatial`, respectively.
 
 ::: {.callout-note}
-You will to have created a folder named `data` within your RStudio Project directory, inside which you will have to have a folder named `attributes` and a folder named `spatial`.
+You will to have create a folder named `data` within your RStudio Project directory, inside which you will have to have a folder named `attributes` and a folder named `spatial`.
 :::
 
 | File                                        | Type   | Link |
