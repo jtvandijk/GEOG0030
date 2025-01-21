@@ -521,7 +521,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># to spatial data</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>theft_bike <span class="ot">&lt;-</span> theft_bike <span class="sc">|&gt;</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(longitude) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(latitude)) <span class="sc">|&gt;</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"longitude"</span>, <span class="st">"latitude"</span>), <span class="at">crs =</span> <span class="dv">4236</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"longitude"</span>, <span class="st">"latitude"</span>), <span class="at">crs =</span> <span class="dv">4326</span>) <span class="sc">|&gt;</span></span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_transform</span>(<span class="dv">27700</span>)</span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
@@ -531,7 +531,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Simple feature collection with 6 features and 10 fields
 Geometry type: POINT
 Dimension:     XY
-Bounding box:  xmin: 531274.9 ymin: 180967.9 xmax: 533333.7 ymax: 181781.7
+Bounding box:  xmin: 531388 ymin: 180914 xmax: 533447 ymax: 181727.9
 Projected CRS: OSGB36 / British National Grid
 # A tibble: 6 × 11
   crime_id           month reported_by falls_within location lsoa_code lsoa_name
@@ -708,11 +708,11 @@ Dimension:     XY
 Bounding box:  xmin: 504982.3 ymin: 159027.2 xmax: 556185.7 ymax: 200138.6
 Projected CRS: OSGB36 / British National Grid
                  railway    n                       geometry
-1                station  616 MULTIPOINT ((505078.2 17673...
+1                station  612 MULTIPOINT ((505078.2 17673...
 2                   stop   17 MULTIPOINT ((528197.7 18571...
 3        subway_entrance   36 MULTIPOINT ((525226.4 18745...
 4 train_station_entrance    1      POINT (538196.3 184826.5)
-5                   &lt;NA&gt; 3190 MULTIPOINT ((504982.3 17581...</code></pre>
+5                   &lt;NA&gt; 3194 MULTIPOINT ((504982.3 17581...</code></pre>
 </div>
 </div>
 <p>The number of points tagged as station in the railway field are most likely the only points in our dataset that represent actual stations, so we will only retain those points.</p>
@@ -788,7 +788,7 @@ Projected CRS: OSGB36 / British National Grid
 <pre><code>Simple feature collection with 6 features and 11 fields
 Geometry type: POINT
 Dimension:     XY
-Bounding box:  xmin: 531274.9 ymin: 180967.9 xmax: 533333.7 ymax: 181781.7
+Bounding box:  xmin: 531388 ymin: 180914 xmax: 533447 ymax: 181727.9
 Projected CRS: OSGB36 / British National Grid
 # A tibble: 6 × 12
   crime_id           month reported_by falls_within location lsoa_code lsoa_name
@@ -826,13 +826,13 @@ Projected CRS: OSGB36 / British National Grid
 <pre><code>Simple feature collection with 2 features and 2 fields
 Geometry type: MULTIPOINT
 Dimension:     XY
-Bounding box:  xmin: 384035.6 ymin: 101574.6 xmax: 612801.1 ymax: 398089
+Bounding box:  xmin: 384131 ymin: 101512 xmax: 612925 ymax: 398061.1
 Projected CRS: OSGB36 / British National Grid
 # A tibble: 2 × 3
   d500[,1]     n                                                        geometry
 * &lt;lgl&gt;    &lt;int&gt;                                                &lt;MULTIPOINT [m]&gt;
-1 FALSE     5507 ((384035.6 398089), (409725.4 101574.6), (494844.3 212310.1), …
-2 TRUE     10512 ((505266.1 184336.3), (505314.2 184265.3), (505323.2 184469.3)…</code></pre>
+1 FALSE     5476 ((384131 398061.1), (409823 101512), (494953 212260), (495917 …
+2 TRUE     10543 ((505376 184282.9), (505424 184212), (505433 184416), (505558 …</code></pre>
 </div>
 </div>
 <p>More than two-thirds of all reported bicycle thefts in London occur within 500 metres of a train or underground station. Of course, we can map the results for a visual inspection:</p>
@@ -996,13 +996,13 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 <pre><code>Simple feature collection with 2 features and 2 fields
 Geometry type: MULTIPOINT
 Dimension:     XY
-Bounding box:  xmin: 384035.6 ymin: 101574.6 xmax: 612801.1 ymax: 398089
+Bounding box:  xmin: 384131 ymin: 101512 xmax: 612925 ymax: 398061.1
 Projected CRS: OSGB36 / British National Grid
 # A tibble: 2 × 3
   d500_buffer[,1]     n                                                 geometry
 * &lt;lgl&gt;           &lt;int&gt;                                         &lt;MULTIPOINT [m]&gt;
-1 FALSE            5515 ((384035.6 398089), (409725.4 101574.6), (494844.3 2123…
-2 TRUE            10504 ((505266.1 184336.3), (505314.2 184265.3), (505323.2 18…</code></pre>
+1 FALSE            5482 ((384131 398061.1), (409823 101512), (494953 212260), (…
+2 TRUE            10537 ((505376 184282.9), (505424 184212), (505433 184416), (…</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-important">

@@ -145,7 +145,7 @@ Now that we have filtered the data to only include reported bicycle thefts, we n
 # to spatial data
 theft_bike <- theft_bike |>
   filter(!is.na(longitude) & !is.na(latitude)) |>
-  st_as_sf(coords = c('longitude', 'latitude'), crs = 4236) |>
+  st_as_sf(coords = c('longitude', 'latitude'), crs = 4326) |>
   st_transform(27700)
 
 # inspect
