@@ -399,11 +399,8 @@ Now that each bike theft point in London is associated with a specific cluster, 
 # set the length of this list to the total number of clusters found
 geometry_list <- vector(mode = 'list', length = max(theft_bike$dbcluster))
 
-# create a counter to keep track
-counter <- 0
-
 # begin loop
-for (cluster_index in seq(0, max(theft_bike$dbcluster))) {
+for (cluster_index in seq(1, max(theft_bike$dbcluster))) {
 
    # filter to only return points for belonging to cluster n
    theft_bike_subset <- theft_bike |>
@@ -415,10 +412,8 @@ for (cluster_index in seq(0, max(theft_bike$dbcluster))) {
      st_convex_hull()
 
    # add the geometry of the polygon to our list
-   geometry_list[counter] <- (cluster_polygon)
+   geometry_list[cluster_index] <- (cluster_polygon)
 
-   # update the counter
-   counter <- counter + 1
 }
 
 # combine the list
