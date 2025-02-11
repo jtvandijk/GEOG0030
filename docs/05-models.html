@@ -702,7 +702,7 @@ sample estimates:
 </div>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># geographically weighted correlation, monte carlo simulation</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>cons_24_cor_sig <span class="ot">&lt;-</span> <span class="fu">gwss.montecarlo</span>(cons_24_sp, <span class="at">vars =</span> <span class="fu">c</span>(<span class="st">"conservative_vote_share"</span>,</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"aged_50_years_and_over"</span>), <span class="at">bw =</span> <span class="dv">2</span>, <span class="at">adaptive =</span> <span class="cn">TRUE</span>, <span class="at">nsim =</span> <span class="dv">99</span>) <span class="sc">|&gt;</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"aged_50_years_and_over"</span>), <span class="at">bw =</span> <span class="dv">25</span>, <span class="at">adaptive =</span> <span class="cn">TRUE</span>, <span class="at">nsim =</span> <span class="dv">99</span>) <span class="sc">|&gt;</span></span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(Corr_conservative_vote_share.aged_50_years_and_over)</span>
 <span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
@@ -995,7 +995,7 @@ Adaptive bandwidth: 108 CV score: 1.938444 </code></pre>
 <pre><code>   ***********************************************************************
    *                       Package   GWmodel                             *
    ***********************************************************************
-   Program starts at: 2025-01-28 11:18:29.552676 
+   Program starts at: 2025-02-11 09:27:19.19713 
    Call:
    gwr.basic(formula = conservative_vote_share ~ eco_active_employed + 
     eco_active_unemployed + eth_white + eth_black + aged_25_to_34_years + 
@@ -1069,7 +1069,7 @@ Adaptive bandwidth: 108 CV score: 1.938444 </code></pre>
    Adjusted R-square value:  0.7001241 
 
    ***********************************************************************
-   Program stops at: 2025-01-28 11:18:29.647682 </code></pre>
+   Program stops at: 2025-02-11 09:27:19.294264 </code></pre>
 </div>
 </div>
 <p>The global regression results are derived from the standard OLS model, representing a single regression for the entire study area without accounting for spatial variation. In contrast, the geographically weighted regression (GWR) results stem from 575 separate but spatially overlapping regression models, each fitted with geographic weighting to different spatial subsets of the data, allowing for local variation in the regression estimates. We can also see that the model fit (adjusted <span class="math inline">\(R^2\)</span>) has increased to 70%.</p>

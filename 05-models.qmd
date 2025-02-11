@@ -248,7 +248,7 @@ tm_shape(cons_24) +
   )
 ``` 
 
-While the map shows correlation patterns, it doesn not indicate statistical significance. To evaluate this, we can use a Monte Carlo simulation with the `gwss.montecarlo()` function. However, for a large dataset like ours, this process is computationally intensive and time-consuming, especially with more than the default `99` simulations.
+While the map shows correlation patterns, it does not indicate statistical significance. To evaluate this, we can use a Monte Carlo simulation with the `gwss.montecarlo()` function. However, for a large dataset like ours, this process is computationally intensive and time-consuming, especially with more than the default `99` simulations.
 
 
 ::: {.callout-important} 
@@ -264,7 +264,7 @@ Although we will not run a Monte Carlo simulation here, the code below *demonstr
 #| cache: True
 #| filename: 'R code'
 # geographically weighted correlation, monte carlo simulation
-cons_24_cor_sig <- gwss.montecarlo(cons_24_sp , vars = c('conservative_vote_share', 'aged_50_years_and_over'), bw = 2, adaptive = TRUE, nsim = 99) |>
+cons_24_cor_sig <- gwss.montecarlo(cons_24_sp , vars = c('conservative_vote_share', 'aged_50_years_and_over'), bw = 25, adaptive = TRUE, nsim = 99) |>
   as_tibble() |>
   select(Corr_conservative_vote_share.aged_50_years_and_over) 
 
