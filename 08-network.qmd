@@ -11,7 +11,7 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 - Verduzco Torres, J. R. and McArthur, D.P. 2024. Public transport accessibility indicators to urban and regional services in Great Britain. *Scientific Data* 11: 53. [[Link]](https://doi.org/10.1038/s41597-023-02890-w)
 
 #### Suggested readings {.unnumbered}
-- Pänkänen, M., Tenkanen, H., and Mladenovíc, M. 2024. Spatial accessibility and transport inequity in Finland: Open source models and perspectives from planning practice. *Computers, Environment and Urban Systems* 116: 102218. [[Link]](https://doi.org/10.1016/j.compenvurbsys.2024.102218)
+- Ponkänen, M., Tenkanen, H., and Mladenovíc, M. 2024. Spatial accessibility and transport inequity in Finland: Open source models and perspectives from planning practice. *Computers, Environment and Urban Systems* 116: 102218. [[Link]](https://doi.org/10.1016/j.compenvurbsys.2024.102218)
 - Van Dijk, J., Krygsman, S. and De Jong, T. 2015. Toward spatial justice: The spatial equity effects of a toll road in Cape Town, South Africa. *Journal of Transport and Land Use* 8(3): 95-114. [[Link]](https://doi.org/10.5198/jtlu.2015.555)
 - Van Dijk, J. and De Jong, T. 2017. Post-processing GPS-tracks in reconstructing travelled routes in a GIS-environment: network subset selection and attribute adjustment. *Annals of GIS* 23(3): 203-217. [[Link]](https://doi.org/10.1080/19475683.2017.1340340)
 

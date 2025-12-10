@@ -12,7 +12,7 @@ knitr::include_graphics('images/w00/geocomputation-welcome.png')
 Welcome to **Geocomputation**. This module offers a deep dive into the principles of spatial analysis and data visualisation while providing a thorough introduction to reproducible research. Over the next ten weeks, you will explore the theory, methods, and tools of spatial analysis through engaging case studies. You will gain hands-on experience in sourcing, managing, cleaning, analysing and presenting spatial, demographic, and socioeconomic datasets.
 
 ## Prerequisites {.unnumbered}
-Please be aware that for this module you are expected to have access to a working **R v4.4** installation and have a basic level of proficiency in programming with R. This includes skills such as installing libraries, loading data, calculating variables, and reshaping data. For installation instructions and a refresher, please refer to the *Getting started* and *R for Data Analysis* tutorials in the [GEOG0018: Methods in Human Geography](https://jtvandijk.github.io/GEOG0018/00-index.html) workbook.
+Please be aware that for this module you are expected to have access to a working **R v4.5** installation and have a basic level of proficiency in programming with R. This includes skills such as installing libraries, loading data, calculating variables, and reshaping data. For installation instructions and a refresher, please refer to the *Getting started* and *R for Data Analysis* tutorials in the [GEOG0018: Methods in Human Geography](https://jtvandijk.github.io/GEOG0018/00-index.html) workbook.
 
 ## Moodle {.unnumbered}
 [Moodle](https://moodle.ucl.ac.uk/) serves as the central hub for GEOG0030, where you will find all essential module information, including key details about assessments. This workbook provides links to all required reading materials and contains the content for each computer tutorial.
@@ -35,7 +35,7 @@ The topics covered over the next ten weeks are:
 | 10   | Data Visualisation | [Complex Visualisations]({{< var urls.w10 >}}) | 
 
 ::: {.callout-note}
-This GitHub resource has been updated for the 2024-2025 academic year. The content for 2023-2024 has been archived and can be found here: [[Link]](https://jtvandijk.github.io/GEOG0030_20232024)
+This GitHub resource has been updated for the 2025-2026 academic year. The content for 2024-2025 has been archived and can be found here: [[Link]](https://jtvandijk.github.io/GEOG0030_20242025)
 :::
 
 ## Troubleshooting {.unnumbered}
@@ -50,16 +50,14 @@ For specific assistance with this module, you can:
 ::: {.callout-note}
 This year's module material features the following **major** updates:
 
-- Second full rewrite of the workbook using `Quarto`.
-- Improved alignment with [GEOG0018 Methods in Human Geography](https://jtvandijk.github.io/GEOG0018).
-- New material covering geographically weighted regression, geodemographic classification, and data visualisation.
-- Fully updated material on spatial queries and geometric operations, point pattern analysis, spatial autocorrelation, and accessibility analysis.
-- Introduction of package management using `renv`.
+- All code has been revised to ensure compatibility with `tmap` v4.
+- Package management using `renv` has been removed to simplify the workflow
 :::
 
 ## Acknowledgements {.unnumbered}
 This workbook is created using the [Quarto](https://quarto.org/) publishing system. Elements of this workbook are partially based on and modified from:
 
+<!-- - The [GEOG0030: Geocomputation 2024-2025](https://jtvandijk.github.io/GEOG0030_20242025/) workbook by [Justin van Dijk](https://www.mappingdutchman.com) -->
 - The [GEOG0030: Geocomputation 2023-2024](https://jtvandijk.github.io/GEOG0030_20232024/) workbook by [Justin van Dijk](https://www.mappingdutchman.com)
 - The [GEOG0030: Geocomputation 2022-2023](https://jtvandijk.github.io/GEOG0030_20222023/) workbook by [Justin van Dijk](https://www.mappingdutchman.com)
 - The [GEOG0030: Geocomputation 2021-2022](https://jtvandijk.github.io/GEOG0030_20212022/) workbook by [Justin van Dijk](https://www.mappingdutchman.com)

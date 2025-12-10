@@ -46,20 +46,20 @@ website:
           file: 00-index.qmd
       - section: "Core Spatial Analysis"
         contents:
-        - 01-spatial.qmd
-        - 02-operations.qmd
-        - 03-point-pattern.qmd
-        - 04-autocorrelation.qmd
-        - 05-models.qmd
+        #- 01-spatial.qmd
+        #- 02-operations.qmd
+        #- 03-point-pattern.qmd
+        #- 04-autocorrelation.qmd
+        #- 05-models.qmd
       - section: "Applied Spatial Analysis"
         contents:
-        - 06-raster.qmd
-        - 07-geodemographics.qmd
-        - 08-network.qmd
+        #- 06-raster.qmd
+        #- 07-geodemographics.qmd
+        #- 08-network.qmd
       - section: "Data visualisation"
         contents:
-        - 09-maps.qmd
-        - 10-datavis.qmd
+        #- 09-maps.qmd
+        #- 10-datavis.qmd
       - section: "Additional Resources"
         contents:
         - 11-data.qmd
