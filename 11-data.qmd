@@ -1,0 +1,66 @@
+# Data Sources
+Below is a list of resources that you may find helpful when sourcing data for your coursework or dissertation. This list is not exhaustive but includes some recommended websites to get you started.
+
+## Open Data
+The following websites contain Open Data or link to Open Data from several respectable data providers:
+
+- [AfricanUrbanNetwork](https://github.com/rafaelprietocuriel/AfricanUrbanNetwork)
+- [AirBnB Data](http://insideairbnb.com/get-the-data.html)
+- [Bike Docking Data (ready for R)](https://docs.ropensci.org/bikedata/)
+- [Bing Maps worldwide road detections](https://github.com/microsoft/RoadDetections)
+- [Camden Air Action](https://camdenairaction.wordpress.com/2017/02/20/schools-monitoring-project-spring-2017/)
+- [Consumer Data Research Centre](https://data.cdrc.ac.uk/)
+- [Department for Environment, Food & Rural Affairs](https://environment.data.gov.uk/)
+- [Edina (e.g. OS mastermap)](https://digimap.edina.ac.uk/)
+- [EU Tourism Data](https://ec.europa.eu/eurostat/statistics-explained/index.php/Tourism_statistics)
+- [Eurostat](https://ec.europa.eu/eurostat)
+- [Geofabrik (OSM data)](https://www.geofabrik.de/)
+- [Geolytix Supermarket Retail Points](https://geolytix.com/blog/supermarket-retail-points/)
+- [Global Urban Areas dataset](https://daylightmap.org/2023/11/27/urban.html)
+- [Global Weather Data](https://rp5.ru/Weather_in_the_world)
+- [Google Dataset Search](https://datasetsearch.research.google.com/)
+- [Google Open Buildings](https://sites.research.google/open-buildings/)
+- [Kaggle Public Datasets](https://www.kaggle.com/datasets)
+- [King's College Data on Air Pollution](https://www.londonair.org.uk/LondonAir/Default.aspx)
+- [London Data Store](https://data.london.gov.uk/)
+- [London Local Authority Maintained Trees](https://data.london.gov.uk/dataset/local-authority-maintained-trees)
+- [London Tube PM2.5 Levels](https://www.ft.com/content/6f381ad4-fef7-11e9-be59-e49b2a136b8d)
+- [Microsoft Global Building Footprints](https://github.com/microsoft/GlobalMLBuildingFootprints#start-of-content)
+- [Microsoft Research Open Data](https://msropendata.com/)
+- [National Public Transport Access Nodes (NaPTAN)](https://www.data.gov.uk/dataset/ff93ffc1-6656-47d8-9155-85ea0b8f2251/national-public-transport-access-nodes-naptan)
+- [NASA EARTHDATA](https://earthdata.nasa.gov/)
+- [NASA SocioEconomic Data and Applications Center (SEDAC)](https://sedac.ciesin.columbia.edu/)
+- [NHS Data (ready for R)](https://nhs-r-community.github.io/NHSRdatasets/)
+- [nomis Official Census and Labour Market Statistics](https://www.nomisweb.co.uk/)
+- [Office for National Statistics Geoportal](https://geoportal.statistics.gov.uk/)
+- [Office for National Statistics](https://www.ons.gov.uk/)
+- [Open Topography](https://opentopography.org/)
+- [Overture Point of Interest data for the United Kingdom](https://doi.org/10.1177/23998083241263124)
+- [Planetary Computer Data Catalog](https://planetarycomputer.microsoft.com/catalog)
+- [pseudo Census Output Areas 2001-2011-2021](https://profrichharris.github.io/census/harmonised/)
+- [Public transport accessibility indicators Great Britain](https://www.nature.com/articles/s41597-023-02890-w)
+- [Tesco Store Data (London)](https://www.nature.com/articles/s41597-020-0397-7)
+- [TfL Cycling Data](https://cycling.data.tfl.gov.uk/)
+- [TfL Open Data](https://tfl.gov.uk/info-for/open-data-users/our-open-data?intcmp=3671#on-this-page-2)
+- [Tidy Tuesday Data (not exclusively spatial data)](https://github.com/rfordatascience/tidytuesday)
+- [UK Data Service](https://ukdataservice.ac.uk/)
+- [US Census Data](https://www.census.gov/data.html)
+- [US City Open Data Census](http://us-cities.survey.okfn.org/)
+- [USGS Earth Explorer](https://earthexplorer.usgs.gov/)
+- [UTD19 Multi-City Traffic Dataset](https://utd19.ethz.ch/)
+- [WorldPop GitHub](https://github.com/wpgp)
+- [WorldPop](https://www.worldpop.org/)
+
+## Safeguarded Data
+Undergraduate students can also apply for Safeguarded datasets held by the [Consumer Data Research Centre](https://www.cdrc.ac.uk/). Accessing these datasets requires following a specific process, which is outlined on the CDRC website. When applying, you will need to explain why you require the specific dataset and describe how you intend to use it. Additionally, consider the ethical implications of using the data, as this will be an important part of your application. Please be aware that it normally takes 4-5 weeks for your application to be processed.
+
+Some of the datasets held by the CDRC that you can apply for are: 
+
+- [Bicycle Sharing System Docking Station Observations](https://data.cdrc.ac.uk/dataset/bicycle-sharing-system-docking-station-observations)
+- [CDRC Modelled Ethnicity Proportions - LSOA Geography]( https://data.cdrc.ac.uk/dataset/cdrc-modelled-ethnicity-proportions-lsoa-geography)
+- [FCA Financial Lives Survey](https://data.cdrc.ac.uk/dataset/fca-financial-lives-survey)
+- [Speedchecker Broadband Internet Speed Tests](https://data.cdrc.ac.uk/dataset/speedchecker-broadband-internet-speed-tests)
+
+::: { .callout-tip}
+Since the application process for Safeguarded CDRC datasets can take several weeks, these datasets may be more suitable for your undergraduate dissertation rather than the GEOG0030 coursework assignment. However, CDRC datasets labeled as **Open Data** do not require an application process. You can download these datasets directly after registering on the website.
+:::

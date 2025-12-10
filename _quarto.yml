@@ -1,0 +1,68 @@
+project:
+  type: website
+  output-dir: docs
+
+lang: en
+
+execute:
+  freeze: false
+  cache: false
+
+format:
+  html:
+    theme:
+      light: flatly
+      dark:  darkly
+    callout-appearance: simple
+    css: assets/styles.css
+    toc: true
+    toc-depth: 4
+    smooth-scroll: true
+    highlight-style: atom-one
+    number-sections: true
+    number-depth: 4
+    pagetitle: "{{< var meta.title >}}"
+
+website:
+  repo-url: https://github.com/jtvandijk/GEOG0030
+  repo-actions: [issue]
+  page-navigation: true
+  page-footer:
+    center: "Course material by [Justin van Dijk](https://www.mappingdutchman.com). Available under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)."
+  search:
+    location: sidebar
+    type: overlay
+  sidebar:
+    style: floating
+    collapse-level: 2
+    logo: assets/logo.svg
+    tools:
+      - icon: github
+        href: https://github.com/jtvandijk/GEOG0030
+    contents:
+      - section: "Module overview"
+        contents:
+          text: "Welcome"
+          file: 00-index.qmd
+      - section: "Core Spatial Analysis"
+        contents:
+        - 01-spatial.qmd
+        - 02-operations.qmd
+        - 03-point-pattern.qmd
+        - 04-autocorrelation.qmd
+        - 05-models.qmd
+      - section: "Applied Spatial Analysis"
+        contents:
+        - 06-raster.qmd
+        - 07-geodemographics.qmd
+        - 08-network.qmd
+      - section: "Data visualisation"
+        contents:
+        - 09-maps.qmd
+        - 10-datavis.qmd
+      - section: "Additional Resources"
+        contents:
+        - 11-data.qmd
+
+editor: source
+

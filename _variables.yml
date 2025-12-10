@@ -1,0 +1,28 @@
+# global variables
+
+meta:
+  title: GEOG0030
+
+urls:
+  w01: "01-spatial.html"
+  w02: "02-operations.html"
+  w03: "03-point-pattern.html"
+  w04: "04-autocorrelation.html"
+  w05: "05-models.html"
+  w06: "06-raster.html"
+  w07: "07-geodemographics.html"
+  w08: "08-network.html"
+  w09: "09-maps.html"
+  w10: "10-datavis.html"
+  
+slides:
+  week01: "https://github.com/jtvandijk/GEOG0030/blob/main/slides/w01-geo.pdf"
+  week02: "https://github.com/jtvandijk/GEOG0030/blob/main/slides/w02-geo.pdf"
+  week03: "https://github.com/jtvandijk/GEOG0030/blob/main/slides/w03-geo.pdf"
+  week04: "https://github.com/jtvandijk/GEOG0030/blob/main/slides/w04-geo.pdf"
+  week05: "https://github.com/jtvandijk/GEOG0030/blob/main/slides/w05-geo.pdf"
+  week06: "https://github.com/jtvandijk/GEOG0030/blob/main/slides/w06-geo.pdf"
+  week07: "https://github.com/jtvandijk/GEOG0030/blob/main/slides/w07-geo.pdf"
+  week08: "https://github.com/jtvandijk/GEOG0030/blob/main/slides/w08-geo.pdf"
+  week09: "https://github.com/jtvandijk/GEOG0030/blob/main/slides/w09-geo.pdf"
+  week10: "https://github.com/jtvandijk/GEOG0030/blob/main/slides/w10-geo.pdf"

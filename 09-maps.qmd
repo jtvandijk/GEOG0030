@@ -1,0 +1,539 @@
+# Beyond the Choropleth
+So far, we have primarily created univariate choropleth maps to visualise data across defined spatial areas, such as LSOAs. This week, we will expand on this by exploring bivariate maps, which illustrate the relationship between two variables within a single visualisation. We will also introduce you to the `ggplot2` library and pay some attention to creating functions to automate and repeat analyses for different spatial units, allowing for more efficient and consistent workflows
+
+## Lecture slides
+You can download the slides of this week's lecture here: [[Link]]({{< var slides.week09 >}}).
+
+## Reading list
+#### Essential readings {.unnumbered}
+- Longley, P. *et al.* 2015. *Geographic Information Science & Systems*, **Chapter 11**: *Cartography and Map Production*, pp. 1-32. [[Link]](https://ucl.rl.talis.com/link?url=https%3A%2F%2Fapp.knovel.com%2Fhotlink%2Ftoc%2Fid%3AkpGISSE001%2Fgeographic-information-science%3Fkpromoter%3Dmarc&sig=e437927b963cc591dcb65491eccdd3869cc31aef80e1443cb2ba12d8f3bb031a)
+
+#### Suggested readings {.unnumbered}
+- Cheshire, J. and Uberti, O. 2021. *Atlas of the invisible: maps and graphics that will change how you see the world.* London: Particular Books.
+- Wickham, H., Çetinkaya-Rundel, M., and Grolemund, G. *R for Data Science*. 2nd edition. **Chapter 19: Functions**. [[Link]](https://r4ds.had.co.nz/functions.html)
+
+## Unemployment in London
+This week, we will look at the change in unemployment across London between 2011 and 2021. Specifically, we will try to reconcile 2011 Census data with 2021 Census data and present the results on a bivariate map. The data cover all usual residents, as recorded in the 2011 and 2021 Census for England and Wales, aggregated at the [Lower Super Output Area (LSOA)](https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeographies/census2021geographies) level. 
+
+::: {.callout-note}
+Administrative geographies, such as LSOAs, are periodically updated to reflect changes in population and other factors, resulting in occasional boundary adjustments. Consequently, it is essential to use the 2011 LSOA boundaries when mapping 2011 Census data and the 2021 LSOA boundaries for 2021 Census data. To facilitate mapping changes over time, we have access to a `csv` file containing a best-fit lookup table. This table provides a correspondence between 2011 LSOAs and their equivalent 2021 LSOAs, enabling consistent comparison across census periods.
+:::
+
+You can download three files below and save them in your project folder under `data/attributes`. Along with these dataset, we also have access to a `GeoPackage` that contains the 2021 LSOA boundaries. 
+
+| File                                        | Type   | Link |
+| :------                                     | :------| :------ |
+| London LSOA Census 2011 Unemployment        | `csv` | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/London-LSOA-Unemployment-2011.csv) | 
+| London LSOA Census 2021 Unemployment        | `csv` | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/London-LSOA-Unemployment-2021.csv) | 
+| England and Wales LSOA 2011-2021 Lookup     | `csv` | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/England-Wales-LSOA-2011-2021.csv) | ]
+| London LSOA 2021 Spatial Boundaries         | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-LSOA-2021.gpkg) |
+
+Open a new script within your `GEOG0030` project and save this as `w09-unemployment-change.r`. 
+
+Begin by loading the necessary libraries:
+
+```{r}
+#| label: 09-load-libraries
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| output: False
+#| tidy: True
+#| filename: 'R code'
+# load libraries
+library(tidyverse)
+library(sf)
+library(biscale)
+library(cowplot)
+```
+
+::: {.callout-warning}
+You may have to install some of these libraries if you have not used these before.
+:::
+
+Once downloaded, we can load all three files into memory:
+```{r}
+#| label: 09-load-csv
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: 'R code'
+# read 2011 data
+lsoa11 <- read_csv('data/attributes/London-LSOA-Unemployment-2011.csv')
+
+# read 2021 data
+lsoa21 <- read_csv('data/attributes/London-LSOA-Unemployment-2021.csv')
+
+# read lookup data
+lookup <- read_csv('data/attributes/England-Wales-LSOA-2011-2021.csv')
+
+# inspect
+head(lsoa11)
+
+# inspect
+head(lsoa21)
+
+# inspect
+head(lookup)
+``` 
+
+::: {.callout-note}
+You can inspect both objects using the `View()` function. 
+:::
+
+### Using lookup tables
+To analyse changes in unemployment over time, we need to combine the 2011 and 2021 unemployment data. Previously, we have joined datasets using a unique identifier found in both, assuming the identifiers match exactly and represent the same geographies. However, when comparing the unique identifiers from (`lsoa11cd` and `lsoa21cd`) these datasets, we can see some clear differences:
+
+```{r}
+#| label: 09-lsoa-differnces
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: 'R code'
+# inspect
+length(unique(lsoa11$lsoa11cd))
+
+# inspect
+length(unique(lsoa21$lsoa21cd))
+``` 
+
+The number of LSOAs increased between the 2011 and 2021 Census due to boundary changes. Specifically, some 2011 LSOAs have been split into multiple 2021 LSOAs, while others have been merged into a single 2021 LSOA polygon. The relationship between 2011 and 2021 LSOAs is captured in the `chgind` column of the lookup table, which flags the type of change for each case.
+
+| Type  | Description |
+| :-:   | :-----------|
+| `U`   | *Unchanged*: The LSOA boundaries remain the same from 2011 to 2021, allowing direct comparisons between data for these years. |
+| `S`   | *Split*: A 2011 LSOA has been divided into two or more 2021 LSOAs. Each split 2021 LSOA will have a corresponding record in the table, enabling comparisons by aggregating the 2021 LSOA data back to the 2011 boundary.|
+| `M`   | *Merged*: Two or more 2011 LSOAs have been combined into a single 2021 LSOA. Comparisons can be made by aggregating the 2011 LSOA data to match the new 2021 boundary. |
+| `X`   | *Irregular/Fragmented*: The relationship between 2011 and 2021 LSOAs is complex due to redesigns from local authority boundary changes or efforts to improve social homogeneity. These cases do not allow straightforward comparisons between 2011 and 2021 data. |
+
+Although there are different approaches to handling this, today we will:
+
+1. Divide the total crimes for 2011 LSOAs that have been split equally across the corresponding 2021 LSOAs.
+2. Combine the total crimes for 2011 LSOAs that have been merged into a single 2021 LSOA.
+
+::: {.callout-note}
+The LSOA boundary changes in London between 2011 and 2021 did not result in any irregular or fragmented boundaries. Therefore, we only need to address the merged and split LSOAs.
+:::
+
+This means we will apply weightings to the values based on their relationships. We can prepare these weightings as follows:
+
+```{r}
+#| label: 09-adjust weightings
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: 'R code'
+# for unchanged LSOAs keep weighting the same 
+lsoa_lookup_same  <- lookup |> filter(chgind == 'U') |>
+  group_by(lsoa11cd) |>
+  mutate(n=n())
+
+# for merged LSOAs: keep weighting the same
+lsoa_lookup_merge <- lookup |> filter(chgind == 'M') |>
+  group_by(lsoa11cd) |>
+  mutate(n=n())
+
+# for split LSOAs: weigh proportionally to the number of 2021 LSOAs 
+lsoa_lookup_split <- lookup |> filter(chgind == 'S') |>
+  group_by(lsoa11cd) |>
+  mutate(n=1/n())
+
+# re-combine the lookup with updated weightings
+lsoa_lookup <- rbind(lsoa_lookup_same,
+                     lsoa_lookup_merge,
+                     lsoa_lookup_split)
+
+# inspect
+lsoa_lookup
+```
+
+::: {.callout-note}
+You can inspect both objects using the `View()` function. 
+:::
+
+We can now join the lookup table on the 2011 LSOA data:
+
+```{r tidy='styler'}
+#| label: 09-lsoa-lookup-join
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| filename: 'R code'
+# join to lsoa data
+lsoa11_21 <- lsoa11 |> 
+  select(-lsoa11nm) |>
+  left_join(lsoa_lookup, by = c('lsoa11cd' = 'lsoa11cd'))
+``` 
+
+If we now compare the number of records in our `lsoa11_21` dataset with the original 2011 and 2021 LSOA datasets, we notice some differences:
+
+```{r}
+#| label: 09-lsoa-increase
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: 'R code'
+# lsoa 2011
+nrow(lsoa11)
+
+# lsoa 2021
+nrow(lsoa21)
+
+# lookup
+nrow(lsoa11_21)
+``` 
+
+Somehow, the number of our LSOAs seem to have increased. However, this is not an actual increase in LSOAs; rather, the change in the number of LSOAs is due to *our one-to-many* relationships. A single 2011 LSOA can correspond to multiple 2021 LSOAs, which causes the data for that 2011 LSOA to be duplicated in the join operation. Fortunately, we anticipated this and have already created the necessary weightings. We can now apply these weightings to assign our 2011 population estimates to the 2021 LSOA boundaries as follows:
+
+```{r}
+#| label: 09-2011-2021
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: 'R code'
+# weigh data
+lsoa11_21 <- lsoa11_21 |>
+  mutate(eco_active_unemployed11 = eco_active_unemployed11 * n) |>
+  mutate(pop11 = pop11 * n)
+
+# assign 2011 to 2021
+lsoa11_21 <- lsoa11_21 |>
+  group_by(lsoa21cd) |>
+  mutate(eco_active_unemployed11_lsoa21 = sum(eco_active_unemployed11)) |>
+  mutate(pop11_lsoa21 = sum(pop11)) |>
+  distinct(lsoa21cd, eco_active_unemployed11_lsoa21, pop11_lsoa21)
+```
+
+We should now be left with all 2021 LSOAs, each containing the corresponding 2011 values, adjusted according to the merged and split LSOA relationships. We can quickly check this by comparing the original values with the re-assigned values:
+
+```{r}
+#| label: 09-2011-2021-check
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: 'R code'
+# inspect number
+nrow(lsoa21)
+
+# inspect number
+nrow(lsoa11_21)
+
+# inspect count original data
+sum(lsoa11$pop11)
+
+# inspect count re-assigned data
+sum(lsoa11_21$pop11_lsoa21)
+
+```
+We can now join the 2011 and 2021 population data together:
+
+```{r tidy='styler'}
+#| label: 09-lsoa-join-data
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| filename: 'R code'
+# join 2011 data with 2021 data
+lsoa11_21 <- lsoa11_21 |> 
+  left_join(lsoa21, by = c('lsoa21cd' = 'lsoa21cd'))
+``` 
+
+### Making bivariate maps
+Bivariate maps are visualisations that represent two different variables simultaneously on a single map, using combinations of colours, patterns, or symbols to convey relationships between them. They are commonly used to explore spatial correlations or patterns, such as comparing population density with income levels across a region. We will use a bivariate map to illustrate changes in unemployment between 2011 and 2021 in London. 
+
+We will start by calculating unemployment rates for both years and classifing them into categories using the `biscale` library:
+
+```{r}
+#| label: 09-2011-2021-biv-classes
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: 'R code'
+# unemployment rates
+lsoa11_21 <- lsoa11_21 |>
+  mutate(unemp11 = eco_active_unemployed11_lsoa21 / pop11_lsoa21) |>
+  mutate(unemp21 = eco_active_unemployed21 / pop21) |>
+  select(-lsoa21nm)
+
+# add classes
+lsoa11_21 <- lsoa11_21 |>
+  bi_class(x = unemp21, y = unemp11, style = 'quantile', dim = 3)
+
+# inspect
+head(lsoa11_21$bi_class)
+```
+
+::: {.callout-note}
+The `dim` argument is used to control the extent of the legend. For instance, `dim = 2` will produce a two-by-two map where `dim = 3` will produce a three-by-three map.
+:::
+
+Instead of using `tmap` to create our map, we will need to use the  `ggplot2` library. Like `tmap`, `ggplot2` is based on the grammar of graphics, allowing you to build a graphic step by step by layering components such as data, aesthetics, and geometries. While we will explore `ggplot2` in more detail [next week](10-datavis.html), for now, we will use it to create a bivariate map by adding the necessary layers one at a time.
+
+::: {.callout-tip}
+Bivariate maps are not supported in Version 3 of `tmap.` However, Version 4, which is currently under development, will include functionality for creating bivariate maps. This new version is expected to be released on CRAN soon
+:::
+
+Once breaks are created, we can use `bi_scale_fill()` as part of our `ggplot()` call:
+
+```{r tidy='styler'} 
+#| label: fig-09-biv-map
+#| fig-cap: Bivariate map change of unemployment rates in London 2011-2021.
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| cache: True
+#| filename: 'R code'
+# load spatial data
+lsoa21_sf <- st_read('data/spatial/London-LSOA-2021.gpkg')
+
+# join unemployment data
+lsoa21_sf <- lsoa21_sf |>
+  left_join(lsoa11_21, by = c('lsoa21cd'='lsoa21cd'))
+
+# bivariate map using ggplot
+ggplot() +
+  geom_sf(
+    data = lsoa21_sf, 
+    mapping = aes(fill = bi_class), 
+    color = NA, 
+    show.legend = FALSE) +
+  bi_scale_fill(
+    pal = 'DkBlue2', 
+    dim = 3) +
+  bi_theme()
+```
+
+Shades closer to grey indicate areas with relative low unemployment rates in both years, while shades closer to blue represent areas with high unemployment rates in both years. Mixed tones suggest areas where unemployment rates have changed between 2011 and 2021, with the specific colour intensity reflecting the degree and direction of this change.
+
+We have set `show.legend = FALSE` to allow us to manually add our own bivariate legend. The palette and dimensions should align with those used in `bi_class()` for dimensions and `bi_scale_fill()` for both dimensions and palette to ensure consistency. We can create a legend and combine it with a map object as follows:
+
+```{r tidy='styler'} 
+#| label: fig-09-biv-map-legend
+#| fig-cap: Bivariate map of relative changes in unemployment rates in London 2011-2021.
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| cache: True
+#| filename: 'R code'
+
+# bivariate map object
+map <- ggplot() +
+  geom_sf(
+    data = lsoa21_sf, 
+    mapping = aes(fill = bi_class), 
+    color = NA, 
+    show.legend = FALSE) +
+  bi_scale_fill(
+    pal = 'DkBlue2', 
+    dim = 3) +
+  bi_theme()
+
+# legend object
+legend <- bi_legend(
+  pal = 'DkBlue2', 
+  dim = 3, 
+  xlab = 'Higher Unemployment 2021',
+  ylab = 'Higher Unemployment 2011', 
+  size = 6
+  )
+
+# combine, draw
+ggdraw() +
+  draw_plot(map, 0, 0, 1, 1) +
+  draw_plot(legend, 0, 0, .3, 0.3)
+```
+
+::: {.callout-note}
+The values in the `draw_plot()` function specify the relative location and size of each map object on the canvas. Adjusting these values often requires some trial and error to achieve the desired positioning, as they control the `x` and `y` coordinates for placement and the width and height proportions of each object.
+:::
+
+We have used LSOA data to create a bivariate map illustrating changes in unemployment rates. However, with nearly 5,000 LSOAs in London, this map can be challenging to interpret due to the high level of detail. Let's zoom in to Lambeth:
+
+```{r tidy='styler'} 
+#| label: fig-09-biv-map-legend-lambeth
+#| fig-cap: Bivariate map of relative changes in unemployment rates in Lambeth 2011-2021.
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| cache: True
+#| filename: 'R code'
+# select lambeth
+lsoa21_lambeth <- lsoa21_sf |>
+  filter(str_detect(lsoa21nm, 'Lambeth'))
+
+# add classes
+lsoa21_lambeth <- lsoa21_lambeth |>
+  bi_class(x = unemp21, y = unemp11, style = 'quantile', dim = 3)
+
+# bivariate map object
+map <- ggplot() +
+  geom_sf(
+    data = lsoa21_lambeth, 
+    mapping = aes(fill = bi_class), 
+    color = NA, 
+    show.legend = FALSE) +
+  bi_scale_fill(
+    pal = 'DkBlue2', 
+    dim = 3) +
+  bi_theme()
+
+# legend object
+legend <- bi_legend(
+  pal = 'DkBlue2', 
+  dim = 3, 
+  xlab = 'Higher Unemployment 2021',
+  ylab = 'Higher Unemployment 2011', 
+  size = 6
+  )
+
+# combine, draw
+bivmap <- ggdraw() +
+  draw_plot(map, 0, 0, 1, 1) +
+  draw_plot(legend, 0.1, 0.1, 0.3, 0.3)
+
+# plot
+bivmap
+```
+
+### Writing functions
+So we have now created a map of Lambeth. But what if we need to create a map for every borough in London? In R, you can create a basic function using the `function()` keyword, which allows you to encapsulate reusable code. A function can take arguments (inputs), perform operations, and return a result. A simple example of a function that adds two values together:
+
+```{r}
+#| label: 09-simple-function
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: 'R code'
+# define function to add two numbers
+add_numbers <- function(a, b) {
+  result <- a + b
+  return(result)
+}
+
+# use function
+add_numbers(5, 3)
+```
+
+We can use the same logic to construct a basic function that takes a spatial dataframe and the name of a borough as input and subsequently creates a bivarate map as output:
+
+```{r tidy='styler'} 
+#| label: 09-map-function
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| cache: True
+#| filename: 'R code'
+# define function to create bivariate unemployment maps
+create_bivariate_map <- function(spatial_df, borough_name) {
+
+  # select borough
+  spatial_df_filter <- spatial_df |>
+    filter(str_detect(lsoa21nm, borough_name))
+  
+  # add classes
+  spatial_df_filter <- spatial_df_filter |>
+    bi_class(x = unemp21, y = unemp11, style = 'quantile', dim = 3)
+  
+  # bivariate map object
+  map <- ggplot() +
+    geom_sf(
+      data = spatial_df_filter, 
+      mapping = aes(fill = bi_class), 
+      color = NA, 
+      show.legend = FALSE
+      ) +
+    bi_scale_fill(
+      pal = 'DkBlue2', 
+      dim = 3) +
+    bi_theme()
+
+  # legend object
+  legend <- bi_legend(
+    pal = 'DkBlue2', 
+    dim = 3, 
+    xlab = 'Higher Unemployment 2021',
+    ylab = 'Higher Unemployment 2011', 
+    size = 6
+    )
+
+  # combine 
+  bivariate_map <- ggdraw() +
+    draw_plot(map, 0, 0, 1, 1) +
+    draw_plot(legend, 0.1, 0.1, 0.3, 0.3)
+
+  # return value
+  return(bivariate_map)
+}
+```
+
+We can now use this function to quickly recreate maps for individual boroughs. Let's try it for the London Borough of Hammersmith:
+
+```{r} 
+#| label: fig-09-biv-map-legend-hammersmith
+#| fig-cap: Bivariate map of relative changes in unemployment rates in Hammersmith 2011-2021.
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: 'R code'
+# run function
+create_bivariate_map(lsoa21_sf, 'Hammersmith')
+```
+
+What about Kensington and Chelsea? Or Wandsworth?
+
+```{r} 
+#| label: fig-09-biv-map-legend-kensington-chelsea
+#| fig-cap: Bivariate map of relative changes in unemployment rates in Kensington and Chelsea 2011-2021.
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: 'R code'
+# run function
+create_bivariate_map(lsoa21_sf, 'Kensington and Chelsea')
+```
+
+```{r} 
+#| label: fig-09-biv-map-legend-richmond
+#| fig-cap: Bivariate map of relative changes in unemployment rates in Wandsworth 2011-2021.
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: 'R code'
+# run function
+create_bivariate_map(lsoa21_sf, 'Wandsworth')
+```
+
+## Assignment
+When the same action, such as mapping a particular variable, needs to be repeated across different datasets or regions, a function ensures that the process is consistent and can be applied easily without rewriting code. This not only saves time but also reduces the risk of errors, as you can simply call the function with different inputs, ensuring the same analysis steps are followed each time.
+
+Having created a function to generate bivariate maps, we can now create a function for univariate maps. Using the dataset from the tutorial, try to:
+
+1. Write a function with two parameters that uses the standard `tmap` library to map unemployment rates at the LSOA-level for a specified borough.
+2. Add a third parameter that specifies which variable should be mapped (e.g., unemployment rates in 2011 or 2021).
+3. Add a fourth parameter to define the colour palette to be used for the map.
+
+::: {.callout-tip}
+If you would like a more comprehensive introduction to writing your own functions in R, refer to **Chapter 19: Functions** in [R for Data Science](https://r4ds.had.co.nz/functions.html). This chapter provides a detailed explanation of how to create and use functions, along with best practices for making your code more efficient and reusable.
+:::
+
+## Before you leave 
+That is it for today. You should now be able to use lookup tables, create bivariate maps with the `ggplot2` library, and build [basic reproducible functions](https://raw.githubusercontent.com/jtvandijk/GEOG0030/refs/heads/main/images/w09/hackerman.gif). Next week, we will dive deeper into the `ggplot2` library, but for now [that is this week's Geocompuation done](https://www.youtube.com/watch?v=Ydg4T2MP7Z8)!
