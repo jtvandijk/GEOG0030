@@ -46,7 +46,7 @@ You will to have create a folder named `data` within your RStudio Project direct
 | File                                        | Type   | Link |
 | :------                                     | :------| :------ |
 | London MSOA Census 2021 European Population | `csv` | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/London-MSOA-European.csv) |
-| London MSOA 2021 Spatial Boundaries         | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/London-MSOA-2021.gpkg) |
+| London MSOA 2021 Spatial Boundaries         | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/master/data/spatial/London-MSOA-2021.gpkg) |
 
 ::: {.callout-tip}
 To download a `csv` file that is hosted on GitHub, click on the **Download raw file** button on the top right of your screen and it should download directly to your computer.
@@ -346,7 +346,7 @@ Let us go ahead and pass our `prop_eur21` variable within the `fill()` parameter
 #| cache: False
 #| filename: 'R code'
 
-# shape, polygons
+# shape
 tm_shape(msoa21) +
   # specify column
   tm_polygons(
@@ -373,13 +373,13 @@ For example, if we want to adjust our choropleth map to use five classes determi
 #| eval: True
 #| cache: False
 #| filename: 'R code'
-# shape, polygons
+# shape
 tm_shape(msoa21) +
-  # specify column, classes
+  # map data
   tm_polygons(
-              fill = 'prop_eur21', 
-              fill.scale = tm_scale_intervals(n = 5, style = 'jenks'), 
-              )
+    fill = 'prop_eur21', 
+    fill.scale = tm_scale_intervals(n = 5, style = 'jenks'), 
+    )
 ``` 
 
 ## Styling spatial data
@@ -404,7 +404,7 @@ To begin styling your map, explore each of these functions and their parameters.
 # shape
 tm_shape(msoa21) +
 
-# specify column, classes, labels
+# map data
 tm_polygons(
     
   # map data
@@ -417,9 +417,9 @@ tm_polygons(
     
   # legend 
   fill.legend = tm_legend(
-  title = 'Share of population',
-  na.text = 'No population',
-  frame = FALSE,
+    title = 'Share of population',
+    na.text = 'No population',
+    frame = FALSE,
   ), 
     
   # borders
@@ -432,7 +432,7 @@ tm_title(
     text = 'Share of population born in Europe'
   ) +
   
-# layout configuration
+# layout 
 tm_layout(
     
   # legend
@@ -484,7 +484,7 @@ lon_eurpop <-
 # shape
 tm_shape(msoa21) +
 
-# specify column, classes, labels
+# map data
 tm_polygons(
     
   # map data 
@@ -513,7 +513,7 @@ tm_shape(lab) +
 # centroids
 tm_symbols(
   size = 0.4,
-  fill = '#000000'
+  col = '#000000'
 ) +
 
 # labels
@@ -530,7 +530,7 @@ tm_title(
     text = 'Share of population born in Europe'
   ) +
   
-# layout configuration
+# layout 
 tm_layout(
     
   # legend
@@ -590,7 +590,7 @@ Now that we have prepared our dataset and created our initial maps in R, we can 
 | File                                            | Type   | Link |
 | :------                                         | :------| :------ |
 | Wales MSOA Census 2021 European Population      | `csv` | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/Wales-MSOA-European.csv) |
-| England and Wales MSOA 2021 Spatial Boundaries  | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/main/data/spatial/England-Wales-MSOA-2021.gpkg) |
+| England and Wales MSOA 2021 Spatial Boundaries  | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/master/data/spatial/England-Wales-MSOA-2021.gpkg) |
 
 ## Before you leave
 And that is how you use R as a GIS in its most basic form. More RGIS in the coming weeks, but [this concludes the tutorial for this week](https://www.youtube.com/watch?v=3wxyN3z9PL4).
