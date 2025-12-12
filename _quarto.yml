@@ -45,6 +45,8 @@ website:
           text: "Welcome"
           file: 00-index.qmd
       - section: "Core Spatial Analysis"
+        contents:
+          - 01-spatial.qmd
       - section: "Applied Spatial Analysis"
       - section: "Data visualisation"
       - section: "Additional Resources"
