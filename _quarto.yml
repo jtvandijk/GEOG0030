@@ -50,6 +50,8 @@ website:
           - 02-operations.qmd
           - 03-point-pattern.qmd
       - section: "Applied Spatial Analysis"
+        contents:
+          - 07-geodemographics.qmd
       - section: "Data visualisation"
         contents: 
           - 09-maps.qmd
