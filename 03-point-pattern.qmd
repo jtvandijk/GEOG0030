@@ -120,23 +120,42 @@ Let's put this onto a map:
 #| eval: True
 #| cache: True
 #| filename: 'R code'
-# shape, polygons
+# shape
 tm_shape(msoa21) +
 
-  # specify column, classes, labels, title
-  tm_polygons(
-    col= 'thef_km_sq', n = 5, style = 'jenks',
-    border.col = '#ffffff',
-    border.alpha = 0.3,
-    palette = c('#fee5d9','#fcae91','#fb6a4a','#de2d26','#a50f15'), 
-    title = 'Thefts / Square kilometre',
-  ) +
-  
-  # set layout
-  tm_layout(
+# map data
+tm_polygons(
+    
+  # map data
+  fill= 'thef_km_sq', 
+  fill.scale = tm_scale_intervals(
+    n = 5, style = 'jenks',
+    values = c('#fee5d9','#fcae91','#fb6a4a','#de2d26','#a50f15')
+  ),
+    
+  # legend 
+  fill.legend = tm_legend(
+    title = 'Share of population',
+    na.text = 'No population',
     frame = FALSE,
-    legend.position = c('left', 'bottom'),
-  )
+  ),
+  
+  # borders
+  col = '#ffffff',
+  col_alpha = 0.3
+  ) +
+
+# layout
+tm_layout(
+  
+  # legend
+  legend.title.size = 0.8,
+  legend.text.size = 0.8,
+  legend.position = c(0.90, 1.00),
+  
+  # canvas
+  frame = FALSE
+)
 
 ``` 
 
@@ -304,7 +323,7 @@ We now have a standalone raster that we can use with any function in the `tmap` 
 #| cache: True
 #| filename: 'R code'
 # set CRS
-crs(theft_bike_raster) <- 'epsg:27700'
+crs(theft_bike_raster) <- 'EPSG:27700'
 ```
 
 Now we can map the KDE values.
@@ -316,22 +335,37 @@ Now we can map the KDE values.
 #| eval: True
 #| message: False
 #| filename: 'R code'
-# shape, polygon
+# shape
 tm_shape(theft_bike_raster) +
-
-  # specify column, colours
+  
+  # map data
   tm_raster(
+    
+    # map data
     col = 'lyr.1',
-    palette = 'Blues',
-    title = 'Density'
+    col.scale = tm_scale(
+      values = 'brewer.blues'
+    ),
+    
+    # legend
+    col.legend = tm_legend(
+      title = 'Density',
+      frame = FALSE,
+    )
   ) +
-
-  # set layout
+  
+  # layout
   tm_layout(
+    
+    # legend
     legend.outside = FALSE,
-    legend.position = c('left', 'bottom'),
+    legend.position = c(0.85, 0.5),
+    legend.text.size = 0.8,
+    
+    # canvas
     frame = FALSE
   )
+
 ```
 
 ::: {.callout-tip}
@@ -433,35 +467,40 @@ We now have a spatial dataframe that contains the bike theft clusters in London,
 #| eval: True
 #| message: False
 #| filename: 'R code'
-# shape, polygon
+# shape
 tm_shape(outline) +
   
-  # specify colours
-  tm_polygons(
-    col = '#f0f0f0', 
-  ) +
+# map data
+tm_polygons(
+  fill = '#f0f0f0',
+  col = NA
+) +
   
-  # shape, points
-  tm_shape(theft_bike) + 
+# shape
+tm_shape(theft_bike) + 
   
-  # specify colours
-  tm_dots(
-    col = '#636363',
-    size = 0.01,
-  ) +
-
-# shape, polygon
+# map data
+tm_symbols(
+  size = 0.10,
+  fill = '#636363',
+  col = '#636363',
+) +
+  
+# shape
 tm_shape(theft_bike_clusters) + 
+
+# map data
+tm_polygons(
+  col = '#fdc086',
+  fill = '#fdc086',
+  fill_alpha = 0.5
+) +
   
-  # specify colours
-  tm_polygons(
-    col = '#fdc086',
-  ) +
+# layout
+tm_layout(
+  frame = FALSE,
+)
   
-  # set layout
-  tm_layout(
-    frame = FALSE,
-  )
 ```
 
 ## Assignment

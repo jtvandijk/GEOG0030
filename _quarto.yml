@@ -48,6 +48,7 @@ website:
         contents:
           - 01-spatial.qmd
           - 02-operations.qmd
+          - 03-point-pattern.qmd
       - section: "Applied Spatial Analysis"
       - section: "Data visualisation"
       - section: "Additional Resources"
