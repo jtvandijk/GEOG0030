@@ -47,6 +47,7 @@ website:
       - section: "Core Spatial Analysis"
         contents:
           - 01-spatial.qmd
+          - 02-operation.qmd
       - section: "Applied Spatial Analysis"
       - section: "Data visualisation"
       - section: "Additional Resources"
