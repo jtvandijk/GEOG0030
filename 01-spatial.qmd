@@ -517,7 +517,7 @@ tm_shape(lab) +
 # centroids
 tm_symbols(
   size = 0.4,
-  col = '#000000'
+  col = '#000000',
   fill = '#000000'
 ) +
 
