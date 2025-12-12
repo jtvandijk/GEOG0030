@@ -322,8 +322,10 @@ Let us build a map using `tmap`:
 #| eval: True
 #| cache: False
 #| filename: 'R code'
-# shape, polygons
+# shape
 tm_shape(msoa21) +
+  
+  # map data
   tm_polygons()
 ```
 
@@ -348,7 +350,8 @@ Let us go ahead and pass our `prop_eur21` variable within the `fill()` parameter
 
 # shape
 tm_shape(msoa21) +
-  # specify column
+  
+  # map data
   tm_polygons(
     fill = 'prop_eur21'
   )
@@ -375,6 +378,7 @@ For example, if we want to adjust our choropleth map to use five classes determi
 #| filename: 'R code'
 # shape
 tm_shape(msoa21) +
+  
   # map data
   tm_polygons(
     fill = 'prop_eur21', 
@@ -514,6 +518,7 @@ tm_shape(lab) +
 tm_symbols(
   size = 0.4,
   col = '#000000'
+  fill = '#000000'
 ) +
 
 # labels
@@ -522,7 +527,9 @@ tm_text(
   col = "#000000",
   size = 0.8,
   xmod = 0,
-  ymod = -0.6
+  ymod = -0.8,
+  bgcol = '#f0f0f0',
+  bgcol_alpha = 0.5
 ) +
 
 # title

@@ -55,7 +55,7 @@ For specific assistance with this module, you can:
 This year's module material features the following **major** updates:
 
 - All code has been revised to ensure compatibility with `tmap` v4.
-- Package management using `renv` has been removed to simplify the workflow
+- Package management using `renv` has been removed due to issues where `sf` installed within the package manager would not bind correctly to GDAL.
 :::
 
 ## Acknowledgements {.unnumbered}

@@ -431,6 +431,7 @@ tm_layout(
   # legend
   legend.outside = FALSE,
   legend.position = c(0.0, 0.2),
+  legend.text.size = 0.7,
   
   # canvas
   frame = FALSE
