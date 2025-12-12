@@ -51,6 +51,9 @@ website:
           - 03-point-pattern.qmd
       - section: "Applied Spatial Analysis"
       - section: "Data visualisation"
+        contents: 
+          - 09-maps.qmd
+          - 10-datavis.qmd
       - section: "Additional Resources"
         contents:
         - 11-data.qmd
