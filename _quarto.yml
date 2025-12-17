@@ -53,6 +53,7 @@ website:
           - 05-models.qmd
       - section: "Applied Spatial Analysis"
         contents:
+          - 06-raster.qmd
           - 07-geodemographics.qmd
           - 08-network.qmd
       - section: "Data visualisation"
