@@ -52,6 +52,7 @@ website:
       - section: "Applied Spatial Analysis"
         contents:
           - 07-geodemographics.qmd
+          - 08-network.qmd
       - section: "Data visualisation"
         contents: 
           - 09-maps.qmd
