@@ -50,6 +50,7 @@ website:
           - 02-operations.qmd
           - 03-point-pattern.qmd
           - 04-autocorrelation.qmd
+          - 05-models.qmd
       - section: "Applied Spatial Analysis"
         contents:
           - 07-geodemographics.qmd
