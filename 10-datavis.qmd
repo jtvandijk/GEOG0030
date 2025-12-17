@@ -151,12 +151,11 @@ The ggplot2 library is built [on the layered grammar of graphics](https://www.ta
 
 Let's try to use this approach by making a boxplot on the distribution of people that self-identify as White British across all Inner London Boroughs. With `ggplot2`, every plot begins with the `ggplot()` function, which creates a coordinate system to which layers can be added. The first argument of `ggplot()` specifies the dataset to use:
 
-```{r tidy} 
+```{r tidy='styler'} 
 #| label: fig-10-boxplot-canvas
 #| classes: styled-output
 #| echo: True
 #| eval: False
-#| tidy: True
 #| cache: True
 #| filename: 'R code'
 # initiate ggplot
