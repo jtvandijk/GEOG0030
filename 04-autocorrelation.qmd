@@ -7,7 +7,7 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 ## Reading list
 #### Essential readings {.unnumbered}
 - Griffith, D. 2017. *Spatial Autocorrelation*. The Geographic Information Science & Technology Body of Knowledge. [[Link]](https://doi.org/10.22224/gistbok/2017.4.13)
-- Gimond, M. 2023. Intro to GIS and spatial analysis. **Chapter 13**: *Spatial autocorrelation*. [[Link]](https://mgimond.github.io/Spatial/spatial-autocorrelation.html)
+- Gimond, M. 2024. Intro to GIS and spatial analysis. **Chapter 13**: *Spatial autocorrelation*. [[Link]](https://mgimond.github.io/Spatial/chp13_0.html)
 - Livings, M. and Wu, A-M. 2020. *Local Measures of Spatial Association*. The Geographic Information Science & Technology Body of Knowledge. [[Link]](https://doi.org/10.22224/gistbok/2020.3.10)
 - Su, R. Newsham, N., and Dodge, S. 2024. Spatiotemporal dynamics of ethnoracial diversity and segregation in Los Angeles County: Insights from mobile phone data. *Computers, Environment and Urban Systems* 114: 102203. [[Link]](https://doi.org/10.1016/j.compenvurbsys.2024.102203)
 
@@ -226,7 +226,7 @@ The computational approach is based on a repeated random permutation of the obse
 ```{r}
 #| label: fig-moran-plot-sig
 #| echo: False 
-#| fig-cap: 'Determining significance using a Monte Carlo simulation. Source: [Manuel Gimond](https://mgimond.github.io/Spatial/spatial-autocorrelation.html).'
+#| fig-cap: 'Determining significance using a Monte Carlo simulation. Source: [Manuel Gimond](https://mgimond.github.io/Spatial/chp13_0.html).'
 knitr::include_graphics('images/w04/mc-sim.png')
 ```
 
@@ -540,7 +540,7 @@ tm_layout(
 ``` 
 
 :::{.callout-note}
-This new map may still not fully address the issue of statistical significance due to repeated testing, and some values may appear significant purely by chance. To correct for this, you can adjust the $p$-values using R’s `p.adjust()` function. For further details, refer to [Manual Gimond's explanation](https://mgimond.github.io/Spatial/spatial-autocorrelation.html#a-note-about-interpreting-the-pseudo-p-value) of the [multiple comparison](https://en.wikipedia.org/wiki/Multiple_comparisons_problem) problem in the context of the *pseudo-*$p$ values.
+This new map may still not fully address the issue of statistical significance due to repeated testing, and some values may appear significant purely by chance. To correct for this, you can adjust the $p$-values using R’s `p.adjust()` function. For further details, refer to [Manual Gimond's explanation](https://mgimond.github.io/Spatial/chp13_0.html#a-note-about-interpreting-the-permutation-based-p-value) of the [multiple comparison](https://en.wikipedia.org/wiki/Multiple_comparisons_problem) problem in the context of the *pseudo-*$p$ values.
 :::
 
 ## Assignment

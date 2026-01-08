@@ -7,7 +7,7 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 ## Reading list 
 #### Essential readings {.unnumbered}
 - Brunsdon, C. and Comber, A. 2021. Opening practice: Supporting reproducibility and critical spatial data science. *Journal of Geographical Systems* 23: 477–496. [[Link]](https://doi.org/10.1007/s10109-020-00334-2)
-- Franklin, R. 2023. Quantitative methods III: Strength in numbers? *Progress in Human Geography*. Online First. [[Link]](https://doi.org/10.1177/03091325231210512).
+- Franklin, R. 2023. Quantitative methods III: Strength in numbers? *Progress in Human Geography*. 48(2): 689-697. [[Link]](https://doi.org/10.1177/03091325231210512).
 - Longley, P. *et al.* 2015. *Geographic Information Science & Systems*, **Chapter 1**: *Geographic Information: Science, Systems, and Society*, pp. 1-32. [[Link]](https://ucl.rl.talis.com/link?url=https%3A%2F%2Fapp.knovel.com%2Fhotlink%2Ftoc%2Fid%3AkpGISSE001%2Fgeographic-information-science%3Fkpromoter%3Dmarc&sig=e437927b963cc591dcb65491eccdd3869cc31aef80e1443cb2ba12d8f3bb031a)
 
 #### Suggested readings {.unnumbered}

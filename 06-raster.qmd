@@ -8,11 +8,13 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 #### Essential readings {.unnumbered}
 - Gimond, M. 2021. Intro to GIS and spatial analysis. **Chapter 14**: *Spatial Interpolation*. [[Link]](https://mgimond.github.io/Spatial/spatial-interpolation.html)
 - Heris, M., Foks, N., Bagstad, K. 2020. A rasterized building footprint dataset for the United States. *Scientific Data* 7: 207. [[Link]](https://doi.org/10.1038/s41597-020-0542-3)
-- Thomson, D., Leasure, D., Bird, T. *et al*. 2022. How accurate are WorldPop-Global-Unconstrained gridded population data at the cell-level? A simulation analysis in urban Namibia. *Plos ONE* 17:7: e0271504. [[Link]](https://doi.org/10.1371/journal.pone.0271504)
+- Láng-Ritter, J., Keskinen, M., Tenkanen, H. 2025. Global gridded population datasets systematically underrepresent rural population. *Nature Communications* 16: 2170. [[Link]](https://doi.org/10.1038/s41467-025-56906-7)
 
 #### Suggested readings {.unnumbered}
 - Mellander, C., Lobo, J., Stolarick, K. *et al*. 2015. Night-time light data: A good proxy measure for economic activity? *PLoS ONE* 10(10): e0139779. [[Link]](https://doi.org/10.1371/journal.pone.0139779)
 - Park, G. and Franklin, R. 2023. The changing demography of hurricane at-risk areas in the United States (1970–2018). *Population, Space and Place* 29(6): e2683. [[Link]](https://doi.org/10.1002/psp.2685)
+- Thomson, D., Leasure, D., Bird, T. *et al*. 2022. How accurate are WorldPop-Global-Unconstrained gridded population data at the cell-level? A simulation analysis in urban Namibia. *Plos ONE* 17:7: e0271504. [[Link]](https://doi.org/10.1371/journal.pone.0271504)
+
 
 ## Population change in London
 For the first part of this week's practical material we will be using raster datasets from [WorldPop](https://hub.worldpop.org/). These population surfaces are estimates of counts of people, displayed within a regular grid raster of a spatial resolution of up to 100m. These datasets can be used to explore, for example, changes in the demographic profiles or area deprivation at small spatial scales.
