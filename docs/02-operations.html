@@ -684,7 +684,7 @@ Projected CRS: OSGB36 / British National Grid
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(osm_stations)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 4058</code></pre>
+<pre><code>[1] 4057</code></pre>
 </div>
 </div>
 <p>The total number of data points seems rather high. In fact, looking at the <code>railway</code> variable, several points are not tagged as station or do not have a value at all:</p>
@@ -707,7 +707,7 @@ Projected CRS: OSGB36 / British National Grid
 2                   stop   17 MULTIPOINT ((528197.7 18571...
 3        subway_entrance   38 MULTIPOINT ((525226.4 18745...
 4 train_station_entrance    1      POINT (538196.2 184826.5)
-5                   &lt;NA&gt; 3388 MULTIPOINT ((504982.3 17581...</code></pre>
+5                   &lt;NA&gt; 3387 MULTIPOINT ((504982.3 17581...</code></pre>
 </div>
 </div>
 <p>The number of points tagged as station in the railway field are most likely the only points in our dataset that represent actual stations, so we will only retain those points.</p>
