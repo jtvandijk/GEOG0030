@@ -79,7 +79,7 @@ You may have to install some of these libraries if you have not used these befor
 :::
 
 ::: {.callout-important}
-For Linux and macOS users who are new to working with spatial data in R, the installation of the `sf` library may fail because additional (non-R) libraries are required which are automatically installed for Windows users. If you encounter installation issues,, please refer to the [information pages](https://r-spatial.github.io/sf/#macos) of the `sf` library for instructions on how to install these additional libraries.
+For Linux and macOS users who are new to working with spatial data in R, the installation of the `sf` library sometimes fails because additional (non-R) libraries are required, which are automatically installed for Windows users. If you encounter installation issues, firs try installing a precompiled version from R-universe by running: `install.packages("sf", repos = "https://r-spatial.r-universe.dev")`. If this does not work, please refer to the [information pages](https://r-spatial.github.io/sf/#macos)of the `sf` library for instructions on how to install these libraries using `Homebrew`. After installation, you also need to make sure that `tmap` works with your Homebrew setup by running `usethis::edit_r_environ()` in R and adding the line `PROJ_LIB=/opt/homebrew/share/proj`. You may need to ask a member of the teaching team for assistance with this. 
 :::
 
 Once downloaded, we can load both files into memory:
