@@ -18,7 +18,7 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 ## Accessibility in Lambeth
 This week, we will analyse the accessibility of fast-food outlets in the London Borough of Lambeth. Specifically, we will examine how closely these outlets are located within walking distance of primary and secondary schools, and explore any potential relationships between their proximity and the relative levels of deprivation in the area.
 
-We will extract the points of interest that we will use for this analysis from the [Point of Interest (POI) data for the United Kingdom](https://journals.sagepub.com/doi/10.1177/23998083241263124), obtained from the [Overture Maps Foundation](https://overturemaps.org/) and pre-processed by the [Consumer Data Research Centre](https://data.cdrc.ac.uk/dataset/point-interest-data-united-kingdom#data-and-resources) to provide users with easy access.
+We will extract the points of interest that we will use for this analysis from the [Point of Interest (POI) data for the United Kingdom](https://journals.sagepub.com/doi/10.1177/23998083241263124), obtained from the [Overture Maps Foundation](https://overturemaps.org/) and pre-processed by the [Geographic Data Service](https://data.geods.ac.uk/dataset/point-of-interest-data-for-the-united-kingdom#data-and-resources) to provide users with easy access.
 
 You can download a subset of the POI dataset via the link provided below. A copy of the 2011 London LSOAs spatial boundaries, the boundaries of the London Boroughs, and the 2019 English [Index of Multiple Deprivation](https://www.gov.uk/government/statistics/english-indices-of-deprivation-2019). Save these files in your project folder under `data`.
 
@@ -592,7 +592,7 @@ fastfood_imd
 There appears to be a weak relationship, with schools in more deprived areas having, on average, a higher number of fast-food outlets within a 1,000-metre walking distance. However, this trend is not consistent, as schools in the least deprived areas of Lambeth show the highest accessibility on average.
 
 ## Assignment 
-Accessibility analysis involves evaluating how easily people can reach essential services, destinations, or opportunities, such as schools, healthcare facilities, or workplaces, from a given location. The CDRC [Access to Healthy Assets & Hazards (AHAH)](https://data.cdrc.ac.uk/dataset/access-healthy-assets-hazards-ahah) dataset, for instance, uses accessibility analysis to quantify how easy it is to reach 'unhealthy' places, such as pubs and gambling outlets, for each neighbourhood in Great Britain. 
+Accessibility analysis involves evaluating how easily people can reach essential services, destinations, or opportunities, such as schools, healthcare facilities, or workplaces, from a given location. The GeoDS [Access to Healthy Assets & Hazards (AHAH)](https://data.geods.ac.uk/dataset/access-to-healthy-assets-hazards-ahah) dataset, for instance, uses accessibility analysis to quantify how easy it is to reach 'unhealthy' places, such as pubs and gambling outlets, for each neighbourhood in Great Britain. 
 
 Having run through all the steps during the tutorial, we can recreate this analysis ourselves. Using Lambeth as a case study, try to complete the following tasks:
 

@@ -329,7 +329,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="accessibility-in-lambeth" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="accessibility-in-lambeth"><span class="header-section-number">8.3</span> Accessibility in Lambeth</h2>
 <p>This week, we will analyse the accessibility of fast-food outlets in the London Borough of Lambeth. Specifically, we will examine how closely these outlets are located within walking distance of primary and secondary schools, and explore any potential relationships between their proximity and the relative levels of deprivation in the area.</p>
-<p>We will extract the points of interest that we will use for this analysis from the <a href="https://journals.sagepub.com/doi/10.1177/23998083241263124">Point of Interest (POI) data for the United Kingdom</a>, obtained from the <a href="https://overturemaps.org/">Overture Maps Foundation</a> and pre-processed by the <a href="https://data.cdrc.ac.uk/dataset/point-interest-data-united-kingdom#data-and-resources">Consumer Data Research Centre</a> to provide users with easy access.</p>
+<p>We will extract the points of interest that we will use for this analysis from the <a href="https://journals.sagepub.com/doi/10.1177/23998083241263124">Point of Interest (POI) data for the United Kingdom</a>, obtained from the <a href="https://overturemaps.org/">Overture Maps Foundation</a> and pre-processed by the <a href="https://data.geods.ac.uk/dataset/point-of-interest-data-for-the-united-kingdom#data-and-resources">Geographic Data Service</a> to provide users with easy access.</p>
 <p>You can download a subset of the POI dataset via the link provided below. A copy of the 2011 London LSOAs spatial boundaries, the boundaries of the London Boroughs, and the 2019 English <a href="https://www.gov.uk/government/statistics/english-indices-of-deprivation-2019">Index of Multiple Deprivation</a>. Save these files in your project folder under <code>data</code>.</p>
 <table class="table">
 <thead>
@@ -1066,7 +1066,7 @@ Geodetic CRS:  WGS 84
 <span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(netx_connected)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 518462</code></pre>
+<pre><code>[1] 519060</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-warning">
@@ -1209,11 +1209,11 @@ dbl (2): imd_rank, imd_dec
 # Groups:   imd_dec [7]
   imd_dec avg_cnt
     &lt;dbl&gt;   &lt;dbl&gt;
-1       2    20.1
-2       3    15.3
-3       4    20.5
+1       2    19.3
+2       3    15.6
+3       4    20.4
 4       5    12.3
-5       6     3  
+5       6     3.5
 6       7     9.4
 7       8    23.5</code></pre>
 </div>
@@ -1223,7 +1223,7 @@ dbl (2): imd_rank, imd_dec
 </section>
 <section id="assignment" class="level2" data-number="1.4">
 <h2 data-number="1.4" class="anchored" data-anchor-id="assignment"><span class="header-section-number">8.4</span> Assignment</h2>
-<p>Accessibility analysis involves evaluating how easily people can reach essential services, destinations, or opportunities, such as schools, healthcare facilities, or workplaces, from a given location. The CDRC <a href="https://data.cdrc.ac.uk/dataset/access-healthy-assets-hazards-ahah">Access to Healthy Assets &amp; Hazards (AHAH)</a> dataset, for instance, uses accessibility analysis to quantify how easy it is to reach ‘unhealthy’ places, such as pubs and gambling outlets, for each neighbourhood in Great Britain.</p>
+<p>Accessibility analysis involves evaluating how easily people can reach essential services, destinations, or opportunities, such as schools, healthcare facilities, or workplaces, from a given location. The GeoDS <a href="https://data.geods.ac.uk/dataset/access-to-healthy-assets-hazards-ahah">Access to Healthy Assets &amp; Hazards (AHAH)</a> dataset, for instance, uses accessibility analysis to quantify how easy it is to reach ‘unhealthy’ places, such as pubs and gambling outlets, for each neighbourhood in Great Britain.</p>
 <p>Having run through all the steps during the tutorial, we can recreate this analysis ourselves. Using Lambeth as a case study, try to complete the following tasks:</p>
 <ol type="1">
 <li>Extract all <code>pubs</code> from the Point of Interest dataset.</li>

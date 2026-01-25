@@ -9,7 +9,7 @@ The following websites contain Open Data or link to Open Data from several respe
 - [Bike Docking Data (ready for R)](https://docs.ropensci.org/bikedata/)
 - [Bing Maps worldwide road detections](https://github.com/microsoft/RoadDetections)
 - [Camden Air Action](https://camdenairaction.wordpress.com/2017/02/20/schools-monitoring-project-spring-2017/)
-- [Consumer Data Research Centre](https://data.cdrc.ac.uk/)
+- [Consumer Data Research Centre](https://data.geods.ac.uk/)
 - [Department for Environment, Food & Rural Affairs](https://environment.data.gov.uk/)
 - [Edina (e.g. OS mastermap)](https://digimap.edina.ac.uk/)
 - [EU Tourism Data](https://ec.europa.eu/eurostat/statistics-explained/index.php/Tourism_statistics)
@@ -62,5 +62,5 @@ Some of the datasets held by the GeoDS that you can apply for are:
 - [Salad Money Daily Transaction Volumes and Values](https://data.geods.ac.uk/dataset/salad-money-daily-transaction-volumes-and-values)
 
 ::: { .callout-tip}
-Since the application process for Safeguarded GeoDS datasets can take several weeks, these datasets may be more suitable for your undergraduate dissertation rather than the GEOG0030 coursework assignment. However, CDRC datasets labeled as **Open Data** do not require an application process. You can download these datasets directly after registering on the website.
+Since the application process for Safeguarded GeoDS datasets can take several weeks, these datasets may be more suitable for your undergraduate dissertation rather than the GEOG0030 coursework assignment. However, GeoDs datasets labeled as **Open Data** do not require an application process. You can download these datasets directly after registering on the website.
 :::
