@@ -6,7 +6,7 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 
 ## Reading list
 #### Essential readings {.unnumbered}
-- Gimond, M. 2021. Intro to GIS and spatial analysis. **Chapter 14**: *Spatial Interpolation*. [[Link]](https://mgimond.github.io/Spatial/spatial-interpolation.html)
+- Gimond, M. 2025. Intro to GIS and spatial analysis. **Chapter 14**: *Spatial Interpolation*. [[Link]](https://mgimond.github.io/Spatial/chp16_0.html)
 - Heris, M., Foks, N., Bagstad, K. 2020. A rasterized building footprint dataset for the United States. *Scientific Data* 7: 207. [[Link]](https://doi.org/10.1038/s41597-020-0542-3)
 - Láng-Ritter, J., Keskinen, M., Tenkanen, H. 2025. Global gridded population datasets systematically underrepresent rural population. *Nature Communications* 16: 2170. [[Link]](https://doi.org/10.1038/s41467-025-56906-7)
 

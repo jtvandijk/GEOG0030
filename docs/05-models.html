@@ -1060,7 +1060,7 @@ Adaptive bandwidth: 108 CV score: 1.938444 </code></pre>
 <pre><code>   ***********************************************************************
    *                       Package   GWmodel                             *
    ***********************************************************************
-   Program starts at: 2026-01-25 18:55:16.53419 
+   Program starts at: 2026-01-29 10:54:09.421172 
    Call:
    gwr.basic(formula = conservative_vote_share ~ eco_active_employed + 
     eco_active_unemployed + eth_white + eth_black + aged_25_to_34_years + 
@@ -1134,7 +1134,7 @@ Adaptive bandwidth: 108 CV score: 1.938444 </code></pre>
    Adjusted R-square value:  0.7001241 
 
    ***********************************************************************
-   Program stops at: 2026-01-25 18:55:16.598267 </code></pre>
+   Program stops at: 2026-01-29 10:54:09.491504 </code></pre>
 </div>
 </div>
 <p>The global regression results are derived from the standard OLS model, representing a single regression for the entire study area without accounting for spatial variation. In contrast, the geographically weighted regression (GWR) results stem from 575 separate but spatially overlapping regression models, each fitted with geographic weighting to different spatial subsets of the data, allowing for local variation in the regression estimates. We can also see that the model fit (adjusted <span class="math inline">\(R^2\)</span>) has increased to 70%.</p>
@@ -1290,7 +1290,7 @@ Adaptive bandwidth: 108 CV score: 1.938444 </code></pre>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Not all of the local regression estimates may be statistically significant. We can use use the estimated <span class="math inline">\(t\)</span>-values, as indicated by the <code>_TV</code> suffix in the <code>SDF</code> data frame of the GWR results, to filter out those are not. For example, to filter at 95% confidence, remove <span class="math inline">\(t\)</span>-values outside the range of <code>-1.96</code> to <code>+1.96</code>.</p>
+<p>Not all of the local regression estimates may be statistically significant. We can use use the estimated <span class="math inline">\(t\)</span>-values, as indicated by the <code>_TV</code> suffix in the <code>SDF</code> data frame of the GWR results, to filter out those are not. For example, to filter at 95% confidence, remove <span class="math inline">\(t\)</span>-values outside the range of <code>-1.96</code> to <code>+1.96</code>. We could also run a Monte Carlo simulation using the <code>gwr.montecarlo()</code> function, however, this will take a long time to run.</p>
 </div>
 </div>
 </div>

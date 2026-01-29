@@ -657,7 +657,7 @@ tm_layout(
 Mapping these local estimates reveals an interesting geography, where, for example, the proportion of the population over 50 years old is a better predictor for the Conservative vote share in regions like the South West, Greater London, and parts of the North West and Yorkshire and the Humber.
 
 ::: {.callout-warning}
-Not all of the local regression estimates may be statistically significant. We can use use the estimated $t$-values, as indicated by the `_TV` suffix in the `SDF` data frame of the GWR results, to filter out those are not.  For example, to filter at 95% confidence, remove $t$-values outside the range of `-1.96` to `+1.96`.
+Not all of the local regression estimates may be statistically significant. We can use use the estimated $t$-values, as indicated by the `_TV` suffix in the `SDF` data frame of the GWR results, to filter out those are not.  For example, to filter at 95% confidence, remove $t$-values outside the range of `-1.96` to `+1.96`. We could also run a Monte Carlo simulation using the `gwr.montecarlo()` function, however, this will take a long time to run.
 :::
 
 ::: {.callout-tip}    
