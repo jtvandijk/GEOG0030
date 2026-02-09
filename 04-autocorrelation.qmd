@@ -8,7 +8,7 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 #### Essential readings {.unnumbered}
 - Griffith, D. 2017. *Spatial Autocorrelation*. The Geographic Information Science & Technology Body of Knowledge. [[Link]](https://doi.org/10.22224/gistbok/2017.4.13)
 - Gimond, M. 2025. Intro to GIS and spatial analysis. **Chapter 13**: *Spatial autocorrelation*. [[Link]](https://mgimond.github.io/Spatial/chp13_0.html)
-- Livings, M. and Wu, A-M. 2020. *Local Measures of Spatial Association*. The Geographic Information Science & Technology Body of Knowledge. [[Link]](https://doi.org/10.22224/gistbok/2020.3.10)
+- Livings, M. and Wu, A-M. 2020. *Local Measures of Spatial Association*. The Geographic Infor  mation Science & Technology Body of Knowledge. [[Link]](https://doi.org/10.22224/gistbok/2020.3.10)
 - Su, R. Newsham, N., and Dodge, S. 2024. Spatiotemporal dynamics of ethnoracial diversity and segregation in Los Angeles County: Insights from mobile phone data. *Computers, Environment and Urban Systems* 114: 102203. [[Link]](https://doi.org/10.1016/j.compenvurbsys.2024.102203)
 
 #### Suggested readings {.unnumbered}
