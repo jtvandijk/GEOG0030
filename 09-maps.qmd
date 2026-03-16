@@ -278,11 +278,7 @@ head(lsoa11_21$bi_class)
 The `dim` argument is used to control the extent of the legend. For instance, `dim = 2` will produce a two-by-two map where `dim = 3` will produce a three-by-three map.
 :::
 
-Instead of using `tmap` to create our map, we will need to use the  `ggplot2` library. Like `tmap`, `ggplot2` is based on the grammar of graphics, allowing you to build a graphic step by step by layering components such as data, aesthetics, and geometries. While we will explore `ggplot2` in more detail [next week](10-datavis.html), for now, we will use it to create a bivariate map by adding the necessary layers one at a time.
-
-::: {.callout-tip}
-Bivariate maps are not supported in Version 3 of `tmap.` However, Version 4, which is currently under development, will include functionality for creating bivariate maps. This new version is expected to be released on CRAN soon
-:::
+Instead of using `tmap` to create our map, today we will use the  `ggplot2` library. Like `tmap`, `ggplot2` is based on the grammar of graphics, allowing you to build a graphic step by step by layering components such as data, aesthetics, and geometries. While we will explore `ggplot2` in more detail [next week](10-datavis.html), for now, we will use it to create a bivariate map by adding the necessary layers one at a time.
 
 Once breaks are created, we can use `bi_scale_fill()` as part of our `ggplot()` call:
 
