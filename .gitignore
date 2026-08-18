@@ -7,3 +7,5 @@
 
 # Claude Code session notes — internal, not for publication
 CLAUDE.md
+
+**/*.quarto_ipynb
