@@ -339,7 +339,8 @@ osm_stations_comb <- osm_stations |>
 
 # spatial query
 theft_bike$d500 <- theft_bike |>
-    st_is_within_distance(osm_stations_comb, dist = 500, sparse = FALSE)
+    st_is_within_distance(osm_stations_comb, dist = 500, sparse = FALSE) |>
+    as.vector()
 
 # inspect
 head(theft_bike)
