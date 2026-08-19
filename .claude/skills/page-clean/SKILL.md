@@ -81,6 +81,30 @@ pattern in `01-spatial.qmd`'s last map chunk is deliberate — done so `tm_shape
 with the `tm_polygons()`/`tm_title()`/etc. layers underneath once rendered, a readability choice, not
 an accident. Don't "fix" this pattern anywhere it recurs.
 
+Real bugs *are* out there, though, and the first full sweep (2026-08-19) turned up several — worth
+knowing the shapes they took so future passes recognise them faster:
+- A second, unfixed instance of the exact same `sparse = FALSE` matrix-vs-vector bug as the `d500`
+  precedent, in the same file (`02-operations.qmd`'s `d500_buffer`) — the fix (`|> as.vector()`) is
+  identical, but it still needed a separate explicit sign-off, since it hadn't actually thrown an
+  error yet (`count()` tolerates a matrix column in a way `if_else()` doesn't).
+- A typo'd function argument name (`utlier.shape` instead of `outlier.shape` in a `geom_boxplot()`
+  call, `10-datavis.qmd`) — caught by comparing against two otherwise-identical sibling chunks that
+  spelled it correctly. This one *was* just fixed directly rather than flagged, since restoring a
+  known, standard argument name to match its own siblings is closer to a typo fix than a design
+  choice — unlike the matrix/vector bugs, which change what gets computed.
+- Prose that plots the wrong object (`06-raster.qmd`: text and fig-cap both describe a *smoothed*
+  raster, but the code plots the original, unsmoothed one instead of the variable it just created)
+  and a leftover duplicate map layer from an apparent `tmap` v3→v4 edit that was never fully cleaned
+  up (same file). Both flagged, not fixed, since they change rendered output.
+- Wrong-topic copy-paste residue in prose (`09-maps.qmd`'s LSOA split/merge instructions said "total
+  crimes" twice, in the *unemployment* chapter) — fixed directly, since it's unambiguously a
+  terminology error, not a logic/design question.
+Pattern to take from this: **matrix/vector and other silent-computation bugs get flagged, not
+fixed**, because the "right" fix requires judgement about what the code should compute. **Typos in
+identifiers, argument names, and prose get fixed directly**, once cross-checked against a sibling
+that proves what the "correct" version looks like — there's no judgement call left once you can show
+the intended form some other way.
+
 **Comment vocabulary must match across chapters, not just within one file.** It's not enough for a
 chapter to be internally consistent — the same conceptual step should use the same comment wording
 everywhere it appears across the 12 chapters, especially for `tmap` layer-by-layer map-building
@@ -105,6 +129,31 @@ wording to match — don't invent new phrasing for the same conceptual step just
 existing comment technically also makes sense. This applies to comment *wording* only; never touch
 what the code does. If a chapter's `tmap` code does something this table doesn't cover, extend the
 table (and flag the addition to the user) rather than leaving it inconsistent or guessing.
+
+The same principle applies to `ggplot2`-building chunks (weeks 9 and 10 especially). Canonical
+vocabulary confirmed there, already consistent across every chunk in `10-datavis.qmd`:
+
+| Comment | Used for |
+|---|---|
+| `# initiate ggplot` | the opening `ggplot(data = ..., aes(...))` call |
+| `# add geometry` | a `geom_*()` layer |
+| `# add labels` | `labs()` |
+| `# add text` | `geom_treemap_text()` / `geom_treemap_subgroup_text()` or similar text layers |
+| `# add border` | `geom_treemap_subgroup_border()` or similar border layers |
+| `# set basic theme` | the base `theme_*()` call (e.g. `theme_light()`, `theme_minimal()`) |
+| `# customise theme` | a following `theme(...)` call overriding specific elements |
+
+### Chunk labels are also worth checking, not just comments
+
+Several real issues found in labels during the first full sweep (2026-08-19), none of them harmless:
+a label copy-pasted from a different week's file (`01-load-gpkg-csv` sitting inside
+`03-point-pattern.qmd`), a label missing its week-number prefix entirely (`3-dbscan-add-clusters`
+instead of `03-...`), a label with a space in it (`09-adjust weightings` — not a valid identifier
+pattern), and a `fig-*`-prefixed label with the wrong week number (`fig-07-subtract-london` inside
+`06-raster.qmd`). All four were safe to rename because a quick `grep -rn "<label>" *.qmd` across the
+whole project confirmed nothing referenced them via `@label` — **always run that grep before
+renaming a label**, since `fig-`/`tbl-` labels can be cross-referenced from anywhere in the project,
+not just their own file.
 
 **Stripping trailing whitespace**: don't reach for a bracket expression with `\t` in it —
 `sed 's/[ \t]*$//'` is unsafe on BSD/macOS `sed`, where `\t` inside `[...]` is not guaranteed to be
@@ -131,7 +180,18 @@ Check every link in the file:
   publisher landing page: `curl -s -o /dev/null -w "%{http_code}" "https://api.crossref.org/works/<doi>"`
   (just the `10.xxxx/...` part, no `https://doi.org/` prefix) — `200` there means the DOI is real and
   resolvable, even if curling the publisher page directly gets blocked. Anything that's a genuine
-  `404`, timeout, or DNS failure — on any link — is worth surfacing.
+  `404`, timeout, or DNS failure — on any link — is worth surfacing. A site can also restructure
+  entirely (found twice: Manuel Gimond's *Spatial* textbook renamed every chapter URL between when
+  chapters were first cited and now — `chp13_0.html`/`chp16_0.html` both 404, replaced by
+  `13_autocorrelation.html`/`16_interpolation.html`) — when a `404` turns up on a site that otherwise
+  looks legitimate and alive, check the site's own root/nav for a working equivalent before assuming
+  the resource is gone, and retarget any specific anchor fragment to the section that actually
+  matches what the surrounding text describes, not just the bare page.
+  The CrossRef API is also useful beyond link-checking: `https://api.crossref.org/works/<doi>` returns
+  the actual author names/title/journal for a DOI, which is worth cross-checking against the citation
+  text itself — found two real author-name typos this way (a missing umlaut, a Slavic surname with
+  the wrong accented letter) that would never have shown up as a broken link since the DOI resolved
+  fine either way.
 - **Internal references**: `{{< var urls.wNN >}}`-style references resolve via `_variables.yml` —
   confirm the referenced file actually exists in the repo. `@fig-`/`@tbl-` cross-references need a
   matching `#| label: fig-...`/`tbl-...` somewhere in the project.
