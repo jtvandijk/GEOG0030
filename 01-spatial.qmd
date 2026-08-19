@@ -16,6 +16,13 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 - Schurr, C., Müller, M. and Imhof, N. 2020. Who makes geographical knowledge? The gender of Geography’s gatekeepers. *The Professional Geographer* 72(3): 317-331. [[Link]](https://doi.org/10.1080/00330124.2020.1744169)
 - Yuan, M. 2001. Representing complex geographic phenomena in GIS. *Cartography and Geographic Information Science* 28(2): 83-96. [[Link]](https://doi.org/10.1559/152304001782173718)
 
+## Before we start {.unnumbered}
+Before working through the tutorial, we will spend a few minutes looking at:
+
+- The raw population data as downloaded from ONS, before any cleaning
+- The attribute table of the GeoPackage, before it is loaded into R
+- A live example of a "file not found" error, and how to fix it
+
 ## Europeans in London
 In RStudio, scripts allow us to build and save code that can be run repeatedly. We can organise these scripts into [RStudio projects](https://support.posit.co/hc/en-us/articles/200526207-Using-RStudio-Projects), which consolidate all files related to an analysis such as input data, R scripts, results, figures, and more. This organisation helps keep track of all data, input, and output, while enabling us to create standalone scripts for each part of our analysis.
 
@@ -596,7 +603,7 @@ Now that we have prepared our dataset and created our initial maps in R, we can 
     * A `GeoPackage` file containing the 2021 MSOA spatial boundaries for England and Wales.
 2. Load both datasets and merge them together. Make sure to only retain those MSOAs that belong to Wales.
 3. Create a map that shows the proportion of the population residing in Wales that is born in Europe.
-4. Experiment by adjusting various map parameters, such as the colour scheme, map labels, and data classification method.
+4. Choose a classification method (e.g. equal interval, quantile, natural breaks) that you think best represents the distribution of your data.
 
 | File                                            | Type   | Link |
 | :------                                         | :------| :------ |
