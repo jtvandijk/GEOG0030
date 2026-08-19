@@ -1,5 +1,5 @@
 # Complex Visualisations
-Most of the visualisations we have created over the past weeks have been maps. However, you will often need to use other types of visualisations for your data, such as histograms, scatterplots, dendrograms, and boxplots. While `base` R can be used for simple visualisations, it is best suited for quick data inspections. For publication-worthy and more complex visualisations, the `ggplot2` library, which we used last week to create bivariate maps, offers a unified and effective approach to data visualisation based on the grammar of graphics. 
+Most of the visualisations we have created over the past weeks have been maps. However, you will often need to use other types of visualisations for your data, such as histograms, scatterplots, dendrograms, and boxplots. While `base` R can be used for simple visualisations, it is best suited for quick data inspections. For publication-worthy and more complex visualisations, the `ggplot2` library, which we used last week to create bivariate maps, offers a unified and effective approach to data visualisation based on the grammar of graphics.
 
 ## Lecture slides
 You can download the slides of this week's lecture here: [[Link]]({{< var slides.week10 >}}).
@@ -13,14 +13,14 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 - Wickham, H., Çetinkaya-Rundel, M., and Grolemund, G. *R for Data Science*. 2nd edition. **Chapter 3: Data visualisation**. [[Link]](https://r4ds.had.co.nz/data-visualisation.html)
 
 ## Population groups in London
-Today, we will use the same dataset that we used in [Week 8](07-geodemographics.html) on self-identified ethnicity. We will visualise the distribution of the self-identified White-British population across the 12 Inner London Boroughs. The LSOA data covers all usual residents, as recorded in the 2021 Census for England and Wales, aggregated at the Lower Super Output Area (LSOA) level. A copy of the 2021 London LSOAs spatial boundaries is also available. If you do not already have it on your computer, save these file in your `data/attribues` and `data/spatial` folders.
+Today, we will use the same dataset that we used in [Week 7](07-geodemographics.html) on self-identified ethnicity. We will visualise the distribution of the self-identified White-British population across the 12 Inner London Boroughs. The LSOA data covers all usual residents, as recorded in the 2021 Census for England and Wales, aggregated at the Lower Super Output Area (LSOA) level. A copy of the 2021 London LSOAs spatial boundaries is also available. If you do not already have it on your computer, save these files in your `data/attributes` and `data/spatial` folders.
 
 | File                                        | Type   | Link |
 | :------                                     | :------| :------ |
-| London LSOA Census 2021 Ethnicity           | `csv` | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/London-LSOA-Ethnicity.csv) | 
+| London LSOA Census 2021 Ethnicity           | `csv` | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/London-LSOA-Ethnicity.csv) |
 | London LSOA 2021 Spatial Boundaries         | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/master/data/spatial/London-LSOA-2021.gpkg) |
 
-To get started, let us create our first script. **File** -> **New File** -> **R Script**. Save your script as `w10-ethnicity-london.r`. 
+To get started, let us create our first script. **File** -> **New File** -> **R Script**. Save your script as `w10-ethnicity-london.r`.
 
 We will start by loading the libraries that we will need:
 
@@ -64,10 +64,10 @@ head(lsoa_eth)
 
 # inspect
 head(lsoa21)
-``` 
+```
 
 ::: {.callout-note}
-You can further inspect both objects using the `View()` function. 
+You can further inspect both objects using the `View()` function.
 :::
 
 We will start by pivoting the data and transforming the raw counts into proportions:
@@ -117,7 +117,7 @@ names(lsoa_eth)[2:20] <- c('Asian - Bangladeshi', 'Asian - Chinese', 'Asian - In
 
 The last thing we need to do is extract the LSOAs that fall within the 12 Inner London Boroughs. We can do this by using the LSOA names that are inside the spatial dataframe:
 
-```{r tidy='styler'} 
+```{r tidy='styler'}
 #| label: 10-filter-LSOAs
 #| classes: styled-output
 #| echo: True
@@ -147,11 +147,11 @@ If you want to know what the `paste(inner_boroughs, collapse = '|')` code does, 
 :::
 
 ### Building boxplots
-The ggplot2 library is built [on the layered grammar of graphics](https://www.tandfonline.com/doi/abs/10.1198/jcgs.2009.07098), which provides a structured approach to creating visualisations. This means that plots are constructed by adding layers, such as data, aesthetic mappings (e.g., axes, colours, sizes), geometric shapes (e.g., points, lines, bars), and optional elements like themes or statistical transformations. This modular design allows users to build complex and customisable plots step by step, ensuring flexibility and clarity in the visualisation process.
+The ggplot2 library is built [on the layered grammar of graphics](https://doi.org/10.1198/jcgs.2009.07098), which provides a structured approach to creating visualisations. This means that plots are constructed by adding layers, such as data, aesthetic mappings (e.g., axes, colours, sizes), geometric shapes (e.g., points, lines, bars), and optional elements like themes or statistical transformations. This modular design allows users to build complex and customisable plots step by step, ensuring flexibility and clarity in the visualisation process.
 
 Let's try to use this approach by making a boxplot on the distribution of people that self-identify as White British across all Inner London Boroughs. With `ggplot2`, every plot begins with the `ggplot()` function, which creates a coordinate system to which layers can be added. The first argument of `ggplot()` specifies the dataset to use:
 
-```{r tidy='styler'} 
+```{r tidy='styler'}
 #| label: fig-10-boxplot-canvas
 #| classes: styled-output
 #| echo: True
@@ -164,7 +164,7 @@ ggplot(data = lsoa_eth)
 
 To build your graph, you add one or more layers to `ggplot()`. For instance, `geom_point()` adds a layer of points to create a scatterplot. `ggplot2` provides many geom functions, each adding a different type of layer to your plot. To create a boxplot, you add the `geom_boxplot()` layer. For boxplots, the `mapping` argument defines how dataset variables are linked to visual properties, such as the grouping or value axes. The mapping is paired with `aes()`, where `y` specifies the numeric variable:
 
-```{r tidy='styler'} 
+```{r tidy='styler'}
 #| label: fig-10-boxplot-basic
 #| fig-cap: Basic boxplot using `ggplot2`.
 #| classes: styled-output
@@ -182,9 +182,9 @@ ggplot(data = lsoa_eth, aes(x = `White - British`)) +
 An aesthetic is a visual property of the elements in your plot. Aesthetics include attributes like size, shape, or colour of points. By modifying the values of these aesthetic properties, you can display a point in various ways, allowing for greater customisation and clarity in your visualisation.
 :::
 
-Just like with `tmap`, we can customise the basic plot by styling the boxplot, adding labels, and adjusting its overall appearancs:
+Just like with `tmap`, we can customise the basic plot by styling the boxplot, adding labels, and adjusting its overall appearance:
 
-```{r tidy='styler'} 
+```{r tidy='styler'}
 #| label: fig-10-boxplot-pretty
 #| fig-cap: Stylised boxplot using `ggplot2`.
 #| classes: styled-output
@@ -196,12 +196,12 @@ Just like with `tmap`, we can customise the basic plot by styling the boxplot, a
 ggplot(data = lsoa_eth, aes(x = `White - British`)) +
   # add geometry
   geom_boxplot(
-    fill = '#f0f0f0', 
-    color = '#252525', 
-    outlier.color = '#ef3b2c', 
-    linewidth = 0.5, 
-    staplewidth = 0.5, 
-    outlier.shape = 16, 
+    fill = '#f0f0f0',
+    color = '#252525',
+    outlier.color = '#ef3b2c',
+    linewidth = 0.5,
+    staplewidth = 0.5,
+    outlier.shape = 16,
     outlier.size = 2) +
   # add labels
   labs(
@@ -212,7 +212,7 @@ ggplot(data = lsoa_eth, aes(x = `White - British`)) +
   theme_light() +
   # customise theme
   theme(
-    plot.title = element_text(hjust = 0.5, size = 14), 
+    plot.title = element_text(hjust = 0.5, size = 14),
     axis.title = element_text(size = 12, colour = '#34495e'),
     axis.text = element_text(size = 10, colour = '#34495e'),
     axis.text.y = element_blank(),
@@ -223,9 +223,9 @@ ggplot(data = lsoa_eth, aes(x = `White - British`)) +
 
 ```
 
-But what if we wwant to create a boxplot for all Inner London Boroughs? We can do this by adding a grouping variable:
+But what if we want to create a boxplot for all Inner London Boroughs? We can do this by adding a grouping variable:
 
-```{r tidy='styler'} 
+```{r tidy='styler'}
 #| label: fig-10-boxplot-pretty-boroughs
 #| fig-cap: Stylised boxplot using `ggplot2`.
 #| classes: styled-output
@@ -241,12 +241,12 @@ lsoa_eth <- lsoa_eth |>
 ggplot(data = lsoa_eth, aes(x = `White - British`, y = borough_name)) +
   # add geometry
   geom_boxplot(
-    fill = '#f0f0f0', 
-    color = '#252525', 
-    outlier.color = '#ef3b2c', 
-    linewidth = 0.5, 
-    staplewidth = 0.5, 
-    utlier.shape = 16, 
+    fill = '#f0f0f0',
+    color = '#252525',
+    outlier.color = '#ef3b2c',
+    linewidth = 0.5,
+    staplewidth = 0.5,
+    outlier.shape = 16,
     outlier.size = 2) +
   # add labels
   labs(
@@ -258,7 +258,7 @@ ggplot(data = lsoa_eth, aes(x = `White - British`, y = borough_name)) +
   theme_light() +
   # customise theme
   theme(
-    plot.title = element_text(hjust = 0.5, size = 14), 
+    plot.title = element_text(hjust = 0.5, size = 14),
     axis.title = element_text(size = 12, colour = '#34495e'),
     axis.text = element_text(size = 10, colour = '#34495e'),
     panel.grid.major = element_line(linewidth = 0.5, colour = '#969696'),
@@ -273,7 +273,7 @@ The boroughs are drawn in alphabetical order by default. To change this we need 
 In R, a factor is a data structure used to represent categorical variables with a specific order or grouping. Factors allow you to define and manipulate the order of categories, which is especially useful for plotting or analysis.
 :::
 
-```{r tidy='styler'} 
+```{r tidy='styler'}
 #| label: fig-10-boxplot-pretty-boroughs-ordered
 #| fig-cap: Stylised boxplot using `ggplot2`.
 #| classes: styled-output
@@ -285,7 +285,7 @@ In R, a factor is a data structure used to represent categorical variables with 
 lsoa_med <- lsoa_eth |>
   group_by(borough_name) |>
   summarise(median = median(`White - British`))
-  
+
 # create factor
 lsoa_eth <- lsoa_eth |>
   mutate(borough_name_factor = factor(borough_name, levels = lsoa_med$borough_name[order(lsoa_med$median, decreasing = TRUE)]))
@@ -294,12 +294,12 @@ lsoa_eth <- lsoa_eth |>
 ggplot(data = lsoa_eth, aes(x = `White - British`, y = borough_name_factor)) +
   # add geometry
   geom_boxplot(
-    fill = '#f0f0f0', 
-    color = '#252525', 
-    outlier.color = '#ef3b2c', 
-    linewidth = 0.5, 
-    staplewidth = 0.5, 
-    outlier.shape = 16, 
+    fill = '#f0f0f0',
+    color = '#252525',
+    outlier.color = '#ef3b2c',
+    linewidth = 0.5,
+    staplewidth = 0.5,
+    outlier.shape = 16,
     outlier.size = 2) +
   # add labels
   labs(
@@ -311,7 +311,7 @@ ggplot(data = lsoa_eth, aes(x = `White - British`, y = borough_name_factor)) +
   theme_light() +
   # customise theme
   theme(
-    plot.title = element_text(hjust = 0.5, size = 14), 
+    plot.title = element_text(hjust = 0.5, size = 14),
     axis.title = element_text(size = 12, colour = '#34495e'),
     axis.text = element_text(size = 10, colour = '#34495e'),
     panel.grid.major = element_line(linewidth = 0.5, colour = '#969696'),
@@ -322,7 +322,7 @@ ggplot(data = lsoa_eth, aes(x = `White - British`, y = borough_name_factor)) +
 ### Creating panels
 Boxplots are effective for visualising distributions, but histograms offer another way to explore the same data by showing the frequency of values. While histograms cannot be displayed alongside boxplots in the same image, we can create a series of histograms, each displayed in a separate panel. These panels can show the distributions for different groups, such as individual boroughs.
 
-```{r tidy='styler'} 
+```{r tidy='styler'}
 #| label: fig-10-histogram-panel
 #| fig-cap: Histograms presented in individual panels.
 #| classes: styled-output
@@ -336,9 +336,9 @@ ggplot(data = lsoa_eth, aes(x = `White - British`)) +
   geom_histogram() +
   # create panels
   facet_wrap(
-    ~ borough_name, 
-    ncol = 4, 
-    nrow= 3
+    ~ borough_name,
+    ncol = 4,
+    nrow = 3
   ) +
   # add labels
   labs(
@@ -357,7 +357,7 @@ ggplot(data = lsoa_eth, aes(x = `White - British`)) +
 
 We could use the same approach to create a series of scatterplots to show the relationship between two variables:
 
-```{r tidy='styler'} 
+```{r tidy='styler'}
 #| label: fig-10-scatter-panel
 #| fig-cap: Scatterplots presented in individual panels.
 #| classes: styled-output
@@ -371,14 +371,14 @@ ggplot(data = lsoa_eth, aes(x = `White - British`, y = `White - Other`)) +
   geom_point() +
   # create panels
   facet_wrap(
-    ~ borough_name, 
-    ncol = 4, 
-    nrow= 3) +
+    ~ borough_name,
+    ncol = 4,
+    nrow = 3) +
   # set basic theme
   theme_light() +
   # customise theme
   theme(
-    plot.title = element_text(hjust = 0.5, size = 14), 
+    plot.title = element_text(hjust = 0.5, size = 14),
     axis.title = element_text(size = 12, colour = '#34495e'),
     axis.text = element_text(size = 10, colour = '#34495e'),
   )
@@ -389,7 +389,7 @@ To export a ggplot, first assign your plot to an object. Then, use the `ggsave()
 :::
 
 ### Making treemaps
-The flexibility of `ggplot2` extends beyond traditional plots through additional libraries that expand its functionality, allowing you to create specialised visualisations. For instance, we can use the `treemapify` library to create a treemap. 
+The flexibility of `ggplot2` extends beyond traditional plots through additional libraries that expand its functionality, allowing you to create specialised visualisations. For instance, we can use the `treemapify` library to create a treemap.
 
 ::: {.callout-note}
 A treemap is a data visualisation that displays hierarchical data as nested rectangles, with each rectangle representing a category or subcategory. The size of each rectangle is proportional to a specific variable, often reflecting values such as frequency or proportion, making it easier to compare the relative sizes of different elements. Treemaps are particularly useful for visualising large datasets with multiple categories or subcategories in a compact, space-efficient layout.
@@ -412,14 +412,14 @@ lambeth_mean <- lsoa_eth |>
 
 # wide to long
 lambeth_mean <- lambeth_mean |>
-  pivot_longer(cols = 2:20, 
-               names_to = 'population_group', 
+  pivot_longer(cols = 2:20,
+               names_to = 'population_group',
                values_to = 'proportion')
 ```
 
 We can now visualise the share of each population group in Lambeth using a treemap:
 
-```{r tidy='styler'} 
+```{r tidy='styler'}
 #| label: fig-10-treemap
 #| fig-cap: Treemap of relative share of population groups in Lambeth.
 #| classes: styled-output
@@ -433,8 +433,8 @@ ggplot(data = lambeth_mean, aes(area = proportion, fill = population_group, labe
   geom_treemap() +
   # add text
   geom_treemap_text(
-    colour = 'white', 
-    place = 'centre', 
+    colour = 'white',
+    place = 'centre',
     grow = TRUE,
     min.size = 8
   ) +
@@ -444,10 +444,10 @@ ggplot(data = lambeth_mean, aes(area = proportion, fill = population_group, labe
   theme(
     legend.position = 'none'
   )
-  
+
 ```
 
-We could create facets for these treemaps, but we can also use subgroups to create a nested representation of our data - weighted by the total population in each London borough.
+We could create facets for these treemaps, but we can also use subgroups to create a nested representation of our data — weighted by the total population in each London borough.
 
 ```{r}
 #| label: 10-nested-treemap-prep
@@ -468,8 +468,8 @@ london_sum <- lsoa_eth |>
 
 # wide to long,
 london_mean <- london_mean |>
-  pivot_longer(cols = 2:20, 
-               names_to = 'population_group', 
+  pivot_longer(cols = 2:20,
+               names_to = 'population_group',
                values_to = 'proportion')
 
 # add total population, weigh
@@ -480,7 +480,7 @@ london_mean <- london_mean |>
 
 Now the data have been prepared, we can create a treemap again as follows:
 
-```{r tidy='styler'} 
+```{r tidy='styler'}
 #| label: fig-10-treemap-subgroups
 #| fig-cap: Treemap of relative share of population groups in London, organised by borough
 #| classes: styled-output
@@ -494,8 +494,8 @@ ggplot(data = london_mean, aes(area = proportion_weighted, fill = population_gro
   geom_treemap() +
   # add text
   geom_treemap_text(
-    colour = '#f0f0f0', 
-    place = 'centre', 
+    colour = '#f0f0f0',
+    place = 'centre',
     grow = TRUE,
     min.size = 8,
   ) +
@@ -518,13 +518,13 @@ ggplot(data = london_mean, aes(area = proportion_weighted, fill = population_gro
   theme(
     legend.position = 'none',
   )
-  
+
 ```
 
 ## Assignment
 The `ggplot2` library supports a wide variety of chart types, all based on the same core principles of layering elements such as data, aesthetics, and geometric shapes. So far, we have worked with boxplots, scatterplots, histograms, and treemaps. However, `ggplot2` also offers many other geometries, including spatial geometries, that you can use to create more diverse visualisations.
 
-Using the `lsoa_eth` dataset try to to complete the following tasks:
+Using the `lsoa_eth` dataset try to complete the following tasks:
 
 1. Create a [violin plot](https://ggplot2.tidyverse.org/reference/geom_violin.html): A violin plot combines aspects of a boxplot and a density plot, offering a compact view of the distribution of continuous data. Use the `geom_violin()` function to visualise the distribution of the self-identified *Asian Bangladeshi* population for each of the Inner London boroughs.
 2. Create a map: Use the `geom_sf()` function to map the distribution of the self-identified *Black Caribbean* population across Greater London.
@@ -534,5 +534,5 @@ Using the `lsoa_eth` dataset try to to complete the following tasks:
 To help you get familiar with ggplot2 and its principles, you can use the `esquisse` library, which allows you to [interactively create plots and generate the corresponding `ggplot2` code](https://dreamrs.github.io/esquisse/).
 :::
 
-## Before you leave 
+## Before you leave
 That is it for today, and indeed, [you have now reached the end of Geocomputation](https://www.youtube.com/watch?v=fFw7q-BLxLA)! Over the course of this module, we have explored the fundamental principles of spatial analysis, data visualisation, and reproducible research. It is now inevitable: time for that reading list.
