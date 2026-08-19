@@ -19,7 +19,7 @@ This week, we will revisit bicycle theft in London, focusing specifically on ide
 
 | File                                        | Type   | Link |
 | :------                                     | :------| :------ |
-| London Bicycle Theft 2023                   | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/master/data/spatial/London-BicycleTheft-2023.gpkg)|
+| London Bicycle Theft 2025                   | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/master/data/spatial/London-BicycleTheft-2025.gpkg)|
 | London MSOA 2021 Spatial Boundaries         | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/master/data/spatial/London-MSOA-2021.gpkg) |
 
 To get started, let us create our first script. **File** -> **New File** -> **R Script**. Save your script as `w03-bike-theft.r`.
@@ -59,7 +59,7 @@ As always, we will start by loading our files into memory:
 msoa21 <- st_read('data/spatial/London-MSOA-2021.gpkg')
 
 # load bicycle theft dataset
-theft_bike <- st_read('data/spatial/London-BicycleTheft-2023.gpkg')
+theft_bike <- st_read('data/spatial/London-BicycleTheft-2025.gpkg')
 
 # inspect
 head(msoa21)

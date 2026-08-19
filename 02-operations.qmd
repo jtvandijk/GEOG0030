@@ -27,7 +27,7 @@ This week, we will examine to what extent reported bicycle theft in London clust
 The UK Police Data Portal allows you to access and generate tabular data for crime recorded in the UK across the different police forces. To download recorded crime data for London:
 
 1. Navigate to [data.police.uk](https://data.police.uk/) and click on **Downloads**.
-2. Under the date range select `January 2023` to `December 2023`.
+2. Under the date range select `January 2025` to `December 2025`.
 3. Under the **Custom download** tab select `Metropolitan Police Service` and `City of London Police`. Leave the other settings unchanged and click on **Generate file**.
 
 ```{r}
@@ -38,7 +38,7 @@ knitr::include_graphics('images/w02/police-data.png')
 ```
 
 4. It may take a few minutes for the download to be generated, so be patient. Once the **Download now** button appears, you can download the dataset.
-5. After downloading, unzip the file. You will find that the zip file contains 12 folders, one for each month of 2023. Each folder includes two files: one for the `Metropolitan Police Service` and one for the `City of London Police`.
+5. After downloading, unzip the file. You will find that the zip file contains 12 folders, one for each month of 2025. Each folder includes two files: one for the `Metropolitan Police Service` and one for the `City of London Police`.
 6. Create a new folder named `London-Crime` within your `data/attributes` directory, and copy all 12 folders with the data into this new folder.
 
 To get started, let us create our first script. **File** -> **New File** -> **R Script**. Save your script as `w02-bike-theft.r`.
@@ -85,7 +85,7 @@ head(crime_df)
 ```
 
 ::: {.callout-note}
-Depending on your computer, processing this data may take some time due to the large volume involved. Once completed, you should have a dataframe containing **1,144,329** observations.
+Depending on your computer, processing this data may take some time due to the large volume involved. Once completed, you should have a dataframe containing **1,149,291** observations.
 :::
 
 ::: {.callout-note}
@@ -203,7 +203,7 @@ We can save the prepared dataset as a `GeoPackage` so that we can use it some ot
 #| tidy: True
 #| filename: 'R code'
 # write
-st_write(theft_bike, 'data/spatial/London-BicycleTheft-2023.gpkg')
+st_write(theft_bike, 'data/spatial/London-BicycleTheft-2025.gpkg')
 ```
 
 ### Station data
@@ -363,7 +363,7 @@ We can use the `count()` function to find out just how many thefts fall in each 
 count(theft_bike, d500)
 ```
 
-More than two-thirds of all reported bicycle thefts in London occur within 500 metres of a train or underground station. Of course, we can map the results for a visual inspection:
+Around two-thirds of all reported bicycle thefts in London occur within 500 metres of a train or underground station. Of course, we can map the results for a visual inspection:
 
 ```{r tidy='styler'}
 #| label: fig-02-theft-map-500m
