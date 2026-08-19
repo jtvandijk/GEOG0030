@@ -54,13 +54,13 @@ The following websites contain Open Data or link to Open Data from several respe
 ## Safeguarded Data
 Undergraduate students can also apply for Safeguarded datasets held by the [Geographic Data Service](https://www.geods.ac.uk/). Accessing these datasets requires following a specific process, which is outlined on the GeoDS website. When applying, you will need to explain why you require the specific dataset and describe how you intend to use it. Additionally, consider the ethical implications of using the data, as this will be an important part of your application. Please be aware that it normally takes 4-5 weeks for your application to be processed.
 
-Some of the datasets held by the GeoDS that you can apply for are: 
+Some of the datasets held by the GeoDS that you can apply for are:
 
 - [Bicycle Sharing System Docking Station Observations](https://data.geods.ac.uk/dataset/the-meddin-bike-sharing-world-map-data)
 - [Modelled Ethnicity Proportions - LSOA Geography](https://data.geods.ac.uk/dataset/modelled-ethnicity-proportions-lsoa-geography)
 - [FCA Financial Lives Survey](https://data.geods.ac.uk/dataset/fca-financial-lives-survey)
 - [Salad Money Daily Transaction Volumes and Values](https://data.geods.ac.uk/dataset/salad-money-daily-transaction-volumes-and-values)
 
-::: { .callout-tip}
-Since the application process for Safeguarded GeoDS datasets can take several weeks, these datasets may be more suitable for your undergraduate dissertation rather than the GEOG0030 coursework assignment. However, GeoDs datasets labeled as **Open Data** do not require an application process. You can download these datasets directly after registering on the website.
+::: {.callout-tip}
+Since the application process for Safeguarded GeoDS datasets can take several weeks, these datasets may be more suitable for your undergraduate dissertation rather than the GEOG0030 coursework assignment. However, GeoDS datasets labelled as **Open Data** do not require an application process. You can download these datasets directly after registering on the website.
 :::
