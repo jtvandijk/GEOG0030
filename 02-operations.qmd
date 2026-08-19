@@ -4,7 +4,7 @@ This week, we look at geometric operations and spatial queries: the fundamental 
 ## Lecture slides
 You can download the slides of this week's lecture here: [[Link]]({{< var slides.week02 >}}).
 
-## Reading list 
+## Reading list
 #### Essential readings {.unnumbered}
 - Longley, P. *et al.* 2015. *Geographic Information Science & Systems*, **Chapter 2**: *The Nature of Geographic Data*, pp. 33-54. [[Link]](https://ucl.rl.talis.com/link?url=https%3A%2F%2Fapp.knovel.com%2Fhotlink%2Ftoc%2Fid%3AkpGISSE001%2Fgeographic-information-science%3Fkpromoter%3Dmarc&sig=e437927b963cc591dcb65491eccdd3869cc31aef80e1443cb2ba12d8f3bb031a)
 - Longley, P. *et al.* 2015. *Geographic Information Science & Systems*, **Chapter 3**: *Representing Geography*, pp. 55-76. [[Link]](https://ucl.rl.talis.com/link?url=https%3A%2F%2Fapp.knovel.com%2Fhotlink%2Ftoc%2Fid%3AkpGISSE001%2Fgeographic-information-science%3Fkpromoter%3Dmarc&sig=e437927b963cc591dcb65491eccdd3869cc31aef80e1443cb2ba12d8f3bb031a)
@@ -17,7 +17,7 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 - Lovelace, R., Nowosad, J. and Muenchow, J. 2021. *Geocomputation with R*, **Chapter 6**: *Reprojecting geographic data*. [[Link]](https://geocompr.robinlovelace.net/reproj-geo-data.html)
 
 ## Bike theft in London I
-This week, we will examine to what extent reported bicycle theft in London cluster around train and underground stations. We will be using open data from [data.police.uk](https://data.police.uk/) on reported crimes alongside [OpenStreetMap](https://www.openstreetmap.org/#map=6/54.91/-3.43) data for this analysis. We will use R to directly download the necessary data from OpenStreetMap, but the crime data will need to be manually downloaded from the data portal. We further have access to a `GeoPackage` that contains the London 2021 MSOA boundaries that we can use as reference layer. If you do not already have it on your computer, save this file in your `data/spatial` folder.
+This week, we will examine to what extent reported bicycle theft in London cluster around train and underground stations. We will be using open data from [data.police.uk](https://data.police.uk/) on reported crimes alongside [OpenStreetMap](https://www.openstreetmap.org/#map=6/54.91/-3.43) data for this analysis. We will use R to directly download the necessary data from OpenStreetMap, but the crime data will need to be manually downloaded from the data portal. We further have access to a `GeoPackage` that contains the London 2021 MSOA boundaries that we can use as a reference layer. If you do not already have it on your computer, save this file in your `data/spatial` folder.
 
 | File                                        | Type   | Link |
 | :------                                     | :------| :------ |
@@ -27,12 +27,12 @@ This week, we will examine to what extent reported bicycle theft in London clust
 The UK Police Data Portal allows you to access and generate tabular data for crime recorded in the UK across the different police forces. To download recorded crime data for London:
 
 1. Navigate to [data.police.uk](https://data.police.uk/) and click on **Downloads**.
-2. Under the data range select `January 2023` to `December 2023`.
+2. Under the date range select `January 2023` to `December 2023`.
 3. Under the **Custom download** tab select `Metropolitan Police Service` and `City of London Police`. Leave the other settings unchanged and click on **Generate file**.
 
 ```{r}
 #| label: fig-police-data
-#| echo: False 
+#| echo: False
 #| fig-cap: 'Downloading data on reported crimes through [data.police.uk](https://data.police.uk/)'
 knitr::include_graphics('images/w02/police-data.png')
 ```
@@ -41,7 +41,7 @@ knitr::include_graphics('images/w02/police-data.png')
 5. After downloading, unzip the file. You will find that the zip file contains 12 folders, one for each month of 2023. Each folder includes two files: one for the `Metropolitan Police Service` and one for the `City of London Police`.
 6. Create a new folder named `London-Crime` within your `data/attributes` directory, and copy all 12 folders with the data into this new folder.
 
-To get started, let us create our first script. **File** -> **New File** -> **R Script**. Save your script as `w02-bike-theft.r`. 
+To get started, let us create our first script. **File** -> **New File** -> **R Script**. Save your script as `w02-bike-theft.r`.
 
 We will start by loading the libraries that we will need:
 
@@ -89,7 +89,7 @@ Depending on your computer, processing this data may take some time due to the l
 :::
 
 ::: {.callout-note}
-You can further inspect the object using the `View()` function. 
+You can further inspect the object using the `View()` function.
 :::
 
 The column names contain spaces and are therefore not easily referenced. We can easily clean this up using the `janitor` package:
@@ -152,9 +152,9 @@ theft_bike <- theft_bike |>
 head(theft_bike)
 ```
 
-Let's map the dataset to get an idea of how the data looks like, using the outline of London as background:
+Let's map the dataset to get an idea of what the data looks like, using the outline of London as background:
 
-```{r tidy='styler'} 
+```{r tidy='styler'}
 #| label: fig-02-theft-map
 #| fig-cap: Reported bicycle thefts in London.
 #| classes: styled-output
@@ -170,23 +170,23 @@ outline <- msoa21 |>
 
 # shape
 tm_shape(outline) +
-  
+
 # map data
 tm_polygons(
   fill = '#f0f0f0',
   col = NA
 ) +
-  
+
 # shape
-tm_shape(theft_bike) + 
-  
+tm_shape(theft_bike) +
+
 # map data
 tm_symbols(
   size = 0.10,
   fill = '#fdc086',
   col = '#fdc086',
 ) +
-  
+
 # layout
 tm_layout(
   frame = FALSE,
@@ -209,7 +209,7 @@ st_write(theft_bike, 'data/spatial/London-BicycleTheft-2023.gpkg')
 ### Station data
 OpenStreetMap (OSM) is a free, editable map of the world. Each map element (whether a point, line, or polygon) in OSM is tagged with various attribute data. To download the station data we need, we must use the appropriate tags, represented as `key` and `value` pairs, to query the OSM database. In our case, we are looking for train stations, which fall under the *Public Transport* `key`, with a `value` of *station*. To limit our search to London, we can use the spatial extent of the 2021 MSOA boundaries as the bounding box for data extraction.
 
-```{r tidy='styler'} 
+```{r tidy='styler'}
 #| label: 02-station-data
 #| classes: styled-output
 #| echo: True
@@ -221,7 +221,7 @@ OpenStreetMap (OSM) is a free, editable map of the world. Each map element (whet
 bbox_london <- msoa21 |>
   st_transform(4326) |>
   st_bbox()
-  
+
 # osm query
 osm_stations <- opq(bbox = bbox_london) |>
   add_osm_feature(key = 'public_transport', value = 'station') |>
@@ -268,7 +268,7 @@ The total number of data points seems rather high. In fact, looking at the `rail
 count(osm_stations, railway)
 ```
 
-The number of points tagged as station in the railway field are most likely the only points in our dataset that represent actual stations, so we will only retain those points.
+The points tagged as station in the railway field are most likely the only points in our dataset that represent actual stations, so we will only retain those points.
 
 ```{r}
 #| label: 02-station-point-extract
@@ -282,9 +282,9 @@ osm_stations <- osm_stations |>
   filter(railway == 'station')
 ```
 
-Let's map the dataset to get an idea of how the data looks like, using the outline of London as background:
+Let's map the dataset to get an idea of what the data looks like, using the outline of London as background:
 
-```{r tidy='styler'} 
+```{r tidy='styler'}
 #| label: fig-02-station-map
 #| fig-cap: Train and underground stations in London.
 #| classes: styled-output
@@ -294,23 +294,23 @@ Let's map the dataset to get an idea of how the data looks like, using the outli
 
 # shape
 tm_shape(outline) +
-  
+
 # map data
 tm_polygons(
   fill = '#f0f0f0',
   col = NA
 ) +
-  
+
 # shape
-tm_shape(osm_stations) + 
-  
+tm_shape(osm_stations) +
+
 # map data
 tm_symbols(
   size = 0.2,
   fill = '#636363',
   col = '#636363',
 ) +
-  
+
 # layout
 tm_layout(
   frame = FALSE,
@@ -320,7 +320,7 @@ tm_layout(
 Now we have our data prepared, we can move on to analyse the extent to which bicycle theft in London cluster around stations. We can use both spatial queries and geometric operations to complete this analysis.
 
 ::: {.callout-warning}
-When using `osmdata` to retrieve train stations in London, be aware that OpenStreetMap data may be incomplete or inconsistent due to different tagging practices by contributors, missing or outdated entries, and variations in how stations are classified. While verifying every detail is beyond the scope of this practical, it is essential to exercise due diligence when working with real-world data. Where possible triangulate with other authoritative sources such as official transport datasets and at the very least perform sanity checks to identify obvious anomalies. 
+When using `osmdata` to retrieve train stations in London, be aware that OpenStreetMap data may be incomplete or inconsistent due to different tagging practices by contributors, missing or outdated entries, and variations in how stations are classified. While verifying every detail is beyond the scope of this practical, it is essential to exercise due diligence when working with real-world data. Where possible triangulate with other authoritative sources such as official transport datasets and at the very least perform sanity checks to identify obvious anomalies.
 :::
 
 ### Spatial queries
@@ -365,7 +365,7 @@ count(theft_bike, d500)
 
 More than two-thirds of all reported bicycle thefts in London occur within 500 metres of a train or underground station. Of course, we can map the results for a visual inspection:
 
-```{r tidy='styler'} 
+```{r tidy='styler'}
 #| label: fig-02-theft-map-500m
 #| fig-cap: Reported bicycle thefts in London within 500 metres from a train or underground station.
 #| classes: styled-output
@@ -380,19 +380,19 @@ theft_bike <- theft_bike |>
 
 # shape
 tm_shape(outline) +
-  
+
 # map data
 tm_polygons(
   fill = '#f0f0f0',
   col = NA
 ) +
-  
+
 # shape
-tm_shape(theft_bike) + 
+tm_shape(theft_bike) +
 
 # map data
 tm_symbols(
-  
+
   # map data
   col = 'dist_class',
   size = 0.1,
@@ -400,17 +400,17 @@ tm_symbols(
     values = c('> 500 m' = '#fdc086',
                '< 500 m' = '#998ec3'),
   ),
-  
-  # legend 
+
+  # legend
   col.legend = tm_legend(
     title = '',
     frame = FALSE,
-  ) 
+  )
 ) +
-  
+
 # shape
-tm_shape(osm_stations) + 
-  
+tm_shape(osm_stations) +
+
 # map data
 tm_symbols(
   size = 0.2,
@@ -428,12 +428,12 @@ tm_add_legend(
 
 # layout
 tm_layout(
-  
+
   # legend
   legend.outside = FALSE,
   legend.position = c(0.0, 0.2),
   legend.text.size = 0.8,
-  
+
   # canvas
   frame = FALSE
 )
@@ -451,8 +451,8 @@ Geometric operations are used to manipulate and analyse the shapes and spatial p
 #| tidy: True
 #| filename: 'R code'
 # buffer
-osm_stations_buffer <- osm_stations |> 
-  st_buffer(dist = 500) |> 
+osm_stations_buffer <- osm_stations |>
+  st_buffer(dist = 500) |>
   st_union()
 
 # inspect
@@ -465,7 +465,7 @@ When performing buffer analysis, the buffer sizes are determined by the units of
 
 We can map the results for a visual inspection:
 
-```{r tidy='styler'} 
+```{r tidy='styler'}
 #| label: fig-02-buffer-map
 #| fig-cap: Train and underground stations in London with a 500 metres buffer.
 #| classes: styled-output
@@ -474,24 +474,24 @@ We can map the results for a visual inspection:
 #| filename: 'R code'
 # shape
 tm_shape(outline) +
-  
+
 # map data
 tm_polygons(
   fill = '#f0f0f0',
   col = NA
 ) +
-  
-# shape
-tm_shape(osm_stations_buffer) + 
 
-  # specify colours
-  tm_polygons(
-    fill = '#beaed4',
-  ) +
-  
+# shape
+tm_shape(osm_stations_buffer) +
+
+# map data
+tm_polygons(
+  fill = '#beaed4',
+) +
+
 # layout
 tm_layout(
- 
+
   # canvas
   frame = FALSE
 )
@@ -508,18 +508,20 @@ We can now use the `st_intersects` function to find out which reported bicycle t
 #| message: False
 #| filename: 'R code'
 # intersect buffer with bicycle thefts
-theft_bike$d500_buffer <- theft_bike |> st_intersects(osm_stations_buffer, sparse = FALSE)
+theft_bike$d500_buffer <- theft_bike |>
+  st_intersects(osm_stations_buffer, sparse = FALSE) |>
+  as.vector()
 
 # number of bicycle thefts within 500m of a station
 count(theft_bike, d500_buffer)
 ```
 
 ::: {.callout-important}
-The results are almost identical, with a small difference due to how the two methods define within and handle spatial relationships and boundaries. For instance, a point on the buffer's edge will be included in the intersect method, but may not meet the distance threshold required by `st_within_distance()`.
+The results are almost identical, with a small difference due to how the two methods define within and handle spatial relationships and boundaries. For instance, a point on the buffer's edge will be included in the intersect method, but may not meet the distance threshold required by `st_is_within_distance()`.
 :::
 
-## Assignment 
-Now that we are familiar with basic spatial queries and geometric operations, we can conduct a similar analysis on the number of *serious* and *fatal* road crashed in London in 2022 and determine how many occurred on or near a main road. Try to do the following:
+## Assignment
+Now that we are familiar with basic spatial queries and geometric operations, we can conduct a similar analysis on the number of *serious* and *fatal* road crashes in London in 2022 and determine how many occurred on or near a main road. Try to do the following:
 
 1. Download the two datasets provided below and save them in the appropriate subfolder within your `data` directory. The datasets include:
     * A `csv` file containing the number of road crashes that occurred in London in 2022, extracted from the UK's official road traffic casualty database using the [stats19](https://github.com/ropensci/stats19) R library.

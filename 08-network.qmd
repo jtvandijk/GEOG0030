@@ -362,7 +362,7 @@ head(osm_network_nodes)
 head(osm_network_edges)
 ```
 
-We can quickly map the network edges to see how the road network looks like:
+We can quickly map the network edges to see what the road network looks like:
 
 ```{r tidy='styler'} 
 #| label: fig-08-netx-map
