@@ -2,54 +2,67 @@
 Below is a list of resources that you may find helpful when sourcing data for your coursework or dissertation. This list is not exhaustive but includes some recommended websites to get you started.
 
 ## Open Data
-The following websites contain Open Data or link to Open Data from several respectable data providers:
+The following websites contain Open Data or link to Open Data from several respectable data providers, grouped by theme to make them easier to scan:
 
-- [AfricanUrbanNetwork](https://github.com/rafaelprietocuriel/AfricanUrbanNetwork)
-- [AirBnB Data](http://insideairbnb.com/get-the-data.html)
-- [Bike Docking Data (ready for R)](https://docs.ropensci.org/bikedata/)
-- [Bing Maps worldwide road detections](https://github.com/microsoft/RoadDetections)
-- [Camden Air Action](https://camdenairaction.wordpress.com/2017/02/20/schools-monitoring-project-spring-2017/)
+### Official and Government Statistics
+- [Office for National Statistics](https://www.ons.gov.uk/)
+- [Office for National Statistics Geoportal](https://geoportal.statistics.gov.uk/)
+- [nomis Official Census and Labour Market Statistics](https://www.nomisweb.co.uk/)
 - [Consumer Data Research Centre](https://data.geods.ac.uk/)
-- [Department for Environment, Food & Rural Affairs](https://environment.data.gov.uk/)
+- [UK Data Service](https://ukdataservice.ac.uk/)
 - [Edina (e.g. OS mastermap)](https://digimap.edina.ac.uk/)
-- [EU Tourism Data](https://ec.europa.eu/eurostat/statistics-explained/index.php/Tourism_statistics)
 - [Eurostat](https://ec.europa.eu/eurostat)
-- [Geofabrik (OSM data)](https://www.geofabrik.de/)
-- [Geolytix Supermarket Retail Points](https://geolytix.com/blog/supermarket-retail-points/)
-- [Global Urban Areas dataset](https://daylightmap.org/2023/11/27/urban.html)
-- [Global Weather Data](https://rp5.ru/Weather_in_the_world)
-- [Google Dataset Search](https://datasetsearch.research.google.com/)
-- [Google Open Buildings](https://sites.research.google/open-buildings/)
-- [Kaggle Public Datasets](https://www.kaggle.com/datasets)
-- [King's College Data on Air Pollution](https://www.londonair.org.uk/LondonAir/Default.aspx)
-- [London Data Store](https://data.london.gov.uk/)
-- [London Local Authority Maintained Trees](https://data.london.gov.uk/dataset/local-authority-maintained-trees)
-- [London Tube PM2.5 Levels](https://www.ft.com/content/6f381ad4-fef7-11e9-be59-e49b2a136b8d)
-- [Microsoft Global Building Footprints](https://github.com/microsoft/GlobalMLBuildingFootprints#start-of-content)
-- [Microsoft Research Open Data](https://msropendata.com/)
+- [EU Tourism Data](https://ec.europa.eu/eurostat/statistics-explained/index.php/Tourism_statistics)
+- [US Census Data](https://www.census.gov/data.html)
+- [pseudo Census Output Areas 2001-2011-2021](https://profrichharris.github.io/census/harmonised/)
+
+### Transport
+- [TfL Open Data](https://tfl.gov.uk/info-for/open-data-users/our-open-data?intcmp=3671#on-this-page-2)
+- [TfL Cycling Data](https://cycling.data.tfl.gov.uk/)
 - [National Public Transport Access Nodes (NaPTAN)](https://www.data.gov.uk/dataset/ff93ffc1-6656-47d8-9155-85ea0b8f2251/national-public-transport-access-nodes-naptan)
+- [UTD19 Multi-City Traffic Dataset](https://utd19.ethz.ch/)
+- [Bing Maps worldwide road detections](https://github.com/microsoft/RoadDetections)
+- [Public transport accessibility indicators Great Britain](https://www.nature.com/articles/s41597-023-02890-w)
+
+### Environment and Air Quality
+- [Department for Environment, Food & Rural Affairs](https://environment.data.gov.uk/)
+- [King's College Data on Air Pollution](https://www.londonair.org.uk/LondonAir/Default.aspx)
+- [Camden Air Action](https://camdenairaction.wordpress.com/2017/02/20/schools-monitoring-project-spring-2017/)
+- [London Tube PM2.5 Levels](https://www.ft.com/content/6f381ad4-fef7-11e9-be59-e49b2a136b8d)
+- [Global Weather Data](https://rp5.ru/Weather_in_the_world)
+- [London Local Authority Maintained Trees](https://data.london.gov.uk/dataset/local-authority-maintained-trees)
+
+### Earth Observation and Imagery
 - [NASA EARTHDATA](https://earthdata.nasa.gov/)
 - [NASA SocioEconomic Data and Applications Center (SEDAC)](https://sedac.ciesin.columbia.edu/)
-- [NHS Data (ready for R)](https://nhs-r-community.github.io/NHSRdatasets/)
-- [nomis Official Census and Labour Market Statistics](https://www.nomisweb.co.uk/)
-- [Office for National Statistics Geoportal](https://geoportal.statistics.gov.uk/)
-- [Office for National Statistics](https://www.ons.gov.uk/)
-- [Open Topography](https://opentopography.org/)
-- [Overture Point of Interest data for the United Kingdom](https://doi.org/10.1177/23998083241263124)
-- [Planetary Computer Data Catalog](https://planetarycomputer.microsoft.com/catalog)
-- [pseudo Census Output Areas 2001-2011-2021](https://profrichharris.github.io/census/harmonised/)
-- [Public transport accessibility indicators Great Britain](https://www.nature.com/articles/s41597-023-02890-w)
-- [Tesco Store Data (London)](https://www.nature.com/articles/s41597-020-0397-7)
-- [TfL Cycling Data](https://cycling.data.tfl.gov.uk/)
-- [TfL Open Data](https://tfl.gov.uk/info-for/open-data-users/our-open-data?intcmp=3671#on-this-page-2)
-- [Tidy Tuesday Data (not exclusively spatial data)](https://github.com/rfordatascience/tidytuesday)
-- [UK Data Service](https://ukdataservice.ac.uk/)
-- [US Census Data](https://www.census.gov/data.html)
-- [US City Open Data Census](http://us-cities.survey.okfn.org/)
 - [USGS Earth Explorer](https://earthexplorer.usgs.gov/)
-- [UTD19 Multi-City Traffic Dataset](https://utd19.ethz.ch/)
-- [WorldPop GitHub](https://github.com/wpgp)
+- [Open Topography](https://opentopography.org/)
+- [Planetary Computer Data Catalog](https://planetarycomputer.microsoft.com/catalog)
+- [Google Open Buildings](https://sites.research.google/open-buildings/)
+- [Microsoft Global Building Footprints](https://github.com/microsoft/GlobalMLBuildingFootprints#start-of-content)
 - [WorldPop](https://www.worldpop.org/)
+- [WorldPop GitHub](https://github.com/wpgp)
+- [Global Urban Areas dataset](https://daylightmap.org/2023/11/27/urban.html)
+
+### OpenStreetMap and Points of Interest
+- [Geofabrik (OSM data)](https://www.geofabrik.de/)
+- [Overture Point of Interest data for the United Kingdom](https://doi.org/10.1177/23998083241263124)
+- [Geolytix Supermarket Retail Points](https://geolytix.com/blog/supermarket-retail-points/)
+- [Tesco Store Data (London)](https://www.nature.com/articles/s41597-020-0397-7)
+
+### R-Ready Packages
+- [Bike Docking Data (ready for R)](https://docs.ropensci.org/bikedata/)
+- [NHS Data (ready for R)](https://nhs-r-community.github.io/NHSRdatasets/)
+- [Tidy Tuesday Data (not exclusively spatial data)](https://github.com/rfordatascience/tidytuesday)
+
+### General and International Data Portals
+- [AfricanUrbanNetwork](https://github.com/rafaelprietocuriel/AfricanUrbanNetwork)
+- [AirBnB Data](http://insideairbnb.com/get-the-data.html)
+- [Google Dataset Search](https://datasetsearch.research.google.com/)
+- [Kaggle Public Datasets](https://www.kaggle.com/datasets)
+- [Microsoft Research Open Data](https://msropendata.com/)
+- [US City Open Data Census](http://us-cities.survey.okfn.org/)
+- [London Data Store](https://data.london.gov.uk/)
 
 ## Safeguarded Data
 Undergraduate students can also apply for Safeguarded datasets held by the [Geographic Data Service](https://www.geods.ac.uk/). Accessing these datasets requires following a specific process, which is outlined on the GeoDS website. When applying, you will need to explain why you require the specific dataset and describe how you intend to use it. Additionally, consider the ethical implications of using the data, as this will be an important part of your application. Please be aware that it normally takes 4-5 weeks for your application to be processed.
