@@ -14,6 +14,13 @@ The slides for this week's lecture can be downloaded here: [[Link]]({{< var slid
 - Van Dijk, J. and Longley, P. 2020. Interactive display of surnames distributions in historic and contemporary Great Britain. *Journal of Maps* 16, pp.58-76. [[Link]](https://doi.org/10.1080/17445647.2020.1746418)
 - Yin, P. 2020. *Kernels and density estimation*. The Geographic Information Science & Technology Body of Knowledge. [[Link]](https://doi.org/10.22224/gistbok/2020.1.12)
 
+## Start of session {.unnumbered}
+Before working through the tutorial, we will spend a few minutes looking at:
+
+- Identical coordinates among the bicycle theft points
+- How `spatstat` stores point data differently to `sf`
+- The difference between `st_intersects()` and `st_intersection()`
+
 ## Bike theft in London II
 This week, we will revisit bicycle theft in London, focusing specifically on identifying patterns and clusters of theft incidents. To do this, we will use the [bicycle theft dataset](02-operations.html#crime-data) that we prepared last week, along with the 2021 MSOA boundaries for London. If you no longer have a copy of these files on your computer, you can download them using the links provided below.
 
@@ -506,8 +513,8 @@ tm_layout(
 ## Assignment
 Now that we know how to work with point location data, we can again apply a similar analysis to road crashes in London in 2025 [that we used last week](02-operations.html#assignment). This time we will use this dataset to assess whether road crashes cluster in specific areas. Try the following:
 
-1. Create a Kernel Density Estimation (KDE) of *all* road crashes that occurred in London in 2025.
-2. Using DBSCAN output, create a cluster map of *serious* and *fatal* road crashes in London
+1. Choose a bandwidth for your Kernel Density Estimation (KDE) that you think best reveals clustering in *all* road crashes that occurred in London in 2025, and map the result.
+2. Choose `eps` and `minPts` values for DBSCAN that you think reasonably define a cluster, and use the output to create a cluster map of *serious* and *fatal* road crashes in London.
 
 If you no longer have a copy of the 2025 London STATS19 Road Collision dataset, you can download it using the link provided below.
 
