@@ -1,3 +1,7 @@
+---
+freeze: true
+---
+
 # Spatial Queries and Geometric Operations
 This week, we look at geometric operations and spatial queries: the fundamental building blocks when it comes to spatial data processing and analysis. This includes operations such as aggregating point data, calculating the distances separating one or more spatial objects, running a *buffer* analysis, and *intersecting* different spatial layers.
 
