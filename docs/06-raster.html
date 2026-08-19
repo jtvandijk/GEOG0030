@@ -496,7 +496,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="essential-readings" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="essential-readings">Essential readings</h4>
 <ul>
-<li>Gimond, M. 2025. Intro to GIS and spatial analysis. <strong>Chapter 14</strong>: <em>Spatial Interpolation</em>. <a href="https://mgimond.github.io/Spatial/chp16_0.html">[Link]</a></li>
+<li>Gimond, M. 2025. Intro to GIS and spatial analysis. <strong>Chapter 16</strong>: <em>Spatial Interpolation</em>. <a href="https://mgimond.github.io/Spatial/16_interpolation.html">[Link]</a></li>
 <li>Heris, M., Foks, N., Bagstad, K. 2020. A rasterized building footprint dataset for the United States. <em>Scientific Data</em> 7: 207. <a href="https://doi.org/10.1038/s41597-020-0542-3">[Link]</a></li>
 <li>Láng-Ritter, J., Keskinen, M., Tenkanen, H. 2025. Global gridded population datasets systematically underrepresent rural population. <em>Nature Communications</em> 16: 2170. <a href="https://doi.org/10.1038/s41467-025-56906-7">[Link]</a></li>
 </ul>
@@ -695,8 +695,8 @@ Figure&nbsp;2: WorldPop 2020 population estimates for the United Kingdom.
 </div>
 </div>
 </div>
-<p>You will notice that while the maps appear similar, the legend indicates a significant increase in values over the decade from 2010 to 2021, with the maximum rising from approximately 12,000 people per cell to over 14,000.</p>
-<p>Now that we have our raster data loaded, we will focus on reducing it to display only the extent of London. We will use the London borough <code>GeoPackage</code></p>
+<p>You will notice that while the maps appear similar, the legend indicates a significant increase in values over the decade from 2010 to 2020, with the maximum rising from approximately 12,000 people per cell to over 14,000.</p>
+<p>Now that we have our raster data loaded, we will focus on reducing it to display only the extent of London. We will use the London borough <code>GeoPackage</code>.</p>
 <div class="callout callout-style-simple callout-tip">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -790,12 +790,12 @@ Figure&nbsp;4: WorldPop 2020 population estimates for London.
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lonpop_change)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell-output-display">
-<div id="fig-07-subtract-london" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-06-subtract-london" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-07-subtract-london-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="06-raster_files/figure-html/fig-07-subtract-london-1.png" class="img-fluid figure-img" width="672">
+<div aria-describedby="fig-06-subtract-london-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="06-raster_files/figure-html/fig-06-subtract-london-1.png" class="img-fluid figure-img" width="672">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07-subtract-london-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-06-subtract-london-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;5: Population change in London 2010-2020.
 </figcaption>
 </figure>
@@ -815,7 +815,7 @@ Figure&nbsp;5: Population change in London 2010-2020.
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>lonpop_smooth <span class="ot">&lt;-</span> <span class="fu">focal</span>(lonpop_change, <span class="at">w =</span> <span class="fu">matrix</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">3</span>), <span class="at">fun =</span> mean)</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lonpop_change)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lonpop_smooth)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell-output-display">
 <div id="fig-06-focus-on-the-hood" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -837,10 +837,10 @@ Figure&nbsp;6: Smoothed version of population change in London 2010-2020.
 <pre><strong>R code</strong></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># subtract</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>lonpop_chang_smooth <span class="ot">&lt;-</span> lonpop_change <span class="sc">-</span> lonpop_smooth</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>lonpop_change_smooth <span class="ot">&lt;-</span> lonpop_change <span class="sc">-</span> lonpop_smooth</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lonpop_chang_smooth)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lonpop_change_smooth)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell-output-display">
 <div id="fig--6-focus-on-the-smooth" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -855,14 +855,14 @@ Figure&nbsp;7: Difference smoothed population change with original population ch
 </div>
 </div>
 </div>
-<p>We can also use zonal functions to better represent population change by aggregating the data to coarser resolutions. For example, resizing the raster’s spatial resolution to contain larger grid cells simplifies the data, making broader trends more visible. However,it may also end up obfuscating more local patterns.</p>
+<p>We can also use zonal functions to better represent population change by aggregating the data to coarser resolutions. For example, resizing the raster’s spatial resolution to contain larger grid cells simplifies the data, making broader trends more visible. However, it may also end up obfuscating more local patterns.</p>
 <div class="callout callout-style-simple callout-tip">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>We can resize a raster using the <code>aggregate() function</code>, setting the <code>factor</code> parameter to the scale of resampling desired (e.g.&nbsp;doubling both the width and height of a cell). The <code>function</code> parameter determines how to aggregate the data.</p>
+<p>We can resize a raster using the <code>aggregate()</code> function, setting the <code>factor</code> parameter to the scale of resampling desired (e.g.&nbsp;doubling both the width and height of a cell). The <code>function</code> parameter determines how to aggregate the data.</p>
 </div>
 </div>
 </div>
@@ -978,7 +978,7 @@ Figure&nbsp;9: Absolute population change in London boroughs 2010-2020.
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Londonair is the website of the London Air Quality Network (LAQN), which provides air pollution data for London and southeast England through the <a href="https://www.imperial.ac.uk/school-public-health/environmental-research-group/">Environmental Research Group</a> at Imperial College This data is publicly available and can be accessed directly using the <code>openair</code> R package, without needing to download files.</p>
+<p>Londonair is the website of the London Air Quality Network (LAQN), which provides air pollution data for London and southeast England through the <a href="https://www.imperial.ac.uk/school-public-health/environmental-research-group/">Environmental Research Group</a> at Imperial College. This data is publicly available and can be accessed directly using the <code>openair</code> R package, without needing to download files.</p>
 </div>
 </div>
 </div>
@@ -1011,7 +1011,7 @@ Figure&nbsp;9: Absolute population change in London boroughs 2010-2020.
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Not all measurements sites collect data on NO<sub>2</sub> so it is normal to get some <code>404 Not Found</code> warnings.</p>
+<p>Not all measurement sites collect data on NO<sub>2</sub> so it is normal to get some <code>404 Not Found</code> warnings.</p>
 </div>
 </div>
 </div>
@@ -1173,47 +1173,39 @@ Figure&nbsp;10: KCL NO<sub>2</sub> measurement sites in London.
 </div>
 <p>We can also use proportional symbols to visualise the values, helping us observe how measurements vary across London.</p>
 <div class="cell styled-output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># shape, polygon</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># shape</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(borough) <span class="sc">+</span></span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># specify column, classes</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># map data</span></span>
 <span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(</span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"#f0f0f0"</span>,</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"#f0f0f0"</span>,</span>
 <span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># shape</span></span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(borough) <span class="sc">+</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(measurement_sites) <span class="sc">+</span></span>
 <span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># map data</span></span>
-<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(</span>
-<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"#f0f0f0"</span>,</span>
-<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_symbols</span>(</span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="st">"no2"</span>,</span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"#fc9272"</span>,</span>
 <span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># shape</span></span>
-<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(measurement_sites) <span class="sc">+</span></span>
-<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># map data</span></span>
-<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_symbols</span>(</span>
-<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="st">"no2"</span>,</span>
-<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"#fc9272"</span>,</span>
-<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># legend</span></span>
-<span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">size.legend =</span> <span class="fu">tm_legend</span>(</span>
-<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a>      <span class="at">title =</span> <span class="st">"Average reading"</span>,</span>
-<span id="cb33-28"><a href="#cb33-28" aria-hidden="true" tabindex="-1"></a>      <span class="at">frame =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb33-29"><a href="#cb33-29" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb33-30"><a href="#cb33-30" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb33-31"><a href="#cb33-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-32"><a href="#cb33-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># layout</span></span>
-<span id="cb33-33"><a href="#cb33-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(</span>
-<span id="cb33-34"><a href="#cb33-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># legend</span></span>
-<span id="cb33-35"><a href="#cb33-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.outside =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb33-36"><a href="#cb33-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.85</span>, <span class="fl">0.35</span>),</span>
-<span id="cb33-37"><a href="#cb33-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.text.size =</span> <span class="fl">0.8</span>,</span>
-<span id="cb33-38"><a href="#cb33-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-39"><a href="#cb33-39" aria-hidden="true" tabindex="-1"></a>    <span class="co"># canvas</span></span>
-<span id="cb33-40"><a href="#cb33-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">frame =</span> <span class="cn">FALSE</span></span>
-<span id="cb33-41"><a href="#cb33-41" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># legend</span></span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">size.legend =</span> <span class="fu">tm_legend</span>(</span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">title =</span> <span class="st">"Average reading"</span>,</span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>      <span class="at">frame =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># layout</span></span>
+<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(</span>
+<span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># legend</span></span>
+<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.outside =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb33-28"><a href="#cb33-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.85</span>, <span class="fl">0.35</span>),</span>
+<span id="cb33-29"><a href="#cb33-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.text.size =</span> <span class="fl">0.8</span>,</span>
+<span id="cb33-30"><a href="#cb33-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-31"><a href="#cb33-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># canvas</span></span>
+<span id="cb33-32"><a href="#cb33-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">frame =</span> <span class="cn">FALSE</span></span>
+<span id="cb33-33"><a href="#cb33-33" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="fig-06-air-quality-measurement-sites-proportional-symbol" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1264,7 +1256,7 @@ Figure&nbsp;11: Proportional symbol map of average KCL NO<sub>2</sub> measuremen
 <span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>measurement_sites_voronoi <span class="ot">&lt;-</span> <span class="fu">st_voronoi_points</span>(measurement_sites)</span>
 <span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a><span class="co"># replace point geometry with polygon geometry</span></span>
-<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>measurement_sites_tesselation <span class="ot">&lt;-</span> measurement_sites <span class="sc">|&gt;</span></span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>measurement_sites_tessellation <span class="ot">&lt;-</span> measurement_sites <span class="sc">|&gt;</span></span>
 <span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_set_geometry</span>(measurement_sites_voronoi) <span class="sc">|&gt;</span></span>
 <span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_intersection</span>(borough)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -1273,7 +1265,7 @@ Figure&nbsp;11: Proportional symbol map of average KCL NO<sub>2</sub> measuremen
 all geometries</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>measurement_sites_tesselation</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>measurement_sites_tessellation</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 98 features and 2 fields
 Geometry type: GEOMETRY
@@ -1319,7 +1311,7 @@ Projected CRS: OSGB36 / British National Grid
 <p>We can now visualise the results of the interpolation:</p>
 <div class="cell styled-output">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># shape</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(measurement_sites_tesselation) <span class="sc">+</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(measurement_sites_tessellation) <span class="sc">+</span></span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># map data</span></span>
 <span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(</span>

@@ -419,7 +419,16 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#data-sources" id="toc-data-sources" class="nav-link active" data-scroll-target="#data-sources"><span class="header-section-number">1</span> Data Sources</a>
   <ul>
-  <li><a href="#open-data" id="toc-open-data" class="nav-link" data-scroll-target="#open-data"><span class="header-section-number">1.1</span> Open Data</a></li>
+  <li><a href="#open-data" id="toc-open-data" class="nav-link" data-scroll-target="#open-data"><span class="header-section-number">1.1</span> Open Data</a>
+  <ul class="collapse">
+  <li><a href="#official-and-government-statistics" id="toc-official-and-government-statistics" class="nav-link" data-scroll-target="#official-and-government-statistics"><span class="header-section-number">1.1.1</span> Official and Government Statistics</a></li>
+  <li><a href="#transport" id="toc-transport" class="nav-link" data-scroll-target="#transport"><span class="header-section-number">1.1.2</span> Transport</a></li>
+  <li><a href="#environment-and-air-quality" id="toc-environment-and-air-quality" class="nav-link" data-scroll-target="#environment-and-air-quality"><span class="header-section-number">1.1.3</span> Environment and Air Quality</a></li>
+  <li><a href="#earth-observation-and-imagery" id="toc-earth-observation-and-imagery" class="nav-link" data-scroll-target="#earth-observation-and-imagery"><span class="header-section-number">1.1.4</span> Earth Observation and Imagery</a></li>
+  <li><a href="#openstreetmap-and-points-of-interest" id="toc-openstreetmap-and-points-of-interest" class="nav-link" data-scroll-target="#openstreetmap-and-points-of-interest"><span class="header-section-number">1.1.5</span> OpenStreetMap and Points of Interest</a></li>
+  <li><a href="#r-ready-packages" id="toc-r-ready-packages" class="nav-link" data-scroll-target="#r-ready-packages"><span class="header-section-number">1.1.6</span> R-Ready Packages</a></li>
+  <li><a href="#general-and-international-data-portals" id="toc-general-and-international-data-portals" class="nav-link" data-scroll-target="#general-and-international-data-portals"><span class="header-section-number">1.1.7</span> General and International Data Portals</a></li>
+  </ul></li>
   <li><a href="#safeguarded-data" id="toc-safeguarded-data" class="nav-link" data-scroll-target="#safeguarded-data"><span class="header-section-number">1.2</span> Safeguarded Data</a></li>
   </ul></li>
   </ul>
@@ -437,55 +446,88 @@ ul.task-list li input[type="checkbox"] {
 <p>Below is a list of resources that you may find helpful when sourcing data for your coursework or dissertation. This list is not exhaustive but includes some recommended websites to get you started.</p>
 <section id="open-data" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="open-data"><span class="header-section-number">1.1</span> Open Data</h2>
-<p>The following websites contain Open Data or link to Open Data from several respectable data providers:</p>
+<p>The following websites contain Open Data or link to Open Data from several respectable data providers, grouped by theme to make them easier to scan:</p>
+<section id="official-and-government-statistics" class="level3" data-number="1.1.1">
+<h3 data-number="1.1.1" class="anchored" data-anchor-id="official-and-government-statistics"><span class="header-section-number">1.1.1</span> Official and Government Statistics</h3>
+<ul>
+<li><a href="https://www.ons.gov.uk/">Office for National Statistics</a></li>
+<li><a href="https://geoportal.statistics.gov.uk/">Office for National Statistics Geoportal</a></li>
+<li><a href="https://www.nomisweb.co.uk/">nomis Official Census and Labour Market Statistics</a></li>
+<li><a href="https://data.geods.ac.uk/">Consumer Data Research Centre</a></li>
+<li><a href="https://ukdataservice.ac.uk/">UK Data Service</a></li>
+<li><a href="https://digimap.edina.ac.uk/">Edina (e.g.&nbsp;OS mastermap)</a></li>
+<li><a href="https://ec.europa.eu/eurostat">Eurostat</a></li>
+<li><a href="https://ec.europa.eu/eurostat/statistics-explained/index.php/Tourism_statistics">EU Tourism Data</a></li>
+<li><a href="https://www.census.gov/data.html">US Census Data</a></li>
+<li><a href="https://profrichharris.github.io/census/harmonised/">pseudo Census Output Areas 2001-2011-2021</a></li>
+</ul>
+</section>
+<section id="transport" class="level3" data-number="1.1.2">
+<h3 data-number="1.1.2" class="anchored" data-anchor-id="transport"><span class="header-section-number">1.1.2</span> Transport</h3>
+<ul>
+<li><a href="https://tfl.gov.uk/info-for/open-data-users/our-open-data?intcmp=3671#on-this-page-2">TfL Open Data</a></li>
+<li><a href="https://cycling.data.tfl.gov.uk/">TfL Cycling Data</a></li>
+<li><a href="https://www.data.gov.uk/dataset/ff93ffc1-6656-47d8-9155-85ea0b8f2251/national-public-transport-access-nodes-naptan">National Public Transport Access Nodes (NaPTAN)</a></li>
+<li><a href="https://utd19.ethz.ch/">UTD19 Multi-City Traffic Dataset</a></li>
+<li><a href="https://github.com/microsoft/RoadDetections">Bing Maps worldwide road detections</a></li>
+<li><a href="https://www.nature.com/articles/s41597-023-02890-w">Public transport accessibility indicators Great Britain</a></li>
+</ul>
+</section>
+<section id="environment-and-air-quality" class="level3" data-number="1.1.3">
+<h3 data-number="1.1.3" class="anchored" data-anchor-id="environment-and-air-quality"><span class="header-section-number">1.1.3</span> Environment and Air Quality</h3>
+<ul>
+<li><a href="https://environment.data.gov.uk/">Department for Environment, Food &amp; Rural Affairs</a></li>
+<li><a href="https://www.londonair.org.uk/LondonAir/Default.aspx">King’s College Data on Air Pollution</a></li>
+<li><a href="https://camdenairaction.wordpress.com/2017/02/20/schools-monitoring-project-spring-2017/">Camden Air Action</a></li>
+<li><a href="https://www.ft.com/content/6f381ad4-fef7-11e9-be59-e49b2a136b8d">London Tube PM2.5 Levels</a></li>
+<li><a href="https://rp5.ru/Weather_in_the_world">Global Weather Data</a></li>
+<li><a href="https://data.london.gov.uk/dataset/local-authority-maintained-trees">London Local Authority Maintained Trees</a></li>
+</ul>
+</section>
+<section id="earth-observation-and-imagery" class="level3" data-number="1.1.4">
+<h3 data-number="1.1.4" class="anchored" data-anchor-id="earth-observation-and-imagery"><span class="header-section-number">1.1.4</span> Earth Observation and Imagery</h3>
+<ul>
+<li><a href="https://earthdata.nasa.gov/">NASA EARTHDATA</a></li>
+<li><a href="https://sedac.ciesin.columbia.edu/">NASA SocioEconomic Data and Applications Center (SEDAC)</a></li>
+<li><a href="https://earthexplorer.usgs.gov/">USGS Earth Explorer</a></li>
+<li><a href="https://opentopography.org/">Open Topography</a></li>
+<li><a href="https://planetarycomputer.microsoft.com/catalog">Planetary Computer Data Catalog</a></li>
+<li><a href="https://sites.research.google/open-buildings/">Google Open Buildings</a></li>
+<li><a href="https://github.com/microsoft/GlobalMLBuildingFootprints#start-of-content">Microsoft Global Building Footprints</a></li>
+<li><a href="https://www.worldpop.org/">WorldPop</a></li>
+<li><a href="https://github.com/wpgp">WorldPop GitHub</a></li>
+<li><a href="https://daylightmap.org/2023/11/27/urban.html">Global Urban Areas dataset</a></li>
+</ul>
+</section>
+<section id="openstreetmap-and-points-of-interest" class="level3" data-number="1.1.5">
+<h3 data-number="1.1.5" class="anchored" data-anchor-id="openstreetmap-and-points-of-interest"><span class="header-section-number">1.1.5</span> OpenStreetMap and Points of Interest</h3>
+<ul>
+<li><a href="https://www.geofabrik.de/">Geofabrik (OSM data)</a></li>
+<li><a href="https://doi.org/10.1177/23998083241263124">Overture Point of Interest data for the United Kingdom</a></li>
+<li><a href="https://geolytix.com/blog/supermarket-retail-points/">Geolytix Supermarket Retail Points</a></li>
+<li><a href="https://www.nature.com/articles/s41597-020-0397-7">Tesco Store Data (London)</a></li>
+</ul>
+</section>
+<section id="r-ready-packages" class="level3" data-number="1.1.6">
+<h3 data-number="1.1.6" class="anchored" data-anchor-id="r-ready-packages"><span class="header-section-number">1.1.6</span> R-Ready Packages</h3>
+<ul>
+<li><a href="https://docs.ropensci.org/bikedata/">Bike Docking Data (ready for R)</a></li>
+<li><a href="https://nhs-r-community.github.io/NHSRdatasets/">NHS Data (ready for R)</a></li>
+<li><a href="https://github.com/rfordatascience/tidytuesday">Tidy Tuesday Data (not exclusively spatial data)</a></li>
+</ul>
+</section>
+<section id="general-and-international-data-portals" class="level3" data-number="1.1.7">
+<h3 data-number="1.1.7" class="anchored" data-anchor-id="general-and-international-data-portals"><span class="header-section-number">1.1.7</span> General and International Data Portals</h3>
 <ul>
 <li><a href="https://github.com/rafaelprietocuriel/AfricanUrbanNetwork">AfricanUrbanNetwork</a></li>
 <li><a href="http://insideairbnb.com/get-the-data.html">AirBnB Data</a></li>
-<li><a href="https://docs.ropensci.org/bikedata/">Bike Docking Data (ready for R)</a></li>
-<li><a href="https://github.com/microsoft/RoadDetections">Bing Maps worldwide road detections</a></li>
-<li><a href="https://camdenairaction.wordpress.com/2017/02/20/schools-monitoring-project-spring-2017/">Camden Air Action</a></li>
-<li><a href="https://data.geods.ac.uk/">Consumer Data Research Centre</a></li>
-<li><a href="https://environment.data.gov.uk/">Department for Environment, Food &amp; Rural Affairs</a></li>
-<li><a href="https://digimap.edina.ac.uk/">Edina (e.g.&nbsp;OS mastermap)</a></li>
-<li><a href="https://ec.europa.eu/eurostat/statistics-explained/index.php/Tourism_statistics">EU Tourism Data</a></li>
-<li><a href="https://ec.europa.eu/eurostat">Eurostat</a></li>
-<li><a href="https://www.geofabrik.de/">Geofabrik (OSM data)</a></li>
-<li><a href="https://geolytix.com/blog/supermarket-retail-points/">Geolytix Supermarket Retail Points</a></li>
-<li><a href="https://daylightmap.org/2023/11/27/urban.html">Global Urban Areas dataset</a></li>
-<li><a href="https://rp5.ru/Weather_in_the_world">Global Weather Data</a></li>
 <li><a href="https://datasetsearch.research.google.com/">Google Dataset Search</a></li>
-<li><a href="https://sites.research.google/open-buildings/">Google Open Buildings</a></li>
 <li><a href="https://www.kaggle.com/datasets">Kaggle Public Datasets</a></li>
-<li><a href="https://www.londonair.org.uk/LondonAir/Default.aspx">King’s College Data on Air Pollution</a></li>
-<li><a href="https://data.london.gov.uk/">London Data Store</a></li>
-<li><a href="https://data.london.gov.uk/dataset/local-authority-maintained-trees">London Local Authority Maintained Trees</a></li>
-<li><a href="https://www.ft.com/content/6f381ad4-fef7-11e9-be59-e49b2a136b8d">London Tube PM2.5 Levels</a></li>
-<li><a href="https://github.com/microsoft/GlobalMLBuildingFootprints#start-of-content">Microsoft Global Building Footprints</a></li>
 <li><a href="https://msropendata.com/">Microsoft Research Open Data</a></li>
-<li><a href="https://www.data.gov.uk/dataset/ff93ffc1-6656-47d8-9155-85ea0b8f2251/national-public-transport-access-nodes-naptan">National Public Transport Access Nodes (NaPTAN)</a></li>
-<li><a href="https://earthdata.nasa.gov/">NASA EARTHDATA</a></li>
-<li><a href="https://sedac.ciesin.columbia.edu/">NASA SocioEconomic Data and Applications Center (SEDAC)</a></li>
-<li><a href="https://nhs-r-community.github.io/NHSRdatasets/">NHS Data (ready for R)</a></li>
-<li><a href="https://www.nomisweb.co.uk/">nomis Official Census and Labour Market Statistics</a></li>
-<li><a href="https://geoportal.statistics.gov.uk/">Office for National Statistics Geoportal</a></li>
-<li><a href="https://www.ons.gov.uk/">Office for National Statistics</a></li>
-<li><a href="https://opentopography.org/">Open Topography</a></li>
-<li><a href="https://doi.org/10.1177/23998083241263124">Overture Point of Interest data for the United Kingdom</a></li>
-<li><a href="https://planetarycomputer.microsoft.com/catalog">Planetary Computer Data Catalog</a></li>
-<li><a href="https://profrichharris.github.io/census/harmonised/">pseudo Census Output Areas 2001-2011-2021</a></li>
-<li><a href="https://www.nature.com/articles/s41597-023-02890-w">Public transport accessibility indicators Great Britain</a></li>
-<li><a href="https://www.nature.com/articles/s41597-020-0397-7">Tesco Store Data (London)</a></li>
-<li><a href="https://cycling.data.tfl.gov.uk/">TfL Cycling Data</a></li>
-<li><a href="https://tfl.gov.uk/info-for/open-data-users/our-open-data?intcmp=3671#on-this-page-2">TfL Open Data</a></li>
-<li><a href="https://github.com/rfordatascience/tidytuesday">Tidy Tuesday Data (not exclusively spatial data)</a></li>
-<li><a href="https://ukdataservice.ac.uk/">UK Data Service</a></li>
-<li><a href="https://www.census.gov/data.html">US Census Data</a></li>
 <li><a href="http://us-cities.survey.okfn.org/">US City Open Data Census</a></li>
-<li><a href="https://earthexplorer.usgs.gov/">USGS Earth Explorer</a></li>
-<li><a href="https://utd19.ethz.ch/">UTD19 Multi-City Traffic Dataset</a></li>
-<li><a href="https://github.com/wpgp">WorldPop GitHub</a></li>
-<li><a href="https://www.worldpop.org/">WorldPop</a></li>
+<li><a href="https://data.london.gov.uk/">London Data Store</a></li>
 </ul>
+</section>
 </section>
 <section id="safeguarded-data" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="safeguarded-data"><span class="header-section-number">1.2</span> Safeguarded Data</h2>
@@ -503,7 +545,7 @@ ul.task-list li input[type="checkbox"] {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Since the application process for Safeguarded GeoDS datasets can take several weeks, these datasets may be more suitable for your undergraduate dissertation rather than the GEOG0030 coursework assignment. However, GeoDs datasets labeled as <strong>Open Data</strong> do not require an application process. You can download these datasets directly after registering on the website.</p>
+<p>Since the application process for Safeguarded GeoDS datasets can take several weeks, these datasets may be more suitable for your undergraduate dissertation rather than the GEOG0030 coursework assignment. However, GeoDS datasets labelled as <strong>Open Data</strong> do not require an application process. You can download these datasets directly after registering on the website.</p>
 </div>
 </div>
 </div>

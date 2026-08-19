@@ -490,6 +490,7 @@ window.Quarto = {
   <li><a href="#essential-readings" id="toc-essential-readings" class="nav-link" data-scroll-target="#essential-readings">Essential readings</a></li>
   <li><a href="#suggested-readings" id="toc-suggested-readings" class="nav-link" data-scroll-target="#suggested-readings">Suggested readings</a></li>
   </ul></li>
+  <li><a href="#start-of-session" id="toc-start-of-session" class="nav-link" data-scroll-target="#start-of-session">Start of session</a></li>
   <li><a href="#population-groups-in-london" id="toc-population-groups-in-london" class="nav-link" data-scroll-target="#population-groups-in-london"><span class="header-section-number">1.3</span> Population groups in London</a>
   <ul class="collapse">
   <li><a href="#spatial-dependency" id="toc-spatial-dependency" class="nav-link" data-scroll-target="#spatial-dependency"><span class="header-section-number">1.3.1</span> Spatial dependency</a></li>
@@ -524,8 +525,8 @@ window.Quarto = {
 <h4 class="unnumbered anchored" data-anchor-id="essential-readings">Essential readings</h4>
 <ul>
 <li>Griffith, D. 2017. <em>Spatial Autocorrelation</em>. The Geographic Information Science &amp; Technology Body of Knowledge. <a href="https://doi.org/10.22224/gistbok/2017.4.13">[Link]</a></li>
-<li>Gimond, M. 2025. Intro to GIS and spatial analysis. <strong>Chapter 13</strong>: <em>Spatial autocorrelation</em>. <a href="https://mgimond.github.io/Spatial/chp13_0.html">[Link]</a></li>
-<li>Livings, M. and Wu, A-M. 2020. <em>Local Measures of Spatial Association</em>. The Geographic Infor mation Science &amp; Technology Body of Knowledge. <a href="https://doi.org/10.22224/gistbok/2020.3.10">[Link]</a></li>
+<li>Gimond, M. 2025. Intro to GIS and spatial analysis. <strong>Chapter 13</strong>: <em>Spatial autocorrelation</em>. <a href="https://mgimond.github.io/Spatial/13_autocorrelation.html">[Link]</a></li>
+<li>Livings, M. and Wu, A-M. 2020. <em>Local Measures of Spatial Association</em>. The Geographic Information Science &amp; Technology Body of Knowledge. <a href="https://doi.org/10.22224/gistbok/2020.3.10">[Link]</a></li>
 <li>Su, R. Newsham, N., and Dodge, S. 2024. Spatiotemporal dynamics of ethnoracial diversity and segregation in Los Angeles County: Insights from mobile phone data. <em>Computers, Environment and Urban Systems</em> 114: 102203. <a href="https://doi.org/10.1016/j.compenvurbsys.2024.102203">[Link]</a></li>
 </ul>
 </section>
@@ -536,6 +537,14 @@ window.Quarto = {
 <li>Harris, R. 2020. Exploring the neighbourhood-level correlates of Covid-19 deaths in London using a difference across spatial boundaries method. <em>Health &amp; Place</em> 66: 102446. <a href="https://doi.org/10.1016/j.healthplace.2020.102446">[Link]</a></li>
 </ul>
 </section>
+</section>
+<section id="start-of-session" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="start-of-session">Start of session</h2>
+<p>Before working through the tutorial, we will spend a few minutes looking at:</p>
+<ul>
+<li>What randomly shuffled data can look like on a map</li>
+<li>How different neighbour definitions treat the Thames</li>
+</ul>
 </section>
 <section id="population-groups-in-london" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="population-groups-in-london"><span class="header-section-number">1.3</span> Population groups in London</h2>
@@ -681,7 +690,7 @@ Projected CRS: OSGB36 / British National Grid
 </div>
 </div>
 </div>
-<p>You will notice is that the column names are rather long, so let us rename the columns for easier reference.</p>
+<p>You will notice that the column names are rather long, so let us rename the columns for easier reference.</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -704,7 +713,7 @@ Projected CRS: OSGB36 / British National Grid
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>lsoa21 <span class="ot">&lt;-</span> lsoa21 <span class="sc">|&gt;</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(lsoa_eth, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"lsoa21cd"</span> <span class="ot">=</span> <span class="st">"lsoa21cd"</span>))</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># shape,</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># shape</span></span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(lsoa21) <span class="sc">+</span></span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># map data</span></span>
@@ -752,7 +761,7 @@ Figure&nbsp;1: Proportions of people that self-identify as Asian-Bangladeshi.
 </div>
 </div>
 </div>
-<p>Looking at the map, the geographical patterning of the percentage of the population that self-identify as Asian-Bangladeshi appears to be neither random nor uniform, with a tendency for similar values to be found in some neighbourhoods in East London. Let us compare our map to a map with the same values which have been randomly permutated:</p>
+<p>Looking at the map, the geographical patterning of the percentage of the population that self-identify as Asian-Bangladeshi appears to be neither random nor uniform, with a tendency for similar values to be found in some neighbourhoods in East London. Let us compare our map to a map with the same values which have been randomly permuted:</p>
 <div class="cell">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -765,7 +774,7 @@ Figure&nbsp;1: Proportions of people that self-identify as Asian-Bangladeshi.
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>lsoa21 <span class="ot">&lt;-</span> lsoa21 <span class="sc">|&gt;</span></span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">asian_bangladeshi_random =</span> <span class="fu">sample</span>(lsoa21<span class="sc">$</span>asian_bangladeshi, <span class="at">replace =</span> <span class="cn">FALSE</span>))</span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co"># shape,</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co"># shape</span></span>
 <span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(lsoa21) <span class="sc">+</span></span>
 <span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># map data</span></span>
@@ -807,7 +816,7 @@ Figure&nbsp;1: Proportions of people that self-identify as Asian-Bangladeshi.
 <img src="04-autocorrelation_files/figure-html/fig-04-permutation-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-04-permutation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Proportions of people that self-identify as Asian-Bangladeshi with randomly permutated values.
+Figure&nbsp;2: Proportions of people that self-identify as Asian-Bangladeshi with randomly permuted values.
 </figcaption>
 </figure>
 </div>
@@ -823,7 +832,7 @@ Figure&nbsp;2: Proportions of people that self-identify as Asian-Bangladeshi wit
 <img src="images/w04/moran-scatter.png" class="img-fluid figure-img" width="1226">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-moran-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Scatter plot of spatially lagged income (neighboring income) versus each areas income. Source: <a href="https://mgimond.github.io/Spatial/spatial-autocorrelation.html">Manuel Gimond</a>.
+Figure&nbsp;3: Scatter plot of spatially lagged income (neighboring income) versus each areas income. Source: <a href="https://mgimond.github.io/Spatial/13_autocorrelation.html">Manuel Gimond</a>.
 </figcaption>
 </figure>
 </div>
@@ -845,7 +854,7 @@ Figure&nbsp;3: Scatter plot of spatially lagged income (neighboring income) vers
 </div>
 </div>
 <p>There are two approaches to estimating the significance of the Moran’s I statistic: an analytical method and a computational method. The analytical method relies on assumptions about the data, such as normality, which can sometimes limit its reliability. In contrast, the computational method, which is preferred here, does not make such assumptions and offers a more flexible and robust evaluation of significance.</p>
-<p>The computational approach is based on a repeated random permutation of the observed values. The Moran’s I statistic is then calculated for each of these randomly reshuffled data sets, generating a reference distribution. By comparing the observed Moran’s I value to this reference distribution, we can assess whether our observed statistic is typical or an outlier and calculate a <em>psuedo</em> <span class="math inline">\(p\)</span>-value (see <a href="#fig-moran-plot-sig" class="quarto-xref">Figure&nbsp;4</a>). If the observed Moran’s I value is an outlier, meaning it falls outside the range expected from random data distribution, it suggests a significant degree of clustering in the data.</p>
+<p>The computational approach is based on a repeated random permutation of the observed values. The Moran’s I statistic is then calculated for each of these randomly reshuffled data sets, generating a reference distribution. By comparing the observed Moran’s I value to this reference distribution, we can assess whether our observed statistic is typical or an outlier and calculate a <em>pseudo</em> <span class="math inline">\(p\)</span>-value (see <a href="#fig-moran-plot-sig" class="quarto-xref">Figure&nbsp;4</a>). If the observed Moran’s I value is an outlier, meaning it falls outside the range expected from random data distribution, it suggests a significant degree of clustering in the data.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-moran-plot-sig" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -854,7 +863,7 @@ Figure&nbsp;3: Scatter plot of spatially lagged income (neighboring income) vers
 <img src="images/w04/mc-sim.png" class="img-fluid figure-img" width="1094">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-moran-plot-sig-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: Determining significance using a Monte Carlo simulation. Source: <a href="https://mgimond.github.io/Spatial/chp13_0.html">Manuel Gimond</a>.
+Figure&nbsp;4: Determining significance using a Monte Carlo simulation. Source: <a href="https://mgimond.github.io/Spatial/13_autocorrelation.html">Manuel Gimond</a>.
 </figcaption>
 </figure>
 </div>
@@ -864,7 +873,7 @@ Figure&nbsp;4: Determining significance using a Monte Carlo simulation. Source: 
 <p><span class="math display">\[
 \frac{N_{extreme} + 1}{N + 1}
 \]</span></p>
-<p>where <span class="math inline">\({N_{extreme}}\)</span> is the number of simulated Moran’s I values that were more extreme than our observed statistic and <span class="math inline">\({N}\)</span> is the total number of simulations. In the example shown in <a href="#fig-moran-plot-sig" class="quarto-xref">Figure&nbsp;4</a>, only 1 out the 199 simulations was more extreme than the observed local Moran’s I statistic. Therefore <span class="math inline">\({N_{extreme}}\)</span> = 1 , so <span class="math inline">\(p\)</span> is equal to <span class="math inline">\((1+1) / (199 + 1) = 0.01\)</span>. This means that there is a one percent probability that we would be wrong in rejecting the null hypothesis of spatial randomness.</p>
+<p>where <span class="math inline">\({N_{extreme}}\)</span> is the number of simulated Moran’s I values that were more extreme than our observed statistic and <span class="math inline">\({N}\)</span> is the total number of simulations. In the example shown in <a href="#fig-moran-plot-sig" class="quarto-xref">Figure&nbsp;4</a>, only 1 out the 199 simulations was more extreme than the observed local Moran’s I statistic. Therefore <span class="math inline">\({N_{extreme}}\)</span> = 1, so <span class="math inline">\(p\)</span> is equal to <span class="math inline">\((1+1) / (199 + 1) = 0.01\)</span>. This means that there is a one percent probability that we would be wrong in rejecting the null hypothesis of spatial randomness.</p>
 </section>
 <section id="defining-neighbours" class="level3" data-number="1.3.2">
 <h3 data-number="1.3.2" class="anchored" data-anchor-id="defining-neighbours"><span class="header-section-number">1.3.2</span> Defining neighbours</h3>
@@ -988,7 +997,7 @@ Figure&nbsp;5: Neighbourhood graph using queen contiguity.
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>lsoa21_nb_weights <span class="ot">&lt;-</span> lsoa21_nb <span class="sc">|&gt;</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nb2listw</span>(<span class="at">style =</span> <span class="st">"W"</span>)</span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect - neigbhours of polygon '10'</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect - neighbours of polygon '10'</span></span>
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>lsoa21_nb_weights<span class="sc">$</span>neighbours[[<span class="dv">10</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell-output cell-output-stdout">
@@ -1060,7 +1069,7 @@ statistic = 0.84992, observed rank = 1000, p-value = 0.001
 alternative hypothesis: greater</code></pre>
 </div>
 </div>
-<p>The results of the <a href="https://en.wikipedia.org/wiki/Monte_Carlo_method">Monte Carlo</a> simulation, visualised in <a href="#fig-04-plot-moran-permutation" class="quarto-xref">Figure&nbsp;7</a>, suggest that there is statistically significant positive autocorrelation in our variable. This indicates that LSOAs with higher percentages of people that self-identify as Asian-Bangladeshi tend to be surrounded by other LSOAS with similarly high percentages. Likewise, LSOAs with lower percentages of people that self-identify as Asian Bangladeshi are generally surrounded by LSOAs with similarly low values.</p>
+<p>The results of the <a href="https://en.wikipedia.org/wiki/Monte_Carlo_method">Monte Carlo</a> simulation, visualised in <a href="#fig-04-plot-moran-permutation" class="quarto-xref">Figure&nbsp;7</a>, suggest that there is statistically significant positive autocorrelation in our variable. This indicates that LSOAs with higher percentages of people that self-identify as Asian-Bangladeshi tend to be surrounded by other LSOAs with similarly high percentages. Likewise, LSOAs with lower percentages of people that self-identify as Asian Bangladeshi are generally surrounded by LSOAs with similarly low values.</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -1116,7 +1125,7 @@ Figure&nbsp;7: Density plot of permutation outcomes.
 </tr>
 </tbody>
 </table>
-<p>We can show these area on a map by deconstructing the Moran’s I into a series of <a href="https://doi.org/10.1111/j.1538-4632.1995.tb00338.x">local Moran values</a>, each measuring how similar each place is (individually) to its neighbours.</p>
+<p>We can show these areas on a map by deconstructing the Moran’s I into a series of <a href="https://doi.org/10.1111/j.1538-4632.1995.tb00338.x">local Moran values</a>, each measuring how similar each place is (individually) to its neighbours.</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -1349,7 +1358,7 @@ Figure&nbsp;9: Mapping the significant Local Moran’s I clusters.
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>This new map may still not fully address the issue of statistical significance due to repeated testing, and some values may appear significant purely by chance. To correct for this, you can adjust the <span class="math inline">\(p\)</span>-values using R’s <code>p.adjust()</code> function. For further details, refer to <a href="https://mgimond.github.io/Spatial/chp13_0.html#a-note-about-interpreting-the-permutation-based-p-value">Manual Gimond’s explanation</a> of the <a href="https://en.wikipedia.org/wiki/Multiple_comparisons_problem">multiple comparison</a> problem in the context of the <em>pseudo-</em><span class="math inline">\(p\)</span> values.</p>
+<p>This new map may still not fully address the issue of statistical significance due to repeated testing, and some values may appear significant purely by chance. To correct for this, you can adjust the <span class="math inline">\(p\)</span>-values using R’s <code>p.adjust()</code> function. For further details, refer to <a href="https://mgimond.github.io/Spatial/13_autocorrelation.html#multiple-comparisons-and-false-discovery-rate">Manual Gimond’s explanation</a> of the <a href="https://en.wikipedia.org/wiki/Multiple_comparisons_problem">multiple comparison</a> problem in the context of the <em>pseudo-</em><span class="math inline">\(p\)</span> values.</p>
 </div>
 </div>
 </div>
@@ -1361,10 +1370,11 @@ Figure&nbsp;9: Mapping the significant Local Moran’s I clusters.
 <ol type="1">
 <li>Extract the centroids from the <code>lsoa21</code> file.</li>
 <li>Identify the <code>5</code> nearest neighbours for each LSOA, using the <code>knearneigh()</code> function.</li>
-<li>Create a neigbhour list of these nearest neighbours, using the <code>knn2nb()</code> function.</li>
+<li>Create a neighbour list of these nearest neighbours, using the <code>knn2nb()</code> function.</li>
 <li>Compute the Global Moran’s I of the <code>asian_indian</code> variable using this new neighbourhood definition.</li>
 <li>Map the statistically significant clusters of Local Moran’s I based on this new neighbourhood definition.</li>
 <li>Compare these results to the output of our <code>asian_bangladeshi</code> values. Do both variables exhibit clustering? Are the clusters located in similar areas?</li>
+<li>Now imagine a different scenario: analysing the spread of a health condition passed on through the people we regularly come into social contact with. Which of contiguity, fixed distance, or k-nearest neighbours would you use to define neighbours, and why?</li>
 </ol>
 </section>
 <section id="before-you-leave" class="level2" data-number="1.5">

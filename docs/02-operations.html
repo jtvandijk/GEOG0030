@@ -461,6 +461,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#essential-readings" id="toc-essential-readings" class="nav-link" data-scroll-target="#essential-readings">Essential readings</a></li>
   <li><a href="#suggested-readings" id="toc-suggested-readings" class="nav-link" data-scroll-target="#suggested-readings">Suggested readings</a></li>
   </ul></li>
+  <li><a href="#start-of-session" id="toc-start-of-session" class="nav-link" data-scroll-target="#start-of-session">Start of session</a></li>
   <li><a href="#bike-theft-in-london-i" id="toc-bike-theft-in-london-i" class="nav-link" data-scroll-target="#bike-theft-in-london-i"><span class="header-section-number">1.3</span> Bike theft in London I</a>
   <ul class="collapse">
   <li><a href="#crime-data" id="toc-crime-data" class="nav-link" data-scroll-target="#crime-data"><span class="header-section-number">1.3.1</span> Crime data</a></li>
@@ -508,9 +509,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 </section>
 </section>
+<section id="start-of-session" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="start-of-session">Start of session</h2>
+<p>Before working through the tutorial, we will spend a few minutes looking at:</p>
+<ul>
+<li>One month of raw crime data from data.police.uk</li>
+<li>Missing values in the crime dataset, and how they affect the analysis</li>
+<li>The trade-offs of relying on a live API query for data</li>
+</ul>
+</section>
 <section id="bike-theft-in-london-i" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="bike-theft-in-london-i"><span class="header-section-number">1.3</span> Bike theft in London I</h2>
-<p>This week, we will examine to what extent reported bicycle theft in London cluster around train and underground stations. We will be using open data from <a href="https://data.police.uk/">data.police.uk</a> on reported crimes alongside <a href="https://www.openstreetmap.org/#map=6/54.91/-3.43">OpenStreetMap</a> data for this analysis. We will use R to directly download the necessary data from OpenStreetMap, but the crime data will need to be manually downloaded from the data portal. We further have access to a <code>GeoPackage</code> that contains the London 2021 MSOA boundaries that we can use as reference layer. If you do not already have it on your computer, save this file in your <code>data/spatial</code> folder.</p>
+<p>This week, we will examine to what extent reported bicycle theft in London cluster around train and underground stations. We will be using open data from <a href="https://data.police.uk/">data.police.uk</a> on reported crimes alongside <a href="https://www.openstreetmap.org/#map=6/54.91/-3.43">OpenStreetMap</a> data for this analysis. We will use R to directly download the necessary data from OpenStreetMap, but the crime data will need to be manually downloaded from the data portal. We further have access to a <code>GeoPackage</code> that contains the London 2021 MSOA boundaries that we can use as a reference layer. If you do not already have it on your computer, save this file in your <code>data/spatial</code> folder.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -532,7 +542,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The UK Police Data Portal allows you to access and generate tabular data for crime recorded in the UK across the different police forces. To download recorded crime data for London:</p>
 <ol type="1">
 <li>Navigate to <a href="https://data.police.uk/">data.police.uk</a> and click on <strong>Downloads</strong>.</li>
-<li>Under the data range select <code>January 2023</code> to <code>December 2023</code>.</li>
+<li>Under the date range select <code>January 2025</code> to <code>December 2025</code>.</li>
 <li>Under the <strong>Custom download</strong> tab select <code>Metropolitan Police Service</code> and <code>City of London Police</code>. Leave the other settings unchanged and click on <strong>Generate file</strong>.</li>
 </ol>
 <div class="cell">
@@ -551,7 +561,7 @@ Figure&nbsp;1: Downloading data on reported crimes through <a href="https://data
 </div>
 <ol start="4" type="1">
 <li>It may take a few minutes for the download to be generated, so be patient. Once the <strong>Download now</strong> button appears, you can download the dataset.</li>
-<li>After downloading, unzip the file. You will find that the zip file contains 12 folders, one for each month of 2023. Each folder includes two files: one for the <code>Metropolitan Police Service</code> and one for the <code>City of London Police</code>.</li>
+<li>After downloading, unzip the file. You will find that the zip file contains 12 folders, one for each month of 2025. Each folder includes two files: one for the <code>Metropolitan Police Service</code> and one for the <code>City of London Police</code>.</li>
 <li>Create a new folder named <code>London-Crime</code> within your <code>data/attributes</code> directory, and copy all 12 folders with the data into this new folder.</li>
 </ol>
 <p>To get started, let us create our first script. <strong>File</strong> -&gt; <strong>New File</strong> -&gt; <strong>R Script</strong>. Save your script as <code>w02-bike-theft.r</code>.</p>
@@ -599,12 +609,12 @@ Figure&nbsp;1: Downloading data on reported crimes through <a href="https://data
 <pre><code># A tibble: 6 × 12
   `Crime ID`      Month `Reported by` `Falls within` Longitude Latitude Location
   &lt;chr&gt;           &lt;chr&gt; &lt;chr&gt;         &lt;chr&gt;              &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;   
-1 4a14d4745da0a2… 2023… City of Lond… City of Londo…    -0.106     51.5 On or n…
-2 e6e32581c99c5b… 2023… City of Lond… City of Londo…    -0.107     51.5 On or n…
-3 7b7cb8e7debe8b… 2023… City of Lond… City of Londo…    -0.110     51.5 On or n…
-4 f7fc44e1e76332… 2023… City of Lond… City of Londo…    -0.108     51.5 On or n…
-5 8083dafd1770af… 2023… City of Lond… City of Londo…    -0.112     51.5 On or n…
-6 4587239a45f0e8… 2023… City of Lond… City of Londo…    -0.112     51.5 On or n…
+1 8c7661d1b68d47… 2025… City of Lond… City of Londo…   -0.108      51.5 On or n…
+2 1b7fbc8deac518… 2025… City of Lond… City of Londo…   -0.112      51.5 On or n…
+3 8476f32b188fae… 2025… City of Lond… City of Londo…   -0.0971     51.5 On or n…
+4 92b8de6e45c3b7… 2025… City of Lond… City of Londo…   -0.0973     51.5 On or n…
+5 023587ed2c674a… 2025… City of Lond… City of Londo…   -0.0985     51.5 On or n…
+6 dffad61ad3005e… 2025… City of Lond… City of Londo…   -0.0985     51.5 On or n…
 # ℹ 5 more variables: `LSOA code` &lt;chr&gt;, `LSOA name` &lt;chr&gt;, `Crime type` &lt;chr&gt;,
 #   `Last outcome category` &lt;chr&gt;, Context &lt;lgl&gt;</code></pre>
 </div>
@@ -615,7 +625,7 @@ Figure&nbsp;1: Downloading data on reported crimes through <a href="https://data
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Depending on your computer, processing this data may take some time due to the large volume involved. Once completed, you should have a dataframe containing <strong>1,144,329</strong> observations.</p>
+<p>Depending on your computer, processing this data may take some time due to the large volume involved. Once completed, you should have a dataframe containing <strong>1,149,291</strong> observations.</p>
 </div>
 </div>
 </div>
@@ -669,13 +679,13 @@ Figure&nbsp;1: Downloading data on reported crimes through <a href="https://data
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(crime_df<span class="sc">$</span>crime_type)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "Other theft"                  "Other crime"                 
- [3] "Theft from the person"        "Public order"                
- [5] "Anti-social behaviour"        "Burglary"                    
- [7] "Criminal damage and arson"    "Drugs"                       
- [9] "Shoplifting"                  "Vehicle crime"               
-[11] "Violence and sexual offences" "Bicycle theft"               
-[13] "Robbery"                      "Possession of weapons"       </code></pre>
+<pre><code> [1] "Other theft"                  "Theft from the person"       
+ [3] "Drugs"                        "Public order"                
+ [5] "Shoplifting"                  "Other crime"                 
+ [7] "Bicycle theft"                "Violence and sexual offences"
+ [9] "Robbery"                      "Criminal damage and arson"   
+[11] "Vehicle crime"                "Burglary"                    
+[13] "Possession of weapons"        "Anti-social behaviour"       </code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filter</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>theft_bike <span class="ot">&lt;-</span> crime_df <span class="sc">|&gt;</span></span>
@@ -687,12 +697,12 @@ Figure&nbsp;1: Downloading data on reported crimes through <a href="https://data
 <pre><code># A tibble: 6 × 12
   crime_id  month reported_by falls_within longitude latitude location lsoa_code
   &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;            &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;    
-1 62b0f525… 2023… City of Lo… City of Lon…   -0.0916     51.5 On or n… E01000002
-2 9a078d63… 2023… City of Lo… City of Lon…   -0.0952     51.5 On or n… E01032739
-3 f175a32e… 2023… City of Lo… City of Lon…   -0.0872     51.5 On or n… E01032739
-4 137ec120… 2023… City of Lo… City of Lon…   -0.0783     51.5 On or n… E01032739
-5 4c3b4677… 2023… City of Lo… City of Lon…   -0.108      51.5 On or n… E01032740
-6 13b5eb5c… 2023… City of Lo… City of Lon…   -0.0980     51.5 On or n… E01032740
+1 f39615e0… 2025… City of Lo… City of Lon…   -0.0925     51.5 On or n… E01000002
+2 342ec0e1… 2025… City of Lo… City of Lon…   -0.0901     51.5 On or n… E01000002
+3 52983bbb… 2025… City of Lo… City of Lon…   -0.0788     51.5 On or n… E01000005
+4 b0de6b48… 2025… City of Lo… City of Lon…   -0.0818     51.5 On or n… E01032739
+5 0992e08f… 2025… City of Lo… City of Lon…   -0.0965     51.5 On or n… E01032739
+6 93611647… 2025… City of Lo… City of Lon…   -0.101      51.5 On or n… E01032739
 # ℹ 4 more variables: lsoa_name &lt;chr&gt;, crime_type &lt;chr&gt;,
 #   last_outcome_category &lt;chr&gt;, context &lt;lgl&gt;</code></pre>
 </div>
@@ -716,22 +726,22 @@ Figure&nbsp;1: Downloading data on reported crimes through <a href="https://data
 <pre><code>Simple feature collection with 6 features and 10 fields
 Geometry type: POINT
 Dimension:     XY
-Bounding box:  xmin: 531388 ymin: 180914 xmax: 533447 ymax: 181727.9
+Bounding box:  xmin: 531847 ymin: 181156 xmax: 533407 ymax: 181926.9
 Projected CRS: OSGB36 / British National Grid
 # A tibble: 6 × 11
   crime_id           month reported_by falls_within location lsoa_code lsoa_name
   &lt;chr&gt;              &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;    
-1 62b0f525fc471c062… 2023… City of Lo… City of Lon… On or n… E01000002 City of …
-2 9a078d630cf67c37c… 2023… City of Lo… City of Lon… On or n… E01032739 City of …
-3 f175a32ef7f90c67a… 2023… City of Lo… City of Lon… On or n… E01032739 City of …
-4 137ec1201fd64b578… 2023… City of Lo… City of Lon… On or n… E01032739 City of …
-5 4c3b467755a98afa3… 2023… City of Lo… City of Lon… On or n… E01032740 City of …
-6 13b5eb5ca0aef09a2… 2023… City of Lo… City of Lon… On or n… E01032740 City of …
+1 f39615e054dd6ced4… 2025… City of Lo… City of Lon… On or n… E01000002 City of …
+2 342ec0e118067e0a8… 2025… City of Lo… City of Lon… On or n… E01000002 City of …
+3 52983bbb3fa5f2c0f… 2025… City of Lo… City of Lon… On or n… E01000005 City of …
+4 b0de6b48cbd276a48… 2025… City of Lo… City of Lon… On or n… E01032739 City of …
+5 0992e08fa4e37dc9f… 2025… City of Lo… City of Lon… On or n… E01032739 City of …
+6 93611647e6ea48308… 2025… City of Lo… City of Lon… On or n… E01032739 City of …
 # ℹ 4 more variables: crime_type &lt;chr&gt;, last_outcome_category &lt;chr&gt;,
 #   context &lt;lgl&gt;, geometry &lt;POINT [m]&gt;</code></pre>
 </div>
 </div>
-<p>Let’s map the dataset to get an idea of how the data looks like, using the outline of London as background:</p>
+<p>Let’s map the dataset to get an idea of what the data looks like, using the outline of London as background:</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -797,7 +807,7 @@ Figure&nbsp;2: Reported bicycle thefts in London.
 <pre><strong>R code</strong></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># write</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_write</span>(theft_bike, <span class="st">"data/spatial/London-BicycleTheft-2023.gpkg"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_write</span>(theft_bike, <span class="st">"data/spatial/London-BicycleTheft-2025.gpkg"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </section>
@@ -906,7 +916,7 @@ Projected CRS: OSGB36 / British National Grid
 5                   &lt;NA&gt; 3314 MULTIPOINT ((504982.3 17581...</code></pre>
 </div>
 </div>
-<p>The number of points tagged as station in the railway field are most likely the only points in our dataset that represent actual stations, so we will only retain those points.</p>
+<p>The points tagged as station in the railway field are most likely the only points in our dataset that represent actual stations, so we will only retain those points.</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -917,7 +927,7 @@ Projected CRS: OSGB36 / British National Grid
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(railway <span class="sc">==</span> <span class="st">"station"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
-<p>Let’s map the dataset to get an idea of how the data looks like, using the outline of London as background:</p>
+<p>Let’s map the dataset to get an idea of what the data looks like, using the outline of London as background:</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -996,17 +1006,17 @@ Figure&nbsp;3: Train and underground stations in London.
 <pre><code>Simple feature collection with 6 features and 11 fields
 Geometry type: POINT
 Dimension:     XY
-Bounding box:  xmin: 531388 ymin: 180914 xmax: 533447 ymax: 181727.9
+Bounding box:  xmin: 531847 ymin: 181156 xmax: 533407 ymax: 181926.9
 Projected CRS: OSGB36 / British National Grid
 # A tibble: 6 × 12
   crime_id           month reported_by falls_within location lsoa_code lsoa_name
   &lt;chr&gt;              &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;    
-1 62b0f525fc471c062… 2023… City of Lo… City of Lon… On or n… E01000002 City of …
-2 9a078d630cf67c37c… 2023… City of Lo… City of Lon… On or n… E01032739 City of …
-3 f175a32ef7f90c67a… 2023… City of Lo… City of Lon… On or n… E01032739 City of …
-4 137ec1201fd64b578… 2023… City of Lo… City of Lon… On or n… E01032739 City of …
-5 4c3b467755a98afa3… 2023… City of Lo… City of Lon… On or n… E01032740 City of …
-6 13b5eb5ca0aef09a2… 2023… City of Lo… City of Lon… On or n… E01032740 City of …
+1 f39615e054dd6ced4… 2025… City of Lo… City of Lon… On or n… E01000002 City of …
+2 342ec0e118067e0a8… 2025… City of Lo… City of Lon… On or n… E01000002 City of …
+3 52983bbb3fa5f2c0f… 2025… City of Lo… City of Lon… On or n… E01000005 City of …
+4 b0de6b48cbd276a48… 2025… City of Lo… City of Lon… On or n… E01032739 City of …
+5 0992e08fa4e37dc9f… 2025… City of Lo… City of Lon… On or n… E01032739 City of …
+6 93611647e6ea48308… 2025… City of Lo… City of Lon… On or n… E01032739 City of …
 # ℹ 5 more variables: crime_type &lt;chr&gt;, last_outcome_category &lt;chr&gt;,
 #   context &lt;lgl&gt;, geometry &lt;POINT [m]&gt;, d500 &lt;lgl&gt;</code></pre>
 </div>
@@ -1034,16 +1044,16 @@ Projected CRS: OSGB36 / British National Grid
 <pre><code>Simple feature collection with 2 features and 2 fields
 Geometry type: MULTIPOINT
 Dimension:     XY
-Bounding box:  xmin: 384131 ymin: 101512 xmax: 612925 ymax: 398061.1
+Bounding box:  xmin: 212146 ymin: 53145.11 xmax: 580025 ymax: 398976
 Projected CRS: OSGB36 / British National Grid
 # A tibble: 2 × 3
   d500      n                                                           geometry
 * &lt;lgl&gt; &lt;int&gt;                                                   &lt;MULTIPOINT [m]&gt;
-1 FALSE  5490 ((384131 398061.1), (409823 101512), (494953 212260), (495917 176…
-2 TRUE  10529 ((505376 184282.9), (505424 184212), (505433 184416), (505558 184…</code></pre>
+1 FALSE  4936 ((212146 54823.97), (273261.1 53145.11), (333765 397533), (382595…
+2 TRUE   9158 ((505376 184282.9), (505424 184212), (505433 184416), (505449 184…</code></pre>
 </div>
 </div>
-<p>More than two-thirds of all reported bicycle thefts in London occur within 500 metres of a train or underground station. Of course, we can map the results for a visual inspection:</p>
+<p>Around two-thirds of all reported bicycle thefts in London occur within 500 metres of a train or underground station. Of course, we can map the results for a visual inspection:</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -1183,7 +1193,7 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 <span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># shape</span></span>
 <span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(osm_stations_buffer) <span class="sc">+</span></span>
 <span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># specify colours</span></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># map data</span></span>
 <span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(</span>
 <span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"#beaed4"</span>,</span>
 <span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
@@ -1215,22 +1225,23 @@ Figure&nbsp;5: Train and underground stations in London with a 500 metres buffer
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># intersect buffer with bicycle thefts</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>theft_bike<span class="sc">$</span>d500_buffer <span class="ot">&lt;-</span> theft_bike <span class="sc">|&gt;</span></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_intersects</span>(osm_stations_buffer, <span class="at">sparse =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="co"># number of bicycle thefts within 500m of a station</span></span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(theft_bike, d500_buffer)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_intersects</span>(osm_stations_buffer, <span class="at">sparse =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.vector</span>()</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="co"># number of bicycle thefts within 500m of a station</span></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(theft_bike, d500_buffer)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 2 features and 2 fields
 Geometry type: MULTIPOINT
 Dimension:     XY
-Bounding box:  xmin: 384131 ymin: 101512 xmax: 612925 ymax: 398061.1
+Bounding box:  xmin: 212146 ymin: 53145.11 xmax: 580025 ymax: 398976
 Projected CRS: OSGB36 / British National Grid
 # A tibble: 2 × 3
-  d500_buffer[,1]     n                                                 geometry
-* &lt;lgl&gt;           &lt;int&gt;                                         &lt;MULTIPOINT [m]&gt;
-1 FALSE            5496 ((384131 398061.1), (409823 101512), (494953 212260), (…
-2 TRUE            10523 ((505376 184282.9), (505424 184212), (505433 184416), (…</code></pre>
+  d500_buffer     n                                                     geometry
+* &lt;lgl&gt;       &lt;int&gt;                                             &lt;MULTIPOINT [m]&gt;
+1 FALSE        4939 ((212146 54823.97), (273261.1 53145.11), (333765 397533), (…
+2 TRUE         9155 ((505376 184282.9), (505424 184212), (505433 184416), (5054…</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-important">
@@ -1239,7 +1250,7 @@ Projected CRS: OSGB36 / British National Grid
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>The results are almost identical, with a small difference due to how the two methods define within and handle spatial relationships and boundaries. For instance, a point on the buffer’s edge will be included in the intersect method, but may not meet the distance threshold required by <code>st_within_distance()</code>.</p>
+<p>The results are almost identical, with a small difference due to how the two methods define within and handle spatial relationships and boundaries. For instance, a point on the buffer’s edge will be included in the intersect method, but may not meet the distance threshold required by <code>st_is_within_distance()</code>.</p>
 </div>
 </div>
 </div>
@@ -1247,14 +1258,14 @@ Projected CRS: OSGB36 / British National Grid
 </section>
 <section id="assignment" class="level2" data-number="1.4">
 <h2 data-number="1.4" class="anchored" data-anchor-id="assignment"><span class="header-section-number">1.4</span> Assignment</h2>
-<p>Now that we are familiar with basic spatial queries and geometric operations, we can conduct a similar analysis on the number of <em>serious</em> and <em>fatal</em> road crashed in London in 2022 and determine how many occurred on or near a main road. Try to do the following:</p>
+<p>Now that we are familiar with basic spatial queries and geometric operations, we can conduct a similar analysis on the number of <em>serious</em> and <em>fatal</em> road crashes in London in 2025 and determine how many occurred on or near a main road. Try to do the following:</p>
 <ol type="1">
 <li>Download the two datasets provided below and save them in the appropriate subfolder within your <code>data</code> directory. The datasets include:
 <ul>
-<li>A <code>csv</code> file containing the number of road crashes that occurred in London in 2022, extracted from the UK’s official road traffic casualty database using the <a href="https://github.com/ropensci/stats19">stats19</a> R library.</li>
+<li>A <code>csv</code> file containing the number of road crashes that occurred in London in 2025, extracted from the UK’s official road traffic casualty database using the <a href="https://github.com/ropensci/stats19">stats19</a> R library.</li>
 <li>A <code>GeoPackage</code> file that contains main roads in London, extracted from the <a href="https://www.ordnancesurvey.co.uk/products/os-open-roads">Ordnance Survey Open Roads</a> dataset.</li>
 </ul></li>
-<li>Calculate the number of <em>serious</em> and <em>fatal</em> road crashes that occurred within 100 metres and 500 metres of a main road.</li>
+<li>Choose a distance threshold that you think reasonably captures whether a crash happened “near” a main road, and calculate how many <em>serious</em> and <em>fatal</em> crashes fall within it.</li>
 </ol>
 <table class="caption-top table">
 <thead>
@@ -1266,9 +1277,9 @@ Projected CRS: OSGB36 / British National Grid
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">London STATS19 Road Collisions 2022</td>
+<td style="text-align: left;">London STATS19 Road Collisions 2025</td>
 <td style="text-align: left;"><code>csv</code></td>
-<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/London-Collisions-2022.csv">Download</a></td>
+<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/London-Collisions-2025.csv">Download</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">London OS Open Roads - Main Roads</td>

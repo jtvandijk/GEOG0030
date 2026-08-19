@@ -461,6 +461,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#essential-readings" id="toc-essential-readings" class="nav-link" data-scroll-target="#essential-readings">Essential readings</a></li>
   <li><a href="#suggested-readings" id="toc-suggested-readings" class="nav-link" data-scroll-target="#suggested-readings">Suggested readings</a></li>
   </ul></li>
+  <li><a href="#start-of-session" id="toc-start-of-session" class="nav-link" data-scroll-target="#start-of-session">Start of session</a></li>
   <li><a href="#bike-theft-in-london-ii" id="toc-bike-theft-in-london-ii" class="nav-link" data-scroll-target="#bike-theft-in-london-ii"><span class="header-section-number">1.3</span> Bike theft in London II</a>
   <ul class="collapse">
   <li><a href="#point-aggregation" id="toc-point-aggregation" class="nav-link" data-scroll-target="#point-aggregation"><span class="header-section-number">1.3.1</span> Point aggregation</a></li>
@@ -508,6 +509,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 </section>
 </section>
+<section id="start-of-session" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="start-of-session">Start of session</h2>
+<p>Before working through the tutorial, we will spend a few minutes looking at:</p>
+<ul>
+<li>Identical coordinates among the bicycle theft points</li>
+<li>How <code>spatstat</code> stores point data differently to <code>sf</code></li>
+<li>The difference between <code>st_intersects()</code> and <code>st_intersection()</code></li>
+</ul>
+</section>
 <section id="bike-theft-in-london-ii" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="bike-theft-in-london-ii"><span class="header-section-number">1.3</span> Bike theft in London II</h2>
 <p>This week, we will revisit bicycle theft in London, focusing specifically on identifying patterns and clusters of theft incidents. To do this, we will use the <a href="02-operations.html#crime-data">bicycle theft dataset</a> that we prepared last week, along with the 2021 MSOA boundaries for London. If you no longer have a copy of these files on your computer, you can download them using the links provided below.</p>
@@ -521,9 +531,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">London Bicycle Theft 2023</td>
+<td style="text-align: left;">London Bicycle Theft 2025</td>
 <td style="text-align: left;"><code>GeoPackage</code></td>
-<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/raw/refs/heads/master/data/spatial/London-BicycleTheft-2023.gpkg">Download</a></td>
+<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/raw/refs/heads/master/data/spatial/London-BicycleTheft-2025.gpkg">Download</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">London MSOA 2021 Spatial Boundaries</td>
@@ -558,7 +568,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>As always, we will start by loading loading our files into memory:</p>
+<p>As always, we will start by loading our files into memory:</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -578,15 +588,15 @@ Bounding box:  xmin: 503574.2 ymin: 155850.8 xmax: 561956.7 ymax: 200933.6
 Projected CRS: OSGB36 / British National Grid</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load bicycle theft dataset</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>theft_bike <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/spatial/London-BicycleTheft-2023.gpkg"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>theft_bike <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/spatial/London-BicycleTheft-2025.gpkg"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Reading layer `London-BicycleTheft-2023' from data source 
-  `/Users/justinvandijk/Library/CloudStorage/Dropbox/UCL/Web/jtvandijk.github.io/GEOG0030/data/spatial/London-BicycleTheft-2023.gpkg' 
+<pre><code>Reading layer `London-BicycleTheft-2025' from data source 
+  `/Users/justinvandijk/Library/CloudStorage/Dropbox/UCL/Web/jtvandijk.github.io/GEOG0030/data/spatial/London-BicycleTheft-2025.gpkg' 
   using driver `GPKG'
-Simple feature collection with 16019 features and 10 fields
+Simple feature collection with 14094 features and 10 fields
 Geometry type: POINT
 Dimension:     XY
-Bounding box:  xmin: 384035.6 ymin: 101574.6 xmax: 612801.1 ymax: 398089
+Bounding box:  xmin: 212146 ymin: 53145.11 xmax: 580025 ymax: 398976
 Projected CRS: OSGB36 / British National Grid</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
@@ -618,43 +628,36 @@ Projected CRS: OSGB36 / British National Grid
 <pre><code>Simple feature collection with 6 features and 10 fields
 Geometry type: POINT
 Dimension:     XY
-Bounding box:  xmin: 531274.9 ymin: 180967.9 xmax: 533333.7 ymax: 181781.7
+Bounding box:  xmin: 531847 ymin: 181156 xmax: 533407 ymax: 181926.9
 Projected CRS: OSGB36 / British National Grid
                                                           crime_id   month
-1 62b0f525fc471c062463ec87469c71e133cdd1c39a09e2bc5ec50c0cbbdd650a 2023-01
-2 9a078d630cf67c37c9e47b5904149d553697931d920eec993f358a637fbf6186 2023-01
-3 f175a32ef7f90c67a5cb83c268ad793e4ce7e0ae19e52b57d213805e65651bdd 2023-01
-4 137ec1201fd64b57898d3558fe3b8000182442e957efc28246797ea61065c86b 2023-01
-5 4c3b467755a98afa3d3c82b526307750ddad9ec13598aaa68130b76863e112cb 2023-01
-6 13b5eb5ca0aef09a222221fbab8da799d55b5a65716f1bbb7cc96e36aebdc816 2023-01
-            reported_by          falls_within                   location
-1 City of London Police City of London Police                 On or near
-2 City of London Police City of London Police                 On or near
-3 City of London Police City of London Police  On or near Lombard Street
-4 City of London Police City of London Police    On or near Mitre Street
-5 City of London Police City of London Police   On or near Temple Avenue
-6 City of London Police City of London Police On or near Montague Street
+1 f39615e054dd6ced4e7cac76acaaf0312429b67d1c944fddc6a165330c691de2 2025-01
+2 342ec0e118067e0a88fc7c5fdf4b80520a3793ea625d0ab44ff5d87522d27025 2025-01
+3 52983bbb3fa5f2c0faec4fa45ed12581bb5236aedad0553923d76b79290c8243 2025-01
+4 b0de6b48cbd276a48ca2a41683c1fcf3cfbb6baf15289234ecf420b9e1e9112f 2025-01
+5 0992e08fa4e37dc9ffea6905f6ec88b32a2f03ac5bac1a6d366a1b59bd9aea07 2025-01
+6 93611647e6ea48308dcbb9f0ad59adc13661e66f301240d85c3806a660989ecf 2025-01
+            reported_by          falls_within                 location
+1 City of London Police City of London Police   On or near Silk Street
+2 City of London Police City of London Police  On or near Milton Court
+3 City of London Police City of London Police   On or near Houndsditch
+4 City of London Police City of London Police On or near Pindar Street
+5 City of London Police City of London Police    On or near New Change
+6 City of London Police City of London Police    On or near Amen Court
   lsoa_code           lsoa_name    crime_type
 1 E01000002 City of London 001B Bicycle theft
-2 E01032739 City of London 001F Bicycle theft
-3 E01032739 City of London 001F Bicycle theft
+2 E01000002 City of London 001B Bicycle theft
+3 E01000005 City of London 001E Bicycle theft
 4 E01032739 City of London 001F Bicycle theft
-5 E01032740 City of London 001G Bicycle theft
-6 E01032740 City of London 001G Bicycle theft
-                          last_outcome_category context
-1 Investigation complete; no suspect identified      NA
-2 Investigation complete; no suspect identified      NA
-3 Investigation complete; no suspect identified      NA
-4 Investigation complete; no suspect identified      NA
-5 Investigation complete; no suspect identified      NA
-6 Investigation complete; no suspect identified      NA
-                       geom
-1 POINT (532390.8 181781.7)
-2 POINT (532157.8 181196.8)
-3 POINT (532720.7 181087.8)
-4 POINT (533333.7 181219.8)
-5 POINT (531274.9 180967.9)
-6 POINT (531956.8 181624.8)</code></pre>
+5 E01032739 City of London 001F Bicycle theft
+6 E01032739 City of London 001F Bicycle theft
+                          last_outcome_category context                    geom
+1 Investigation complete; no suspect identified      NA   POINT (532441 181911)
+2 Investigation complete; no suspect identified      NA   POINT (532608 181849)
+3                   Unable to prosecute suspect      NA   POINT (533407 181356)
+4                   Unable to prosecute suspect      NA POINT (533182 181926.9)
+5 Investigation complete; no suspect identified      NA   POINT (532182 181156)
+6                   Unable to prosecute suspect      NA POINT (531847 181247.1)</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note">
@@ -829,7 +832,7 @@ Figure&nbsp;2: Bike theft in London represented as <code>ppp</code> object.
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># count number of duplicated points</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">multiplicity</span>(theft_bike_ppp) <span class="sc">&gt;</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 10003</code></pre>
+<pre><code>[1] 8122</code></pre>
 </div>
 </div>
 <p>To address this, we have three options:</p>
@@ -844,7 +847,7 @@ Figure&nbsp;2: Bike theft in London represented as <code>ppp</code> object.
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add ajitter</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add jitter</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>theft_bike_jitter <span class="ot">&lt;-</span> <span class="fu">rjitter</span>(theft_bike_ppp, <span class="at">radius =</span> <span class="dv">5</span>, <span class="at">retry =</span> <span class="cn">TRUE</span>, <span class="at">nsim =</span> <span class="dv">1</span>,</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">drop =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -897,7 +900,7 @@ Figure&nbsp;3: Kernel density estimation - bandwidth 500m.
 </div>
 </div>
 </div>
-<p>We can see from just our KDE that there are visible clusters present within our bike theft data, particularly in and around Central London. We can go ahead and increase the bandwidth to to see how that affects the density estimate:</p>
+<p>We can see from just our KDE that there are visible clusters present within our bike theft data, particularly in and around Central London. We can go ahead and increase the bandwidth to see how that affects the density estimate:</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -1180,12 +1183,12 @@ Figure&nbsp;6: DBSCAN-identified clusters of reported bicycle theft in London.
 </section>
 <section id="assignment" class="level2" data-number="1.4">
 <h2 data-number="1.4" class="anchored" data-anchor-id="assignment"><span class="header-section-number">1.4</span> Assignment</h2>
-<p>Now that we know how to work with point locatoin data, we can again apply a similar analysis to road crashes in London in 2022 <a href="02-operations.html#assignment">that we used last week</a>. This time we will use this dataset to assess whether road crashes cluster in specific areas. Try the following:</p>
+<p>Now that we know how to work with point location data, we can again apply a similar analysis to road crashes in London in 2025 <a href="02-operations.html#assignment">that we used last week</a>. This time we will use this dataset to assess whether road crashes cluster in specific areas. Try the following:</p>
 <ol type="1">
-<li>Create a Kernel Density Estimation (KDE) of <em>all</em> road crashes that occurred in London in 2022.</li>
-<li>Using DBSCAN output, create a cluster map of <em>serious</em> and <em>fatal</em> road crashes in London</li>
+<li>Choose a bandwidth for your Kernel Density Estimation (KDE) that you think best reveals clustering in <em>all</em> road crashes that occurred in London in 2025, and map the result.</li>
+<li>Choose <code>eps</code> and <code>minPts</code> values for DBSCAN that you think reasonably define a cluster, and use the output to create a cluster map of <em>serious</em> and <em>fatal</em> road crashes in London.</li>
 </ol>
-<p>If you no longer have a copy of the 2022 London STATS19 Road Collision dataset, you can download it using the link provided below.</p>
+<p>If you no longer have a copy of the 2025 London STATS19 Road Collision dataset, you can download it using the link provided below.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -1196,9 +1199,9 @@ Figure&nbsp;6: DBSCAN-identified clusters of reported bicycle theft in London.
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">London STATS19 Road Collisions 2022</td>
+<td style="text-align: left;">London STATS19 Road Collisions 2025</td>
 <td style="text-align: left;"><code>csv</code></td>
-<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/London-Collisions-2022.csv">Download</a></td>
+<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/London-Collisions-2025.csv">Download</a></td>
 </tr>
 </tbody>
 </table>

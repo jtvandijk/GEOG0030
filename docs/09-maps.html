@@ -516,7 +516,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>You can download three files below and save them in your project folder under <code>data/attributes</code>. Along with these dataset, we also have access to a <code>GeoPackage</code> that contains the 2021 LSOA boundaries.</p>
+<p>You can download three files below and save them in your project folder under <code>data/attributes</code>. Along with these datasets, we also have access to a <code>GeoPackage</code> that contains the 2021 LSOA boundaries.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -717,8 +717,8 @@ chr (5): lsoa11cd, lsoa11nm, lsoa21cd, lsoa21nm, chgind
 </table>
 <p>Although there are different approaches to handling this, today we will:</p>
 <ol type="1">
-<li>Divide the total crimes for 2011 LSOAs that have been split equally across the corresponding 2021 LSOAs.</li>
-<li>Combine the total crimes for 2011 LSOAs that have been merged into a single 2021 LSOA.</li>
+<li>Divide the total unemployment figures for 2011 LSOAs that have been split equally across the corresponding 2021 LSOAs.</li>
+<li>Combine the total unemployment figures for 2011 LSOAs that have been merged into a single 2021 LSOA.</li>
 </ol>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
@@ -823,7 +823,7 @@ chr (5): lsoa11cd, lsoa11nm, lsoa21cd, lsoa21nm, chgind
 <pre><code>[1] 5016</code></pre>
 </div>
 </div>
-<p>Somehow, the number of our LSOAs seem to have increased. However, this is not an actual increase in LSOAs; rather, the change in the number of LSOAs is due to <em>our one-to-many</em> relationships. A single 2011 LSOA can correspond to multiple 2021 LSOAs, which causes the data for that 2011 LSOA to be duplicated in the join operation. Fortunately, we anticipated this and have already created the necessary weightings. We can now apply these weightings to assign our 2011 population estimates to the 2021 LSOA boundaries as follows:</p>
+<p>Somehow, the number of our LSOAs seems to have increased. However, this is not an actual increase in LSOAs; rather, the change in the number of LSOAs is due to <em>our one-to-many</em> relationships. A single 2011 LSOA can correspond to multiple 2021 LSOAs, which causes the data for that 2011 LSOA to be duplicated in the join operation. Fortunately, we anticipated this and have already created the necessary weightings. We can now apply these weightings to assign our 2011 population estimates to the 2021 LSOA boundaries as follows:</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -885,7 +885,7 @@ chr (5): lsoa11cd, lsoa11nm, lsoa21cd, lsoa21nm, chgind
 <section id="making-bivariate-maps" class="level3" data-number="1.3.2">
 <h3 data-number="1.3.2" class="anchored" data-anchor-id="making-bivariate-maps"><span class="header-section-number">1.3.2</span> Making bivariate maps</h3>
 <p>Bivariate maps are visualisations that represent two different variables simultaneously on a single map, using combinations of colours, patterns, or symbols to convey relationships between them. They are commonly used to explore spatial correlations or patterns, such as comparing population density with income levels across a region. We will use a bivariate map to illustrate changes in unemployment between 2011 and 2021 in London.</p>
-<p>We will start by calculating unemployment rates for both years and classifing them into categories using the <code>biscale</code> library:</p>
+<p>We will start by calculating unemployment rates for both years and classifying them into categories using the <code>biscale</code> library:</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
 <div class="code-with-filename-file">

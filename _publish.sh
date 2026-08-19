@@ -4,7 +4,7 @@
 # rm -r *_cache *_files
 
 # render
-quarto render
+quarto render --no-clean
 
 # fix section numbers
 source activate simple

@@ -461,6 +461,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#essential-readings" id="toc-essential-readings" class="nav-link" data-scroll-target="#essential-readings">Essential readings</a></li>
   <li><a href="#suggested-readings" id="toc-suggested-readings" class="nav-link" data-scroll-target="#suggested-readings">Suggested readings</a></li>
   </ul></li>
+  <li><a href="#start-of-session" id="toc-start-of-session" class="nav-link" data-scroll-target="#start-of-session">Start of session</a></li>
   <li><a href="#europeans-in-london" id="toc-europeans-in-london" class="nav-link" data-scroll-target="#europeans-in-london"><span class="header-section-number">1.3</span> Europeans in London</a>
   <ul class="collapse">
   <li><a href="#exploring-spatial-data" id="toc-exploring-spatial-data" class="nav-link" data-scroll-target="#exploring-spatial-data"><span class="header-section-number">1.3.1</span> Exploring spatial data</a></li>
@@ -507,6 +508,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Yuan, M. 2001. Representing complex geographic phenomena in GIS. <em>Cartography and Geographic Information Science</em> 28(2): 83-96. <a href="https://doi.org/10.1559/152304001782173718">[Link]</a></li>
 </ul>
 </section>
+</section>
+<section id="start-of-session" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="start-of-session">Start of session</h2>
+<p>Before working through the tutorial, we will spend a few minutes looking at:</p>
+<ul>
+<li>The raw population data as downloaded from ONS, before any cleaning</li>
+<li>The attribute table of the GeoPackage, before it is loaded into R</li>
+<li>A live example of a “file not found” error, and how to fix it</li>
+</ul>
 </section>
 <section id="europeans-in-london" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="europeans-in-london"><span class="header-section-number">1.3</span> Europeans in London</h2>
@@ -1381,7 +1391,7 @@ Figure&nbsp;8: Building up a map layer by layer.
 </ul></li>
 <li>Load both datasets and merge them together. Make sure to only retain those MSOAs that belong to Wales.</li>
 <li>Create a map that shows the proportion of the population residing in Wales that is born in Europe.</li>
-<li>Experiment by adjusting various map parameters, such as the colour scheme, map labels, and data classification method.</li>
+<li>Choose a classification method (e.g.&nbsp;equal interval, quantile, natural breaks) that you think best represents the distribution of your data.</li>
 </ol>
 <table class="caption-top table">
 <thead>

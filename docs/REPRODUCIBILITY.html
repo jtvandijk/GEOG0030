@@ -36,7 +36,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./01-spatial.html" rel="next">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -254,7 +253,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./00-index.html">Module overview</a></li><li class="breadcrumb-item"><a href="./00-index.html">Welcome</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -291,7 +290,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./00-index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./00-index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Welcome</span></a>
   </div>
 </li>
@@ -417,189 +416,158 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#geocomputation" id="toc-geocomputation" class="nav-link active" data-scroll-target="#geocomputation">Geocomputation</a>
+  <li><a href="#reproducibility" id="toc-reproducibility" class="nav-link active" data-scroll-target="#reproducibility"><span class="header-section-number">1</span> Reproducibility</a>
   <ul>
-  <li><a href="#welcome" id="toc-welcome" class="nav-link" data-scroll-target="#welcome">Welcome</a></li>
-  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
-  <li><a href="#moodle" id="toc-moodle" class="nav-link" data-scroll-target="#moodle">Moodle</a></li>
-  <li><a href="#module-overview" id="toc-module-overview" class="nav-link" data-scroll-target="#module-overview">Module overview</a></li>
-  <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting">Troubleshooting</a></li>
-  <li><a href="#major-updates" id="toc-major-updates" class="nav-link" data-scroll-target="#major-updates">Major updates</a></li>
-  <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements">Acknowledgements</a></li>
+  <li><a href="#r-packages-used-in-the-teaching-material" id="toc-r-packages-used-in-the-teaching-material" class="nav-link" data-scroll-target="#r-packages-used-in-the-teaching-material"><span class="header-section-number">1.1</span> R packages used in the teaching material</a></li>
+  <li><a href="#additional-packages-required-to-build-the-site" id="toc-additional-packages-required-to-build-the-site" class="nav-link" data-scroll-target="#additional-packages-required-to-build-the-site"><span class="header-section-number">1.2</span> Additional packages required to build the site</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/jtvandijk/GEOG0030/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./00-index.html">Module overview</a></li><li class="breadcrumb-item"><a href="./00-index.html">Welcome</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
 
 
-<section id="geocomputation" class="level1 unnumbered">
-<h1 class="unnumbered">Geocomputation</h1>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="images/w00/geocomputation-welcome.png" class="img-fluid figure-img" style="width:100.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-<section id="welcome" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="welcome">Welcome</h2>
-<p>Welcome to <strong>Geocomputation</strong>. This module offers a deep dive into the principles of spatial analysis and data visualisation while providing a thorough introduction to reproducible research. Over the next ten weeks, you will explore the theory, methods, and tools of spatial analysis through engaging case studies. You will gain hands-on experience in sourcing, managing, cleaning, analysing and presenting spatial, demographic, and socioeconomic datasets.</p>
-</section>
-<section id="prerequisites" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="prerequisites">Prerequisites</h2>
-<p>Please be aware that for this module you are expected to have access to a working <strong>R v4.6</strong> installation and have a basic level of proficiency in programming with R. This includes skills such as installing libraries, loading data, calculating variables, and reshaping data.</p>
-<div class="callout callout-style-simple callout-important">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>For installation instructions and a refresher, please refer to the <em>Getting started</em> and <em>R for Data Analysis</em> tutorials in the <a href="https://jtvandijk.github.io/GEOG0018/00-index.html">GEOG0018: Methods in Human Geography</a> workbook.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="moodle" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="moodle">Moodle</h2>
-<p><a href="https://moodle.ucl.ac.uk/">Moodle</a> serves as the central hub for GEOG0030, where you will find all essential module information, including key details about assessments. This workbook provides links to all required reading materials and contains the content for each computer tutorial.</p>
-</section>
-<section id="module-overview" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="module-overview">Module overview</h2>
-<p>The topics covered over the next ten weeks are:</p>
+<section id="reproducibility" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Reproducibility</h1>
+<p>Package versions used to build the handbook, kept here for reference. This is documentation rather than an enforced lockfile — <code>renv</code> was evaluated in previous years but is not used, owing to <code>sf</code>’s system-level dependency on GDAL/GEOS/PROJ.</p>
+<p>Built with <a href="https://quarto.org">Quarto</a> <code>1.10.18</code> and R <code>4.6.1</code>.</p>
+<section id="r-packages-used-in-the-teaching-material" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="r-packages-used-in-the-teaching-material"><span class="header-section-number">1.1</span> R packages used in the teaching material</h2>
+<p>The packages called via <code>library()</code> in the <code>.qmd</code> files. A student running the code independently of the rendered handbook would need these.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th style="text-align: left;">Week</th>
-<th style="text-align: left;">Section</th>
-<th style="text-align: left;">Topic</th>
+<th>Package</th>
+<th>Version</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">1</td>
-<td style="text-align: left;">Core Spatial Analysis</td>
-<td style="text-align: left;"><a href="01-spatial.html">Reproducible Spatial Analysis</a></td>
+<td>biscale</td>
+<td>1.1.0</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">2</td>
-<td style="text-align: left;">Core Spatial Analysis</td>
-<td style="text-align: left;"><a href="02-operations.html">Spatial Queries and Geometric Operations</a></td>
+<td>classInt</td>
+<td>0.4.11</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">3</td>
-<td style="text-align: left;">Core Spatial Analysis</td>
-<td style="text-align: left;"><a href="03-point-pattern.html">Point Pattern Analysis</a></td>
+<td>cluster</td>
+<td>2.1.8.2</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">4</td>
-<td style="text-align: left;">Core Spatial Analysis</td>
-<td style="text-align: left;"><a href="04-autocorrelation.html">Spatial Autocorrelation</a></td>
+<td>cowplot</td>
+<td>1.2.0</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">5</td>
-<td style="text-align: left;">Core Spatial Analysis</td>
-<td style="text-align: left;"><a href="05-models.html">Spatial Models</a></td>
+<td>dbscan</td>
+<td>1.2.5</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"></td>
-<td style="text-align: left;"><strong>Reading week</strong></td>
-<td style="text-align: left;"><strong>Reading week</strong></td>
+<td>dodgr</td>
+<td>0.4.3</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">6</td>
-<td style="text-align: left;">Applied Spatial Analysis</td>
-<td style="text-align: left;"><a href="06-raster.html">Raster Data Analysis</a></td>
+<td>easystats</td>
+<td>0.7.6</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">7</td>
-<td style="text-align: left;">Applied Spatial Analysis</td>
-<td style="text-align: left;"><a href="07-geodemographics.html">Geodemographic Classification</a></td>
+<td>factoextra</td>
+<td>2.2.0</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">8</td>
-<td style="text-align: left;">Applied Spatial Analysis</td>
-<td style="text-align: left;"><a href="08-network.html">Accessibility Analysis</a></td>
+<td>ggcorrplot</td>
+<td>0.3.0</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">9</td>
-<td style="text-align: left;">Data Visualisation</td>
-<td style="text-align: left;"><a href="09-maps.html">Beyond the Choropleth</a></td>
+<td>GWmodel</td>
+<td>2.4.1</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">10</td>
-<td style="text-align: left;">Data Visualisation</td>
-<td style="text-align: left;"><a href="10-datavis.html">Complex Visualisations</a></td>
+<td>gstat</td>
+<td>2.1.6</td>
+</tr>
+<tr class="even">
+<td>janitor</td>
+<td>2.2.1</td>
+</tr>
+<tr class="odd">
+<td>openair</td>
+<td>3.1.0</td>
+</tr>
+<tr class="even">
+<td>osmdata</td>
+<td>0.4.0</td>
+</tr>
+<tr class="odd">
+<td>sf</td>
+<td>1.1.2</td>
+</tr>
+<tr class="even">
+<td>spatstat</td>
+<td>3.6.2</td>
+</tr>
+<tr class="odd">
+<td>spdep</td>
+<td>1.4.2</td>
+</tr>
+<tr class="even">
+<td>terra</td>
+<td>1.9.34</td>
+</tr>
+<tr class="odd">
+<td>tidyverse</td>
+<td>2.0.0</td>
+</tr>
+<tr class="even">
+<td>tmap</td>
+<td>4.4.1</td>
+</tr>
+<tr class="odd">
+<td>treemapify</td>
+<td>2.6.1</td>
 </tr>
 </tbody>
 </table>
-<div class="callout callout-style-simple callout-note">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>This GitHub resource has been updated for the 2026-2027 academic year. The content for 2025-2026 has been archived and can be found here: <a href="https://jtvandijk.github.io/GEOG0030/2025-2026/">[Link]</a></p>
-</div>
-</div>
-</div>
 </section>
-<section id="troubleshooting" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="troubleshooting">Troubleshooting</h2>
-<p>For specific assistance with this module, you can:</p>
-<ul>
-<li>Refer to the <a href="https://moodle.ucl.ac.uk/">Moodle</a> assessment tab for queries about module assessments.</li>
-<li>Ask a question at the end of lectures or during the computer practicals.</li>
-<li>Attend the scheduled Geocomputation <strong>Additional Support Hours</strong>.</li>
-<li>Book into the <a href="https://outlook.office.com/bookwithme/user/8561a481703d4feda7a704ab81b62c8d@ucl.ac.uk?anonymous&amp;ep=plink">Academic Support and Feedback hours</a>.</li>
-</ul>
-</section>
-<section id="major-updates" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="major-updates">Major updates</h2>
-<div class="callout callout-style-simple callout-note">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>This year’s module material features the following <strong>major</strong> updates:</p>
-<ul>
-<li>Weeks 9 and 10 now focus on AI-assisted applied spatial analysis using Microsoft Copilot.</li>
-<li>Weeks 1-8 now open with a short “Start of session” section outlining what will be shown live at the start of the tutorial.</li>
-<li>The Data Sources page is now organised by theme rather than a single long list.</li>
-<li>Various bug fixes and dependency updates across the course material.</li>
-</ul>
-</div>
-</div>
-</div>
-</section>
-<section id="acknowledgements" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
-<p>This workbook is created using the <a href="https://quarto.org/">Quarto</a> publishing system. Elements of this workbook are partially based on and modified from:</p>
-<ul>
-<li>The <a href="https://jtvandijk.github.io/GEOG0030/2025-2026/">GEOG0030: Geocomputation 2025-2026</a> workbook by <a href="https://www.mappingdutchman.com">Justin van Dijk</a></li>
-<li>The <a href="https://jtvandijk.github.io/GEOG0030_20242025/">GEOG0030: Geocomputation 2024-2025</a> workbook by <a href="https://www.mappingdutchman.com">Justin van Dijk</a></li>
-<li>The <a href="https://jtvandijk.github.io/GEOG0030_20232024/">GEOG0030: Geocomputation 2023-2024</a> workbook by <a href="https://www.mappingdutchman.com">Justin van Dijk</a></li>
-<li>The <a href="https://jtvandijk.github.io/GEOG0030_20222023/">GEOG0030: Geocomputation 2022-2023</a> workbook by <a href="https://www.mappingdutchman.com">Justin van Dijk</a></li>
-<li>The <a href="https://jtvandijk.github.io/GEOG0030_20212022/">GEOG0030: Geocomputation 2021-2022</a> workbook by <a href="https://www.mappingdutchman.com">Justin van Dijk</a></li>
-<li>The <a href="https://jo-wilkin.github.io/GEOG0030/coursebook/index.html">GEOG0030: Geocomputation 2020-2021</a> workbook by <a href="https://github.com/jo-wilkin">Jo Wilkin</a></li>
-</ul>
-<p>This year’s workbook also takes inspiration and design elements from:</p>
-<ul>
-<li>The <a href="https://martinfleischmann.net/sds/">Spatial Data Science for Social Geography</a> course by <a href="https://martinfleischmann.net/">Martin Fleischmann</a></li>
-<li>The <a href="https://profrichharris.github.io/MandM/">Mapping and Modelling Geographic Data in R</a> course by <a href="https://profrichharris.github.io/">Richard Harris</a></li>
-</ul>
-<p>The datasets used in this workbook contain:</p>
-<ul>
-<li>Data from Office for National Statistics licensed under the Open Government Licence v.3.0</li>
-<li>OS data © Crown copyright and database right [2024]</li>
-</ul>
+<section id="additional-packages-required-to-build-the-site" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="additional-packages-required-to-build-the-site"><span class="header-section-number">1.2</span> Additional packages required to build the site</h2>
+<p>Required only to render the handbook, not by students. <code>formatR</code> and <code>styler</code> are invoked via knitr chunk options rather than <code>library()</code> calls.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Package</th>
+<th>Version</th>
+<th>Used for</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>formatR</td>
+<td>1.14</td>
+<td><code>#\| tidy: True</code> chunk option</td>
+</tr>
+<tr class="even">
+<td>styler</td>
+<td>1.11.0</td>
+<td><code>{r tidy='styler'}</code> chunk option</td>
+</tr>
+<tr class="odd">
+<td>knitr</td>
+<td>1.51</td>
+<td>rendering engine</td>
+</tr>
+<tr class="even">
+<td>rmarkdown</td>
+<td>2.31</td>
+<td>rendering engine</td>
+</tr>
+</tbody>
+</table>
+<p>A <code>simple</code> conda environment (<code>python=3</code>, <code>pandas</code>) is required for the section-numbering step in <code>_publish.sh</code> (<code>_section_numbers.py</code>).</p>
 
 
 </section>
@@ -1019,15 +987,6 @@ ul.task-list li input[type="checkbox"] {
     }
   });
   </script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
-  </div>
-  <div class="nav-page nav-page-next">
-      <a href="./01-spatial.html" class="pagination-link" aria-label="Reproducible Spatial Analysis">
-        <span class="nav-page-text">Reproducible Spatial Analysis</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
-  </div>
-</nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
