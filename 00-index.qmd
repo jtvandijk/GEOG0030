@@ -55,6 +55,7 @@ For specific assistance with this module, you can:
 This year's module material features the following **major** updates:
 
 - Weeks 9 and 10 now focus on AI-assisted applied spatial analysis using Microsoft Copilot.
+- Weeks 1-8 now open with a short "Start of session" section outlining what will be shown live at the start of the tutorial.
 - The Data Sources page is now organised by theme rather than a single long list.
 - Various bug fixes and dependency updates across the course material.
 :::

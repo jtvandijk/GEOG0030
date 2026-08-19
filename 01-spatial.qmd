@@ -16,7 +16,7 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 - Schurr, C., Müller, M. and Imhof, N. 2020. Who makes geographical knowledge? The gender of Geography’s gatekeepers. *The Professional Geographer* 72(3): 317-331. [[Link]](https://doi.org/10.1080/00330124.2020.1744169)
 - Yuan, M. 2001. Representing complex geographic phenomena in GIS. *Cartography and Geographic Information Science* 28(2): 83-96. [[Link]](https://doi.org/10.1559/152304001782173718)
 
-## Before we start {.unnumbered}
+## Start of session {.unnumbered}
 Before working through the tutorial, we will spend a few minutes looking at:
 
 - The raw population data as downloaded from ONS, before any cleaning
