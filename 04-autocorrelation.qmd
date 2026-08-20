@@ -558,7 +558,7 @@ Any statistic that includes spatial weights is dependent upon how those weights 
 4. Compute the Global Moran’s I of the `asian_indian` variable using this new neighbourhood definition.
 5. Map the statistically significant clusters of Local Moran's I based on this new neighbourhood definition.
 6. Compare these results to the output of our `asian_bangladeshi` values. Do both variables exhibit clustering? Are the clusters located in similar areas?
-7. Now imagine a different scenario: analysing the spread of a health condition passed on through the people we regularly come into social contact with. Which of contiguity, fixed distance, or k-nearest neighbours would you use to define neighbours, and why?
+7. Now imagine a different scenario: testing whether nearby areas have similarly high or low levels of air pollution, given that pollution is a continuous physical process that does not respect administrative boundaries. Which of contiguity, fixed distance, or k-nearest neighbours would you use to define neighbours, and why?
 
 ## Before you leave
 And that is how you can measure spatial dependence in your dataset through different spatial autocorrelation measures. Next week we will focus on the last topic within our set of core spatial analysis methods and techniques, but [this week we have covered enough](https://www.youtube.com/watch?v=svU7L8yhav8)! Probably time to get back to that pesky reading list.
