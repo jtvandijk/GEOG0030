@@ -380,7 +380,7 @@ The values of the KDE output are stored in the raster grid as `lyr.1`.
 :::
 
 #### DBSCAN
-Kernel Density Estimation is a useful exploratory technique for identifying spatial clusters in point data, but it does not provide precise boundaries for these clusters. To more accurately delineate clusters, we can use an algorithm called DBSCAN [(Density-Based Spatial Clustering of Applications with Noise)](https://cdn.aaai.org/KDD/1996/KDD96-037.pdf), which takes both distance and density into account. DBSCAN is effective at discovering distinct clusters by grouping together points that are close to one another while marking points that don't belong to any cluster as noise.
+Kernel Density Estimation is a useful exploratory technique for identifying spatial clusters in point data, but it does not provide precise boundaries for these clusters. To more accurately delineate clusters, we can use an algorithm called DBSCAN [(Density-Based Spatial Clustering of Applications with Noise)](https://cdn.aaai.org/KDD/1996/KDD96-037.pdf), which takes both distance and density into account. DBSCAN is effective at discovering distinct clusters by grouping together points that are close to one another while marking points that do not belong to any cluster as noise.
 
 DBSCAN requires two parameters:
 

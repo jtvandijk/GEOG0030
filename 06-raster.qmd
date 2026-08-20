@@ -16,6 +16,12 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 - Thomson, D., Leasure, D., Bird, T. *et al*. 2022. How accurate are WorldPop-Global-Unconstrained gridded population data at the cell-level? A simulation analysis in urban Namibia. *Plos ONE* 17:7: e0271504. [[Link]](https://doi.org/10.1371/journal.pone.0271504)
 
 
+## Start of session {.unnumbered}
+Before working through the tutorial, we will spend a few minutes looking at:
+
+- What raster data actually looks like
+- How WorldPop's population estimates compare to the census
+
 ## Population change in London
 For the first part of this week's practical material we will be using raster datasets from [WorldPop](https://hub.worldpop.org/). These population surfaces are estimates of counts of people, displayed within a regular grid raster of a spatial resolution of up to 100m. These datasets can be used to explore, for example, changes in the demographic profiles or area deprivation at small spatial scales.
 
@@ -686,9 +692,9 @@ We have set the output cell size to 1000x1000 metres. While a smaller cell size 
 Having run through all the steps during the tutorial, we can conduct some more granular analysis of the NO~2~ measurements. For example, instead of examining the annual average measurements, we could compare data across different months. Please try the following tasks:
 
 1. Create monthly averages for the pollution data.
-2. For both *June* and *December*, generate a dataframe containing the London monitoring sites along with their average NO₂ readings for these months.
+2. Choose two months that you expect to show a meaningful difference in NO₂ levels, and generate a dataframe containing the London monitoring sites along with their average NO₂ readings for each month.
 3. Perform Inverse Distance Weighting (IDW) interpolation for the data from both months.
-4. Combine the results to assess the differences between these months.
+4. Compare the results. Do the patterns match what you expected, and what might explain any differences you observe?
 
 ## Before you leave
 This week, we have explored raster datasets and how to manage and process them using the `terra` library. While you will typically encounter vector data, particularly in relation to government statistics and administrative boundaries, there are also many use cases where raster data may be encountered. With that being said: [that is it for this week](https://www.youtube.com/watch?v=8iwBM_YB1sE)!

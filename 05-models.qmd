@@ -19,7 +19,7 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 Before working through the tutorial, we will spend a few minutes looking at:
 
 - How `GWmodel` still relies on an older spatial format
-- Code in today's tutorial that won't be run live
+- Code in today's tutorial that will not be run live
 
 ## Elections results in England and Wales
 This week we will investigate the political geography of England and Wales, focusing on the results of the July 2024 General Election, which was won by the Labour Party led by Keir Starmer. You will work with data extracted from two data sources: the [constituency results from the election](https://commonslibrary.parliament.uk/research-briefings/cbp-10009/) and socio-demographic information relating to age groups, economic status, and ethnic background from the 2021 Census, extracted using the [Custom Dataset Tool](https://www.ons.gov.uk/datasets/create). These datasets have been prepared and merged. Along with this dataset, we also have access to a `GeoPackage` that contains the boundaries of the parliamentary constituencies.
