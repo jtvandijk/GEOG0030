@@ -19,19 +19,25 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 - Van Dijk, J., Krygsman, S. and De Jong, T. 2015. Toward spatial justice: The spatial equity effects of a toll road in Cape Town, South Africa. *Journal of Transport and Land Use* 8(3): 95-114. [[Link]](https://doi.org/10.5198/jtlu.2015.555)
 - Van Dijk, J. and De Jong, T. 2017. Post-processing GPS-tracks in reconstructing travelled routes in a GIS-environment: network subset selection and attribute adjustment. *Annals of GIS* 23(3): 203-217. [[Link]](https://doi.org/10.1080/19475683.2017.1340340)
 
+## Start of session {.unnumbered}
+Before working through the tutorial, we will spend a few minutes looking at:
+
+- Checking a filtered point count against a known reference figure
+- The connectivity of a road network extracted from a bounding box
+
 ## Accessibility in Lambeth
 This week, we will analyse the accessibility of fast-food outlets in the London Borough of Lambeth. Specifically, we will examine how closely these outlets are located within walking distance of primary and secondary schools, and explore any potential relationships between their proximity and the relative levels of deprivation in the area.
 
 We will extract the points of interest that we will use for this analysis from the [Point of Interest (POI) data for the United Kingdom](https://doi.org/10.1177/23998083241263124), obtained from the [Overture Maps Foundation](https://overturemaps.org/) and pre-processed by the [Geographic Data Service](https://data.geods.ac.uk/dataset/point-of-interest-data-for-the-united-kingdom#data-and-resources) to provide users with easy access.
 
-You can download a subset of the POI dataset via the link provided below, along with a copy of the 2011 London LSOAs spatial boundaries, the boundaries of the London Boroughs, and the 2019 English [Index of Multiple Deprivation](https://www.gov.uk/government/statistics/english-indices-of-deprivation-2019). Save these files in your project folder under `data`.
+You can download a subset of the POI dataset via the link provided below, along with a copy of the 2021 London LSOAs spatial boundaries, the boundaries of the London Boroughs, and the 2025 English [Index of Multiple Deprivation](https://www.gov.uk/government/statistics/english-indices-of-deprivation-2025). Save these files in your project folder under `data`.
 
 | File                                        | Type   | Link |
 | :------                                     | :------| :------ |
 | Lambeth Overture Points of Interest 2024    | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/master/data/spatial/Lambeth-POI-2024.gpkg) |
-| London LSOA 2011 Spatial Boundaries         | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/master/data/spatial/London-LSOA-2011.gpkg) |
+| London LSOA 2021 Spatial Boundaries         | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/master/data/spatial/London-LSOA-2021.gpkg) |
 | London Borough Spatial Boundaries           | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/master/data/spatial/London-Boroughs.gpkg) |
-| England 2019 Index of Multiple Deprivation  | `csv` | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/England-IMD-2019.csv) |
+| England 2025 Index of Multiple Deprivation  | `csv` | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/England-IMD-2025.csv) |
 
 ::: {.callout-tip}
 You may have already downloaded some of these datasets in previous weeks, but for completeness, they are all provided here. Only download the datasets you do not already have or did not save.
@@ -87,7 +93,7 @@ Next, we can load the spatial data into R.
 poi24 <- st_read('data/spatial/Lambeth-POI-2024.gpkg')
 
 # read lsoa dataset
-lsoa11 <- st_read('data/spatial/London-LSOA-2011.gpkg')
+lsoa21 <- st_read('data/spatial/London-LSOA-2021.gpkg')
 
 # read borough dataset
 borough <- st_read('data/spatial/London-Boroughs.gpkg')
@@ -106,7 +112,7 @@ Now, carefully examine each individual dataframe to understand how the data is s
 head(poi24)
 
 # inspect lsoa dataset
-head(lsoa11)
+head(lsoa21)
 
 # inspect borough dataset
 head(borough)
@@ -561,16 +567,16 @@ In the final step, we can investigate whether there is a relationship between th
 #| eval: True
 #| filename: 'R code'
 # read imd dataset
-imd19 <- read_csv('data/attributes/England-IMD-2019.csv')
+imd25 <- read_csv('data/attributes/England-IMD-2025.csv')
 
 # join imd
-lsoa11 <- lsoa11 |>
-  left_join(imd19, by = c('lsoa11cd'='lsoa11cd'))
+lsoa21 <- lsoa21 |>
+  left_join(imd25, by = c('lsoa21cd'='lsoa21cd'))
 
 # join schools to their parent lsoa
 poi_schools <- poi_schools |>
   st_transform(27700) |>
-  st_join(lsoa11)
+  st_join(lsoa21)
 ```
 
 We can use this approach to derive the average number of fast-food by IMD decile:
@@ -600,9 +606,9 @@ Accessibility analysis involves evaluating how easily people can reach essential
 
 Having run through all the steps during the tutorial, we can recreate this analysis ourselves. Using Lambeth as a case study, try to complete the following tasks:
 
-1. Extract all `pubs` from the Point of Interest dataset.
-2. For each LSOA within Lambeth, calculate the average walking distance to the nearest pub.
-3. Create a map of the results.
+1. Extract all `pubs` from the Point of Interest dataset, along with a second point of interest category that you would classify as a "healthy" asset (for example, a GP surgery, pharmacy, or leisure centre).
+2. For each LSOA within Lambeth, calculate the average walking distance to the nearest pub and to the nearest asset in your chosen "healthy" category.
+3. Create maps of both results, and compare them. Do the two accessibility patterns differ, and what might that suggest about the borough?
 
 ::: {.callout-note}
 Unlike before, LSOAs are now the unit of analysis. This means you will need to input the LSOA *centroids* into your distance matrix.
