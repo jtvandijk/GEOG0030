@@ -27,8 +27,6 @@ The following websites contain Open Data or link to Open Data from several respe
 ### Environment and Air Quality
 - [Department for Environment, Food & Rural Affairs](https://environment.data.gov.uk/)
 - [King's College Data on Air Pollution](https://www.londonair.org.uk/LondonAir/Default.aspx)
-- [Camden Air Action](https://camdenairaction.wordpress.com/2017/02/20/schools-monitoring-project-spring-2017/)
-- [London Tube PM2.5 Levels](https://www.ft.com/content/6f381ad4-fef7-11e9-be59-e49b2a136b8d)
 - [Global Weather Data](https://rp5.ru/Weather_in_the_world)
 - [London Local Authority Maintained Trees](https://data.london.gov.uk/dataset/local-authority-maintained-trees)
 
@@ -42,7 +40,6 @@ The following websites contain Open Data or link to Open Data from several respe
 - [Microsoft Global Building Footprints](https://github.com/microsoft/GlobalMLBuildingFootprints#start-of-content)
 - [WorldPop](https://www.worldpop.org/)
 - [WorldPop GitHub](https://github.com/wpgp)
-- [Global Urban Areas dataset](https://daylightmap.org/2023/11/27/urban.html)
 
 ### OpenStreetMap and Points of Interest
 - [Geofabrik (OSM data)](https://www.geofabrik.de/)
