@@ -16,7 +16,7 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 - Singleton, A. and Longley, P. A. 2024. Classifying and mapping residential structure through the London Output Area Classification. *Environment and Planning B: Urban Analytics and City Science* 51(5): 1153-1164. [[Link]](https://doi.org/10.1177/23998083241242913)
 - Singleton, A. and Spielman, S. 2014. The past, present, and future of geodemographic research in the United States and United Kingdom. *The Professional Geographer* 66(4): 558-567. [[Link]](https://doi.org/10.1080/00330124.2013.848764)
 
-## Start of session {.unnumbered}
+## Start of session
 Before working through the tutorial, we will spend a few minutes looking at:
 
 - How `cbind()` joins the cluster results to the map

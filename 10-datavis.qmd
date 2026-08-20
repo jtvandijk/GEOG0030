@@ -27,7 +27,7 @@ Suppose you want to understand how the population of Inner London varies by ethn
 Load both files, and use Copilot to help with the parts you are less sure of, for example turning the raw counts into proportions, or reshaping the data from long to wide format. Check the result at each step rather than moving straight to the next one.
 
 ::: {.callout-note}
-Prompt: *"I have Census data in long format, with one row per LSOA per ethnic group. Reshape it so that each LSOA has one row, with a column for each ethnic group containing the proportion of the population in that group."*
+Example prompt: *"I have Census data in long format, with one row per LSOA per ethnic group. Using R I want to reshape it so that each LSOA has one row, with a column for each ethnic group containing the proportion of the population in that group."*
 :::
 
 By the end of this stage, you should have a single dataframe with one row per LSOA, restricted to the 12 Inner London Boroughs (Camden, Greenwich, Hackney, Hammersmith and Fulham, Islington, Kensington and Chelsea, Lambeth, Lewisham, Southwark, Tower Hamlets, Wandsworth, and Westminster), with a column for each ethnic group expressed as a proportion of that LSOA's population, and a column identifying which borough each LSOA belongs to.

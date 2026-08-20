@@ -14,7 +14,7 @@ The slides for this week's lecture can be downloaded here: [[Link]]({{< var slid
 - Van Dijk, J. and Longley, P. 2020. Interactive display of surnames distributions in historic and contemporary Great Britain. *Journal of Maps* 16, pp.58-76. [[Link]](https://doi.org/10.1080/17445647.2020.1746418)
 - Yin, P. 2020. *Kernels and density estimation*. The Geographic Information Science & Technology Body of Knowledge. [[Link]](https://doi.org/10.22224/gistbok/2020.1.12)
 
-## Start of session {.unnumbered}
+## Start of session
 Before working through the tutorial, we will spend a few minutes looking at:
 
 - Identical coordinates among the bicycle theft points

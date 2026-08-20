@@ -26,7 +26,7 @@ Let's say you need to find the distance between a few London landmarks.
 Load the file, and use Copilot to work out the distance between the London landmarks.
 
 ::: {.callout-note}
-Prompt: *"What is the distance between Big Ben and the Tower of London?"*
+Example prompt: *"How to calculate the distance between two points in R?"*
 :::
 
 ::: {.callout-tip}

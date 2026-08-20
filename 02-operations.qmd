@@ -20,7 +20,7 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 - Lovelace, R., Nowosad, J. and Muenchow, J. 2021. *Geocomputation with R*, **Chapter 5**: *Geometry operations*. [[Link]](https://geocompr.robinlovelace.net/geometry-operations.html)
 - Lovelace, R., Nowosad, J. and Muenchow, J. 2021. *Geocomputation with R*, **Chapter 6**: *Reprojecting geographic data*. [[Link]](https://geocompr.robinlovelace.net/reproj-geo-data.html)
 
-## Start of session {.unnumbered}
+## Start of session
 Before working through the tutorial, we will spend a few minutes looking at:
 
 - One month of raw crime data from data.police.uk

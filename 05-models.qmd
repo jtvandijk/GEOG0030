@@ -15,7 +15,7 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 - Comber, A., Brunsdon, C., Charlton, M. *et al.*. 2022. A route map for successful applications of Geographically Weighted Regression. *Geographical Analysis* 55(1): 155-178. [[Link]](https://doi.org/10.1111/gean.12316)
 - Hochstenbach, C., Howard, A., and Arundel, R. 2024. *Tijdschrift voor Economische en Sociale Geografie*. [[Link]](https://doi.org/10.1111/tesg.12655)
 
-## Start of session {.unnumbered}
+## Start of session
 Before working through the tutorial, we will spend a few minutes looking at:
 
 - How `GWmodel` still relies on an older spatial format

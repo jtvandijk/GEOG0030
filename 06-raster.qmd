@@ -16,7 +16,7 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 - Thomson, D., Leasure, D., Bird, T. *et al*. 2022. How accurate are WorldPop-Global-Unconstrained gridded population data at the cell-level? A simulation analysis in urban Namibia. *Plos ONE* 17:7: e0271504. [[Link]](https://doi.org/10.1371/journal.pone.0271504)
 
 
-## Start of session {.unnumbered}
+## Start of session
 Before working through the tutorial, we will spend a few minutes looking at:
 
 - What raster data actually looks like

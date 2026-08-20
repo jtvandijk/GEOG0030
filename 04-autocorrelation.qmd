@@ -15,7 +15,7 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 - Lee, S. 2019. Uncertainty in the effects of the modifiable areal unit problem under different levels of spatial autocorrelation: a simulation study. *International Journal of Geographical Information Science* 33: 1135-1154. [[Link]](https://doi.org/10.1080/13658816.2018.1542699)
 - Harris, R. 2020. Exploring the neighbourhood-level correlates of Covid-19 deaths in London using a difference across spatial boundaries method. *Health & Place* 66: 102446. [[Link]](https://doi.org/10.1016/j.healthplace.2020.102446)
 
-## Start of session {.unnumbered}
+## Start of session
 Before working through the tutorial, we will spend a few minutes looking at:
 
 - What randomly shuffled data can look like on a map
