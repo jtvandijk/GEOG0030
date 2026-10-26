@@ -14,7 +14,7 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 
 #### Suggested readings {.unnumbered}
 - Cheshire, J. and Uberti, O. 2021. *Atlas of the invisible: maps and graphics that will change how you see the world.* London: Particular Books.
-- Wickham, H., Çetinkaya-Rundel, M., and Grolemund, G. *R for Data Science*. 2nd edition. **Chapter 19: Functions**. [[Link]](https://r4ds.had.co.nz/functions.html)
+- Wickham, H., Çetinkaya-Rundel, M., and Grolemund, G. *R for Data Science*. 2nd edition. **Chapter 25: Functions**. [[Link]](https://r4ds.hadley.nz/functions.html)
 
 ## Coding with Copilot
 Let's say you need to find the distance between a few London landmarks.

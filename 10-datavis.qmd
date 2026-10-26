@@ -14,7 +14,7 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 
 #### Suggested readings {.unnumbered}
 - Cheshire, J. and Uberti, O. 2014. *London, The Information Capital: 100 Maps & Graphics That Will Change How You View the City.* London: Particular Books.
-- Wickham, H., Çetinkaya-Rundel, M., and Grolemund, G. *R for Data Science*. 2nd edition. **Chapter 3: Data visualisation**. [[Link]](https://r4ds.had.co.nz/data-visualisation.html)
+- Wickham, H., Çetinkaya-Rundel, M., and Grolemund, G. *R for Data Science*. 2nd edition. **Chapter 1: Data visualisation**. [[Link]](https://r4ds.hadley.nz/data-visualize.html)
 
 ## Coding with Copilot
 Suppose you want to understand how the population of Inner London varies by ethnicity, borough by borough. The data cover self-identified ethnicity across London, recorded in the 2021 Census at Lower Super Output Area (LSOA) level, and we will narrow this down to the 12 Inner London Boroughs.

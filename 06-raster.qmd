@@ -12,8 +12,8 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 
 #### Suggested readings {.unnumbered}
 - Mellander, C., Lobo, J., Stolarick, K. *et al*. 2015. Night-time light data: A good proxy measure for economic activity? *PLoS ONE* 10(10): e0139779. [[Link]](https://doi.org/10.1371/journal.pone.0139779)
-- Park, G. and Franklin, R. 2023. The changing demography of hurricane at-risk areas in the United States (1970–2018). *Population, Space and Place* 29(6): e2683. [[Link]](https://doi.org/10.1002/psp.2685)
-- Thomson, D., Leasure, D., Bird, T. *et al*. 2022. How accurate are WorldPop-Global-Unconstrained gridded population data at the cell-level? A simulation analysis in urban Namibia. *Plos ONE* 17:7: e0271504. [[Link]](https://doi.org/10.1371/journal.pone.0271504)
+- Park, G. and Franklin, R. 2023. The changing demography of hurricane at-risk areas in the United States (1970–2018). *Population, Space and Place* 29(6): e2685. [[Link]](https://doi.org/10.1002/psp.2685)
+- Thomson, D., Leasure, D., Bird, T. *et al*. 2022. How accurate are WorldPop-Global-Unconstrained gridded population data at the cell-level? A simulation analysis in urban Namibia. *PLoS ONE* 17(7): e0271504. [[Link]](https://doi.org/10.1371/journal.pone.0271504)
 
 
 ## Start of session
