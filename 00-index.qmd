@@ -47,16 +47,16 @@ For specific assistance with this module, you can:
 
 - Refer to the [Moodle](https://moodle.ucl.ac.uk/) assessment tab for queries about module assessments.
 - Ask a question at the end of lectures or during the computer practicals.
-- Attend the scheduled Geocomputation **Additional Support Hours**.
-- Book into the [Academic Support and Feedback hours](https://outlook.office.com/bookwithme/user/8561a481703d4feda7a704ab81b62c8d@ucl.ac.uk?anonymous&ep=plink).
+- Book an [Academic Support and Feedback slot](https://outlook.office.com/bookwithme/user/8561a481703d4feda7a704ab81b62c8d@ucl.ac.uk?anonymous&ep=plink).
 
 ## Major updates {.unnumbered}
 ::: {.callout-note}
 This year's module material features the following **major** updates:
 
-- Weeks 9 and 10 now focus on AI-assisted applied spatial analysis using Microsoft Copilot.
 - Weeks 1-8 now open with a short "Start of session" section outlining what will be shown live at the start of the tutorial.
-- The Data Sources page is now organised by theme rather than a single long list.
+- Weeks 9 and 10 now focus on AI-assisted applied spatial analysis using Microsoft Copilot.
+- The Data Sources page is now organised by broad theme rather than a single long list.
+- Several data sources have been updated to newer versions.
 - Various bug fixes and dependency updates across the course material.
 :::
 
