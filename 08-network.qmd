@@ -492,7 +492,7 @@ OpenStreetMap is a dynamic dataset, meaning that changes are made on a continuou
 Now that we have our connected subgraph, we can use the `dodgr_distances()` function to calculate the network distances between every possible origin (i.e. school) and destination (i.e. fast food outlet). For all combinations, the function will map the point of interest locations to the nearest point on the network and return the corresponding shortest-path distances.
 
 ::: {.callout-tip}
-The `dodgr` package requires data to be projected in WGS84, so we need to reproject our point of interest data accordingly.
+The `dodgr` package requires coordinates in WGS84 (longitude and latitude), so we need to reproject our point of interest data accordingly.
 :::
 
 ```{r}
@@ -515,7 +515,7 @@ distance_matrix <- dodgr_distances(
   netx_connected,
   from = st_coordinates(poi_schools),
   to = st_coordinates(poi_fastfood),
-  shortest = FALSE,
+  shortest = TRUE,
   pairwise = FALSE,
   quiet = FALSE)
 ```
@@ -607,7 +607,7 @@ Accessibility analysis involves evaluating how easily people can reach essential
 Having run through all the steps during the tutorial, we can recreate this analysis ourselves. Using Lambeth as a case study, try to complete the following tasks:
 
 1. Extract all `pubs` from the Point of Interest dataset, along with a second point of interest category that you would classify as a "healthy" asset (for example, a GP surgery, pharmacy, or leisure centre).
-2. For each LSOA within Lambeth, calculate the average walking distance to the nearest pub and to the nearest asset in your chosen "healthy" category.
+2. For each LSOA within Lambeth, calculate the walking distance to the nearest pub and to the nearest asset in your chosen "healthy" category.
 3. Create maps of both results, and compare them. Do the two accessibility patterns differ, and what might that suggest about the borough?
 
 ::: {.callout-note}
