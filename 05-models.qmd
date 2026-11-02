@@ -12,7 +12,7 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 
 #### Suggested readings {.unnumbered}
 - Brunsdon, C., Fotheringham, S., and Charlton, M. 1998. Geographically Weighted Regression. *Journal of the Royal Statistical Society: Series D (The Statistician)* 47(3): 431-443. [[Link]](https://doi.org/10.1111/1467-9884.00145)
-- Comber, A., Brunsdon, C., Charlton, M. *et al.*. 2023. A route map for successful applications of Geographically Weighted Regression. *Geographical Analysis* 55(1): 155-178. [[Link]](https://doi.org/10.1111/gean.12316)
+- Comber, A., Brunsdon, C., Charlton, M. *et al.* 2023. A route map for successful applications of Geographically Weighted Regression. *Geographical Analysis* 55(1): 155-178. [[Link]](https://doi.org/10.1111/gean.12316)
 - Hochstenbach, C., Howard, A., and Arundel, R. 2025. Increasing social and spatial inequalities in parental co-residence. *Tijdschrift voor Economische en Sociale Geografie* 116(2): 212-231. [[Link]](https://doi.org/10.1111/tesg.12655)
 
 ## Start of session
@@ -199,7 +199,7 @@ tm_layout(
 )
 ```
 
-Looking at the maps, the spatial distribution of Conservative vote share and the proportion of the population over 50 appears neither random nor uniform. This raises the question to what extent the observed correlation in @fig-05-plot-data-scatter holds consistently across different constituencies? To answer this we can run a Geographically Weighted Correlation using the `GWmodel` library.
+Looking at the maps, the spatial distribution of Conservative vote share and the proportion of the population over 50 appears neither random nor uniform. This raises the question: to what extent does the observed correlation in @fig-05-plot-data-scatter hold consistently across different constituencies? To answer this we can run a Geographically Weighted Correlation using the `GWmodel` library.
 
 Geographically Weighted Correlation (GWC) allows us to investigate whether the strength and direction of the association between variables vary across space. By applying a localised correlation technique, GWC calculates the correlation coefficient within specified spatial windows or *kernels* across the study area. This can reveal geographic areas where the relationship is stronger or weaker, providing more insight than a single global correlation and helping us to understand spatial heterogeneity in the data.
 
@@ -259,14 +259,14 @@ summary(cons_24$cons_age_cor)
 ```
 
 ::: {.callout-warning}
-The results of the outcomes of `gwss` function can be accessed through the `$SDF` data frame.
+The results of the `gwss()` function can be accessed through the `$SDF` data frame.
 :::
 
 The summary shows that there indeed seems to be variation of this relationship across the country, with the local Pearson correlation ranging from very weak to very strong. Of course, we can map this in the usual way:
 
 ```{r tidy='styler'}
 #| label: fig-05-gwc-map
-#| fig-cap: Local correlation values `conservative_vote_share` and `aged_50_years_and_over` variables.
+#| fig-cap: Local correlation between the `conservative_vote_share` and `aged_50_years_and_over` variables.
 #| echo: True
 #| eval: True
 #| cache: True
@@ -401,7 +401,7 @@ performance::check_model(lm_voteshare, check = c('qq', 'normality'))
 
 ```{r}
 #| label: fig-05-diagnose-linearity
-#| fig-cap: Check for linearity and homogeneity
+#| fig-cap: Check for linearity and homogeneity.
 #| classes: styled-output
 #| echo: True
 #| eval: True
@@ -448,7 +448,7 @@ tm_polygons(
   fill = 'lm_residuals',
   fill.scale = tm_scale_intervals(
     n = 5, style = 'jenks',
-    values = c('#ffffb2', '#fecc5c', '#fd8d3c', '#f03b20', '#f03b20'),
+    values = c('#ffffb2', '#fecc5c', '#fd8d3c', '#f03b20', '#bd0026'),
   ),
 
   # legend
@@ -608,7 +608,7 @@ cons_24_coef <- cons_24 |>
          eth_black_coef = cons_24_gwr$SDF$eth_black,
          aged_25_to_34_years_coef = cons_24_gwr$SDF$aged_25_to_34_years,
          aged_50_years_and_over_coef = cons_24_gwr$SDF$aged_50_years_and_over) |>
-  select(40:45) |>
+  select(ends_with('_coef')) |>
   pivot_longer(cols = !geom, names_to = 'variable', values_to = 'coefficient')
 
 # shape
@@ -658,10 +658,10 @@ tm_layout(
 
 ```
 
-Mapping these local estimates reveals an interesting geography, where, for example, the proportion of the population over 50 years old is a better predictor for the Conservative vote share in regions like the South West, Greater London, and parts of the North West and Yorkshire and the Humber.
+Mapping these local estimates reveals an interesting geography, where, for example, the proportion of the population over 50 years old has a stronger association with the Conservative vote share in London and parts of the North West and Yorkshire and the Humber than in the East Midlands or the South East.
 
 ::: {.callout-warning}
-Not all of the local regression estimates may be statistically significant. We can use the estimated $t$-values, as indicated by the `_TV` suffix in the `SDF` data frame of the GWR results, to filter out those that are not significant. For example, to filter at 95% confidence, remove $t$-values outside the range of `-1.96` to `+1.96`. We could also run a Monte Carlo simulation using the `gwr.montecarlo()` function, however, this will take a long time to run.
+Not all of the local regression estimates may be statistically significant. We can use the estimated $t$-values, as indicated by the `_TV` suffix in the `SDF` data frame of the GWR results, to filter out those that are not significant. For example, to filter at 95% confidence, keep only the estimates with $t$-values outside the range of `-1.96` to `+1.96`. We could also run a Monte Carlo simulation using the `gwr.montecarlo()` function, however, this will take a long time to run.
 :::
 
 ::: {.callout-tip}
@@ -707,10 +707,10 @@ The spatial error model adjusts for spatial autocorrelation in the error terms, 
 Both the spatial error and spatial lag models assume that the relationships between variables are the same across the study area, with adjustments made only for spatial dependencies. GWR, on the other hand, allows the relationships themselves to vary across space. GWR is more flexible but also more complex and computationally intensive, providing local instead of global estimates of coefficients.
 
 ## Assignment
-The Geographically Weighted Regression (GWR) reveals some varying patterns in the sign and direction of the Conservative voter share, but it is likely that other factors are at play. One could hypothesise that another potential predictor of the Conservative vote share is the proportion of the population employed in a particular industry. Try to do the following:
+The Geographically Weighted Regression (GWR) reveals some varying patterns in the strength and direction of the relationships with the Conservative vote share, but it is likely that other factors are at play. One could hypothesise that another potential predictor of the Conservative vote share is the proportion of the population employed in a particular industry. Try to do the following:
 
 1. Download the dataset provided below and save it to the appropriate subfolder within your `data` directory. The `csv`, extracted using the [Custom Dataset Tool](https://www.ons.gov.uk/datasets/create), contains the number of employed individuals as recorded in the 2021 Census by their [Standard Industrial Classification (SIC)](https://www.ons.gov.uk/census/census2021dictionary/variablesbytopic/labourmarketvariablescensus2021/industrycurrent#:~:text=Type%3A%20Derived%20variable-,Definition,firm%20or%20organisation's%20main%20activity.) code.
-2. Formulate a hypothesis regarding which of the nine main industries presented in the dataset might help predict the Conservative vote share.
+2. Formulate a hypothesis regarding which of the industry categories presented in the dataset might help predict the Conservative vote share.
 3. For the chosen industry variable:
     * Calculate the share of individuals employed in that industry.
     * [Extend the Geographically Weighted Regression (GWR)](05-models.html#geographically-weighted-regression-1) by including this new variable.

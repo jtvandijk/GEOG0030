@@ -71,7 +71,7 @@ You may have to install some of these libraries if you have not used these befor
 :::
 
 ### Map algebra
-We will be using some simple map algebra to look at population change in London between 2010 and 2020. We can load the individual `GeoTiff` files that we downloaded into R and reproject them into British National Grid using the `terra` library.
+We will be using some simple map algebra to look at population change in London between 2010 and 2020. We can load the individual GeoTIFF files that we downloaded into R and reproject them into British National Grid using the `terra` library.
 
 ```{r}
 #| label: 06-load-raster
@@ -85,9 +85,13 @@ pop2010 <- rast('data/spatial/gbr_ppp_2010_1km_Aggregated.tif')
 pop2020 <- rast('data/spatial/gbr_ppp_2020_1km_Aggregated.tif')
 
 # transform projection
-pop2010 <- pop2010 |> project('EPSG:27700')
-pop2020 <- pop2020 |> project('EPSG:27700')
+pop2010 <- pop2010 |> project('EPSG:27700', method = 'sum')
+pop2020 <- pop2020 |> project('EPSG:27700', method = 'sum')
 ```
+
+::: {.callout-important}
+The cells in these rasters hold *counts* of people. By default, `project()` interpolates values bilinearly, which smooths the counts and does not preserve the total: for London, this would lose around 8% of the population. Setting `method = 'sum'` sums the contributions of the overlapping cells instead, so that the totals are preserved. Whenever you reproject or resample a raster of counts, check that the total before and after is the same.
+:::
 
 Carefully examine each dataframe to understand its structure and the information it contains:
 
@@ -139,7 +143,7 @@ plot(pop2010)
 plot(pop2020)
 ```
 
-You will notice that while the maps appear similar, the legend indicates a significant increase in values over the decade from 2010 to 2020, with the maximum rising from approximately 12,000 people per cell to over 14,000.
+You will notice that while the maps appear similar, the legend indicates a significant increase in values over the decade from 2010 to 2020, with the maximum rising from approximately 13,000 people per cell to over 15,000.
 
 Now that we have our raster data loaded, we will focus on reducing it to display only the extent of London. We will use the London borough `GeoPackage`.
 
@@ -210,7 +214,7 @@ lonpop_change <- pop2020_london - pop2010_london
 plot(lonpop_change)
 ```
 
-### Zonal statistics
+### Focal and zonal statistics
 To further analyse our population change raster, we can create a smoothed version of the `lonpop_change` raster using the `focal()` function. This function generates a raster that calculates the average (mean) value of the nearest neighbours for each cell.
 
 ```{r}
@@ -231,7 +235,7 @@ plot(lonpop_smooth)
 The differences may not be immediately apparent, but if you subtract the smoothed raster from the original raster, you will clearly see that changes have occurred.
 
 ```{r}
-#| label: fig--6-focus-on-the-smooth
+#| label: fig-06-focus-on-the-smooth
 #| fig-cap: Difference smoothed population change with original population change raster.
 #| classes: styled-output
 #| echo: True
@@ -332,7 +336,7 @@ Calculating population change, particularly over decades as we have done, can be
 In the second part of this week's practical, we will explore various methods of spatial data interpolation, focusing on air pollution in London using data from [Londonair](https://www.londonair.org.uk/). We will specifically look at Nitrogen Dioxide (NO~2~) measurements.
 
 ::: {.callout-note}
-Londonair is the website of the London Air Quality Network (LAQN), which provides air pollution data for London and southeast England through the [Environmental Research Group](https://www.imperial.ac.uk/school-public-health/environmental-research-group/) at Imperial College. This data is publicly available and can be accessed directly using the `openair` R package, without needing to download files.
+Londonair is the website of the London Air Quality Network (LAQN), which provides air pollution data for London and south-east England through the [Environmental Research Group](https://www.imperial.ac.uk/school-public-health/environmental-research-group/) at Imperial College. This data is publicly available and can be accessed directly using the `openair` R package, without needing to download files.
 :::
 
 ::: {.callout-note}
@@ -377,7 +381,7 @@ pollution <- read_csv('data/attributes/London-NO2-2023.zip')
 head(pollution)
 ```
 
-In the first five rows, we can see data from the same site, with the date field showing an observation for every hour. Given there are 24 hours in a day, 365 days in a year, and data from hundreds of sites, it is no surprise that the dataset is so large. To make the dataset more manageable, let us summarise the values by site.
+In the first six rows, we can see data from the same site, with the date field showing an observation for every hour. Given there are 24 hours in a day, 365 days in a year, and data from hundreds of sites, it is no surprise that the dataset is so large. To make the dataset more manageable, let us summarise the values by site.
 
 ```{r}
 #| label: 06-mean-air-pollution-data
@@ -685,14 +689,14 @@ tm_layout(
 ```
 
 ::: {.callout-note}
-We have set the output cell size to 1000x1000 metres. While a smaller cell size can yield a smoother IDW output, it may introduce uncertainty due to the limited number of data points available for interpolation. Moreover, reducing the cell size will exponentially increase processing time.
+We have set the output cell size to 1000x1000 metres. A smaller cell size gives a more finely resolved IDW output, but it does not add information: the surface still rests on the same limited number of measurement sites. Moreover, reducing the cell size increases processing time considerably: halving the cell size quadruples the number of cells.
 :::
 
 ## Assignment
 Having run through all the steps during the tutorial, we can conduct some more granular analysis of the NO~2~ measurements. For example, instead of examining the annual average measurements, we could compare data across different months. Please try the following tasks:
 
 1. Create monthly averages for the pollution data.
-2. Choose two months that you expect to show a meaningful difference in NO₂ levels, and generate a dataframe containing the London monitoring sites along with their average NO₂ readings for each month.
+2. Choose two months that you expect to show a meaningful difference in NO~2~ levels, and generate a dataframe containing the London monitoring sites along with their average NO~2~ readings for each month.
 3. Perform Inverse Distance Weighting (IDW) interpolation for the data from both months.
 4. Compare the results. Do the patterns match what you expected, and what might explain any differences you observe?
 
