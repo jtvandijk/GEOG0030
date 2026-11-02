@@ -78,4 +78,4 @@ This year's workbook also takes inspiration and design elements from:
 The datasets used in this workbook contain:
 
 - Data from Office for National Statistics licensed under the Open Government Licence v.3.0
-- OS data © Crown copyright and database right [2024]
+- OS data © Crown copyright and database right 2024
