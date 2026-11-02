@@ -255,7 +255,7 @@ poi_fastfood <- poi24 |>
 poi_fastfood
 ```
 
-Let's map both datasets to get an idea of what the data looks like:
+Let us map both datasets to get an idea of what the data looks like:
 
 ```{r tidy='styler'}
 #| label: fig-08-poi-map

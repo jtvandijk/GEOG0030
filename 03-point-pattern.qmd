@@ -115,14 +115,14 @@ msoa21 <- msoa21 |>
 
 # theft density
 msoa21 <- msoa21 |>
-  mutate(thef_km_sq = theft_bike_n/km_sq)
+  mutate(theft_km_sq = theft_bike_n / km_sq)
 ```
 
-Let's put this onto a map:
+Let us put this onto a map:
 
 ```{r tidy='styler'}
 #| label: fig-03-choro-3
-#| fig-cap: Number of reported bicycle thefts by square kilometre.
+#| fig-cap: Number of reported bicycle thefts per square kilometre.
 #| echo: True
 #| eval: True
 #| cache: True
@@ -134,7 +134,7 @@ tm_shape(msoa21) +
 tm_polygons(
 
   # map data
-  fill = 'thef_km_sq',
+  fill = 'theft_km_sq',
   fill.scale = tm_scale_intervals(
     n = 5, style = 'jenks',
     values = c('#fee5d9','#fcae91','#fb6a4a','#de2d26','#a50f15')
@@ -142,8 +142,7 @@ tm_polygons(
 
   # legend
   fill.legend = tm_legend(
-    title = 'Share of population',
-    na.text = 'No population',
+    title = 'Thefts per km²',
     frame = FALSE,
   ),
 
@@ -202,14 +201,14 @@ theft_bike <- theft_bike |>
   st_intersection(outline)
 
 # sf to ppp
-window = as.owin(msoa21)
+window <- as.owin(msoa21)
 theft_bike_ppp <- ppp(st_coordinates(theft_bike)[,1],
                       st_coordinates(theft_bike)[,2],
                       window = window)
 
 # inspect
 par(mar = c(1, 1, 1, 1))
-plot(theft_bike_ppp, main='')
+plot(theft_bike_ppp, main = '')
 ```
 
 Some statistical procedures require point events to be unique. In our bicycle theft data, duplicates are likely due to the police snapping points to protect anonymity and privacy. This can pose an issue for spatial point pattern analysis, where each theft and its location must be distinct. We can check whether we have any duplicated points as follows:
@@ -234,7 +233,7 @@ To address this, we have three options:
 2. Assign weights to points, where each has an attribute indicating the number of events at that location rather than being recorded as separate event.
 3. Add *jitter* by slightly offsetting the points randomly, which can be useful if precise location is not crucial for the analysis.
 
-Each approach has its own trade-offs, depending on the analysis. In our case, we will use the *jitter* approach to retain all bike theft events. Since the locations are already approximated, adding a small offset (~5 metre) will not impact the analysis.
+Each approach has its own trade-offs, depending on the analysis. In our case, we will use the *jitter* approach to retain all bike theft events. Since the locations are already approximated, adding a small offset (around 5 metres) will not impact the analysis. As the jitter is random, we first set a seed so that the same offsets are drawn every time the script is run.
 
 ```{r}
 #| label: 03-jitter-jitter-jitter
@@ -243,8 +242,11 @@ Each approach has its own trade-offs, depending on the analysis. In our case, we
 #| eval: True
 #| tidy: True
 #| filename: 'R code'
+# set seed for reproducibility
+set.seed(99)
+
 # add jitter
-theft_bike_jitter <- rjitter(theft_bike_ppp, radius=5, retry=TRUE, nsim=1, drop=TRUE)
+theft_bike_jitter <- rjitter(theft_bike_ppp, radius = 5, retry = TRUE, nsim = 1, drop = TRUE)
 
 # check for duplicates
 anyDuplicated(theft_bike_jitter)
@@ -262,7 +264,7 @@ Instead of visualising the distribution of bike thefts at a specific geographica
 Kernel Density Estimation (KDE) generates a raster surface that shows the estimated density of event points across space. Each cell represents the local density, highlighting areas of high or low concentration. KDE uses overlapping moving windows (defined by a kernel) and a bandwidth parameter, which controls the size of the window, influencing the smoothness of the resulting density surface. The kernel function can assign equal or weighted values to points, producing a grid of density values based on these local calculations.
 :::
 
-Let's go ahead and create a simple KDE of bike theft with our bandwidth set to 500 metres:
+Let us go ahead and create a simple KDE of bike theft with our bandwidth set to 500 metres:
 
 ```{r}
 #| label: fig-03-bike-theft-kde500
@@ -275,7 +277,7 @@ Let's go ahead and create a simple KDE of bike theft with our bandwidth set to 5
 #| filename: 'R code'
 # kernel density estimation
 par(mar = c(1, 1, 1, 1))
-plot(density.ppp(theft_bike_jitter, sigma=500), main = '')
+plot(density.ppp(theft_bike_jitter, sigma = 500), main = '')
 ```
 
 We can see from just our KDE that there are visible clusters present within our bike theft data, particularly in and around Central London. We can go ahead and increase the bandwidth to see how that affects the density estimate:
@@ -291,10 +293,10 @@ We can see from just our KDE that there are visible clusters present within our 
 #| filename: 'R code'
 # kernel density estimation
 par(mar = c(1, 1, 1, 1))
-plot(density.ppp(theft_bike_jitter, sigma=1000), main = '')
+plot(density.ppp(theft_bike_jitter, sigma = 1000), main = '')
 ```
 
-By increasing the bandwidth, our clusters appear larger and brighter than with the 500-metre bandwidth. A larger bandwidth considers more points, resulting in a smoother surface. However, this can lead to oversmoothing, where clusters become less defined, potentially overestimating areas of high bike theft. Smaller bandwidths offer more precision and sharper clusters but risk undersmoothing, which can cause irregularities.
+By increasing the bandwidth, our clusters appear larger and more diffuse than with the 500-metre bandwidth. A larger bandwidth considers more points, resulting in a smoother surface in which the same events are spread over a wider area, so the peak density is lower. Note that `plot()` rescales the colours separately for each figure, so compare the values on the colour bars rather than the colours themselves. A bandwidth that is too large leads to oversmoothing, where clusters become less defined and density spills over into the surrounding areas. Smaller bandwidths offer more precision and sharper clusters but risk undersmoothing, which can cause irregularities.
 
 ::: {.callout-tip}
 While automated methods (e.g. maximum-likelihood estimation) can assist in selecting an optimal bandwidth, the choice is subjective and depends on the specific characteristics of your dataset.
@@ -315,7 +317,7 @@ Once we are satisfied with our KDE visualisation, we can create a proper map by 
 #| cache: True
 #| filename: 'R code'
 # to raster
-theft_bike_raster <- density.ppp(theft_bike_jitter, sigma=1000) |>
+theft_bike_raster <- density.ppp(theft_bike_jitter, sigma = 1000) |>
   rast()
 ```
 
@@ -465,7 +467,7 @@ theft_bike_clusters <- st_sfc(geometry_list, crs = 27700)
 While loops in R should generally be avoided for large datasets due to inefficiency, they remain a useful tool for automating repetitive tasks and reducing the risk of errors. For smaller datasets or tasks that cannot easily be vectorised, loops can still be effective and simplify the code.
 :::
 
-We now have a spatial dataframe that contains the bike theft clusters in London, as defined by the DBSCAN clustering algorithm. Let's quickly map these clusters:
+We now have a spatial dataframe that contains the bike theft clusters in London, as defined by the DBSCAN clustering algorithm. Let us quickly map these clusters:
 
 ```{r tidy='styler'}
 #| label: fig-03-map-clusters

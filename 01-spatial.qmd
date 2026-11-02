@@ -182,7 +182,7 @@ class(msoa21)
 We should see our data is an `sf` dataframe, which is what we want.
 
 ### Joining attribute data
-Now we have our dataset containing London's European born population and the MSOA spatial boundaries loaded, we can join these together using an **Attribute Join**. Before proceeding with the join, we need to verify that a matching unique identifier exists in both datasets. Let's look at the column names in our datasets again:
+Now we have our dataset containing London's European born population and the MSOA spatial boundaries loaded, we can join these together using an **Attribute Join**. Before proceeding with the join, we need to verify that a matching unique identifier exists in both datasets. Let us look at the column names in our datasets again:
 
 ```{r}
 #| label: 01-names-att-join
@@ -378,8 +378,8 @@ To customise the classification breaks, refer to the `tm_polygons()` documentati
 
 | Parameter         | Description |
 | :-                | :------ |
-| `fill.scale`      | Defines the color scale for polygon fills. Accepts a scale object created by functions such as `tm_scale_continuous()` and `tm_intervals()`  |
-| `tm_scale_continuous()` | Creates a continuous scale object for mapping numeric values to colours. You can specify options such as `palette` (color scheme) and `limits` (data range). |
+| `fill.scale`      | Defines the colour scale for polygon fills. Accepts a scale object created by functions such as `tm_scale_continuous()` and `tm_intervals()`  |
+| `tm_scale_continuous()` | Creates a continuous scale object for mapping numeric values to colours. You can specify options such as `palette` (colour scheme) and `limits` (data range). |
 | `tm_scale_intervals()`  | Creates a scale object for mapping data into discrete classes (intervals). Parameters include: `n` (number of classes) and `style` (classification method: e.g. *quantile*, *equal*, *jenks*)   |
 
 For example, if we want to adjust our choropleth map to use five classes determined by the natural breaks method, we need to specify the `n` and `style` parameters as follows:

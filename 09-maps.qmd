@@ -17,7 +17,7 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 - Wickham, H., Çetinkaya-Rundel, M., and Grolemund, G. *R for Data Science*. 2nd edition. **Chapter 25: Functions**. [[Link]](https://r4ds.hadley.nz/functions.html)
 
 ## Coding with Copilot
-Let's say you need to find the distance between a few London landmarks.
+Say you need to find the distance between a few London landmarks.
 
 | File                          | Type  | Link |
 | :------                       | :-----| :------ |
