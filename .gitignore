@@ -10,3 +10,6 @@
 CLAUDE.md
 
 **/*.quarto_ipynb
+
+# Instructor-only reference material (worked solutions, reference maps): never publish
+live/
