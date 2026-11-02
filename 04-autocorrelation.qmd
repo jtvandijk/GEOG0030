@@ -213,7 +213,7 @@ Underlying our Moran's I test is the concept of a **spatial lag**. A spatial lag
 ```{r}
 #| label: fig-moran-plot
 #| echo: False
-#| fig-cap: 'Scatter plot of spatially lagged income (neighbouring income) versus each area's income. Source: [Manuel Gimond](https://mgimond.github.io/Spatial/13_autocorrelation.html).'
+#| fig-cap: 'Scatter plot of spatially lagged income (neighbouring income) versus the income of each area. Source: [Manuel Gimond](https://mgimond.github.io/Spatial/13_autocorrelation.html).'
 knitr::include_graphics('images/w04/moran-scatter.png')
 ```
 
