@@ -8,7 +8,7 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 #### Essential readings {.unnumbered}
 - Dalton, C. M. and Thatcher, J. 2015. Inflated granularity: Spatial "Big Data" and geodemographics. *Big Data & Society* 2(2): 1-15. [[Link]](https://doi.org/10.1177/2053951715601144)
 - Longley, P. A. 2012. Geodemographics and the practices of geographic information science. *International Journal of Geographical Information Science* 26(12): 2227-2237. [[Link]](https://doi.org/10.1080/13658816.2012.719623)
-- Wyszomierski, J., Longley, P. A., and Singleton, A. *et al.* 2024. A neighbourhood Output Area Classification from the 2021 and 2022 UK censuses. *The Geographical Journal*. 190(2): e12550. [[Link]](https://doi.org/10.1111/geoj.12550)
+- Wyszomierski, J., Longley, P. A., Singleton, A. *et al.* 2024. A neighbourhood Output Area Classification from the 2021 and 2022 UK censuses. *The Geographical Journal*. 190(2): e12550. [[Link]](https://doi.org/10.1111/geoj.12550)
 
 #### Suggested readings {.unnumbered}
 - Fränti, P. and Sieranoja, S. 2019. How much can k-means be improved by using better initialization and repeats? *Pattern Recognition* 93: 95-112. [[Link]](https://doi.org/10.1016/j.patcog.2019.04.014)
@@ -133,7 +133,7 @@ To identify geodemographic clusters in our dataset, we will use a technique call
 $k$-means clustering is an unsupervised machine learning algorithm used to group data into a predefined number of clusters, based on similarities between data points. It works by initially assigning $k$ random centroids, then iteratively updating them by assigning each data point to the nearest centroid and recalculating the centroid's position based on the mean of the points in each cluster. The process continues until the centroids stabilise, meaning they no longer change significantly. $k$-means is often used for tasks such as data segmentation, image compression, or anomaly detection. It is simple but may not work well with non-spherical or overlapping clusters.
 :::
 
-Because all the data are stored in [long format](https://towardsdatascience.com/long-and-wide-formats-in-data-explained-e48d7c9a06cb), with each London LSOA appearing on multiple rows for each category — such as separate rows for different age groups, ethnicities, countries of birth, and first or preferred languages — we need to transform it into a [wide format](https://towardsdatascience.com/long-and-wide-formats-in-data-explained-e48d7c9a06cb). For example, instead of having multiple rows for an LSOA showing counts for different age groups all the information for each LSOA will be consolidated into a single row. Additionally, we will clean up the column names to follow standard R naming conventions and make the data easier to work with. Like we have done previously, we can automate this process using the `janitor` package.
+Because all the data are stored in [long format](https://towardsdatascience.com/long-and-wide-formats-in-data-explained-e48d7c9a06cb), with each London LSOA appearing on multiple rows for each category — such as separate rows for different age groups, ethnicities, countries of birth, and first or preferred languages — we need to transform it into a [wide format](https://towardsdatascience.com/long-and-wide-formats-in-data-explained-e48d7c9a06cb). For example, instead of having multiple rows for an LSOA showing counts for different age groups, all the information for each LSOA will be consolidated into a single row. Additionally, we will clean up the column names to follow standard R naming conventions and make the data easier to work with. Like we have done previously, we can automate this process using the `janitor` package.
 
 We will begin with the `age` dataframe:
 
@@ -276,13 +276,14 @@ A straightforward yet effective method to examine the distribution of our variab
 #| filename: 'R code'
 # wide to long
 lsoa_age_wd <- lsoa_age |>
-  pivot_longer(cols = c(2:5), names_to = 'agegroup', values_to = 'count')
+  pivot_longer(cols = c(2:6), names_to = 'agegroup', values_to = 'proportion')
 
 # facet age
-ggplot(lsoa_age_wd, aes(y = count)) +
+ggplot(lsoa_age_wd, aes(y = proportion)) +
   geom_boxplot() +
   facet_wrap(~agegroup, ncol = 2) +
   theme_minimal() +
+  theme(axis.text.x = element_blank()) +
   ylab('')
 ```
 
@@ -430,7 +431,7 @@ lsoa_clus
 We now need to perform some post-processing to extract useful summary data for each cluster. To characterise the clusters, we can compare the global mean values of each variable with the mean values specific to each cluster.
 
 ```{r}
-#| label: 07-cluster-comparision
+#| label: 07-cluster-comparison
 #| classes: styled-output
 #| echo: True
 #| eval: True
@@ -505,12 +506,12 @@ tm_shape(lsoa21) +
 tm_polygons(
   fill = 'cluster',
   fill.scale = tm_scale_categorical(
-    values = c('#feebe2', '#fbb4b9', '#f768a1', '#c51b8a', '#7a0177'),
+    values = c('#feebe2', '#fcc5c0', '#fa9fb5', '#f768a1', '#c51b8a', '#7a0177'),
   ),
 
   # legend
   fill.legend = tm_legend(
-    title = 'Cluster number',
+    title = 'Cluster',
     frame = FALSE,
   ),
 
