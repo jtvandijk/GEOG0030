@@ -214,7 +214,7 @@ head(sort(msoa21$msoa21cd))
 head(sort(msoa_eur$msoa21cd))
 ```
 
-They seem to contain similar values, so that is promising. Let us try to join the attribute data onto the spatial data:
+They seem to contain similar values, so that is promising. Let us try to join the attribute data onto the spatial data using a *left join*, which keeps every row of the spatial data and adds the matching rows of the attribute data. Rows without a match receive `NA`. Other types of join exist, such as `inner_join()` and `full_join()`, which we look at in next week's lecture:
 
 ```{r}
 #| label: 01-join-att
@@ -292,7 +292,7 @@ msoa21 <- msoa21 |>
 ```
 
 ### Mapping spatial data
-For our map-making, we will use one of the two primary visualisation libraries for spatial data: `tmap`. `tmap` offers a flexible, layer-based approach that makes it easy to create various types of thematic maps, such as choropleths and proportional symbol maps. One of the standout features of `tmap` is its quick plotting function, `qtm()`, which allows you to generate basic maps with minimal effort.
+For our map-making, we will use one of the two primary visualisation libraries for spatial data: `tmap`. `tmap` offers a flexible, layer-based approach that makes it easy to create various types of thematic maps, such as choropleth maps, which shade areas according to their value, and proportional symbol maps. One of the standout features of `tmap` is its quick plotting function, `qtm()`, which allows you to generate basic maps with minimal effort.
 
 ```{r}
 #| label: fig-01-qtm
@@ -373,6 +373,23 @@ tm_shape(msoa21) +
 ```
 
 We are making progress, but there is still an issue with our map: the classification breaks do not adequately reflect the variation in our dataset. By default, `tmap` uses *pretty* breaks, which may not be the most effective for our data. An alternative, such as *natural breaks* (or *jenks*), might better reveal the data's variation.
+
+To judge which classification method suits the data, it helps to look at how the values are distributed first. A histogram shows how many MSOAs fall within each range of values:
+
+```{r}
+#| label: fig-01-hist
+#| fig-cap: Distribution of the share of population born in Europe across MSOAs.
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: False
+#| filename: 'R code'
+# plot histogram
+hist(msoa21$prop_eur21, breaks = 20, main = '', xlab = 'Share of population born in Europe')
+```
+
+Half of all MSOAs have a share between roughly 12 and 19 per cent, with a longer tail of MSOAs with a higher share. Equal-width classes would put most MSOAs in the middle classes and only a few in the highest class, whereas natural breaks follow the shape of the distribution.
 
 To customise the classification breaks, refer to the `tm_polygons()` documentation. The following parameters are relevant:
 
@@ -607,7 +624,7 @@ Now that we have prepared our dataset and created our initial maps in R, we can 
     * A `GeoPackage` file containing the 2021 MSOA spatial boundaries for England and Wales.
 2. Load both datasets and merge them together. Make sure to only retain those MSOAs that belong to Wales.
 3. Create a map that shows the proportion of the population residing in Wales that is born in Europe.
-4. Choose a classification method (e.g. equal interval, quantile, natural breaks) that you think best represents the distribution of your data.
+4. Look at the distribution of the proportions in a histogram and choose a classification method (e.g. equal interval, quantile, natural breaks) that you think best represents the distribution of your data.
 
 | File                                            | Type   | Link |
 | :------                                         | :------| :------ |
