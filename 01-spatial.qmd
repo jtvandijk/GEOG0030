@@ -277,7 +277,7 @@ sum(!is.na(msoa21$pop21))
 
 No missing values. In this case we did not expect any missing values, so this confirms that our full attribute dataset has been linked to the spatial dataset.
 
-We are almost ready to map the data. The only thing left is to calculate the share of European-born immigrants within each MSOA:
+We are almost ready to map the data. We will map the share of European-born residents rather than their number, because MSOAs differ in size: the populations in our data range from about 5,300 to 16,300, so a count partly reflects how many people live in an MSOA. A share allows MSOAs of different sizes to be compared. The only thing left is to calculate this share within each MSOA:
 
 ```{r}
 #| label: 01-european-prop
