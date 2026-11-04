@@ -3,7 +3,7 @@ freeze: true
 ---
 
 # Spatial Queries and Geometric Operations
-This week, we look at geometric operations and spatial queries: the fundamental building blocks when it comes to spatial data processing and analysis. This includes operations such as aggregating point data, calculating the distances separating one or more spatial objects, running a *buffer* analysis, and *intersecting* different spatial layers.
+This week, we look at geometric operations and spatial queries: the fundamental building blocks when it comes to spatial data processing and analysis. This includes selecting features based on their distance to other features, running a *buffer* analysis, and *intersecting* different spatial layers.
 
 ## Lecture slides
 You can download the slides of this week's lecture here: [[Link]]({{< var slides.week02 >}}).
@@ -124,7 +124,7 @@ names(crime_df)
 If your `clean_names()` function returns an error, it is likely due to a conflict with another library that also includes a `clean_names()` function. In such cases, R cannot determine which one to use. To resolve this, you can specify the library explicitly by using `janitor::clean_names()`.
 :::
 
-For our analysis, we are currently only interested in reported bicycle thefts, so we need to filter our data based on the `crime_type` column. We can start by examining the unique values in this column and then subset the data accordingly:
+For our analysis, we are currently only interested in reported bicycle thefts, so we need to filter our data based on the `crime_type` column. Selecting rows based on their values in this way is called an *attribute query*. We can start by examining the unique values in this column and then subset the data accordingly:
 
 ```{r}
 #| label: 02-filter-crime
@@ -336,7 +336,7 @@ When using `osmdata` to retrieve train stations in London, be aware that OpenStr
 :::
 
 ### Spatial queries
-A spatial query is used to retrieve data based on its geographic location or spatial relationships. It uses spatial information from one or more layers to find features that meet specific criteria, such as proximity, intersection, or containment. For instance, we can use a spatial query to count all the bicycle thefts that have occurred within 500 metres of a train or underground station:
+A spatial query is used to retrieve data based on its geographic location or spatial relationships. It uses spatial information from one or more layers to find features that meet specific criteria, such as proximity, intersection, or containment. In contrast to the attribute query we used earlier, a spatial query selects features by where they are rather than by their values. For instance, we can use a spatial query to count all the bicycle thefts that have occurred within 500 metres of a train or underground station:
 
 ```{r}
 #| label: 02-spatial-query-1
@@ -362,7 +362,9 @@ head(theft_bike)
 The above code converts the stations dataframe into a single geometry. This step is essential because we want a single answer for each bicycle theft: is it within 500 metres of *any* station? Without this conversion, `sf` would compare each theft with each station separately and return one column of results per station, rather than one result per theft.
 :::
 
-We can use the `count()` function to find out just how many thefts fall in each of these categories:
+The distances in this query are straight-line (Euclidean) distances in metres, because our data use the British National Grid.
+
+We can use the `count()` function to find out just how many thefts fall in each of these categories. We first drop the geometry column with `st_drop_geometry()`, so that `count()` returns a simple table rather than a spatial object:
 
 ```{r}
 #| label: 02-spatial-query-2
@@ -372,7 +374,9 @@ We can use the `count()` function to find out just how many thefts fall in each 
 #| tidy: True
 #| filename: 'R code'
 # number of bicycle thefts within 500m of a station
-count(theft_bike, d500)
+theft_bike |>
+  st_drop_geometry() |>
+  count(d500)
 ```
 
 Around two-thirds of all reported bicycle thefts in London occur within 500 metres of a train or underground station. Of course, we can map the results for a visual inspection:
@@ -455,7 +459,7 @@ tm_layout(
 ### Geometric operations
 Geometric operations are used to manipulate and analyse the shapes and spatial properties of geometric objects, such as points, lines, and polygons. These operations include tasks like calculating intersections, buffering, and determining the distance between shapes.
 
-The lecture introduced the main geometric operations, and we have already used two of them in this tutorial without naming them. *Clipping* keeps only the parts of one layer that fall within another, which is what `st_intersection()` did when we removed the stations outside London. *Union*, also known as *dissolve*, merges separate geometries into one, which is what `st_union()` did when we created the outline of London and the single station geometry. A *buffer* creates a zone of a given distance around a geometry.
+The lecture introduced the main geometric operations, and we have already used two of them in this tutorial without naming them. *Clipping* keeps only the parts of one layer that fall within another, which is what `st_intersection()` did when we removed the stations outside London. *Dissolve* merges separate geometries into one, which is what `st_union()` did when we created the outline of London and the single station geometry. The lecture's *union* of two layers, which keeps every shape from both, is not needed in this tutorial. A *buffer* creates a zone of a given distance around a geometry.
 
 In this case, we can create 500-metre buffers around each station and then count how many bicycle thefts fall within these buffers.
 
@@ -529,7 +533,9 @@ theft_bike$d500_buffer <- theft_bike |>
   as.vector()
 
 # number of bicycle thefts within 500m of a station
-count(theft_bike, d500_buffer)
+theft_bike |>
+  st_drop_geometry() |>
+  count(d500_buffer)
 ```
 
 ::: {.callout-important}
