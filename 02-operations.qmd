@@ -163,6 +163,10 @@ theft_bike <- theft_bike |>
 head(theft_bike)
 ```
 
+::: {.callout-note}
+Coordinates can be stored in different *coordinate reference systems* (CRS). The police data use longitude and latitude (`EPSG:4326`), which are angles measured in degrees. Distances and buffers are easier to work with in metres, so we convert the data to the British National Grid (`EPSG:27700`), which is based on metres. The OpenStreetMap data that we download next also use longitude and latitude, so we convert those as well. Layers that you combine must use the same CRS. We return to coordinate reference systems in Week 9.
+:::
+
 Let us map the dataset to get an idea of what the data looks like, using the outline of London as background:
 
 ```{r tidy='styler'}
