@@ -1,5 +1,5 @@
 # Spatial Autocorrelation
-This week, we will explore the concept of spatial dependence: the idea that the value of a variable at one location is influenced by the value of the same variable at nearby locations. This dependence can be statistically measured by assessing spatial autocorrelation, which refers to the degree of similarity between values of a variable at different locations or between multiple variables at the same location.
+This week, we will explore the concept of spatial dependence: the idea that the value of a variable at one location is influenced by the value of the same variable at nearby locations. This dependence can be statistically measured by assessing spatial autocorrelation, which refers to the degree of similarity between values of a variable at different locations.
 
 ## Lecture slides
 You can download the slides of this week's lecture here: [[Link]]({{< var slides.week04 >}}).
@@ -123,6 +123,7 @@ tm_polygons(
   fill = 'asian_bangladeshi',
   fill.scale = tm_scale_intervals(
     breaks = c(0, 0.2, 0.4, 0.6, 0.8),
+    labels = c('0.0 - 0.2', '0.2 - 0.4', '0.4 - 0.6', '0.6 - 0.8'),
     values = c('#f0f9e8', '#bae4bc', '#43a2ca', '#0868ac'),
     ),
 
@@ -178,6 +179,7 @@ tm_polygons(
   fill = 'asian_bangladeshi_random',
   fill.scale = tm_scale_intervals(
     breaks = c(0, 0.2, 0.4, 0.6, 0.8),
+    labels = c('0.0 - 0.2', '0.2 - 0.4', '0.4 - 0.6', '0.6 - 0.8'),
     values = c('#f0f9e8', '#bae4bc', '#43a2ca', '#0868ac'),
     ),
 
@@ -208,7 +210,7 @@ tm_layout(
 
 Looking at @fig-04-permutation, even with the values being randomly permuted, certain patterns seem to emerge. This observation raises an important question: to what extent are the patterns that we see in the actual data actually present? A widely used method to quantify the similarity between neighbouring locations is by calculating Moran’s I statistic. This measure assesses spatial autocorrelation, indicating the degree to which values of a variable cluster spatially — either through similar (positive spatial autocorrelation) or contrasting values (negative spatial autocorrelation).
 
-Underlying our Moran's I test is the concept of a **spatial lag**. A spatial lag refers to a concept in spatial analysis where the value of a variable at a given location is influenced by the values of the same variable at neighbouring locations. Essentially, it captures the idea that observations in close proximity are likely to be correlated, meaning that what happens in one area can 'lag' into or affect nearby areas. The Moran's I statistic tries to capture the relationship between a value and its spatial lag. An Ordinary Least Squares (OLS) regression is applied, after both variables have been transformed to [z-scores](https://en.wikipedia.org/wiki/Standard_score), to fit the data and produce a slope, which determines the Moran’s I statistic.
+Underlying our Moran's I test is the concept of a **spatial lag**: the average value of a variable across the neighbours of a location. It captures the idea that observations in close proximity are likely to be similar, meaning that what happens in one area is related to what happens in nearby areas. The Moran's I statistic captures the relationship between a value and its spatial lag. An Ordinary Least Squares (OLS) regression is applied, after both variables have been transformed to [z-scores](https://en.wikipedia.org/wiki/Standard_score), to fit the data and produce a slope, which determines the Moran’s I statistic.
 
 ```{r}
 #| label: fig-moran-plot
@@ -242,7 +244,7 @@ $$
 \frac{N_{extreme} + 1}{N + 1}
 $$
 
-where ${N_{extreme}}$ is the number of simulated Moran's I values that were more extreme than our observed statistic and ${N}$ is the total number of simulations. In the example shown in @fig-moran-plot-sig, only 1 out of the 199 simulations was more extreme than the observed local Moran's I statistic. Therefore ${N_{extreme}}$ = 1, so $p$ is equal to $(1+1) / (199 + 1) = 0.01$. This means that, if the values were randomly distributed across space, we would expect to see a Moran's I at least this extreme in only one percent of cases.
+where ${N_{extreme}}$ is the number of simulated Moran's I values that were more extreme than our observed statistic and ${N}$ is the total number of simulations. In the example shown in @fig-moran-plot-sig, only 1 out of the 199 simulations was more extreme than the observed global Moran's I statistic. Therefore ${N_{extreme}}$ = 1, so $p$ is equal to $(1+1) / (199 + 1) = 0.01$. This means that, if the values were randomly distributed across space, we would expect to see a Moran's I at least this extreme in only one percent of cases.
 
 ### Defining neighbours
 If the purpose of a Moran’s I test is to quantify how similar places are to their neighbours, the first step is to define what constitutes a **neighbour.** This definition is not necessarily straightforward, because 'neighbouring' observations can be determined in various ways, based on either geometry or proximity. The most common methods include:
@@ -274,11 +276,7 @@ lsoa21_nb <- poly2nb(lsoa21, queen = TRUE)
 summary(lsoa21_nb)
 ```
 
-The `neighbour list` object is a [sparse matrix](https://en.wikipedia.org/wiki/Sparse_matrix) that lists the neighbouring polygons for each LSOA. This matrix represents the spatial relationships between LSOAs, where each entry indicates which polygons share boundaries. These neighbourhood relationships can be visualised as a graph by extracting the coordinate points of the centroids of the polygons representing each LSOA:
-
-::: {.callout-warning}
-Regardless of the neighbourhood definition you choose, it is important to verify the results, particularly when using contiguity-based approaches. If your spatial file has issues such as polygons that appear adjacent but do not actually share a border, your results may be inaccurate. You could increase the default value of the `snap` distance parameter in the `poly2nb()` function to include these polygons only separated by small gaps.
-:::
+The `neighbour list` object is a list that holds, for each LSOA, the numbers of the LSOAs that are its neighbours. It is a compact, [sparse](https://en.wikipedia.org/wiki/Sparse_matrix) way of storing the spatial relationships between LSOAs. These neighbourhood relationships can be visualised as a graph by extracting the coordinate points of the centroids of the polygons representing each LSOA:
 
 ```{r}
 #| label: fig-nb-plot
@@ -299,6 +297,10 @@ plot(lsoa21_nb, st_geometry(lsoa21_cent), add = TRUE)
 ```
 
 With nearly 5,000 LSOAs, the neighbourhood graph appears quite crowded. However, it seems acceptable, with no noticeable gaps and a dense network of neighbours in Central London, where many smaller LSOAs are located.
+
+::: {.callout-warning}
+Regardless of the neighbourhood definition you choose, it is important to verify the results, particularly when using contiguity-based approaches. If your spatial file has issues such as polygons that appear adjacent but do not actually share a border, your results may be inaccurate. You could increase the default value of the `snap` distance parameter in the `poly2nb()` function to include these polygons only separated by small gaps.
+:::
 
 ### Defining weights
 The neighbourhood list simply identifies which areas (polygons) are neighbours, but spatial weights take this a step further by assigning a weight to each neighbourhood connection. This is important because not all polygons have the same number of neighbours. To ensure that our spatially lagged values are comparable across neighbourhoods of different sizes, standardisation is required. The code below uses `style = 'W'` to row-standardise the values: if an LSOA has five neighbours, the value of the spatially lagged variable will be the average of that variable across those five neighbours, with each neighbour receiving equal weight.
@@ -338,10 +340,10 @@ Now that everything is in place, we can begin by plotting the proportion of peop
 #| tidy: True
 #| filename: 'R code'
 # moran's plot
-moran.plot(lsoa21$asian_bangladeshi, listw = lsoa21_nb_weights, xlab = 'Variable: Asian-Bangladeshi', ylab = 'Spatially Lagged Variable: Asian-Bangladeshi')
+moran.plot(lsoa21$asian_bangladeshi, listw = lsoa21_nb_weights, labels = FALSE, pch = 16, cex = 0.4, xlab = 'Variable: Asian-Bangladeshi', ylab = 'Spatially Lagged Variable: Asian-Bangladeshi')
 ```
 
-We observe a positive relationship between our `asian_bangladeshi` variable and the spatially lagged values, suggesting that our global Moran's I test will likely yield a statistic reflective of the slope visible in the scatter plot.
+We observe a positive relationship between our `asian_bangladeshi` variable and the spatially lagged values. The slope of the fitted line is the global Moran's I statistic, which the test below calculates and checks for significance. The dashed lines mark the mean of the variable and the mean of the spatially lagged variable, and the diamonds are observations that have a particularly large influence on the fitted line.
 
 ```{r}
 #| label: 04-test-moran
@@ -358,7 +360,7 @@ moran <- moran.mc(lsoa21$asian_bangladeshi, listw = lsoa21_nb_weights, nsim = 99
 moran
 ```
 
-The results of the [Monte Carlo](https://en.wikipedia.org/wiki/Monte_Carlo_method) simulation, visualised in @fig-04-plot-moran-permutation, suggest that there is statistically significant positive autocorrelation in our variable. This indicates that LSOAs with higher percentages of people that self-identify as Asian-Bangladeshi tend to be surrounded by other LSOAs with similarly high percentages. Likewise, LSOAs with lower percentages of people that self-identify as Asian Bangladeshi are generally surrounded by LSOAs with similarly low values.
+The output shows a Moran's I statistic of about 0.85, which is close to the maximum of 1. None of the 999 simulated values was as large as the observed one, so the pseudo $p$-value is $1 / 1000 = 0.001$, the smallest value that 999 simulations can give. The results of the [Monte Carlo](https://en.wikipedia.org/wiki/Monte_Carlo_method) simulation, visualised in @fig-04-plot-moran-permutation, suggest that there is statistically significant positive autocorrelation in our variable. This indicates that LSOAs with higher percentages of people that self-identify as Asian-Bangladeshi tend to be surrounded by other LSOAs with similarly high percentages. Likewise, LSOAs with lower percentages of people that self-identify as Asian Bangladeshi are generally surrounded by LSOAs with similarly low values.
 
 ```{r}
 #| label: fig-04-plot-moran-permutation
@@ -373,14 +375,14 @@ plot(moran, main = '', xlab = 'Variable: Asian-Bangladeshi')
 ```
 
 ### Local Moran's I
-Although we have established that there is positive spatial autocorrelation in our data, we still need to identify the specific spatial patterns. Looking back at @fig-moran-plot, you will notice that the plot is divided into four quadrants.
+Although we have established that there is positive spatial autocorrelation in our data, we still need to identify the specific spatial patterns. Looking back at @fig-04-plot-moran-queens, you will notice that the dashed lines divide the plot into four quadrants.
 
 | Quadrant              | Description |
 | :-                    | :------ |
 | Top-right quadrant    | This area represents LSOAs that have a higher-than-average share of the Asian-Bangladeshi population and are surrounded by other LSOAs with similarly high shares of the Asian-Bangladeshi population. These are known as *high-high* clusters. |
 | Bottom-left quadrant  | This area represents LSOAs with a lower-than-average share of the Asian-Bangladeshi population, surrounded by other LSOAs with similarly low shares. These are *low-low* clusters. |
-| Top-left quadrant     | LSOAs with a higher-than-average share of the Asian-Bangladeshi population surrounded by LSOAs with a lower-than-average share. These are *high-low* clusters. |
-| Bottom-right quadrant | LSOAs with a lower-than-average share of the Asian-Bangladeshi population surrounded by LSOAs with a higher-than-average share. These are *low-high* clusters. |
+| Top-left quadrant     | LSOAs with a lower-than-average share of the Asian-Bangladeshi population surrounded by LSOAs with a higher-than-average share. These are *low-high* outliers. |
+| Bottom-right quadrant | LSOAs with a higher-than-average share of the Asian-Bangladeshi population surrounded by LSOAs with a lower-than-average share. These are *high-low* outliers. |
 
 We can show these areas on a map by deconstructing the Moran's I into a series of [local Moran values](https://doi.org/10.1111/j.1538-4632.1995.tb00338.x), each measuring how similar each place is (individually) to its neighbours.
 
@@ -407,9 +409,9 @@ We are not given a single statistic as we did with our global Moran's I, but rat
 | `E.Ii`              | Expectation (mean) of the local Moran’s I statistic. |
 | `Var.Ii`            | Variance of local Moran's I statistic |
 | `Z.Ii`              | Standard deviation (z-score) of the local Moran’s I statistic. |
-| `Pr()`              | *Pseudo* $p$-value of local Moran's I statistic based on standard deviations and means from the permutation sample. |
-| `Pr() Sim`          | *Pseudo* $p$-value of local Moran's I statistic based on the rank within the permutation sample, assuming a uniform distribution. |
-| `Pr(Folded) Sim`    | *Pseudo* $p$-value of local Moran's I statistic based on the rank within the permutation sample using a one-sided test, assuming a uniform distribution. |
+| `Pr(z != E(Ii))`       | *Pseudo* $p$-value of local Moran's I statistic based on standard deviations and means from the permutation sample. |
+| `Pr(z != E(Ii)) Sim`   | *Pseudo* $p$-value of local Moran's I statistic based on the rank within the permutation sample, assuming a uniform distribution. |
+| `Pr(folded) Sim`       | *Pseudo* $p$-value of local Moran's I statistic based on the rank within the permutation sample using a one-sided test, assuming a uniform distribution. |
 
 We can further extract the quadrants to which of all these polygons have been assigned:
 
@@ -427,6 +429,8 @@ lmoran_quadrants <- attr(lmoran, 'quadr')
 # inspect
 head(lmoran_quadrants)
 ```
+
+The `quadr` attribute holds three versions of the quadrant labels: `mean`, `median` and `pysal`. We use the `mean` version, which splits the Moran scatterplot at the mean of the variable and the mean of the spatially lagged variable, exactly where the dashed lines in @fig-04-plot-moran-queens are drawn. The `median` version splits at the medians instead, which for a skewed variable such as this one labels many more LSOAs as high-high.
 
 We can now link these values back to our spatial dataframe and make a map using the `tmap` library:
 
@@ -494,8 +498,8 @@ This type of map is called a [LISA map](https://geodacenter.github.io/workbook/6
 #| eval: True
 #| cache: True
 #| filename: 'R code'
-# replace values if not significant
-lmoran_quadrants[lmoran[,6] > 0.05, ] <- NA
+# replace values if not significant (based on the rank-based pseudo p-value)
+lmoran_quadrants[lmoran[, 'Pr(z != E(Ii)) Sim'] > 0.05, ] <- NA
 
 # replace names
 names(lmoran_quadrants) <- c('lmoran_mean_sig', 'lmoran_median_sig', 'lmoran_pysal_sig')
@@ -517,6 +521,7 @@ tm_polygons(
                'Low-High' = '#92c5de',
                'High-Low' = '#f4a582',
                'High-High' = '#ca0020'),
+    label.na = 'Not significant',
   ),
 
   # legend
@@ -536,7 +541,7 @@ tm_layout(
 
   # legend
   legend.outside = FALSE,
-  legend.position = c(0.85, 0.25),
+  legend.position = c(0.8, 0.3),
   legend.text.size = 0.8,
 
   # canvas
@@ -546,7 +551,7 @@ tm_layout(
 ```
 
 :::{.callout-note}
-This new map may still not fully address the issue of statistical significance due to repeated testing, and some values may appear significant purely by chance. To correct for this, you can adjust the $p$-values using R’s `p.adjust()` function. For further details, refer to [Manuel Gimond's explanation](https://mgimond.github.io/Spatial/13_autocorrelation.html#multiple-comparisons-and-false-discovery-rate) of the [multiple comparison](https://en.wikipedia.org/wiki/Multiple_comparisons_problem) problem in the context of the *pseudo-*$p$ values.
+This new map may still not fully address the issue of statistical significance due to repeated testing, and some values may appear significant purely by chance. To correct for this, you can adjust the $p$-values using R’s `p.adjust()` function, for example with `method = 'fdr'`, which controls the false discovery rate. The default method (Holm) is much stricter and, with 999 simulations, leaves no significant LSOAs at all, because the smallest pseudo $p$-value that 999 simulations can give is too large to survive it. For further details, refer to [Manuel Gimond's explanation](https://mgimond.github.io/Spatial/13_autocorrelation.html#multiple-comparisons-and-false-discovery-rate) of the [multiple comparison](https://en.wikipedia.org/wiki/Multiple_comparisons_problem) problem in the context of the *pseudo-*$p$ values.
 :::
 
 ## Assignment
@@ -555,9 +560,9 @@ Any statistic that includes spatial weights is dependent upon how those weights 
 1. Extract the centroids from the `lsoa21` file.
 2. Identify the `5` nearest neighbours for each LSOA, using the `knearneigh()` function.
 3. Create a neighbour list of these nearest neighbours, using the `knn2nb()` function.
-4. Compute the Global Moran’s I of the `asian_indian` variable using this new neighbourhood definition.
-5. Map the statistically significant clusters of Local Moran's I based on this new neighbourhood definition.
-6. Compare these results to the output of our `asian_bangladeshi` values. Do both variables exhibit clustering? Are the clusters located in similar areas?
+4. Compute the Global Moran’s I of the `asian_bangladeshi` variable using this new neighbourhood definition. How does it compare with the value for first order contiguity?
+5. Compute the Global Moran’s I of the `asian_indian` variable using the new neighbourhood definition and map its statistically significant clusters of Local Moran's I.
+6. Compare the results for the two variables. Do both variables exhibit clustering? Are the clusters located in similar areas?
 7. Now imagine a different scenario: testing whether nearby areas have similarly high or low levels of air pollution, given that pollution is a continuous physical process that does not respect administrative boundaries. Which of contiguity, fixed distance, or k-nearest neighbours would you use to define neighbours, and why?
 
 ## Before you leave
