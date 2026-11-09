@@ -484,7 +484,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="spatial-queries-and-geometric-operations" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">2</span> Spatial Queries and Geometric Operations</h1>
-<p>This week, we look at geometric operations and spatial queries: the fundamental building blocks when it comes to spatial data processing and analysis. This includes operations such as aggregating point data, calculating the distances separating one or more spatial objects, running a <em>buffer</em> analysis, and <em>intersecting</em> different spatial layers.</p>
+<p>This week, we look at geometric operations and spatial queries: the fundamental building blocks when it comes to spatial data processing and analysis. This includes selecting features based on their distance to other features, running a <em>buffer</em> analysis, and <em>intersecting</em> different spatial layers.</p>
 <section id="lecture-slides" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="lecture-slides"><span class="header-section-number">2.1</span> Lecture slides</h2>
 <p>You can download the slides of this week’s lecture here: <a href="https://github.com/jtvandijk/GEOG0030/blob/master/slides/w02-geo.pdf">[Link]</a>.</p>
@@ -514,13 +514,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Before working through the tutorial, we will spend a few minutes looking at:</p>
 <ul>
 <li>One month of raw crime data from data.police.uk</li>
-<li>Missing values in the crime dataset, and how they affect the analysis</li>
+<li>Missing values in the crime dataset</li>
 <li>The trade-offs of relying on a live API query for data</li>
 </ul>
 </section>
 <section id="bike-theft-in-london-i" class="level2" data-number="1.4">
 <h2 data-number="1.4" class="anchored" data-anchor-id="bike-theft-in-london-i"><span class="header-section-number">2.4</span> Bike theft in London I</h2>
-<p>This week, we will examine to what extent reported bicycle theft in London cluster around train and underground stations. We will be using open data from <a href="https://data.police.uk/">data.police.uk</a> on reported crimes alongside <a href="https://www.openstreetmap.org/#map=6/54.91/-3.43">OpenStreetMap</a> data for this analysis. We will use R to directly download the necessary data from OpenStreetMap, but the crime data will need to be manually downloaded from the data portal. We further have access to a <code>GeoPackage</code> that contains the London 2021 MSOA boundaries that we can use as a reference layer. If you do not already have it on your computer, save this file in your <code>data/spatial</code> folder.</p>
+<p>This week, we will examine to what extent reported bicycle theft in London clusters around train and underground stations. We will be using open data from <a href="https://data.police.uk/">data.police.uk</a> on reported crimes alongside <a href="https://www.openstreetmap.org/#map=6/54.91/-3.43">OpenStreetMap</a> data for this analysis. We will use R to directly download the necessary data from OpenStreetMap, but the crime data will need to be manually downloaded from the data portal. We further have access to a <code>GeoPackage</code> that contains the London 2021 MSOA boundaries that we can use as a reference layer. If you do not already have it on your computer, save this file in your <code>data/spatial</code> folder.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -669,7 +669,7 @@ Figure&nbsp;1: Downloading data on reported crimes through <a href="https://data
 </div>
 </div>
 </div>
-<p>For our analysis, we are currently only interested in reported bicycle thefts, so we need to filter our data based on the <code>crime_type</code> column. We can start by examining the unique values in this column and then subset the data accordingly:</p>
+<p>For our analysis, we are currently only interested in reported bicycle thefts, so we need to filter our data based on the <code>crime_type</code> column. Selecting rows based on their values in this way is called an <em>attribute query</em>. We can start by examining the unique values in this column and then subset the data accordingly:</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -741,7 +741,17 @@ Projected CRS: OSGB36 / British National Grid
 #   context &lt;lgl&gt;, geometry &lt;POINT [m]&gt;</code></pre>
 </div>
 </div>
-<p>Let’s map the dataset to get an idea of what the data looks like, using the outline of London as background:</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Coordinates can be stored in different <em>coordinate reference systems</em> (CRS). The police data use longitude and latitude (<code>EPSG:4326</code>), which are angles measured in degrees. Distances and buffers are easier to work with in metres, so we convert the data to the British National Grid (<code>EPSG:27700</code>), which is based on metres. The OpenStreetMap data that we download next also use longitude and latitude, so we convert those as well. Layers that you combine must use the same CRS. We return to coordinate reference systems in Week 9.</p>
+</div>
+</div>
+</div>
+<p>Let us map the dataset to get an idea of what the data looks like, using the outline of London as background:</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -890,7 +900,7 @@ Projected CRS: OSGB36 / British National Grid
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(osm_stations)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 3980</code></pre>
+<pre><code>[1] 4003</code></pre>
 </div>
 </div>
 <p>The total number of data points seems rather high. In fact, looking at the <code>railway</code> variable, several points are not tagged as station or do not have a value at all:</p>
@@ -913,7 +923,7 @@ Projected CRS: OSGB36 / British National Grid
 2                   stop   14 MULTIPOINT ((528197.7 18571...
 3        subway_entrance   37 MULTIPOINT ((525226.4 18745...
 4 train_station_entrance    1      POINT (538196.2 184826.5)
-5                   &lt;NA&gt; 3314 MULTIPOINT ((504982.3 17581...</code></pre>
+5                   &lt;NA&gt; 3337 MULTIPOINT ((504982.3 17581...</code></pre>
 </div>
 </div>
 <p>The points tagged as station in the railway field are most likely the only points in our dataset that represent actual stations, so we will only retain those points.</p>
@@ -927,7 +937,7 @@ Projected CRS: OSGB36 / British National Grid
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(railway <span class="sc">==</span> <span class="st">"station"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
-<p>Let’s map the dataset to get an idea of what the data looks like, using the outline of London as background:</p>
+<p>Let us map the dataset to get an idea of what the data looks like, using the outline of London as background:</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -970,7 +980,7 @@ Figure&nbsp;3: Train and underground stations in London.
 </div>
 </div>
 </div>
-<p>Now we have our data prepared, we can move on to analyse the extent to which bicycle theft in London cluster around stations. We can use both spatial queries and geometric operations to complete this analysis.</p>
+<p>Now that we have prepared our data, we can analyse the extent to which bicycle theft in London clusters around stations. We can use both spatial queries and geometric operations to complete this analysis.</p>
 <div class="callout callout-style-simple callout-warning">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -984,7 +994,7 @@ Figure&nbsp;3: Train and underground stations in London.
 </section>
 <section id="spatial-queries" class="level3" data-number="1.4.3">
 <h3 data-number="1.4.3" class="anchored" data-anchor-id="spatial-queries"><span class="header-section-number">2.4.3</span> Spatial queries</h3>
-<p>A spatial query is used to retrieve data based on its geographic location or spatial relationships. It uses spatial information from one or more layers to find features that meet specific criteria, such as proximity, intersection, or containment. For instance, we can use a spatial query to count all the bicycle thefts that have occurred within 500 metres of a train or underground station:</p>
+<p>A spatial query is used to retrieve data based on its geographic location or spatial relationships. It uses spatial information from one or more layers to find features that meet specific criteria, such as proximity, intersection, or containment. In contrast to the attribute query we used earlier, a spatial query selects features by where they are rather than by their values. For instance, we can use a spatial query to count all the bicycle thefts that have occurred within 500 metres of a train or underground station:</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -1027,30 +1037,28 @@ Projected CRS: OSGB36 / British National Grid
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>The above code converts the stations dataframe into a single geometry. This step is essential for <code>sf</code> to ensure that each point in the dataset is compared to every point in the stations dataframe. Without this conversion, the comparison would be done one station point at a time, storing only the last result rather than considering all station points simultaneously.</p>
+<p>The above code converts the stations dataframe into a single geometry. This step is essential because we want a single answer for each bicycle theft: is it within 500 metres of <em>any</em> station? Without this conversion, <code>sf</code> would compare each theft with each station separately and return one column of results per station, rather than one result per theft.</p>
 </div>
 </div>
 </div>
-<p>We can use the <code>count()</code> function to find out just how many thefts fall in each of these categories:</p>
+<p>The distances in this query are straight-line (Euclidean) distances in metres, because our data use the British National Grid.</p>
+<p>We can use the <code>count()</code> function to find out just how many thefts fall in each of these categories. We first drop the geometry column with <code>st_drop_geometry()</code>, so that <code>count()</code> returns a simple table rather than a spatial object:</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># number of bicycle thefts within 500m of a station</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(theft_bike, d500)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>theft_bike <span class="sc">|&gt;</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_drop_geometry</span>() <span class="sc">|&gt;</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">count</span>(d500)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Simple feature collection with 2 features and 2 fields
-Geometry type: MULTIPOINT
-Dimension:     XY
-Bounding box:  xmin: 212146 ymin: 53145.11 xmax: 580025 ymax: 398976
-Projected CRS: OSGB36 / British National Grid
-# A tibble: 2 × 3
-  d500      n                                                           geometry
-* &lt;lgl&gt; &lt;int&gt;                                                   &lt;MULTIPOINT [m]&gt;
-1 FALSE  4936 ((212146 54823.97), (273261.1 53145.11), (333765 397533), (382595…
-2 TRUE   9158 ((505376 184282.9), (505424 184212), (505433 184416), (505449 184…</code></pre>
+<pre><code># A tibble: 2 × 2
+  d500      n
+  &lt;lgl&gt; &lt;int&gt;
+1 FALSE  4938
+2 TRUE   9156</code></pre>
 </div>
 </div>
 <p>Around two-thirds of all reported bicycle thefts in London occur within 500 metres of a train or underground station. Of course, we can map the results for a visual inspection:</p>
@@ -1061,7 +1069,7 @@ Projected CRS: OSGB36 / British National Grid
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># classify distances</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>theft_bike <span class="ot">&lt;-</span> theft_bike <span class="sc">|&gt;</span></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dist_class =</span> <span class="fu">if_else</span>(d500 <span class="sc">==</span> <span class="cn">TRUE</span>, <span class="st">"&gt; 500 m"</span>, <span class="st">"&lt; 500 m"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dist_class =</span> <span class="fu">if_else</span>(d500 <span class="sc">==</span> <span class="cn">TRUE</span>, <span class="st">"&lt; 500 m"</span>, <span class="st">"&gt; 500 m"</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dist_class =</span> <span class="fu">factor</span>(dist_class, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"&gt; 500 m"</span>, <span class="st">"&lt; 500 m"</span>)))</span>
 <span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="co"># shape</span></span>
@@ -1131,7 +1139,7 @@ Projected CRS: OSGB36 / British National Grid
 <img src="02-operations_files/figure-html/fig-02-theft-map-500m-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-02-theft-map-500m-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: Reported bicycle thefts in London within 500 metres from a train or underground station.
+Figure&nbsp;4: Reported bicycle thefts in London within 500 metres of a train or underground station.
 </figcaption>
 </figure>
 </div>
@@ -1140,7 +1148,9 @@ Figure&nbsp;4: Reported bicycle thefts in London within 500 metres from a train 
 </section>
 <section id="geometric-operations" class="level3" data-number="1.4.4">
 <h3 data-number="1.4.4" class="anchored" data-anchor-id="geometric-operations"><span class="header-section-number">2.4.4</span> Geometric operations</h3>
-<p>Geometric operations are used to manipulate and analyse the shapes and spatial properties of geometric objects, such as points, lines, and polygons. These operations include tasks like calculating intersections, buffering, and determining the distance between shapes. In this case, we can create 500-metre buffers around each station and then count how many bicycle thefts fall within these buffers.</p>
+<p>Geometric operations are used to manipulate and analyse the shapes and spatial properties of geometric objects, such as points, lines, and polygons. These operations include tasks like calculating intersections, buffering, and determining the distance between shapes.</p>
+<p>The lecture introduced the main geometric operations, and we have already used two of them in this tutorial without naming them. <em>Clipping</em> keeps only the parts of one layer that fall within another, which is what <code>st_intersection()</code> did when we removed the stations outside London. <em>Dissolve</em> merges separate geometries into one, which is what <code>st_union()</code> did when we created the outline of London and the single station geometry. The lecture’s <em>union</em> of two layers, which keeps every shape from both, is not needed in this tutorial. A <em>buffer</em> creates a zone of a given distance around a geometry.</p>
+<p>In this case, we can create 500-metre buffers around each station and then count how many bicycle thefts fall within these buffers.</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -1211,7 +1221,7 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 <img src="02-operations_files/figure-html/fig-02-buffer-map-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-02-buffer-map-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5: Train and underground stations in London with a 500 metres buffer.
+Figure&nbsp;5: Train and underground stations in London with a 500 metre buffer.
 </figcaption>
 </figure>
 </div>
@@ -1229,19 +1239,16 @@ Figure&nbsp;5: Train and underground stations in London with a 500 metres buffer
 <span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.vector</span>()</span>
 <span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="co"># number of bicycle thefts within 500m of a station</span></span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(theft_bike, d500_buffer)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>theft_bike <span class="sc">|&gt;</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_drop_geometry</span>() <span class="sc">|&gt;</span></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">count</span>(d500_buffer)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Simple feature collection with 2 features and 2 fields
-Geometry type: MULTIPOINT
-Dimension:     XY
-Bounding box:  xmin: 212146 ymin: 53145.11 xmax: 580025 ymax: 398976
-Projected CRS: OSGB36 / British National Grid
-# A tibble: 2 × 3
-  d500_buffer     n                                                     geometry
-* &lt;lgl&gt;       &lt;int&gt;                                             &lt;MULTIPOINT [m]&gt;
-1 FALSE        4939 ((212146 54823.97), (273261.1 53145.11), (333765 397533), (…
-2 TRUE         9155 ((505376 184282.9), (505424 184212), (505433 184416), (5054…</code></pre>
+<pre><code># A tibble: 2 × 2
+  d500_buffer     n
+  &lt;lgl&gt;       &lt;int&gt;
+1 FALSE        4941
+2 TRUE         9153</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-important">
@@ -1250,10 +1257,32 @@ Projected CRS: OSGB36 / British National Grid
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>The results are almost identical, with a small difference due to how the two methods define within and handle spatial relationships and boundaries. For instance, a point on the buffer’s edge will be included in the intersect method, but may not meet the distance threshold required by <code>st_is_within_distance()</code>.</p>
+<p>The results are almost identical, with a tiny difference between the two methods. The <code>st_buffer()</code> function approximates a circle with a polygon, and the straight edges of this polygon lie slightly inside the true 500-metre circle. A point that is just within 500 metres of a station, but falls in the thin sliver between the polygon and the circle, is therefore found by <code>st_is_within_distance()</code> but missed by <code>st_intersects()</code>. The difference can only go in this direction: the buffer can miss points that are within 500 metres, but it never includes points that are further away.</p>
 </div>
 </div>
 </div>
+<p>To judge whether two-thirds is a high share, we need a point of comparison. The buffers do not cover all of London, so we can calculate how much of London lies within 500 metres of a station:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># area within 500m of a station</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>buffer_area <span class="ot">&lt;-</span> osm_stations_buffer <span class="sc">|&gt;</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_intersection</span>(outline) <span class="sc">|&gt;</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_area</span>()</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="co"># area of London</span></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>london_area <span class="ot">&lt;-</span> <span class="fu">st_area</span>(outline)</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="co"># share of London within 500m of a station</span></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a><span class="fu">as.numeric</span>(buffer_area<span class="sc">/</span>london_area)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.2427948</code></pre>
+</div>
+</div>
+<p>The buffers cover roughly a quarter of London’s area, yet contain around two-thirds of the reported bicycle thefts. Bicycle thefts are therefore far more concentrated around stations than the area alone would suggest. This does not mean that stations cause bicycle theft: both are more likely to be found where many people are. Comparing an observed pattern with what we would expect by chance is a theme we return to in the coming weeks.</p>
 </section>
 </section>
 <section id="assignment" class="level2" data-number="1.5">
@@ -1265,7 +1294,8 @@ Projected CRS: OSGB36 / British National Grid
 <li>A <code>csv</code> file containing the number of road crashes that occurred in London in 2025, extracted from the UK’s official road traffic casualty database using the <a href="https://github.com/ropensci/stats19">stats19</a> R library.</li>
 <li>A <code>GeoPackage</code> file that contains main roads in London, extracted from the <a href="https://www.ordnancesurvey.co.uk/products/os-open-roads">Ordnance Survey Open Roads</a> dataset.</li>
 </ul></li>
-<li>Choose a distance threshold that you think reasonably captures whether a crash happened “near” a main road, and calculate how many <em>serious</em> and <em>fatal</em> crashes fall within it.</li>
+<li>Choose a distance threshold that you think reasonably captures whether a crash happened “near” a main road, and calculate how many <em>serious</em> and <em>fatal</em> crashes, and what share of the total, fall within it.</li>
+<li>Calculate the share of London’s area that falls within your chosen distance of a main road and compare this with the share of crashes you found in the previous step. What does this comparison tell you?</li>
 </ol>
 <table class="caption-top table">
 <thead>
@@ -1291,7 +1321,7 @@ Projected CRS: OSGB36 / British National Grid
 </section>
 <section id="before-you-leave" class="level2" data-number="1.6">
 <h2 data-number="1.6" class="anchored" data-anchor-id="before-you-leave"><span class="header-section-number">2.6</span> Before you leave</h2>
-<p>Boom. That is how you can conduct basic spatial queries and geometric operations and using R and <code>sf</code>. Yet more RGIS coming over the next couple of weeks, but <a href="https://www.youtube.com/watch?v=Xyt810Ahbxk">this concludes the tutorial for this week</a>. Time to check out that reading list?</p>
+<p>Boom. That is how you can conduct basic spatial queries and geometric operations using R and <code>sf</code>. Yet more RGIS coming over the next couple of weeks, but <a href="https://www.youtube.com/watch?v=Xyt810Ahbxk">this concludes the tutorial for this week</a>. Time to check out that reading list?</p>
 
 
 </section>
