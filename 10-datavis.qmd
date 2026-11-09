@@ -13,6 +13,7 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 - Wickham, H. 2010. A layered grammar of graphics. *Journal of Computational and Graphical Statistics* 19(1): 3-28. [[Link]](https://doi.org/10.1198/jcgs.2009.07098)
 
 #### Suggested readings {.unnumbered}
+- Wickham, H. 2014. Tidy data. *Journal of Statistical Software* 59(10): 1-23. [[Link]](https://doi.org/10.18637/jss.v059.i10)
 - Cheshire, J. and Uberti, O. 2014. *London, The Information Capital: 100 Maps & Graphics That Will Change How You View the City.* London: Particular Books.
 - Wickham, H., Çetinkaya-Rundel, M., and Grolemund, G. *R for Data Science*. 2nd edition. **Chapter 1: Data visualisation**. [[Link]](https://r4ds.hadley.nz/data-visualize.html)
 
@@ -33,7 +34,7 @@ Example prompt: *"I have Census data in long format, with one row per LSOA per e
 By the end of this stage, you should have a single dataframe with one row per LSOA, restricted to the 12 Inner London Boroughs (Camden, Greenwich, Hackney, Hammersmith and Fulham, Islington, Kensington and Chelsea, Lambeth, Lewisham, Southwark, Tower Hamlets, Wandsworth, and Westminster), with a column for each ethnic group expressed as a proportion of that LSOA's population, and a column identifying which borough each LSOA belongs to.
 
 ::: {.callout-tip}
-Check your row count against what you would expect. If it looks too high or too low for 12 boroughs' worth of LSOAs, something has gone wrong upstream.
+Check your row count against what you would expect. The 12 boroughs hold around 1,800 of London's 4,994 LSOAs; if your count is far from that, something has gone wrong upstream.
 :::
 
 ## Assignment
@@ -44,8 +45,8 @@ With the dataset ready, now work with Copilot to produce two visualisations:
 
 If you get both visualisations working, take the code for one of them and turn it into a function, so that it can be rerun without copying and pasting. Keep the parameter list tight rather than open-ended, and match it to the visualisation you choose, since borough and population group are not interchangeable across the two:
 
-- If you are turning the **treemap** into a function: one parameter for which borough to use, and one for the fill colour.
-- If you are turning the **histogram panel** into a function: one parameter for which population group to plot, and one for the fill colour.
+- If you are turning the **treemap** into a function: one parameter for which borough to use, and one for the colour of the tile borders.
+- If you are turning the **histogram panel** into a function: one parameter for which population group to plot, and one for the fill colour of the bars.
 
 A treemap fixes one borough and shows every group within it, so borough is the parameter that changes what it shows. A histogram panel fixes one population group and shows every borough, so population group plays that role instead. Borough is not a meaningful parameter for the histogram panel, since the whole point of that chart is to show all boroughs at once.
 

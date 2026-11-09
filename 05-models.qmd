@@ -12,7 +12,7 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 
 #### Suggested readings {.unnumbered}
 - Brunsdon, C., Fotheringham, S., and Charlton, M. 1998. Geographically Weighted Regression. *Journal of the Royal Statistical Society: Series D (The Statistician)* 47(3): 431-443. [[Link]](https://doi.org/10.1111/1467-9884.00145)
-- Comber, A., Brunsdon, C., Charlton, M. *et al.*. 2023. A route map for successful applications of Geographically Weighted Regression. *Geographical Analysis* 55(1): 155-178. [[Link]](https://doi.org/10.1111/gean.12316)
+- Comber, A., Brunsdon, C., Charlton, M. *et al.* 2023. A route map for successful applications of Geographically Weighted Regression. *Geographical Analysis* 55(1): 155-178. [[Link]](https://doi.org/10.1111/gean.12316)
 - Hochstenbach, C., Howard, A., and Arundel, R. 2025. Increasing social and spatial inequalities in parental co-residence. *Tijdschrift voor Economische en Sociale Geografie* 116(2): 212-231. [[Link]](https://doi.org/10.1111/tesg.12655)
 
 ## Start of session
@@ -83,7 +83,7 @@ You can inspect both objects using the `View()` function.
 :::
 
 ### Geographically weighted correlation
-In [GEOG0018 Research Methods in Human Geography](https://jtvandijk.github.io/GEOG0018/03-statistics2.html), we already worked with this electoral dataset and we hypothesised that predominantly older voters tend to support the Conservative Party. To explore this, we examined the relationship between the proportion of individuals over 50 years old in each parliamentary constituency (`aged_50_years_and_over`) and the proportion of votes cast for the Conservative Party (`conservative_vote_share`). A scatterplot and Pearson's correlation revealed a moderate association between the two variables, suggesting a possible link between age demographics and Conservative voting patterns:
+We start with a recap of an analysis from [GEOG0018 Methods in Human Geography](https://jtvandijk.github.io/GEOG0018/03-statistics2.html), which not everyone will have taken. The hypothesis is that predominantly older voters tend to support the Conservative Party. To explore this, we examine the relationship between the proportion of individuals over 50 years old in each parliamentary constituency (`aged_50_years_and_over`) and the proportion of votes cast for the Conservative Party (`conservative_vote_share`). A scatterplot and Pearson's correlation show a moderate association between the two variables ($r$ = 0.57), suggesting a possible link between age demographics and Conservative voting patterns:
 
 ```{r}
 #| label: fig-05-plot-data-scatter
@@ -199,7 +199,7 @@ tm_layout(
 )
 ```
 
-Looking at the maps, the spatial distribution of Conservative vote share and the proportion of the population over 50 appears neither random nor uniform. This raises the question to what extent the observed correlation in @fig-05-plot-data-scatter holds consistently across different constituencies? To answer this we can run a Geographically Weighted Correlation using the `GWmodel` library.
+Looking at the maps, the spatial distribution of Conservative vote share and the proportion of the population over 50 appears neither random nor uniform. This raises the question: to what extent does the observed correlation in @fig-05-plot-data-scatter hold consistently across different constituencies? To answer this we can run a Geographically Weighted Correlation using the `GWmodel` library.
 
 Geographically Weighted Correlation (GWC) allows us to investigate whether the strength and direction of the association between variables vary across space. By applying a localised correlation technique, GWC calculates the correlation coefficient within specified spatial windows or *kernels* across the study area. This can reveal geographic areas where the relationship is stronger or weaker, providing more insight than a single global correlation and helping us to understand spatial heterogeneity in the data.
 
@@ -225,7 +225,7 @@ cons_24_sp <- as_Spatial(cons_24)
 The `sf` package is now preferred over `sp` in R for its modern, efficient handling of spatial data. By using simple features, a standardised format for spatial geometries, `sf` is more compatible with other geospatial tools and integrates smoothly with the tidyverse, simplifying data manipulation and analysis. However, some libraries still rely on `sp` and have not yet transitioned to `sf`.
 :::
 
-We can now calculate a geographically weighted correlation. We will use an adaptive bandwidth that estimates the local correlation using the 25 nearest constituencies:
+We can now calculate a geographically weighted correlation. We will use an adaptive bandwidth that estimates the local correlation using the 25 nearest constituencies. The 25 is a choice: a smaller number gives more local but noisier estimates, a larger number smoother ones:
 
 ```{r}
 #| label: 05-gwc
@@ -259,14 +259,14 @@ summary(cons_24$cons_age_cor)
 ```
 
 ::: {.callout-warning}
-The results of the outcomes of `gwss` function can be accessed through the `$SDF` data frame.
+The results of the `gwss()` function can be accessed through the `$SDF` data frame.
 :::
 
 The summary shows that there indeed seems to be variation of this relationship across the country, with the local Pearson correlation ranging from very weak to very strong. Of course, we can map this in the usual way:
 
 ```{r tidy='styler'}
 #| label: fig-05-gwc-map
-#| fig-cap: Local correlation values `conservative_vote_share` and `aged_50_years_and_over` variables.
+#| fig-cap: Local correlation between the `conservative_vote_share` and `aged_50_years_and_over` variables.
 #| echo: True
 #| eval: True
 #| cache: True
@@ -333,11 +333,10 @@ cons_24_cor_sig <- gwss.montecarlo(cons_24_sp, vars = c('conservative_vote_share
 # replace names
 names(cons_24_cor_sig) <- 'cons_age_cor_p'
 
-# bind results
+# bind results, keep the local correlation only where the p-value is below 0.025 or above 0.975
 cons_24 <- cons_24 |>
   cbind(cons_24_cor_sig) |>
-  mutate(cons_24_cor = if_else(cons_age_cor_p < 0.025, cons_age_cor_p,
-                       if_else(cons_age_cor_p > 0.975, cons_age_cor_p, NA)))
+  mutate(cons_age_cor_sig = if_else(cons_age_cor_p < 0.025 | cons_age_cor_p > 0.975, cons_age_cor, NA))
 ```
 
 ::: {.callout-note}
@@ -350,10 +349,10 @@ A correlation describes the strength and direction of a linear relationship, but
 GWR fits a separate regression equation at each location in the study area, weighting nearby observations more heavily than those farther away. Again, the weighting is typically based on a kernel function. The basic GWR equation is:
 
 $$
-y_{i} = \beta_{0}(\upsilon_{i}, v_{i}) + \sum_{k=1}^{p}\beta_{k}(\upsilon_{i}, v_{i})x_{ik} + \epsilon_{i}
+y_{i} = \beta_{0}(u_{i}, v_{i}) + \sum_{k=1}^{p}\beta_{k}(u_{i}, v_{i})x_{ik} + \epsilon_{i}
 $$
 
-where $(\upsilon_{i}, v_{i})$ are the coordinates of location $i$ and $\beta_{k}(\upsilon_{i}, v_{i})$ are the location-specific coefficients.
+where $(u_{i}, v_{i})$ are the coordinates of location $i$ and $\beta_{k}(u_{i}, v_{i})$ are the location-specific coefficients.
 
 #### Multivariate regression
 To predict the Conservative voter share, we hypothesise that certain socio-demographic variables may play a significant role. These independent variables include:
@@ -401,7 +400,7 @@ performance::check_model(lm_voteshare, check = c('qq', 'normality'))
 
 ```{r}
 #| label: fig-05-diagnose-linearity
-#| fig-cap: Check for linearity and homogeneity
+#| fig-cap: Check for linearity and homogeneity.
 #| classes: styled-output
 #| echo: True
 #| eval: True
@@ -424,7 +423,7 @@ performance::check_model(lm_voteshare, check = c('vif', 'outliers'))
 ```
 
 #### Geographically weighted regression
-The model diagnostics seem generally fine, perhaps except for the linearity check. This could indicate a curved relationship or, alternatively, suggest spatial dependence in the relationship. If spatial dependence is present, it may imply that the observations are not independent. We can examine this by assessing whether the model residuals display spatial dependence. Let us begin with a map:
+The model diagnostics seem generally fine, perhaps except for the linearity check and the variance inflation factors (VIFs). The VIFs of the unemployed (8.7), over 50 (7.2) and 25-34 (6.1) variables are classed as moderate: the shares of the population over 50 and aged 25-34 are strongly negatively correlated ($r$ = -0.85), and the unemployed coefficient is the only one that is not statistically significant. We keep all variables for now, but we need to be careful when interpreting the local coefficients later. The linearity check could indicate a curved relationship or, alternatively, suggest spatial dependence in the relationship. If spatial dependence is present, it may imply that the observations are not independent. We can examine this by assessing whether the model residuals display spatial dependence. Let us begin with a map:
 
 ```{r tidy='styler'}
 #| label: fig-05-map-residuals
@@ -447,8 +446,9 @@ tm_polygons(
   # map data
   fill = 'lm_residuals',
   fill.scale = tm_scale_intervals(
-    n = 5, style = 'jenks',
-    values = c('#ffffb2', '#fecc5c', '#fd8d3c', '#f03b20', '#f03b20'),
+    breaks = c(-0.3, -0.1, -0.03, 0.03, 0.1, 0.3),
+    values = c('#2166ac', '#92c5de', '#f7f7f7', '#f4a582', '#b2182b'),
+    labels = c('-0.30 to -0.10', '-0.10 to -0.03', '-0.03 to 0.03', '0.03 to 0.10', '0.10 to 0.30'),
   ),
 
   # legend
@@ -477,7 +477,7 @@ tm_layout(
 
 ```
 
-Looking at @fig-05-map-residuals there appears to be some spatial structure in the model residuals. We can test this more formally using Moran's I test to assess spatial autocorrelation:
+A residual is the part of the Conservative vote share that the model does not explain: the observed value minus the predicted value. In @fig-05-map-residuals, blue constituencies have a lower Conservative vote share than the model predicts and red constituencies a higher one. There appears to be some spatial structure in the model residuals. We can test this more formally using Moran's I test to assess spatial autocorrelation:
 
 ```{r}
 #| label: 05-spatial-autocorrelation
@@ -500,7 +500,7 @@ moran <- moran.mc(cons_24$lm_residuals, listw = cons_24_nb_weights, nsim = 999)
 # results
 moran
 ```
-The Moran's I test indicates significant spatial autocorrelation in our model residuals, suggesting that the observations are not independent. As a result, we can proceed with a Geographically Weighted Regression to account for spatial variation in the relationship between the variables.
+We use `zero.policy = TRUE` because Ynys Môn (Anglesey) is an island and has no neighbours under contiguity, as we saw [last week](04-autocorrelation.html#defining-neighbours). The Moran's I test indicates significant spatial autocorrelation in our model residuals, suggesting that the observations are not independent. As a result, we can proceed with a Geographically Weighted Regression to account for spatial variation in the relationship between the variables.
 
 We will first estimate the 'optimal' bandwidth using an automated bandwidth selection procedure:
 
@@ -537,6 +537,29 @@ The global regression results are derived from the standard OLS model, represent
 ::: {.callout-important}
 All the local estimates are contained in the spatial data frame `cons_24_gwr$SDF`. You can inspect the results using the `View()` function.
 :::
+
+As the last step of the workflow from the lecture, we check whether the residuals of the GWR are still spatially autocorrelated:
+
+```{r}
+#| label: 05-spatial-autocorrelation-gwr
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: 'R code'
+# join gwr residuals onto spatial data
+cons_24 <- cons_24 |>
+  mutate(gwr_residuals = cons_24_gwr$SDF$residual)
+
+# moran's test
+moran_gwr <- moran.mc(cons_24$gwr_residuals, listw = cons_24_nb_weights, nsim = 999)
+
+# results
+moran_gwr
+```
+
+Moran's I falls from about 0.42 for the residuals of the global model to about 0.15 for the residuals of the GWR. The geographically weighted model therefore reduces the spatial dependence in the residuals considerably, but it does not remove it: the statistic is still significant, so some spatial structure remains unexplained.
 
 We can now also map all the local $R^2$ values to get an idea of how well the model fit varies spatially:
 
@@ -600,7 +623,7 @@ In similar fashion, and with some data wrangling, we can map the individual loca
 #| eval: True
 #| cache: True
 #| filename: 'R code'
-# join local coefficient values onto spatial data, select, pivot
+# join local coefficient values onto spatial data, select
 cons_24_coef <- cons_24 |>
   mutate(eco_active_employed_coef = cons_24_gwr$SDF$eco_active_employed,
          eco_active_unemployed_coef = cons_24_gwr$SDF$eco_active_unemployed,
@@ -608,60 +631,63 @@ cons_24_coef <- cons_24 |>
          eth_black_coef = cons_24_gwr$SDF$eth_black,
          aged_25_to_34_years_coef = cons_24_gwr$SDF$aged_25_to_34_years,
          aged_50_years_and_over_coef = cons_24_gwr$SDF$aged_50_years_and_over) |>
-  select(40:45) |>
-  pivot_longer(cols = !geom, names_to = 'variable', values_to = 'coefficient')
+  select(ends_with('_coef'))
 
-# shape
-tm_shape(cons_24_coef) +
+# function to map the local coefficients of one variable
+map_coef <- function(variable, title) {
 
-# map data
-tm_polygons(
+  # shape
+  tm_shape(cons_24_coef) +
 
   # map data
-  fill = 'coefficient',
-  fill.scale = tm_scale_intervals(
-    n = 9, style = 'jenks',
-    values = c('#7f3b08','#b35806','#e08214','#fdb863','#f7f7f7',
-               '#d8daeb','#b2abd2','#8073ac','#542788'),
-  ),
+  tm_polygons(
 
-  # legend
-  fill.legend = tm_legend(
-    title = 'Local GWR coefficient',
-    frame = FALSE
-  ),
+    # map data
+    fill = variable,
+    fill.scale = tm_scale_continuous(
+      midpoint = 0,
+      values = '-brewer.rd_bu',
+    ),
 
-  # borders
-  col = '#ffffff',
-  col_alpha = 0.3,
-  lwd = 0.1
-  ) +
+    # legend
+    fill.legend = tm_legend(
+      title = title,
+      frame = FALSE,
+      bg = FALSE,
+      position = tm_pos_in('left', 'top'),
+      text.size = 0.5,
+      title.size = 0.6,
+    ),
 
-# facet
-tm_facets(
-  by = 'variable',
-  ncol = 3,
-  ) +
+    # borders
+    col = '#ffffff',
+    col_alpha = 0.3,
+    lwd = 0.1
+    ) +
 
-# layout
-tm_layout(
+  # layout
+  tm_layout(frame = FALSE)
+}
 
-  # legend
-  legend.outside = TRUE,
-  legend.text.size = 0.8,
-
-  # canvas
-  frame = FALSE,
-  panel.labels = c('Age: 25-34', 'Age: >50', 'Employed', 'Unemployed',
-                   'Ethnicity: Black', 'Ethnicity: White'),
+# arrange the maps
+tmap_arrange(
+  map_coef('aged_25_to_34_years_coef', 'Age: 25-34'),
+  map_coef('aged_50_years_and_over_coef', 'Age: >50'),
+  map_coef('eco_active_employed_coef', 'Employed'),
+  map_coef('eco_active_unemployed_coef', 'Unemployed'),
+  map_coef('eth_black_coef', 'Ethnicity: Black'),
+  map_coef('eth_white_coef', 'Ethnicity: White'),
+  ncol = 3
 )
 
 ```
 
-Mapping these local estimates reveals an interesting geography, where, for example, the proportion of the population over 50 years old is a better predictor for the Conservative vote share in regions like the South West, Greater London, and parts of the North West and Yorkshire and the Humber.
+Mapping these local estimates reveals an interesting geography, where, for example, the proportion of the population over 50 years old has a stronger association with the Conservative vote share in London and parts of the North West and Yorkshire and the Humber than in the East Midlands or the South East. Each map has its own colour scale, centred on zero (white), so compare the colours within a map and not between maps: blue is a negative local association and red a positive one.
+
+Be careful with the unemployed variable. Its local coefficients range from about -11 to +10, and only about a third of them are statistically significant (see below). Together with its moderate VIF and its non-significant global coefficient, this points to unstable estimates rather than to a real geography.
 
 ::: {.callout-warning}
-Not all of the local regression estimates may be statistically significant. We can use the estimated $t$-values, as indicated by the `_TV` suffix in the `SDF` data frame of the GWR results, to filter out those that are not significant. For example, to filter at 95% confidence, remove $t$-values outside the range of `-1.96` to `+1.96`. We could also run a Monte Carlo simulation using the `gwr.montecarlo()` function, however, this will take a long time to run.
+Not all of the local regression estimates may be statistically significant. We can use the estimated $t$-values, as indicated by the `_TV` suffix in the `SDF` data frame of the GWR results, to filter out those that are not significant. For example, to filter at 95% confidence, keep only the estimates with $t$-values outside the range of `-1.96` to `+1.96`. Treat this as a guide rather than a formal test: neighbouring local models share observations, and with 575 local models some estimates will look significant by chance. We could also run a Monte Carlo simulation using the `gwr.montecarlo()` function, however, this will take a long time to run.
 :::
 
 ::: {.callout-tip}
@@ -669,7 +695,7 @@ For a more comprehensive dive into Geographically Weighted Regression, the [Spat
 :::
 
 ### More spatial models
-In this tutorial, we have looked at geographically weighted correlation and regression. However, whilst out of the scope of this module, there are many other approaches to account for space in statistical models. Examples of such models are the spatial error model and the spatial lag model.
+In this tutorial, we have looked at geographically weighted correlation and regression. However, whilst out of the scope of this module, there are many other approaches to account for space in statistical models. Examples of such models are the spatial error model and the spatial lag model. If you need one of these for your own work, for example for a dissertation, the `spatialreg` package fits both, and Lagrange multiplier tests (`lm.RStests()`) help to choose between them.
 
 #### Spatial error model
 The spatial error model is used when the error terms in a regression model exhibit spatial autocorrelation, meaning the error terms are not independent across space. This can happen due to omitted variables that have a spatial pattern or unmeasured factors that affect the dependent variable similarly across nearby locations.
@@ -677,10 +703,10 @@ The spatial error model is used when the error terms in a regression model exhib
 The model adjusts for spatial autocorrelation by adding a spatially lagged error term (a weighted sum of the errors from neighbouring locations) to the regression equation:
 
 $$
-y = X\beta + \upsilon, \upsilon = \lambda W \upsilon + \epsilon
+y = X\beta + \xi, \xi = \lambda W \xi + \epsilon
 $$
 
-where $X\beta$ represents the standard regression components, $\lambda$ is a spatial autoregressive parameter, $W$ is a spatial weights matrix, and $\upsilon$ is a vector of spatially autocorrelated errors.
+where $X\beta$ represents the standard regression components, $\lambda$ is a spatial autoregressive parameter, $W$ is a spatial weights matrix, and $\xi$ is a vector of spatially autocorrelated errors.
 
 ::: {.callout-note}
 Spatial error models can be fitted using R's [spatialreg](https://cran.r-project.org/web/packages/spatialreg/index.html) package.
@@ -707,12 +733,12 @@ The spatial error model adjusts for spatial autocorrelation in the error terms, 
 Both the spatial error and spatial lag models assume that the relationships between variables are the same across the study area, with adjustments made only for spatial dependencies. GWR, on the other hand, allows the relationships themselves to vary across space. GWR is more flexible but also more complex and computationally intensive, providing local instead of global estimates of coefficients.
 
 ## Assignment
-The Geographically Weighted Regression (GWR) reveals some varying patterns in the sign and direction of the Conservative voter share, but it is likely that other factors are at play. One could hypothesise that another potential predictor of the Conservative vote share is the proportion of the population employed in a particular industry. Try to do the following:
+The Geographically Weighted Regression (GWR) reveals some varying patterns in the strength and direction of the relationships with the Conservative vote share, but it is likely that other factors are at play. One could hypothesise that another potential predictor of the Conservative vote share is the proportion of the population employed in a particular industry. Try to do the following:
 
 1. Download the dataset provided below and save it to the appropriate subfolder within your `data` directory. The `csv`, extracted using the [Custom Dataset Tool](https://www.ons.gov.uk/datasets/create), contains the number of employed individuals as recorded in the 2021 Census by their [Standard Industrial Classification (SIC)](https://www.ons.gov.uk/census/census2021dictionary/variablesbytopic/labourmarketvariablescensus2021/industrycurrent#:~:text=Type%3A%20Derived%20variable-,Definition,firm%20or%20organisation's%20main%20activity.) code.
-2. Formulate a hypothesis regarding which of the nine main industries presented in the dataset might help predict the Conservative vote share.
+2. Formulate a hypothesis regarding which of the industry categories presented in the dataset might help predict the Conservative vote share.
 3. For the chosen industry variable:
-    * Calculate the share of individuals employed in that industry.
+    * Calculate the share of individuals employed in that industry. The file offers more than one possible denominator: state which one you use and why.
     * [Extend the Geographically Weighted Regression (GWR)](05-models.html#geographically-weighted-regression-1) by including this new variable.
 4. What do the results suggest? Is this variable associated with any changes in Conservative vote share?
 5. Create a map of the local coefficients for this variable.

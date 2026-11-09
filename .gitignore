@@ -13,3 +13,7 @@ CLAUDE.md
 
 # Instructor-only reference material (worked solutions, reference maps): never publish
 live/
+
+# Private planning notes and slide tooling: never publish
+_todo-*.md
+_notes/

@@ -468,6 +468,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="suggested-readings" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="suggested-readings">Suggested readings</h4>
 <ul>
+<li>Wickham, H. 2014. Tidy data. <em>Journal of Statistical Software</em> 59(10): 1-23. <a href="https://doi.org/10.18637/jss.v059.i10">[Link]</a></li>
 <li>Cheshire, J. and Uberti, O. 2014. <em>London, The Information Capital: 100 Maps &amp; Graphics That Will Change How You View the City.</em> London: Particular Books.</li>
 <li>Wickham, H., Çetinkaya-Rundel, M., and Grolemund, G. <em>R for Data Science</em>. 2nd edition. <strong>Chapter 1: Data visualisation</strong>. <a href="https://r4ds.hadley.nz/data-visualize.html">[Link]</a></li>
 </ul>
@@ -515,7 +516,7 @@ ul.task-list li input[type="checkbox"] {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Check your row count against what you would expect. If it looks too high or too low for 12 boroughs’ worth of LSOAs, something has gone wrong upstream.</p>
+<p>Check your row count against what you would expect. The 12 boroughs hold around 1,800 of London’s 4,994 LSOAs; if your count is far from that, something has gone wrong upstream.</p>
 </div>
 </div>
 </div>
@@ -529,8 +530,8 @@ ul.task-list li input[type="checkbox"] {
 </ol>
 <p>If you get both visualisations working, take the code for one of them and turn it into a function, so that it can be rerun without copying and pasting. Keep the parameter list tight rather than open-ended, and match it to the visualisation you choose, since borough and population group are not interchangeable across the two:</p>
 <ul>
-<li>If you are turning the <strong>treemap</strong> into a function: one parameter for which borough to use, and one for the fill colour.</li>
-<li>If you are turning the <strong>histogram panel</strong> into a function: one parameter for which population group to plot, and one for the fill colour.</li>
+<li>If you are turning the <strong>treemap</strong> into a function: one parameter for which borough to use, and one for the colour of the tile borders.</li>
+<li>If you are turning the <strong>histogram panel</strong> into a function: one parameter for which population group to plot, and one for the fill colour of the bars.</li>
 </ul>
 <p>A treemap fixes one borough and shows every group within it, so borough is the parameter that changes what it shows. A histogram panel fixes one population group and shows every borough, so population group plays that role instead. Borough is not a meaningful parameter for the histogram panel, since the whole point of that chart is to show all boroughs at once.</p>
 <p>Ask Copilot to help you refactor your existing code into a function with the two parameters above, then test it by calling it with different values to the ones you used originally. If the result does not look right, the function is not actually finished, even if it runs without an error.</p>

@@ -65,6 +65,10 @@ You may have used spatial data before and noticed that we did not download a col
 
 To get started, let us create our first script. **File** -> **New File** -> **R Script**. Save your script as `w01-european-population-london.r`.
 
+::: {.callout-note}
+Working in a project with a saved script is how we put this week's lecture theme of reproducibility into practice. Because all files are referenced through paths relative to the project folder, such as `data/spatial/London-MSOA-2021.gpkg`, anyone who has your project folder can run your script and reproduce your results. Get into the habit of testing this: restart R (**Session** -> **Restart R**) and run your script from top to bottom. If it runs without errors, your analysis can be repeated.
+:::
+
 We will start by loading the libraries that we will need:
 
 ```{r}
@@ -119,7 +123,7 @@ You can further inspect both objects using the `View()` function.
 :::
 
 ### Exploring spatial data
-The first thing we want to do when we load spatial data is to plot the data to check whether everything is in order. To do this, we can simply use the base R `plot()` function
+The first thing we want to do when we load spatial data is to plot the data to check whether everything is in order. To do this, we can simply use the base R `plot()` function.
 
 ```{r}
 #| label: fig-01-plot-map-data
@@ -137,7 +141,7 @@ plot(msoa21, max.plot = 1, main = '')
 You should see your `msoa21` plot appear in your **Plots** window.
 
 ::: {.callout-warning}
-The `plot()` function should not to be used to make publishable maps but can be used as a quick way of inspecting your spatial data.
+The `plot()` function should not be used to make publishable maps but can be used as a quick way of inspecting your spatial data.
 :::
 
 Just as with a tabular dataframe, we can inspect the attributes of the spatial data frame:
@@ -178,7 +182,7 @@ class(msoa21)
 We should see our data is an `sf` dataframe, which is what we want.
 
 ### Joining attribute data
-Now we have our dataset containing London's European born population and the MSOA spatial boundaries loaded, we can join these together using an **Attribute Join**. Before proceeding with the join, we need to verify that a matching unique identifier exists in both datasets. Let's look at the column names in our datasets again:
+Now we have our dataset containing London's European born population and the MSOA spatial boundaries loaded, we can join these together using an **Attribute Join**. Before proceeding with the join, we need to verify that a matching unique identifier exists in both datasets. Let us look at the column names in our datasets again:
 
 ```{r}
 #| label: 01-names-att-join
@@ -210,7 +214,7 @@ head(sort(msoa21$msoa21cd))
 head(sort(msoa_eur$msoa21cd))
 ```
 
-They seem to contain similar values, so that is promising. Let us try to join the attribute data onto the spatial data:
+They seem to contain similar values, so that is promising. Let us try to join the attribute data onto the spatial data using a *left join*, which keeps every row of the spatial data and adds the matching rows of the attribute data. Rows without a match receive `NA`. Other types of join exist, such as `inner_join()` and `full_join()`, which we look at in next week's lecture:
 
 ```{r}
 #| label: 01-join-att
@@ -273,7 +277,7 @@ sum(!is.na(msoa21$pop21))
 
 No missing values. In this case we did not expect any missing values, so this confirms that our full attribute dataset has been linked to the spatial dataset.
 
-We are almost ready to map the data. Only thing that is left is for us to calculate the share of European-born immigrants within each MSOA:
+We are almost ready to map the data. We will map the share of European-born residents rather than their number, because MSOAs differ in size: the populations in our data range from about 5,300 to 16,300, so a count partly reflects how many people live in an MSOA. A share allows MSOAs of different sizes to be compared. The only thing left is to calculate this share within each MSOA:
 
 ```{r}
 #| label: 01-european-prop
@@ -288,7 +292,7 @@ msoa21 <- msoa21 |>
 ```
 
 ### Mapping spatial data
-For our map-making, we will use one of the two primary visualisation libraries for spatial data: `tmap`. `tmap` offers a flexible, layer-based approach that makes it easy to create various types of thematic maps, such as choropleths and proportional symbol maps. One of the standout features of `tmap` is its quick plotting function, `qtm()`, which allows you to generate basic maps with minimal effort.
+For our map-making, we will use one of the two primary visualisation libraries for spatial data: `tmap`. `tmap` offers a flexible, layer-based approach that makes it easy to create various types of thematic maps, such as choropleth maps, which shade areas according to their value, and proportional symbol maps. One of the standout features of `tmap` is its quick plotting function, `qtm()`, which allows you to generate basic maps with minimal effort.
 
 ```{r}
 #| label: fig-01-qtm
@@ -298,10 +302,10 @@ For our map-making, we will use one of the two primary visualisation libraries f
 #| tidy: True
 #| filename: 'R code'
 # quick thematic map
-qtm(msoa21, fill='prop_eur21')
+qtm(msoa21, fill = 'prop_eur21')
 ```
 
-In this case, the `fill()` argument in `tmap` is how we instruct the library to create a choropleth map based on the values in the specified column. If we set `fill()` to `NULL`, only the borders of our polygons will be drawn, without any colour fill. The `qtm()` function in `tmap` is versatile, allowing us to pass various parameters to customise the aesthetics of our map. By checking the function's documentation, you can explore the full list of available parameters. For instance, to set the MSOA borders to white, we can use the `borders` parameter:
+In this case, the `fill` argument in `tmap` is how we instruct the library to create a choropleth map based on the values in the specified column. If we set `fill` to `NULL`, only the borders of our polygons will be drawn, without any colour fill. The `qtm()` function in `tmap` is versatile, allowing us to pass various parameters to customise the aesthetics of our map. By checking the function's documentation, you can explore the full list of available parameters. For instance, to set the MSOA borders to white, we can use the `col` parameter:
 
 
 ```{r}
@@ -313,7 +317,7 @@ In this case, the `fill()` argument in `tmap` is how we instruct the library to 
 #| out.width: '100%'
 #| filename: 'R code'
 # quick thematic map
-qtm(msoa21, fill= 'prop_eur21', col = 'white')
+qtm(msoa21, fill = 'prop_eur21', col = 'white')
 ```
 
 The map does not look quite right yet. While we can continue tweaking parameters in the `qtm()` function to improve it, `qtm()` is somewhat limited in its functionality and is primarily intended for quickly inspecting your data and creating basic maps. For more complex and refined map-making with the `tmap` library, it is better to use the main plotting method that starts with the `tm_shape()` function.
@@ -340,7 +344,7 @@ tm_shape(msoa21) +
   tm_polygons()
 ```
 
-As you can now see, we have mapped the spatial polygons of our `msoa21` spatial dataframe. However, this is not quite the map we want; we need a choropleth map where the polygons are coloured based on the proportion of European immigrants. To achieve this, we use the `col` parameter within the `tm_polygons()` function.
+As you can now see, we have mapped the spatial polygons of our `msoa21` spatial dataframe. However, this is not quite the map we want; we need a choropleth map where the polygons are coloured based on the proportion of European immigrants. To achieve this, we use the `fill` parameter within the `tm_polygons()` function.
 
 ::: {.callout-tip}
 The `fill` parameter within `tm_polygons()` allows you to fill polygons with colours based on:
@@ -349,7 +353,7 @@ The `fill` parameter within `tm_polygons()` allows you to fill polygons with col
 - The name of a data variable within the spatial data file. This variable can either contain specific colour values or numeric/categorical values that will be mapped to a colour palette.
 :::
 
-Let us go ahead and pass our `prop_eur21` variable within the `fill()` parameter and see what we get:
+Let us go ahead and pass our `prop_eur21` variable within the `fill` parameter and see what we get:
 
 ```{r tidy='styler'}
 #| label: fig-01-choro-1
@@ -368,14 +372,31 @@ tm_shape(msoa21) +
   )
 ```
 
-We are making progress, but there are two immediate issues with our map. First, the classification breaks do not adequately reflect the variation in our dataset. By default, `tmap` uses *pretty* breaks, which may not be the most effective for our data. An alternative, such as *natural breaks* (or *jenks*), might better reveal the data's variation.
+We are making progress, but there is still an issue with our map: the classification breaks do not adequately reflect the variation in our dataset. By default, `tmap` uses *pretty* breaks, which may not be the most effective for our data. An alternative, such as *natural breaks* (or *jenks*), might better reveal the data's variation.
+
+To judge which classification method suits the data, it helps to look at how the values are distributed first. A histogram shows how many MSOAs fall within each range of values:
+
+```{r}
+#| label: fig-01-hist
+#| fig-cap: Distribution of the share of population born in Europe across MSOAs.
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: False
+#| filename: 'R code'
+# plot histogram
+hist(msoa21$prop_eur21, breaks = 20, main = '', xlab = 'Share of population born in Europe')
+```
+
+Half of all MSOAs have a share between roughly 12 and 19 per cent, with a longer tail of MSOAs with a higher share. Equal-width classes would put most MSOAs in the middle classes and only a few in the highest class, whereas natural breaks follow the shape of the distribution.
 
 To customise the classification breaks, refer to the `tm_polygons()` documentation. The following parameters are relevant:
 
 | Parameter         | Description |
 | :-                | :------ |
-| `fill.scale`      | Defines the color scale for polygon fills. Accepts a scale object created by functions such as `tm_scale_continuous()` and `tm_intervals()`  |
-| `tm_scale_continuous()` | Creates a continuous scale object for mapping numeric values to colours. You can specify options such as `palette` (color scheme) and `limits` (data range). |
+| `fill.scale`      | Defines the colour scale for polygon fills. Accepts a scale object created by functions such as `tm_scale_continuous()` and `tm_intervals()`  |
+| `tm_scale_continuous()` | Creates a continuous scale object for mapping numeric values to colours. You can specify options such as `palette` (colour scheme) and `limits` (data range). |
 | `tm_scale_intervals()`  | Creates a scale object for mapping data into discrete classes (intervals). Parameters include: `n` (number of classes) and `style` (classification method: e.g. *quantile*, *equal*, *jenks*)   |
 
 For example, if we want to adjust our choropleth map to use five classes determined by the natural breaks method, we need to specify the `n` and `style` parameters as follows:
@@ -404,7 +425,7 @@ Styling a map in `tmap` requires a deeper understanding and familiarity with the
 | :-                | :------ |
 | `tm_layout()`     | Customises overall map layout, including titles, fonts, legend position, margins, and frame settings. |
 | `tm_compass()`    | Adds a compass or North arrow to the map, with options for size, position, and style. |
-| `tm_scale_bar()`  | Adds a scale bar to indicate distance, with options for units, position, and styling. |
+| `tm_scalebar()`   | Adds a scale bar to indicate distance, with options for units, position, and styling. |
 
 To begin styling your map, explore each of these functions and their parameters. Through trial and error, you can tweak and refine the map until you achieve the desired look:
 
@@ -479,7 +500,7 @@ tm_scalebar(
 
 ```
 
-We can also have some map labels, if we want, by extracting centroids from selected polygons and adding these as separate map layer:
+We can also have some map labels, if we want, by extracting centroids from selected polygons, here the MSOAs Camden 015 and Lambeth 025, and adding these as a separate map layer:
 
 ```{r tidy='styler'}
 #| label: fig-01-choro-4
@@ -491,7 +512,7 @@ We can also have some map labels, if we want, by extracting centroids from selec
 
 # map labels
 lab <- msoa21 |>
-  filter(msoa21cd == 'E02000642' | msoa21cd == 'E02000180') |> st_centroid()
+  filter(msoa21cd %in% c('E02000642', 'E02000180')) |> st_centroid()
 
 # map object
 lon_eurpop <-
@@ -603,7 +624,7 @@ Now that we have prepared our dataset and created our initial maps in R, we can 
     * A `GeoPackage` file containing the 2021 MSOA spatial boundaries for England and Wales.
 2. Load both datasets and merge them together. Make sure to only retain those MSOAs that belong to Wales.
 3. Create a map that shows the proportion of the population residing in Wales that is born in Europe.
-4. Choose a classification method (e.g. equal interval, quantile, natural breaks) that you think best represents the distribution of your data.
+4. Look at the distribution of the proportions in a histogram and choose a classification method (e.g. equal interval, quantile, natural breaks) that you think best represents the distribution of your data.
 
 | File                                            | Type   | Link |
 | :------                                         | :------| :------ |

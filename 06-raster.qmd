@@ -7,7 +7,7 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 ## Reading list
 #### Essential readings {.unnumbered}
 - Gimond, M. 2025. Intro to GIS and spatial analysis. **Chapter 16**: *Spatial Interpolation*. [[Link]](https://mgimond.github.io/Spatial/16_interpolation.html)
-- Heris, M., Foks, N., Bagstad, K. 2020. A rasterized building footprint dataset for the United States. *Scientific Data* 7: 207. [[Link]](https://doi.org/10.1038/s41597-020-0542-3)
+- Heris, M., Foks, N., Bagstad, K. *et al*. 2020. A rasterized building footprint dataset for the United States. *Scientific Data* 7: 207. [[Link]](https://doi.org/10.1038/s41597-020-0542-3)
 - Láng-Ritter, J., Keskinen, M., Tenkanen, H. 2025. Global gridded population datasets systematically underrepresent rural population. *Nature Communications* 16: 2170. [[Link]](https://doi.org/10.1038/s41467-025-56906-7)
 
 #### Suggested readings {.unnumbered}
@@ -71,7 +71,7 @@ You may have to install some of these libraries if you have not used these befor
 :::
 
 ### Map algebra
-We will be using some simple map algebra to look at population change in London between 2010 and 2020. We can load the individual `GeoTiff` files that we downloaded into R and reproject them into British National Grid using the `terra` library.
+We will be using some simple map algebra to look at population change in London between 2010 and 2020. We can load the individual GeoTIFF files that we downloaded into R and reproject them into British National Grid using the `terra` library.
 
 ```{r}
 #| label: 06-load-raster
@@ -85,11 +85,15 @@ pop2010 <- rast('data/spatial/gbr_ppp_2010_1km_Aggregated.tif')
 pop2020 <- rast('data/spatial/gbr_ppp_2020_1km_Aggregated.tif')
 
 # transform projection
-pop2010 <- pop2010 |> project('EPSG:27700')
-pop2020 <- pop2020 |> project('EPSG:27700')
+pop2010 <- pop2010 |> project('EPSG:27700', method = 'sum', res = 1000)
+pop2020 <- pop2020 |> project('EPSG:27700', method = 'sum', res = 1000)
 ```
 
-Carefully examine each dataframe to understand its structure and the information it contains:
+::: {.callout-important}
+The cells in these rasters hold *counts* of people. By default, `project()` interpolates values bilinearly, which smooths the counts and does not preserve the total: for London, this would lose around 8% of the population. Setting `method = 'sum'` sums the contributions of the overlapping cells instead, so that the totals are preserved. Whenever you reproject or resample a raster of counts, check that the total before and after is the same. We also set the cell size of the output to 1,000 metres with `res = 1000`: if you leave it out, `terra` chooses a cell size itself (here about 763 metres).
+:::
+
+Carefully examine each raster to understand its structure and the information it contains. The output lists, among other things, the number of rows and columns, the resolution (cell size), the extent, the coordinate reference system, and the range of the values:
 
 ```{r}
 #| label: 06-inspect-raster
@@ -99,18 +103,14 @@ Carefully examine each dataframe to understand its structure and the information
 #| tidy: True
 #| filename: 'R code'
 # inspect 2010 data
-head(pop2010)
+pop2010
 
 # inspect 2020 data
-head(pop2020)
+pop2020
 ```
 
 ::: {.callout-note}
 A raster file is always rectangular, with areas lacking data stored as `NA`. For our population data, this means any pixels outside the land borders of Great Britain will have by definition an `NA` value.
-:::
-
-::: {.callout-tip}
-You can further inspect the results using the `View()` function.
 :::
 
 We can also plot the raster files for visual inspection:
@@ -139,7 +139,7 @@ plot(pop2010)
 plot(pop2020)
 ```
 
-You will notice that while the maps appear similar, the legend indicates a significant increase in values over the decade from 2010 to 2020, with the maximum rising from approximately 12,000 people per cell to over 14,000.
+You will notice that while the maps appear similar, the legend indicates a significant increase in values over the decade from 2010 to 2020, with the maximum rising from approximately 21,000 people per cell to almost 25,000.
 
 Now that we have our raster data loaded, we will focus on reducing it to display only the extent of London. We will use the London borough `GeoPackage`.
 
@@ -210,8 +210,8 @@ lonpop_change <- pop2020_london - pop2010_london
 plot(lonpop_change)
 ```
 
-### Zonal statistics
-To further analyse our population change raster, we can create a smoothed version of the `lonpop_change` raster using the `focal()` function. This function generates a raster that calculates the average (mean) value of the nearest neighbours for each cell.
+### Focal and zonal statistics
+To further analyse our population change raster, we can create a smoothed version of the `lonpop_change` raster using the `focal()` function. This function generates a raster in which each cell holds the mean value of that cell and its eight neighbours.
 
 ```{r}
 #| label: fig-06-focus-on-the-hood
@@ -222,16 +222,18 @@ To further analyse our population change raster, we can create a smoothed versio
 #| tidy: True
 #| filename: 'R code'
 # smooth
-lonpop_smooth <- focal(lonpop_change, w = matrix(1,3,3), fun = mean)
+lonpop_smooth <- focal(lonpop_change, w = matrix(1,3,3), fun = mean, na.rm = TRUE, na.policy = 'omit')
 
 # inspect
 plot(lonpop_smooth)
 ```
 
+By default, `focal()` returns `NA` for every cell that has a missing neighbour, which would silently remove a strip along the edge of London. With `na.rm = TRUE` the mean is calculated from the neighbours that are available, and `na.policy = 'omit'` keeps the output to the cells that have a value in the input.
+
 The differences may not be immediately apparent, but if you subtract the smoothed raster from the original raster, you will clearly see that changes have occurred.
 
 ```{r}
-#| label: fig--6-focus-on-the-smooth
+#| label: fig-06-focus-on-the-smooth
 #| fig-cap: Difference smoothed population change with original population change raster.
 #| classes: styled-output
 #| echo: True
@@ -248,39 +250,40 @@ plot(lonpop_change_smooth)
 We can also use zonal functions to better represent population change by aggregating the data to coarser resolutions. For example, resizing the raster's spatial resolution to contain larger grid cells simplifies the data, making broader trends more visible. However, it may also end up obfuscating more local patterns.
 
 ::: {.callout-tip}
-We can resize a raster using the `aggregate()` function, setting the `factor` parameter to the scale of resampling desired (e.g. doubling both the width and height of a cell). The `function` parameter determines how to aggregate the data.
+We can resize a raster using the `aggregate()` function, setting the `factor` parameter to the scale of resampling desired (e.g. doubling both the width and height of a cell). The `fun` parameter determines how to aggregate the data: as our cells hold counts of people, we use the sum, so that the total is preserved.
 :::
 
 ```{r}
 #| label: fig-06-aggregate-the-raster
-#| fig-cap: Aggregated cell values.
+#| fig-cap: Population change in London 2010-2020, aggregated to cells of 2 by 2 kilometres.
 #| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
 #| filename: 'R code'
 # aggregate
-lonpop_agg <- aggregate(lonpop_change, fact = 2, fun = mean)
+lonpop_agg <- aggregate(lonpop_change, fact = 2, fun = sum, na.rm = TRUE)
 
 # inspect
 plot(lonpop_agg)
 ```
 
-We can also aggregate raster cells to vector geographies. For example, we can aggregate the WorldPop gridded population estimates to the London borough boundaries:
+We can also aggregate raster cells to vector geographies. For example, we can aggregate the WorldPop gridded population estimates to the London borough boundaries. Because boroughs differ in size and in population, we map the percentage change rather than the absolute change:
 
 ```{r tidy='styler'}
 #| label: fig-06-aggregate-the-raster-to-vector
-#| fig-cap: Absolute population change in London boroughs 2010-2020.
+#| fig-cap: Percentage population change in London boroughs 2010-2020.
 #| classes: styled-output
 #| echo: True
 #| eval: True
 # aggregate
-london_borough_pop <- extract(lonpop_change, borough, fun = sum)
+london_borough_pop2010 <- extract(pop2010_london, borough, fun = sum)
+london_borough_pop2020 <- extract(pop2020_london, borough, fun = sum)
 
-# bind to spatial boundaries
+# bind to spatial boundaries, calculate percentage change
 borough <- borough |>
   st_as_sf() |>
-  mutate(pop_change = london_borough_pop$gbr_ppp_2020_1km_Aggregated)
+  mutate(pop_change = (london_borough_pop2020[[2]] - london_borough_pop2010[[2]]) / london_borough_pop2010[[2]] * 100)
 
 # shape
 tm_shape(borough) +
@@ -291,12 +294,13 @@ tm_polygons(
   # map data
   fill = 'pop_change',
   fill.scale = tm_scale_intervals(
-    values = c('#f1eef6', '#bdc9e1', '#74a9cf', '#0570b0'),
+    n = 5, style = 'jenks',
+    values = c('#f1eef6', '#d0d1e6', '#a6bddb', '#74a9cf', '#0570b0')
   ),
 
   # legend
   fill.legend = tm_legend(
-    title = 'Population change',
+    title = 'Change (%)',
     frame = FALSE,
   ),
 
@@ -311,7 +315,7 @@ tm_layout(
 
   # legend
   legend.outside = FALSE,
-  legend.position = c(0.85, 0.25),
+  legend.position = c(0.85, 0.30),
   legend.text.size = 0.8,
 
   # canvas
@@ -332,7 +336,7 @@ Calculating population change, particularly over decades as we have done, can be
 In the second part of this week's practical, we will explore various methods of spatial data interpolation, focusing on air pollution in London using data from [Londonair](https://www.londonair.org.uk/). We will specifically look at Nitrogen Dioxide (NO~2~) measurements.
 
 ::: {.callout-note}
-Londonair is the website of the London Air Quality Network (LAQN), which provides air pollution data for London and southeast England through the [Environmental Research Group](https://www.imperial.ac.uk/school-public-health/environmental-research-group/) at Imperial College. This data is publicly available and can be accessed directly using the `openair` R package, without needing to download files.
+Londonair is the website of the London Air Quality Network (LAQN), which provides air pollution data for London and south-east England through the [Environmental Research Group](https://www.imperial.ac.uk/school-public-health/environmental-research-group/) at Imperial College. This data is publicly available and can be accessed directly using the `openair` R package, without needing to download files.
 :::
 
 ::: {.callout-note}
@@ -377,7 +381,7 @@ pollution <- read_csv('data/attributes/London-NO2-2023.zip')
 head(pollution)
 ```
 
-In the first five rows, we can see data from the same site, with the date field showing an observation for every hour. Given there are 24 hours in a day, 365 days in a year, and data from hundreds of sites, it is no surprise that the dataset is so large. To make the dataset more manageable, let us summarise the values by site.
+In the first six rows, we can see data from the same site, with the date field showing an observation for every hour. Given there are 24 hours in a day, 365 days in a year, and data from hundreds of sites, it is no surprise that the dataset is so large. To make the dataset more manageable, let us summarise the values by site.
 
 ```{r}
 #| label: 06-mean-air-pollution-data
@@ -400,7 +404,7 @@ We now have 177 measurement sites with their corresponding latitudes, longitudes
 
 ```{r tidy='styler'}
 #| label: fig-06-air-quality-measurement-sites
-#| fig-cap: KCL NO~2~ measurement sites in London.
+#| fig-cap: Londonair NO~2~ measurement sites in London.
 #| classes: styled-output
 #| echo: True
 #| eval: True
@@ -413,9 +417,15 @@ measurement_sites <- pollution_avg |>
   st_as_sf(coords=c('longitude','latitude'), crs=4326) |>
   st_transform(27700)
 
+# number of measurement sites before clipping
+nrow(measurement_sites)
+
 # clip measurement sites to london boundaries
 measurement_sites <- measurement_sites |>
   st_intersection(borough)
+
+# number of measurement sites after clipping
+nrow(measurement_sites)
 
 # shape
 tm_shape(borough) +
@@ -456,11 +466,13 @@ tm_layout(
 )
 ```
 
+The network also covers south-east England, so only 98 of the 177 sites fall inside Greater London. We use these 98 sites in what follows. This means that the interpolated values near the edge of London are based on London sites only, even where a site just across the boundary is closer.
+
 We can also use proportional symbols to visualise the values, helping us observe how measurements vary across London.
 
 ```{r tidy='styler'}
 #| label: fig-06-air-quality-measurement-sites-proportional-symbol
-#| fig-cap: Proportional symbol map of average KCL NO~2~ measurement in London.
+#| fig-cap: Proportional symbol map of average Londonair NO~2~ measurements in London.
 #| classes: styled-output
 #| echo: True
 #| eval: True
@@ -504,7 +516,7 @@ tm_layout(
 @fig-06-air-quality-measurement-sites-proportional-symbol shows heterogeneity in average NO~2~ measurements across London, both in terms of coverage and NO~2~ levels. To make reasonable assumptions about NO~2~ levels in areas without measurements, we can interpolate the missing values.
 
 ### Voronoi tessellation
-A straightforward method for interpolating values across space is to create a Voronoi tessellation polygons. These polygons define the boundaries of areas closest to each unique point, meaning that each point in the dataset has a corresponding polygon.
+A straightforward method for interpolating values across space is to create Voronoi polygons (a Voronoi tessellation). These polygons define the boundaries of areas closest to each unique point, meaning that each point in the dataset has a corresponding polygon. Every location then takes the value of its closest measurement site: in the lecture this is called nearest neighbour interpolation.
 
 ::: {.callout-note}
 In addition to Voronoi tessellation, you may encounter the term Thiessen polygons. These terms are often used interchangeably to describe the geometry created from point data.
@@ -600,10 +612,10 @@ tm_layout(
 ```
 
 ### Inverse Distance Weighting
-A more sophisticated method for interpolating point data is Inverse Distance Weighting (IDW). IDW converts numerical point data into a continuous surface, allowing for visualisation of how the data is distributed across space. This technique estimates values at each location by calculating a weighted average from nearby points, with the weights inversely related to their distances.
+A more sophisticated method for interpolating point data is Inverse Distance Weighting (IDW). IDW converts numerical point data into a continuous surface, allowing for visualisation of how the data is distributed across space. This technique estimates values at each location by calculating a weighted average of the measurements, with the weights inversely related to the distances to the measurement sites: nearby points count for more.
 
 ::: {.callout-note}
-The distance weighting is done by a power function: the larger the power coefficient, the stronger the weight of nearby point. The output is most commonly represented as a raster surface.
+The distance weighting is done by a power function: the larger the power coefficient, the stronger the weight of nearby points. The output is most commonly represented as a raster surface.
 :::
 
 We will start by generating an empty grid to store the predicted values before running the IDW.
@@ -685,14 +697,16 @@ tm_layout(
 ```
 
 ::: {.callout-note}
-We have set the output cell size to 1000x1000 metres. While a smaller cell size can yield a smoother IDW output, it may introduce uncertainty due to the limited number of data points available for interpolation. Moreover, reducing the cell size will exponentially increase processing time.
+We have set the output cell size to 1000x1000 metres. A smaller cell size gives a more finely resolved IDW output, but it does not add information: the surface still rests on the same limited number of measurement sites. Moreover, reducing the cell size increases processing time considerably: halving the cell size quadruples the number of cells.
 :::
+
+Voronoi polygons and IDW are two of several interpolation methods. Kriging, which estimates from the data how similarity between measurements changes with distance, is a further option that we do not use here. If you want to explore it, for example for your own research project, Gimond's chapter in the essential readings explains how it works, and `gstat` supports it as well.
 
 ## Assignment
 Having run through all the steps during the tutorial, we can conduct some more granular analysis of the NO~2~ measurements. For example, instead of examining the annual average measurements, we could compare data across different months. Please try the following tasks:
 
 1. Create monthly averages for the pollution data.
-2. Choose two months that you expect to show a meaningful difference in NO₂ levels, and generate a dataframe containing the London monitoring sites along with their average NO₂ readings for each month.
+2. Choose two months that you expect to show a meaningful difference in NO~2~ levels, and generate a dataframe containing the London monitoring sites along with their average NO~2~ readings for each month.
 3. Perform Inverse Distance Weighting (IDW) interpolation for the data from both months.
 4. Compare the results. Do the patterns match what you expected, and what might explain any differences you observe?
 
