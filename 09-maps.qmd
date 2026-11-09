@@ -10,11 +10,11 @@ You can download the slides of this week's lecture here: [[Link]]({{< var slides
 
 ## Reading list
 #### Essential readings {.unnumbered}
-- Longley, P. *et al.* 2015. *Geographic Information Science & Systems*, **Chapter 11**: *Cartography and Map Production*, pp. 1-32. [[Link]](https://ucl.rl.talis.com/link?url=https%3A%2F%2Fapp.knovel.com%2Fhotlink%2Ftoc%2Fid%3AkpGISSE001%2Fgeographic-information-science%3Fkpromoter%3Dmarc&sig=e437927b963cc591dcb65491eccdd3869cc31aef80e1443cb2ba12d8f3bb031a)
+- Longley, P. *et al.* 2015. *Geographic Information Science & Systems*, **Chapter 11**: *Cartography and Map Production*, pp. 237-265. [[Link]](https://ucl.rl.talis.com/link?url=https%3A%2F%2Fapp.knovel.com%2Fhotlink%2Ftoc%2Fid%3AkpGISSE001%2Fgeographic-information-science%3Fkpromoter%3Dmarc&sig=e437927b963cc591dcb65491eccdd3869cc31aef80e1443cb2ba12d8f3bb031a)
 
 #### Suggested readings {.unnumbered}
 - Cheshire, J. and Uberti, O. 2021. *Atlas of the invisible: maps and graphics that will change how you see the world.* London: Particular Books.
-- Wickham, H., Çetinkaya-Rundel, M., and Grolemund, G. *R for Data Science*. 2nd edition. **Chapter 25: Functions**. [[Link]](https://r4ds.hadley.nz/functions.html)
+- Wickham, H., Çetinkaya-Rundel, M., and Grolemund, G. *R for Data Science*. 2nd edition. **Chapter 19: Joins**. [[Link]](https://r4ds.hadley.nz/joins.html)
 
 ## Coding with Copilot
 Say you need to find the distance between a few London landmarks.
@@ -27,6 +27,8 @@ Load the file, and use Copilot to work out the distance between the London landm
 
 ::: {.callout-note}
 Example prompt: *"How to calculate the distance between two points in R?"*
+
+You can open Microsoft Copilot with your UCL account. All data in these two weeks are public and none are personal, but as a rule do not paste anything into an AI assistant that you would not want to share.
 :::
 
 ::: {.callout-tip}
@@ -36,7 +38,7 @@ What does the result actually show? Does it seem right, and how would you know?
 ## Assignment
 For the main part of this week, you will work independently with Copilot on a real analytical question: how has unemployment changed across London between the 2011 and 2021 Census?
 
-The data are provided at Lower Super Output Area (LSOA) level for both years.
+The data are provided at Lower Super Output Area (LSOA) level for both years. Both files give the number of unemployed residents and the size of the population on which an unemployment rate should be based: residents aged 16 to 74 in 2011 and residents aged 16 and over in 2021.
 
 ::: {.callout-note}
 Administrative geographies, such as LSOAs, are periodically updated to reflect changes in population and other factors, resulting in occasional boundary adjustments. As a result, the 2011 and 2021 datasets do not use the same set of LSOAs, and cannot simply be joined on a shared code. A lookup table connecting the two is provided below, and you will need to use it to link the datasets together.
@@ -51,13 +53,11 @@ You can download the files below and save them in your project folder under `dat
 | England and Wales LSOA 2011-2021 Lookup     | `csv` | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/attributes/England-Wales-LSOA-2011-2021.csv) |
 | London LSOA 2021 Spatial Boundaries         | `GeoPackage` | [Download](https://github.com/jtvandijk/GEOG0030/raw/refs/heads/master/data/spatial/London-LSOA-2021.gpkg) |
 
-Your task is to produce a bivariate map showing how unemployment in 2011 relates to unemployment in 2021 across London. Use the lookup table to link the two datasets onto a shared geography, calculate the change, and map the result in a way that lets you see where things have improved, worsened, or stayed much the same.
+Your task is to produce a bivariate map showing how unemployment in 2011 relates to unemployment in 2021 across London. Use the lookup table to link the two datasets onto a shared geography, calculate the unemployment rate for each year, and map the two together in a way that lets you see where things have improved, worsened, or stayed much the same.
 
 Work through this with Copilot: ask it for a starting point, run what it gives you, and check the result at every step rather than assuming it is right.
 
-::: {.callout-tip}
-Check whether the number of LSOAs you are working with looks right after each step. It is easy to end up with more rows than you started with, or fewer, without noticing.
-:::
+Be ready to explain to the teaching team, in your own words, what each step does and why you chose it.
 
 ## Before you leave
 That is it for today. Next week, we build on this with some further visualisation work, again working with Copilot rather than following a worked example. [Onwards](https://www.youtube.com/watch?v=Ydg4T2MP7Z8).
