@@ -1,3 +1,7 @@
+---
+number-offset: 2
+---
+
 # Point Pattern Analysis
 This week, we will be focusing on point pattern analysis (PPA), which aims to detect clusters or patterns within a set of points. Through this analysis, we can measure density, dispersion, and homogeneity in point structures. Various methods exist for calculating and identifying these clusters, and today we will explore several of these techniques using our [bike theft dataset from last week](02-operations.html#crime-data).
 
@@ -280,6 +284,11 @@ par(mar = c(1, 1, 1, 1))
 plot(density.ppp(theft_bike_jitter, sigma = 500), main = '')
 ```
 
+::: {.callout-note .exercise icon=false}
+## Predict first
+Before you run the next chunk, predict what happens to the hotspots when we double the bandwidth to 1000 metres: do they become more or less pronounced, and do separate hotspots merge? Compare your prediction with the map.
+:::
+
 We can see from just our KDE that there are visible clusters present within our bike theft data, particularly in and around Central London. We can go ahead and increase the bandwidth to see how that affects the density estimate:
 
 ```{r}
@@ -515,7 +524,12 @@ tm_layout(
 
 ```
 
-The clusters in @fig-03-map-clusters depend on the values that we chose. A larger `eps` or a smaller `minPts` merges clusters and pulls in more points, while a smaller `eps` or a larger `minPts` gives fewer and tighter clusters. There is no single correct pair of values, so try several settings, compare the maps, and choose values that match what you would be willing to call a cluster for your question. A k-distance plot (`kNNdistplot()` in the `dbscan` library) is sometimes used to choose `eps`, but for these data it does not show a clear elbow.
+The clusters in @fig-03-map-clusters depend on the values that we chose. A larger `eps` or a smaller `minPts` merges clusters and pulls in more points, while a smaller `eps` or a larger `minPts` gives fewer and tighter clusters. There is no single correct pair of values. A k-distance plot (`kNNdistplot()` in the `dbscan` library) is sometimes used to choose `eps`, but for these data it does not show a clear elbow.
+
+::: {.callout-note .exercise icon=false}
+## Try it yourself
+Change `eps` to `100` or `400`, or `minPts` to `10` or `40`, and predict whether you get more or fewer clusters, and whether they become larger or smaller. Rerun the code and compare the map with your prediction. Choose values that match what you would be willing to call a cluster for your question.
+:::
 
 Note also that `minPts` counts thefts, not distinct places. Because the police snap many thefts to the same location, one location with 20 or more thefts is enough to form a cluster on its own.
 

@@ -1,3 +1,7 @@
+---
+number-offset: 9
+---
+
 # Complex Visualisations
 This week, we look at self-identified ethnicity across Inner London, using it as the basis for a treemap and a panelled set of histograms.
 

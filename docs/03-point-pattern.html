@@ -290,7 +290,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-spatial.html">Core Spatial Analysis</a></li><li class="breadcrumb-item"><a href="./03-point-pattern.html">Point Pattern Analysis</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-spatial.html">Core Spatial Analysis</a></li><li class="breadcrumb-item"><a href="./03-point-pattern.html">3 Point Pattern Analysis</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -478,21 +478,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="toc-actions"><ul><li><a href="https://github.com/jtvandijk/GEOG0030/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-spatial.html">Core Spatial Analysis</a></li><li class="breadcrumb-item"><a href="./03-point-pattern.html">Point Pattern Analysis</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-spatial.html">Core Spatial Analysis</a></li><li class="breadcrumb-item"><a href="./03-point-pattern.html">3 Point Pattern Analysis</a></li></ol></nav></header>
 
 
 
 
 
-<section id="point-pattern-analysis" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">3</span> Point Pattern Analysis</h1>
+<section id="point-pattern-analysis" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Point Pattern Analysis</h1>
 <p>This week, we will be focusing on point pattern analysis (PPA), which aims to detect clusters or patterns within a set of points. Through this analysis, we can measure density, dispersion, and homogeneity in point structures. Various methods exist for calculating and identifying these clusters, and today we will explore several of these techniques using our <a href="02-operations.html#crime-data">bike theft dataset from last week</a>.</p>
-<section id="lecture-slides" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="lecture-slides"><span class="header-section-number">3.1</span> Lecture slides</h2>
+<section id="lecture-slides" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="lecture-slides"><span class="header-section-number">3.1</span> Lecture slides</h2>
 <p>The slides for this week’s lecture can be downloaded here: <a href="https://github.com/jtvandijk/GEOG0030/blob/master/slides/w03-geo.pdf">[Link]</a></p>
 </section>
-<section id="reading-list" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="reading-list"><span class="header-section-number">3.2</span> Reading list</h2>
+<section id="reading-list" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="reading-list"><span class="header-section-number">3.2</span> Reading list</h2>
 <section id="essential-readings" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="essential-readings">Essential readings</h4>
 <ul>
@@ -509,8 +509,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 </section>
 </section>
-<section id="start-of-session" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="start-of-session"><span class="header-section-number">3.3</span> Start of session</h2>
+<section id="start-of-session" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="start-of-session"><span class="header-section-number">3.3</span> Start of session</h2>
 <p>Before working through the tutorial, we will spend a few minutes looking at:</p>
 <ul>
 <li>Identical coordinates among the bicycle theft points</li>
@@ -518,8 +518,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>The difference between <code>st_intersects()</code> and <code>st_intersection()</code></li>
 </ul>
 </section>
-<section id="bike-theft-in-london-ii" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="bike-theft-in-london-ii"><span class="header-section-number">3.4</span> Bike theft in London II</h2>
+<section id="bike-theft-in-london-ii" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="bike-theft-in-london-ii"><span class="header-section-number">3.4</span> Bike theft in London II</h2>
 <p>This week, we will revisit bicycle theft in London, focusing specifically on identifying patterns and clusters of theft incidents. To do this, we will use the <a href="02-operations.html#crime-data">bicycle theft dataset</a> that we prepared last week, along with the 2021 MSOA boundaries for London. If you no longer have a copy of these files on your computer, you can download them using the links provided below.</p>
 <table class="caption-top table">
 <thead>
@@ -670,8 +670,8 @@ Projected CRS: OSGB36 / British National Grid
 </div>
 </div>
 </div>
-<section id="point-aggregation" class="level3" data-number="1.4.1">
-<h3 data-number="1.4.1" class="anchored" data-anchor-id="point-aggregation"><span class="header-section-number">3.4.1</span> Point aggregation</h3>
+<section id="point-aggregation" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="point-aggregation"><span class="header-section-number">3.4.1</span> Point aggregation</h3>
 <p>One key advantage of point data is that it is scale-free, allowing aggregation to any geographic level for analysis. Before diving into PPA, we will aggregate the bicycle thefts to the MSOA level to map their distribution by using a point-in-polygon approach.</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
@@ -762,8 +762,8 @@ Figure&nbsp;1: Number of reported bicycle thefts per square kilometre.
 </div>
 </div>
 </section>
-<section id="point-pattern-analysis-1" class="level3" data-number="1.4.2">
-<h3 data-number="1.4.2" class="anchored" data-anchor-id="point-pattern-analysis-1"><span class="header-section-number">3.4.2</span> Point pattern analysis</h3>
+<section id="point-pattern-analysis-1" class="level3" data-number="3.4.2">
+<h3 data-number="3.4.2" class="anchored" data-anchor-id="point-pattern-analysis-1"><span class="header-section-number">3.4.2</span> Point pattern analysis</h3>
 <p><a href="#fig-03-choro-3" class="quarto-xref">Figure&nbsp;1</a> shows that the number of bicycle thefts is clearly concentrated in parts of Central London. While this map may provide helpful insights, its representation depends on the classification and aggregation of the underlying data. Alternatively, we can directly analyse the point events themselves. For this, we will use the <code>spatstat</code> library, the primary library for point pattern analysis in R. To use <code>spatstat</code>, we need to convert our data into a <code>ppp</code> object.</p>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
@@ -866,8 +866,8 @@ Figure&nbsp;2: Bike theft in London represented as <code>ppp</code> object.
 </div>
 </div>
 <p>This seemed to have worked, so we can move forward.</p>
-<section id="kernel-density-estimation" class="level4" data-number="1.4.2.1">
-<h4 data-number="1.4.2.1" class="anchored" data-anchor-id="kernel-density-estimation"><span class="header-section-number">3.4.2.1</span> Kernel density estimation</h4>
+<section id="kernel-density-estimation" class="level4" data-number="3.4.2.1">
+<h4 data-number="3.4.2.1" class="anchored" data-anchor-id="kernel-density-estimation"><span class="header-section-number">3.4.2.1</span> Kernel density estimation</h4>
 <p>Instead of visualising the distribution of bike thefts at a specific geographical level, we can use Kernel Density Estimation (KDE) to display the distribution of these incidents. KDE is a statistical method that creates a smooth, continuous distribution to represent the density of the underlying pattern between data points.</p>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
@@ -900,6 +900,19 @@ Figure&nbsp;3: Kernel density estimation - bandwidth 500m.
 </figcaption>
 </figure>
 </div>
+</div>
+</div>
+<div class="exercise callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Predict first
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Before you run the next chunk, predict what happens to the hotspots when we double the bandwidth to 1000 metres: do they become more or less pronounced, and do separate hotspots merge? Compare your prediction with the map.</p>
 </div>
 </div>
 <p>We can see from just our KDE that there are visible clusters present within our bike theft data, particularly in and around Central London. We can go ahead and increase the bandwidth to see how that affects the density estimate:</p>
@@ -1029,8 +1042,8 @@ Figure&nbsp;5: Kernel Density Estimate of bicycle thefts in London.
 </div>
 </div>
 </section>
-<section id="dbscan" class="level4" data-number="1.4.2.2">
-<h4 data-number="1.4.2.2" class="anchored" data-anchor-id="dbscan"><span class="header-section-number">3.4.2.2</span> DBSCAN</h4>
+<section id="dbscan" class="level4" data-number="3.4.2.2">
+<h4 data-number="3.4.2.2" class="anchored" data-anchor-id="dbscan"><span class="header-section-number">3.4.2.2</span> DBSCAN</h4>
 <p>Kernel Density Estimation is a useful exploratory technique for identifying spatial clusters in point data, but it does not provide precise boundaries for these clusters. To more accurately delineate clusters, we can use an algorithm called DBSCAN <a href="https://cdn.aaai.org/KDD/1996/KDD96-037.pdf">(Density-Based Spatial Clustering of Applications with Noise)</a>, which takes both distance and density into account. DBSCAN is effective at discovering distinct clusters by grouping together points that are close to one another while marking points that do not belong to any cluster as noise.</p>
 <p>DBSCAN requires two parameters:</p>
 <table class="caption-top table">
@@ -1183,13 +1196,26 @@ Figure&nbsp;6: DBSCAN-identified clusters of reported bicycle theft in London.
 </div>
 </div>
 </div>
-<p>The clusters in <a href="#fig-03-map-clusters" class="quarto-xref">Figure&nbsp;6</a> depend on the values that we chose. A larger <code>eps</code> or a smaller <code>minPts</code> merges clusters and pulls in more points, while a smaller <code>eps</code> or a larger <code>minPts</code> gives fewer and tighter clusters. There is no single correct pair of values, so try several settings, compare the maps, and choose values that match what you would be willing to call a cluster for your question. A k-distance plot (<code>kNNdistplot()</code> in the <code>dbscan</code> library) is sometimes used to choose <code>eps</code>, but for these data it does not show a clear elbow.</p>
+<p>The clusters in <a href="#fig-03-map-clusters" class="quarto-xref">Figure&nbsp;6</a> depend on the values that we chose. A larger <code>eps</code> or a smaller <code>minPts</code> merges clusters and pulls in more points, while a smaller <code>eps</code> or a larger <code>minPts</code> gives fewer and tighter clusters. There is no single correct pair of values. A k-distance plot (<code>kNNdistplot()</code> in the <code>dbscan</code> library) is sometimes used to choose <code>eps</code>, but for these data it does not show a clear elbow.</p>
+<div class="exercise callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Try it yourself
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Change <code>eps</code> to <code>100</code> or <code>400</code>, or <code>minPts</code> to <code>10</code> or <code>40</code>, and predict whether you get more or fewer clusters, and whether they become larger or smaller. Rerun the code and compare the map with your prediction. Choose values that match what you would be willing to call a cluster for your question.</p>
+</div>
+</div>
 <p>Note also that <code>minPts</code> counts thefts, not distinct places. Because the police snap many thefts to the same location, one location with 20 or more thefts is enough to form a cluster on its own.</p>
 </section>
 </section>
 </section>
-<section id="assignment" class="level2" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="assignment"><span class="header-section-number">3.5</span> Assignment</h2>
+<section id="assignment" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="assignment"><span class="header-section-number">3.5</span> Assignment</h2>
 <p>Now that we know how to work with point location data, we can again apply a similar analysis to road crashes in London in 2025 <a href="02-operations.html#assignment">that we used last week</a>. This time we will use this dataset to assess whether road crashes cluster in specific areas. Try the following:</p>
 <ol type="1">
 <li>Choose a bandwidth for your Kernel Density Estimation (KDE) that you think best reveals clustering in <em>all</em> road crashes that occurred in London in 2025, and map the result.</li>
@@ -1213,8 +1239,8 @@ Figure&nbsp;6: DBSCAN-identified clusters of reported bicycle theft in London.
 </tbody>
 </table>
 </section>
-<section id="before-you-leave" class="level2" data-number="1.6">
-<h2 data-number="1.6" class="anchored" data-anchor-id="before-you-leave"><span class="header-section-number">3.6</span> Before you leave</h2>
+<section id="before-you-leave" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="before-you-leave"><span class="header-section-number">3.6</span> Before you leave</h2>
 <p>With access to point event data, geographers aim to identify underlying patterns. This week, we explored several techniques that help us analyse and interpret such data. That is <a href="https://www.youtube.com/watch?v=-zxtbwGogyY">us done for this week</a>. Reading list anyone?</p>
 
 
@@ -1637,13 +1663,13 @@ Figure&nbsp;6: DBSCAN-identified clusters of reported bicycle theft in London.
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./02-operations.html" class="pagination-link" aria-label="Spatial Queries and Geometric Operations">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Spatial Queries and Geometric Operations</span>
+      <a href="./02-operations.html" class="pagination-link" aria-label="2 Spatial Queries and Geometric Operations">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">2 Spatial Queries and Geometric Operations</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./04-autocorrelation.html" class="pagination-link" aria-label="Spatial Autocorrelation">
-        <span class="nav-page-text">Spatial Autocorrelation</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./04-autocorrelation.html" class="pagination-link" aria-label="4 Spatial Autocorrelation">
+        <span class="nav-page-text">4 Spatial Autocorrelation</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

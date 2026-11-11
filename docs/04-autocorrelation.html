@@ -319,7 +319,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-spatial.html">Core Spatial Analysis</a></li><li class="breadcrumb-item"><a href="./04-autocorrelation.html">Spatial Autocorrelation</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-spatial.html">Core Spatial Analysis</a></li><li class="breadcrumb-item"><a href="./04-autocorrelation.html">4 Spatial Autocorrelation</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -506,21 +506,21 @@ window.Quarto = {
 <div class="toc-actions"><ul><li><a href="https://github.com/jtvandijk/GEOG0030/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-spatial.html">Core Spatial Analysis</a></li><li class="breadcrumb-item"><a href="./04-autocorrelation.html">Spatial Autocorrelation</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-spatial.html">Core Spatial Analysis</a></li><li class="breadcrumb-item"><a href="./04-autocorrelation.html">4 Spatial Autocorrelation</a></li></ol></nav></header>
 
 
 
 
 
-<section id="spatial-autocorrelation" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">4</span> Spatial Autocorrelation</h1>
+<section id="spatial-autocorrelation" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Spatial Autocorrelation</h1>
 <p>This week, we will explore the concept of spatial dependence: the idea that the value of a variable at one location is influenced by the value of the same variable at nearby locations. This dependence can be statistically measured by assessing spatial autocorrelation, which refers to the degree of similarity between values of a variable at different locations.</p>
-<section id="lecture-slides" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="lecture-slides"><span class="header-section-number">4.1</span> Lecture slides</h2>
+<section id="lecture-slides" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="lecture-slides"><span class="header-section-number">4.1</span> Lecture slides</h2>
 <p>You can download the slides of this week’s lecture here: <a href="https://github.com/jtvandijk/GEOG0030/blob/master/slides/w04-geo.pdf">[Link]</a>.</p>
 </section>
-<section id="reading-list" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="reading-list"><span class="header-section-number">4.2</span> Reading list</h2>
+<section id="reading-list" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="reading-list"><span class="header-section-number">4.2</span> Reading list</h2>
 <section id="essential-readings" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="essential-readings">Essential readings</h4>
 <ul>
@@ -538,16 +538,16 @@ window.Quarto = {
 </ul>
 </section>
 </section>
-<section id="start-of-session" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="start-of-session"><span class="header-section-number">4.3</span> Start of session</h2>
+<section id="start-of-session" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="start-of-session"><span class="header-section-number">4.3</span> Start of session</h2>
 <p>Before working through the tutorial, we will spend a few minutes looking at:</p>
 <ul>
 <li>What randomly shuffled data can look like on a map</li>
 <li>How different neighbour definitions treat the Thames</li>
 </ul>
 </section>
-<section id="population-groups-in-london" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="population-groups-in-london"><span class="header-section-number">4.4</span> Population groups in London</h2>
+<section id="population-groups-in-london" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="population-groups-in-london"><span class="header-section-number">4.4</span> Population groups in London</h2>
 <p>This week, we will investigate to what extent people in London who <a href="https://www.ons.gov.uk/peoplepopulationandcommunity/culturalidentity/ethnicity/bulletins/ethnicgroupenglandandwales/census2021">self-identified</a> as <em>Asian-Bangladeshi</em> in the 2021 Census are clustered in London at the LSOA-level. The data covers all usual residents, as recorded in the 2021 Census for England and Wales, aggregated at the <a href="https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeographies/census2021geographies">Lower Super Output Area (LSOA)</a> level.</p>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
@@ -701,8 +701,8 @@ Projected CRS: OSGB36 / British National Grid
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"asian_pakistani"</span>, <span class="st">"asian_other"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
-<section id="spatial-dependency" class="level3" data-number="1.4.1">
-<h3 data-number="1.4.1" class="anchored" data-anchor-id="spatial-dependency"><span class="header-section-number">4.4.1</span> Spatial dependency</h3>
+<section id="spatial-dependency" class="level3" data-number="4.4.1">
+<h3 data-number="4.4.1" class="anchored" data-anchor-id="spatial-dependency"><span class="header-section-number">4.4.1</span> Spatial dependency</h3>
 <p>As you should know by now, the first step when working with spatial data is to create a map:</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
@@ -877,8 +877,8 @@ Figure&nbsp;4: Determining significance using a Monte Carlo simulation. Source: 
 \]</span></p>
 <p>where <span class="math inline">\({N_{extreme}}\)</span> is the number of simulated Moran’s I values that were more extreme than our observed statistic and <span class="math inline">\({N}\)</span> is the total number of simulations. In the example shown in <a href="#fig-moran-plot-sig" class="quarto-xref">Figure&nbsp;4</a>, only 1 out of the 199 simulations was more extreme than the observed global Moran’s I statistic. Therefore <span class="math inline">\({N_{extreme}}\)</span> = 1, so <span class="math inline">\(p\)</span> is equal to <span class="math inline">\((1+1) / (199 + 1) = 0.01\)</span>. This means that, if the values were randomly distributed across space, we would expect to see a Moran’s I at least this extreme in only one percent of cases.</p>
 </section>
-<section id="defining-neighbours" class="level3" data-number="1.4.2">
-<h3 data-number="1.4.2" class="anchored" data-anchor-id="defining-neighbours"><span class="header-section-number">4.4.2</span> Defining neighbours</h3>
+<section id="defining-neighbours" class="level3" data-number="4.4.2">
+<h3 data-number="4.4.2" class="anchored" data-anchor-id="defining-neighbours"><span class="header-section-number">4.4.2</span> Defining neighbours</h3>
 <p>If the purpose of a Moran’s I test is to quantify how similar places are to their neighbours, the first step is to define what constitutes a <strong>neighbour.</strong> This definition is not necessarily straightforward, because ‘neighbouring’ observations can be determined in various ways, based on either geometry or proximity. The most common methods include:</p>
 <table class="caption-top table">
 <colgroup>
@@ -987,8 +987,8 @@ Figure&nbsp;5: Neighbourhood graph using queen contiguity.
 </div>
 </div>
 </section>
-<section id="defining-weights" class="level3" data-number="1.4.3">
-<h3 data-number="1.4.3" class="anchored" data-anchor-id="defining-weights"><span class="header-section-number">4.4.3</span> Defining weights</h3>
+<section id="defining-weights" class="level3" data-number="4.4.3">
+<h3 data-number="4.4.3" class="anchored" data-anchor-id="defining-weights"><span class="header-section-number">4.4.3</span> Defining weights</h3>
 <p>The neighbourhood list simply identifies which areas (polygons) are neighbours, but spatial weights take this a step further by assigning a weight to each neighbourhood connection. This is important because not all polygons have the same number of neighbours. To ensure that our spatially lagged values are comparable across neighbourhoods of different sizes, standardisation is required. The code below uses <code>style = 'W'</code> to row-standardise the values: if an LSOA has five neighbours, the value of the spatially lagged variable will be the average of that variable across those five neighbours, with each neighbour receiving equal weight.</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
@@ -1022,8 +1022,21 @@ Figure&nbsp;5: Neighbourhood graph using queen contiguity.
 </div>
 </div>
 </section>
-<section id="global-morans-i" class="level3" data-number="1.4.4">
-<h3 data-number="1.4.4" class="anchored" data-anchor-id="global-morans-i"><span class="header-section-number">4.4.4</span> Global Moran’s I</h3>
+<section id="global-morans-i" class="level3" data-number="4.4.4">
+<h3 data-number="4.4.4" class="anchored" data-anchor-id="global-morans-i"><span class="header-section-number">4.4.4</span> Global Moran’s I</h3>
+<div class="exercise callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Predict first
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Before you run the plot below, predict whether the line through the points will slope upwards or downwards, and whether it will be steep or flat. The slope of this line is Moran’s I.</p>
+</div>
+</div>
 <p>Now that everything is in place, we can begin by plotting the proportion of people that self-identify as Asian-Bangladeshi against the spatially lagged values:</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
@@ -1094,8 +1107,8 @@ Figure&nbsp;7: Density plot of permutation outcomes.
 </div>
 </div>
 </section>
-<section id="local-morans-i" class="level3" data-number="1.4.5">
-<h3 data-number="1.4.5" class="anchored" data-anchor-id="local-morans-i"><span class="header-section-number">4.4.5</span> Local Moran’s I</h3>
+<section id="local-morans-i" class="level3" data-number="4.4.5">
+<h3 data-number="4.4.5" class="anchored" data-anchor-id="local-morans-i"><span class="header-section-number">4.4.5</span> Local Moran’s I</h3>
 <p>Although we have established that there is positive spatial autocorrelation in our data, we still need to identify the specific spatial patterns. Looking back at <a href="#fig-04-plot-moran-queens" class="quarto-xref">Figure&nbsp;6</a>, you will notice that the dashed lines divide the plot into four quadrants.</p>
 <table class="caption-top table">
 <colgroup>
@@ -1222,6 +1235,19 @@ Figure&nbsp;7: Density plot of permutation outcomes.
 </div>
 </div>
 <p>The <code>quadr</code> attribute holds three versions of the quadrant labels: <code>mean</code>, <code>median</code> and <code>pysal</code>. We use the <code>mean</code> version, which splits the Moran scatterplot at the mean of the variable and the mean of the spatially lagged variable, exactly where the dashed lines in <a href="#fig-04-plot-moran-queens" class="quarto-xref">Figure&nbsp;6</a> are drawn. The <code>median</code> version splits at the medians instead, which for a skewed variable such as this one labels many more LSOAs as high-high.</p>
+<div class="exercise callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Predict first
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Before you run the next chunk, predict in which part of London you expect to find the high-high clusters for this variable. Compare your prediction with the map.</p>
+</div>
+</div>
 <p>We can now link these values back to our spatial dataframe and make a map using the <code>tmap</code> library:</p>
 <div class="cell">
 <div class="code-with-filename">
@@ -1368,8 +1394,8 @@ Figure&nbsp;9: Mapping the significant Local Moran’s I clusters.
 </div>
 </section>
 </section>
-<section id="assignment" class="level2" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="assignment"><span class="header-section-number">4.5</span> Assignment</h2>
+<section id="assignment" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="assignment"><span class="header-section-number">4.5</span> Assignment</h2>
 <p>Any statistic that includes spatial weights is dependent upon how those weights are defined. We have so far used first order contiguity, i.e.&nbsp;polygons that share a boundary, but there is no particular reason why we should not include second order contiguity polygons (i.e.&nbsp;neighbours of neighbours), use a fixed distance neighbours definitions, or adopt a <span class="math inline">\(k\)</span> nearest neighbours definition. Try to do the following:</p>
 <ol type="1">
 <li>Extract the centroids from the <code>lsoa21</code> file.</li>
@@ -1381,8 +1407,8 @@ Figure&nbsp;9: Mapping the significant Local Moran’s I clusters.
 <li>Now imagine a different scenario: testing whether nearby areas have similarly high or low levels of air pollution, given that pollution is a continuous physical process that does not respect administrative boundaries. Which of contiguity, fixed distance, or k-nearest neighbours would you use to define neighbours, and why?</li>
 </ol>
 </section>
-<section id="before-you-leave" class="level2" data-number="1.6">
-<h2 data-number="1.6" class="anchored" data-anchor-id="before-you-leave"><span class="header-section-number">4.6</span> Before you leave</h2>
+<section id="before-you-leave" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="before-you-leave"><span class="header-section-number">4.6</span> Before you leave</h2>
 <p>And that is how you can measure spatial dependence in your dataset through different spatial autocorrelation measures. Next week we will focus on the last topic within our set of core spatial analysis methods and techniques, but <a href="https://www.youtube.com/watch?v=svU7L8yhav8">this week we have covered enough</a>! Probably time to get back to that pesky reading list.</p>
 
 
@@ -1805,13 +1831,13 @@ Figure&nbsp;9: Mapping the significant Local Moran’s I clusters.
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./03-point-pattern.html" class="pagination-link" aria-label="Point Pattern Analysis">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Point Pattern Analysis</span>
+      <a href="./03-point-pattern.html" class="pagination-link" aria-label="3 Point Pattern Analysis">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">3 Point Pattern Analysis</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./05-models.html" class="pagination-link" aria-label="Spatial Models">
-        <span class="nav-page-text">Spatial Models</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./05-models.html" class="pagination-link" aria-label="5 Spatial Models">
+        <span class="nav-page-text">5 Spatial Models</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -1,3 +1,7 @@
+---
+number-offset: 4
+---
+
 # Spatial Models
 Last week, we explored spatial dependency and methods for measuring it. This week, we will examine how spatial autocorrelation can impact our analyses, especially in models where independence assumptions are crucial. To address these dependencies, we will use the `GWmodel` library to calculate local summary statistics for geographical areas and to fit basic spatially explicit models to our data.
 
@@ -240,6 +244,11 @@ cons_24_cor <- gwss(cons_24_sp, vars = c('conservative_vote_share', 'aged_50_yea
                     bw = 25, adaptive = TRUE)
 ```
 
+::: {.callout-note .exercise icon=false}
+## Predict first
+Before you run the next chunk, predict whether the local correlation will be positive in every constituency, or whether it changes sign somewhere. Check the summary of the local correlations that follows.
+:::
+
 We can now extract the values and bind these back to our original `sf` object:
 
 ```{r}
@@ -423,6 +432,12 @@ performance::check_model(lm_voteshare, check = c('vif', 'outliers'))
 ```
 
 #### Geographically weighted regression
+
+::: {.callout-note .exercise icon=false}
+## Predict first
+Before you map the residuals of the global model below, predict whether they will be scattered randomly across the map, or will cluster in particular regions. Compare your prediction with the map.
+:::
+
 The model diagnostics seem generally fine, perhaps except for the linearity check and the variance inflation factors (VIFs). The VIFs of the unemployed (8.7), over 50 (7.2) and 25-34 (6.1) variables are classed as moderate: the shares of the population over 50 and aged 25-34 are strongly negatively correlated ($r$ = -0.85), and the unemployed coefficient is the only one that is not statistically significant. We keep all variables for now, but we need to be careful when interpreting the local coefficients later. The linearity check could indicate a curved relationship or, alternatively, suggest spatial dependence in the relationship. If spatial dependence is present, it may imply that the observations are not independent. We can examine this by assessing whether the model residuals display spatial dependence. Let us begin with a map:
 
 ```{r tidy='styler'}
@@ -612,6 +627,11 @@ tm_layout(
   frame = FALSE
 )
 ```
+
+::: {.callout-note .exercise icon=false}
+## Try it yourself
+Fit the GWR again with a bandwidth twice as large (`bw = cons_24_bw * 2`), and predict how the local R-squared map changes. Rerun the code and compare the result with your prediction.
+:::
 
 In similar fashion, and with some data wrangling, we can map the individual local coefficients of our independent variables:
 

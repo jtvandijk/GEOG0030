@@ -1,3 +1,7 @@
+---
+number-offset: 3
+---
+
 # Spatial Autocorrelation
 This week, we will explore the concept of spatial dependence: the idea that the value of a variable at one location is influenced by the value of the same variable at nearby locations. This dependence can be statistically measured by assessing spatial autocorrelation, which refers to the degree of similarity between values of a variable at different locations.
 
@@ -329,6 +333,12 @@ Not all places have neighbours. Islands, by definition, will not be considered a
 :::
 
 ### Global Moran's I
+
+::: {.callout-note .exercise icon=false}
+## Predict first
+Before you run the plot below, predict whether the line through the points will slope upwards or downwards, and whether it will be steep or flat. The slope of this line is Moran's I.
+:::
+
 Now that everything is in place, we can begin by plotting the proportion of people that self-identify as Asian-Bangladeshi against the spatially lagged values:
 
 ```{r}
@@ -431,6 +441,11 @@ head(lmoran_quadrants)
 ```
 
 The `quadr` attribute holds three versions of the quadrant labels: `mean`, `median` and `pysal`. We use the `mean` version, which splits the Moran scatterplot at the mean of the variable and the mean of the spatially lagged variable, exactly where the dashed lines in @fig-04-plot-moran-queens are drawn. The `median` version splits at the medians instead, which for a skewed variable such as this one labels many more LSOAs as high-high.
+
+::: {.callout-note .exercise icon=false}
+## Predict first
+Before you run the next chunk, predict in which part of London you expect to find the high-high clusters for this variable. Compare your prediction with the map.
+:::
 
 We can now link these values back to our spatial dataframe and make a map using the `tmap` library:
 
