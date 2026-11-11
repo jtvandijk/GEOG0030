@@ -24,6 +24,11 @@ main p {
   text-align: justify;
 }
 
+/* keep step-by-step lists readable: no justification inside lists */
+main li, main li p {
+  text-align: left;
+}
+
 .callout.exercise {
   border-left-color: var(--main-color, var(--bs-link-color)) !important;
   background-color: color-mix(in srgb, var(--main-color, var(--bs-link-color)) 5%, transparent);

@@ -72,8 +72,8 @@ This workbook is created using the [Quarto](https://quarto.org/) publishing syst
 
 This year's workbook also takes inspiration and design elements from:
 
-- The [Spatial Data Science for Social Geography](https://martinfleischmann.net/sds/) course by [Martin Fleischmann](https://martinfleischmann.net/)
-- The [Mapping and Modelling Geographic Data in R](https://profrichharris.github.io/MandM/) course by [Richard Harris](https://profrichharris.github.io/)
+- The [Spatial Data Science for Social Geography](https://martinfleischmann.net/sds/) course by [Dr Martin Fleischmann](https://martinfleischmann.net/)
+- The [Mapping and Modelling Geographic Data in R](https://profrichharris.github.io/MandM/) course by [Professor Richard Harris](https://profrichharris.github.io/)
 
 The datasets used in this workbook contain:
 
