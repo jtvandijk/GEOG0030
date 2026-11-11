@@ -290,7 +290,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-spatial.html">Core Spatial Analysis</a></li><li class="breadcrumb-item"><a href="./01-spatial.html">Reproducible Spatial Analysis</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-spatial.html">Core Spatial Analysis</a></li><li class="breadcrumb-item"><a href="./01-spatial.html">1 Reproducible Spatial Analysis</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -476,7 +476,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="toc-actions"><ul><li><a href="https://github.com/jtvandijk/GEOG0030/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-spatial.html">Core Spatial Analysis</a></li><li class="breadcrumb-item"><a href="./01-spatial.html">Reproducible Spatial Analysis</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-spatial.html">Core Spatial Analysis</a></li><li class="breadcrumb-item"><a href="./01-spatial.html">1 Reproducible Spatial Analysis</a></li></ol></nav></header>
 
 
 
@@ -1075,6 +1075,19 @@ Figure&nbsp;4: Building up a map layer by layer.
 </div>
 </div>
 </div>
+<div class="exercise callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Predict first
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Before you run the map below, decide where in London you expect the highest shares of European-born residents: the centre or the outskirts? Compare your guess with the map.</p>
+</div>
+</div>
 <p>Let us go ahead and pass our <code>prop_eur21</code> variable within the <code>fill</code> parameter and see what we get:</p>
 <div class="cell">
 <div class="code-with-filename">
@@ -1103,6 +1116,19 @@ Figure&nbsp;5: Building up a map layer by layer.
 </div>
 </div>
 <p>We are making progress, but there is still an issue with our map: the classification breaks do not adequately reflect the variation in our dataset. By default, <code>tmap</code> uses <em>pretty</em> breaks, which may not be the most effective for our data. An alternative, such as <em>natural breaks</em> (or <em>jenks</em>), might better reveal the data’s variation.</p>
+<div class="exercise callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Predict first
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Before you run the histogram below, decide whether you expect the shares to be spread symmetrically around a typical value or to be strongly skewed, and roughly what that typical value is. Then check the histogram.</p>
+</div>
+</div>
 <p>To judge which classification method suits the data, it helps to look at how the values are distributed first. A histogram shows how many MSOAs fall within each range of values:</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
@@ -1288,6 +1314,19 @@ Figure&nbsp;8: Building up a map layer by layer.
 </figcaption>
 </figure>
 </div>
+</div>
+</div>
+<div class="exercise callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Try it yourself
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Change <code>n = 5</code> to <code>n = 3</code> or <code>n = 9</code>, or replace <code>'jenks'</code> with <code>'quantile'</code>, and predict what happens to the map. Run the code and compare the result with your prediction.</p>
 </div>
 </div>
 <p>We can also have some map labels, if we want, by extracting centroids from selected polygons, here the MSOAs Camden 015 and Lambeth 025, and adding these as a separate map layer:</p>
@@ -1877,8 +1916,8 @@ Figure&nbsp;9: Building up a map layer by layer.
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./02-operations.html" class="pagination-link" aria-label="Spatial Queries and Geometric Operations">
-        <span class="nav-page-text">Spatial Queries and Geometric Operations</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./02-operations.html" class="pagination-link" aria-label="2 Spatial Queries and Geometric Operations">
+        <span class="nav-page-text">2 Spatial Queries and Geometric Operations</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -319,7 +319,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-spatial.html">Core Spatial Analysis</a></li><li class="breadcrumb-item"><a href="./05-models.html">Spatial Models</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-spatial.html">Core Spatial Analysis</a></li><li class="breadcrumb-item"><a href="./05-models.html">5 Spatial Models</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -513,21 +513,21 @@ window.Quarto = {
 <div class="toc-actions"><ul><li><a href="https://github.com/jtvandijk/GEOG0030/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-spatial.html">Core Spatial Analysis</a></li><li class="breadcrumb-item"><a href="./05-models.html">Spatial Models</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-spatial.html">Core Spatial Analysis</a></li><li class="breadcrumb-item"><a href="./05-models.html">5 Spatial Models</a></li></ol></nav></header>
 
 
 
 
 
-<section id="spatial-models" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">5</span> Spatial Models</h1>
+<section id="spatial-models" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Spatial Models</h1>
 <p>Last week, we explored spatial dependency and methods for measuring it. This week, we will examine how spatial autocorrelation can impact our analyses, especially in models where independence assumptions are crucial. To address these dependencies, we will use the <code>GWmodel</code> library to calculate local summary statistics for geographical areas and to fit basic spatially explicit models to our data.</p>
-<section id="lecture-slides" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="lecture-slides"><span class="header-section-number">5.1</span> Lecture slides</h2>
+<section id="lecture-slides" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="lecture-slides"><span class="header-section-number">5.1</span> Lecture slides</h2>
 <p>You can download the slides of this week’s lecture here: <a href="https://github.com/jtvandijk/GEOG0030/blob/master/slides/w05-geo.pdf">[Link]</a>.</p>
 </section>
-<section id="reading-list" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="reading-list"><span class="header-section-number">5.2</span> Reading list</h2>
+<section id="reading-list" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="reading-list"><span class="header-section-number">5.2</span> Reading list</h2>
 <section id="essential-readings" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="essential-readings">Essential readings</h4>
 <ul>
@@ -545,16 +545,16 @@ window.Quarto = {
 </ul>
 </section>
 </section>
-<section id="start-of-session" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="start-of-session"><span class="header-section-number">5.3</span> Start of session</h2>
+<section id="start-of-session" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="start-of-session"><span class="header-section-number">5.3</span> Start of session</h2>
 <p>Before working through the tutorial, we will spend a few minutes looking at:</p>
 <ul>
 <li>How <code>GWmodel</code> still relies on an older spatial format</li>
 <li>Code in today’s tutorial that will not be run live</li>
 </ul>
 </section>
-<section id="elections-results-in-england-and-wales" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="elections-results-in-england-and-wales"><span class="header-section-number">5.4</span> Elections results in England and Wales</h2>
+<section id="elections-results-in-england-and-wales" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="elections-results-in-england-and-wales"><span class="header-section-number">5.4</span> Elections results in England and Wales</h2>
 <p>This week we will investigate the political geography of England and Wales, focusing on the results of the July 2024 General Election, which was won by the Labour Party led by Keir Starmer. You will work with data extracted from two data sources: the <a href="https://commonslibrary.parliament.uk/research-briefings/cbp-10009/">constituency results from the election</a> and socio-demographic information relating to age groups, economic status, and ethnic background from the 2021 Census, extracted using the <a href="https://www.ons.gov.uk/datasets/create">Custom Dataset Tool</a>. These datasets have been prepared and merged. Along with this dataset, we also have access to a <code>GeoPackage</code> that contains the boundaries of the parliamentary constituencies.</p>
 <p>You can download both files below and save them in your project folder under <code>data/attributes</code> and <code>data/spatial</code>, respectively.</p>
 <table class="caption-top table">
@@ -690,8 +690,8 @@ Projected CRS: OSGB36 / British National Grid
 </div>
 </div>
 </div>
-<section id="geographically-weighted-correlation" class="level3" data-number="1.4.1">
-<h3 data-number="1.4.1" class="anchored" data-anchor-id="geographically-weighted-correlation"><span class="header-section-number">5.4.1</span> Geographically weighted correlation</h3>
+<section id="geographically-weighted-correlation" class="level3" data-number="5.4.1">
+<h3 data-number="5.4.1" class="anchored" data-anchor-id="geographically-weighted-correlation"><span class="header-section-number">5.4.1</span> Geographically weighted correlation</h3>
 <p>We start with a recap of an analysis from <a href="https://jtvandijk.github.io/GEOG0018/03-statistics2.html">GEOG0018 Methods in Human Geography</a>, which not everyone will have taken. The hypothesis is that predominantly older voters tend to support the Conservative Party. To explore this, we examine the relationship between the proportion of individuals over 50 years old in each parliamentary constituency (<code>aged_50_years_and_over</code>) and the proportion of votes cast for the Conservative Party (<code>conservative_vote_share</code>). A scatterplot and Pearson’s correlation show a moderate association between the two variables (<span class="math inline">\(r\)</span> = 0.57), suggesting a possible link between age demographics and Conservative voting patterns:</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
@@ -884,6 +884,19 @@ Figure&nbsp;3: Proportions of population over 50 years old.
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">bw =</span> <span class="dv">25</span>, <span class="at">adaptive =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
+<div class="exercise callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Predict first
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Before you run the next chunk, predict whether the local correlation will be positive in every constituency, or whether it changes sign somewhere. Check the summary of the local correlations that follows.</p>
+</div>
+</div>
 <p>We can now extract the values and bind these back to our original <code>sf</code> object:</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
@@ -1010,16 +1023,16 @@ Figure&nbsp;4: Local correlation between the <code>conservative_vote_share</code
 </div>
 </div>
 </section>
-<section id="geographically-weighted-regression" class="level3" data-number="1.4.2">
-<h3 data-number="1.4.2" class="anchored" data-anchor-id="geographically-weighted-regression"><span class="header-section-number">5.4.2</span> Geographically weighted regression</h3>
+<section id="geographically-weighted-regression" class="level3" data-number="5.4.2">
+<h3 data-number="5.4.2" class="anchored" data-anchor-id="geographically-weighted-regression"><span class="header-section-number">5.4.2</span> Geographically weighted regression</h3>
 <p>A correlation describes the strength and direction of a linear relationship, but if we want to quantify the change in a dependent variable (<code>y</code>) for a one-unit change in the independent variable(s) (<code>x</code>) we need to run a regression. Geographically weighted regression (GWR) is used when the relationship between a dependent and set of independent variables is not constant across space, meaning the model coefficients vary by location. This is useful when you suspect that the relationship between variables may change depending on the geographic context. GWR provides a localised understanding of the relationships by allowing each observation to have its own set of regression coefficients, which can provide insights into how relationships differ across the study area.</p>
 <p>GWR fits a separate regression equation at each location in the study area, weighting nearby observations more heavily than those farther away. Again, the weighting is typically based on a kernel function. The basic GWR equation is:</p>
 <p><span class="math display">\[
 y_{i} = \beta_{0}(u_{i}, v_{i}) + \sum_{k=1}^{p}\beta_{k}(u_{i}, v_{i})x_{ik} + \epsilon_{i}
 \]</span></p>
 <p>where <span class="math inline">\((u_{i}, v_{i})\)</span> are the coordinates of location <span class="math inline">\(i\)</span> and <span class="math inline">\(\beta_{k}(u_{i}, v_{i})\)</span> are the location-specific coefficients.</p>
-<section id="multivariate-regression" class="level4" data-number="1.4.2.1">
-<h4 data-number="1.4.2.1" class="anchored" data-anchor-id="multivariate-regression"><span class="header-section-number">5.4.2.1</span> Multivariate regression</h4>
+<section id="multivariate-regression" class="level4" data-number="5.4.2.1">
+<h4 data-number="5.4.2.1" class="anchored" data-anchor-id="multivariate-regression"><span class="header-section-number">5.4.2.1</span> Multivariate regression</h4>
 <p>To predict the Conservative voter share, we hypothesise that certain socio-demographic variables may play a significant role. These independent variables include:</p>
 <table class="caption-top table">
 <colgroup>
@@ -1166,8 +1179,21 @@ Figure&nbsp;7: Check for influential observations and multicollinearity.
 </div>
 </div>
 </section>
-<section id="geographically-weighted-regression-1" class="level4" data-number="1.4.2.2">
-<h4 data-number="1.4.2.2" class="anchored" data-anchor-id="geographically-weighted-regression-1"><span class="header-section-number">5.4.2.2</span> Geographically weighted regression</h4>
+<section id="geographically-weighted-regression-1" class="level4" data-number="5.4.2.2">
+<h4 data-number="5.4.2.2" class="anchored" data-anchor-id="geographically-weighted-regression-1"><span class="header-section-number">5.4.2.2</span> Geographically weighted regression</h4>
+<div class="exercise callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Predict first
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Before you map the residuals of the global model below, predict whether they will be scattered randomly across the map, or will cluster in particular regions. Compare your prediction with the map.</p>
+</div>
+</div>
 <p>The model diagnostics seem generally fine, perhaps except for the linearity check and the variance inflation factors (VIFs). The VIFs of the unemployed (8.7), over 50 (7.2) and 25-34 (6.1) variables are classed as moderate: the shares of the population over 50 and aged 25-34 are strongly negatively correlated (<span class="math inline">\(r\)</span> = -0.85), and the unemployed coefficient is the only one that is not statistically significant. We keep all variables for now, but we need to be careful when interpreting the local coefficients later. The linearity check could indicate a curved relationship or, alternatively, suggest spatial dependence in the relationship. If spatial dependence is present, it may imply that the observations are not independent. We can examine this by assessing whether the model residuals display spatial dependence. Let us begin with a map:</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
@@ -1317,7 +1343,7 @@ Adaptive bandwidth: 108 CV score: 1.938444 </code></pre>
 <pre><code>   ***********************************************************************
    *                       Package   GWmodel                             *
    ***********************************************************************
-   Program starts at: 2026-11-09 21:14:52.514396 
+   Program starts at: 2026-11-11 13:14:14.709746 
    Call:
    gwr.basic(formula = conservative_vote_share ~ eco_active_employed + 
     eco_active_unemployed + eth_white + eth_black + aged_25_to_34_years + 
@@ -1391,7 +1417,7 @@ Adaptive bandwidth: 108 CV score: 1.938444 </code></pre>
    Adjusted R-square value:  0.7001241 
 
    ***********************************************************************
-   Program stops at: 2026-11-09 21:14:52.56869 </code></pre>
+   Program stops at: 2026-11-11 13:14:14.764328 </code></pre>
 </div>
 </div>
 <p>The global regression results are derived from the standard OLS model, representing a single regression for the entire study area without accounting for spatial variation. In contrast, the geographically weighted regression (GWR) results stem from 575 separate but spatially overlapping regression models, each fitted with geographic weighting to different spatial subsets of the data, allowing for local variation in the regression estimates. We can also see that the model fit (adjusted <span class="math inline">\(R^2\)</span>) has increased to 70%.</p>
@@ -1490,6 +1516,19 @@ Figure&nbsp;9: Model performance of the Geographically Weighted Regression.
 </figcaption>
 </figure>
 </div>
+</div>
+</div>
+<div class="exercise callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Try it yourself
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Fit the GWR again with a bandwidth twice as large (<code>bw = cons_24_bw * 2</code>), and predict how the local R-squared map changes. Rerun the code and compare the result with your prediction.</p>
 </div>
 </div>
 <p>In similar fashion, and with some data wrangling, we can map the individual local coefficients of our independent variables:</p>
@@ -1592,11 +1631,11 @@ Figure&nbsp;10: Local coefficients of the Geographically Weighted Regression.
 </div>
 </section>
 </section>
-<section id="more-spatial-models" class="level3" data-number="1.4.3">
-<h3 data-number="1.4.3" class="anchored" data-anchor-id="more-spatial-models"><span class="header-section-number">5.4.3</span> More spatial models</h3>
+<section id="more-spatial-models" class="level3" data-number="5.4.3">
+<h3 data-number="5.4.3" class="anchored" data-anchor-id="more-spatial-models"><span class="header-section-number">5.4.3</span> More spatial models</h3>
 <p>In this tutorial, we have looked at geographically weighted correlation and regression. However, whilst out of the scope of this module, there are many other approaches to account for space in statistical models. Examples of such models are the spatial error model and the spatial lag model. If you need one of these for your own work, for example for a dissertation, the <code>spatialreg</code> package fits both, and Lagrange multiplier tests (<code>lm.RStests()</code>) help to choose between them.</p>
-<section id="spatial-error-model" class="level4" data-number="1.4.3.1">
-<h4 data-number="1.4.3.1" class="anchored" data-anchor-id="spatial-error-model"><span class="header-section-number">5.4.3.1</span> Spatial error model</h4>
+<section id="spatial-error-model" class="level4" data-number="5.4.3.1">
+<h4 data-number="5.4.3.1" class="anchored" data-anchor-id="spatial-error-model"><span class="header-section-number">5.4.3.1</span> Spatial error model</h4>
 <p>The spatial error model is used when the error terms in a regression model exhibit spatial autocorrelation, meaning the error terms are not independent across space. This can happen due to omitted variables that have a spatial pattern or unmeasured factors that affect the dependent variable similarly across nearby locations.</p>
 <p>The model adjusts for spatial autocorrelation by adding a spatially lagged error term (a weighted sum of the errors from neighbouring locations) to the regression equation:</p>
 <p><span class="math display">\[
@@ -1614,8 +1653,8 @@ y = X\beta + \xi, \xi = \lambda W \xi + \epsilon
 </div>
 </div>
 </section>
-<section id="spatial-lag-model" class="level4" data-number="1.4.3.2">
-<h4 data-number="1.4.3.2" class="anchored" data-anchor-id="spatial-lag-model"><span class="header-section-number">5.4.3.2</span> Spatial lag model</h4>
+<section id="spatial-lag-model" class="level4" data-number="5.4.3.2">
+<h4 data-number="5.4.3.2" class="anchored" data-anchor-id="spatial-lag-model"><span class="header-section-number">5.4.3.2</span> Spatial lag model</h4>
 <p>The spatial lag model is appropriate when the dependent variable itself exhibits spatial dependence. This means the value of the dependent variable in one location depends on the values in neighbouring locations. This model is used to capture the spillover effects or diffusion processes, where the outcome in one area is influenced by outcomes in nearby areas (e.g.&nbsp;house prices, crime rates).</p>
 <p>The model incorporates a spatially lagged dependent variable, which is the weighted sum of the dependent variable values in neighbouring locations, into the regression equation:</p>
 <p><span class="math display">\[
@@ -1633,15 +1672,15 @@ y = \rho Wy + X\beta + \epsilon
 </div>
 </div>
 </section>
-<section id="to-note" class="level4" data-number="1.4.3.3">
-<h4 data-number="1.4.3.3" class="anchored" data-anchor-id="to-note"><span class="header-section-number">5.4.3.3</span> To note</h4>
+<section id="to-note" class="level4" data-number="5.4.3.3">
+<h4 data-number="5.4.3.3" class="anchored" data-anchor-id="to-note"><span class="header-section-number">5.4.3.3</span> To note</h4>
 <p>The spatial error model adjusts for spatial autocorrelation in the error terms, whereas the spatial lag model adjusts for spatial dependence in the dependent variable itself. The spatial error model does not alter the interpretation of the coefficients of the independent variables, while the spatial lag model introduces a feedback loop where changes in one area can influence neighbouring areas.</p>
 <p>Both the spatial error and spatial lag models assume that the relationships between variables are the same across the study area, with adjustments made only for spatial dependencies. GWR, on the other hand, allows the relationships themselves to vary across space. GWR is more flexible but also more complex and computationally intensive, providing local instead of global estimates of coefficients.</p>
 </section>
 </section>
 </section>
-<section id="assignment" class="level2" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="assignment"><span class="header-section-number">5.5</span> Assignment</h2>
+<section id="assignment" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="assignment"><span class="header-section-number">5.5</span> Assignment</h2>
 <p>The Geographically Weighted Regression (GWR) reveals some varying patterns in the strength and direction of the relationships with the Conservative vote share, but it is likely that other factors are at play. One could hypothesise that another potential predictor of the Conservative vote share is the proportion of the population employed in a particular industry. Try to do the following:</p>
 <ol type="1">
 <li>Download the dataset provided below and save it to the appropriate subfolder within your <code>data</code> directory. The <code>csv</code>, extracted using the <a href="https://www.ons.gov.uk/datasets/create">Custom Dataset Tool</a>, contains the number of employed individuals as recorded in the 2021 Census by their <a href="https://www.ons.gov.uk/census/census2021dictionary/variablesbytopic/labourmarketvariablescensus2021/industrycurrent#:~:text=Type%3A%20Derived%20variable-,Definition,firm%20or%20organisation's%20main%20activity.">Standard Industrial Classification (SIC)</a> code.</li>
@@ -1671,8 +1710,8 @@ y = \rho Wy + X\beta + \epsilon
 </tbody>
 </table>
 </section>
-<section id="before-you-leave" class="level2" data-number="1.6">
-<h2 data-number="1.6" class="anchored" data-anchor-id="before-you-leave"><span class="header-section-number">5.6</span> Before you leave</h2>
+<section id="before-you-leave" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="before-you-leave"><span class="header-section-number">5.6</span> Before you leave</h2>
 <p>This week, we explored decomposing global measures to account for non-stationarity in spatial variables. Geographically Weighted Regression (GWR) is particularly useful when the relationship between variables varies across space, as it allows for localised regression coefficients and helps identify spatial heterogeneity that might be overlooked in global models. This was <a href="https://www.youtube.com/watch?v=Le5AGYxPCLI">a rather heavy one</a>, time for some light reading?</p>
 
 
@@ -2095,13 +2134,13 @@ y = \rho Wy + X\beta + \epsilon
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./04-autocorrelation.html" class="pagination-link" aria-label="Spatial Autocorrelation">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Spatial Autocorrelation</span>
+      <a href="./04-autocorrelation.html" class="pagination-link" aria-label="4 Spatial Autocorrelation">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">4 Spatial Autocorrelation</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./06-raster.html" class="pagination-link" aria-label="Raster Data Analysis">
-        <span class="nav-page-text">Raster Data Analysis</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./06-raster.html" class="pagination-link" aria-label="6 Raster Data Analysis">
+        <span class="nav-page-text">6 Raster Data Analysis</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

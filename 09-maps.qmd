@@ -1,3 +1,7 @@
+---
+number-offset: 8
+---
+
 # Beyond the Choropleth
 This week, we turn to bivariate mapping, using unemployment change across London as our example.
 

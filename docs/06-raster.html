@@ -290,7 +290,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06-raster.html">Applied Spatial Analysis</a></li><li class="breadcrumb-item"><a href="./06-raster.html">Raster Data Analysis</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06-raster.html">Applied Spatial Analysis</a></li><li class="breadcrumb-item"><a href="./06-raster.html">6 Raster Data Analysis</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -479,21 +479,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="toc-actions"><ul><li><a href="https://github.com/jtvandijk/GEOG0030/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06-raster.html">Applied Spatial Analysis</a></li><li class="breadcrumb-item"><a href="./06-raster.html">Raster Data Analysis</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06-raster.html">Applied Spatial Analysis</a></li><li class="breadcrumb-item"><a href="./06-raster.html">6 Raster Data Analysis</a></li></ol></nav></header>
 
 
 
 
 
-<section id="raster-data-analysis" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">6</span> Raster Data Analysis</h1>
+<section id="raster-data-analysis" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Raster Data Analysis</h1>
 <p>So far, we have exclusively focused on the use of vector and tabular data. However, depending on the nature of your research problem, you may also encounter <em>raster data</em>. This week’s content introduces you to raster data, map algebra, and interpolation.</p>
-<section id="lecture-slides" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="lecture-slides"><span class="header-section-number">6.1</span> Lecture slides</h2>
+<section id="lecture-slides" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="lecture-slides"><span class="header-section-number">6.1</span> Lecture slides</h2>
 <p>You can download the slides of this week’s lecture here: <a href="https://github.com/jtvandijk/GEOG0030/blob/master/slides/w06-geo.pdf">[Link]</a>.</p>
 </section>
-<section id="reading-list" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="reading-list"><span class="header-section-number">6.2</span> Reading list</h2>
+<section id="reading-list" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="reading-list"><span class="header-section-number">6.2</span> Reading list</h2>
 <section id="essential-readings" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="essential-readings">Essential readings</h4>
 <ul>
@@ -511,16 +511,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 </section>
 </section>
-<section id="start-of-session" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="start-of-session"><span class="header-section-number">6.3</span> Start of session</h2>
+<section id="start-of-session" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="start-of-session"><span class="header-section-number">6.3</span> Start of session</h2>
 <p>Before working through the tutorial, we will spend a few minutes looking at:</p>
 <ul>
 <li>What raster data actually looks like</li>
 <li>How WorldPop’s population estimates compare to the census</li>
 </ul>
 </section>
-<section id="population-change-in-london" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="population-change-in-london"><span class="header-section-number">6.4</span> Population change in London</h2>
+<section id="population-change-in-london" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="population-change-in-london"><span class="header-section-number">6.4</span> Population change in London</h2>
 <p>For the first part of this week’s practical material we will be using raster datasets from <a href="https://hub.worldpop.org/">WorldPop</a>. These population surfaces are estimates of counts of people, displayed within a regular grid raster of a spatial resolution of up to 100m. These datasets can be used to explore, for example, changes in the demographic profiles or area deprivation at small spatial scales.</p>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
@@ -592,8 +592,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<section id="map-algebra" class="level3" data-number="1.4.1">
-<h3 data-number="1.4.1" class="anchored" data-anchor-id="map-algebra"><span class="header-section-number">6.4.1</span> Map algebra</h3>
+<section id="map-algebra" class="level3" data-number="6.4.1">
+<h3 data-number="6.4.1" class="anchored" data-anchor-id="map-algebra"><span class="header-section-number">6.4.1</span> Map algebra</h3>
 <p>We will be using some simple map algebra to look at population change in London between 2010 and 2020. We can load the individual GeoTIFF files that we downloaded into R and reproject them into British National Grid using the <code>terra</code> library.</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
@@ -790,6 +790,19 @@ Figure&nbsp;4: WorldPop 2020 population estimates for London.
 </div>
 </div>
 </div>
+<div class="exercise callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Predict first
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Before you run the next chunk, predict whether population grew in nearly all cells or only in some, and whether the largest gains are in central or outer London. Compare your prediction with the map.</p>
+</div>
+</div>
 <p>Now we have our two London population rasters, we can calculate population change between the two time periods by subtracting our 2010 population raster from our 2020 population raster:</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
@@ -816,8 +829,8 @@ Figure&nbsp;5: Population change in London 2010-2020.
 </div>
 </div>
 </section>
-<section id="focal-and-zonal-statistics" class="level3" data-number="1.4.2">
-<h3 data-number="1.4.2" class="anchored" data-anchor-id="focal-and-zonal-statistics"><span class="header-section-number">6.4.2</span> Focal and zonal statistics</h3>
+<section id="focal-and-zonal-statistics" class="level3" data-number="6.4.2">
+<h3 data-number="6.4.2" class="anchored" data-anchor-id="focal-and-zonal-statistics"><span class="header-section-number">6.4.2</span> Focal and zonal statistics</h3>
 <p>To further analyse our population change raster, we can create a smoothed version of the <code>lonpop_change</code> raster using the <code>focal()</code> function. This function generates a raster in which each cell holds the mean value of that cell and its eight neighbours.</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
@@ -868,6 +881,19 @@ Figure&nbsp;7: Difference smoothed population change with original population ch
 </figcaption>
 </figure>
 </div>
+</div>
+</div>
+<div class="exercise callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Try it yourself
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Change the window in <code>focal()</code> from <code>matrix(1,3,3)</code> to <code>matrix(1,5,5)</code>, and predict how the smoothed raster changes. Run the code and compare the result with your prediction.</p>
 </div>
 </div>
 <p>We can also use zonal functions to better represent population change by aggregating the data to coarser resolutions. For example, resizing the raster’s spatial resolution to contain larger grid cells simplifies the data, making broader trends more visible. However, it may also end up obfuscating more local patterns.</p>
@@ -986,8 +1012,8 @@ Figure&nbsp;9: Percentage population change in London boroughs 2010-2020.
 </div>
 </section>
 </section>
-<section id="air-pollution-in-london" class="level2" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="air-pollution-in-london"><span class="header-section-number">6.5</span> Air pollution in London</h2>
+<section id="air-pollution-in-london" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="air-pollution-in-london"><span class="header-section-number">6.5</span> Air pollution in London</h2>
 <p>In the second part of this week’s practical, we will explore various methods of spatial data interpolation, focusing on air pollution in London using data from <a href="https://www.londonair.org.uk/">Londonair</a>. We will specifically look at Nitrogen Dioxide (NO<sub>2</sub>) measurements.</p>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
@@ -1248,8 +1274,8 @@ Figure&nbsp;11: Proportional symbol map of average Londonair NO<sub>2</sub> meas
 </div>
 </div>
 <p><a href="#fig-06-air-quality-measurement-sites-proportional-symbol" class="quarto-xref">Figure&nbsp;11</a> shows heterogeneity in average NO<sub>2</sub> measurements across London, both in terms of coverage and NO<sub>2</sub> levels. To make reasonable assumptions about NO<sub>2</sub> levels in areas without measurements, we can interpolate the missing values.</p>
-<section id="voronoi-tessellation" class="level3" data-number="1.5.1">
-<h3 data-number="1.5.1" class="anchored" data-anchor-id="voronoi-tessellation"><span class="header-section-number">6.5.1</span> Voronoi tessellation</h3>
+<section id="voronoi-tessellation" class="level3" data-number="6.5.1">
+<h3 data-number="6.5.1" class="anchored" data-anchor-id="voronoi-tessellation"><span class="header-section-number">6.5.1</span> Voronoi tessellation</h3>
 <p>A straightforward method for interpolating values across space is to create Voronoi polygons (a Voronoi tessellation). These polygons define the boundaries of areas closest to each unique point, meaning that each point in the dataset has a corresponding polygon. Every location then takes the value of its closest measurement site: in the lecture this is called nearest neighbour interpolation.</p>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
@@ -1386,8 +1412,8 @@ Figure&nbsp;12: Interpolation of average NO<sub>2</sub> measurements in London u
 </div>
 </div>
 </section>
-<section id="inverse-distance-weighting" class="level3" data-number="1.5.2">
-<h3 data-number="1.5.2" class="anchored" data-anchor-id="inverse-distance-weighting"><span class="header-section-number">6.5.2</span> Inverse Distance Weighting</h3>
+<section id="inverse-distance-weighting" class="level3" data-number="6.5.2">
+<h3 data-number="6.5.2" class="anchored" data-anchor-id="inverse-distance-weighting"><span class="header-section-number">6.5.2</span> Inverse Distance Weighting</h3>
 <p>A more sophisticated method for interpolating point data is Inverse Distance Weighting (IDW). IDW converts numerical point data into a continuous surface, allowing for visualisation of how the data is distributed across space. This technique estimates values at each location by calculating a weighted average of the measurements, with the weights inversely related to the distances to the measurement sites: nearby points count for more.</p>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
@@ -1502,11 +1528,24 @@ Figure&nbsp;13: Interpolation of average NO<sub>2</sub> measurements in London u
 </div>
 </div>
 </div>
+<div class="exercise callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Try it yourself
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Change <code>idp = 2</code> to <code>idp = 1</code> or <code>idp = 4</code> in the IDW code, and predict how the surface changes. Rerun the code and compare the resulting map with your prediction.</p>
+</div>
+</div>
 <p>Voronoi polygons and IDW are two of several interpolation methods. Kriging, which estimates from the data how similarity between measurements changes with distance, is a further option that we do not use here. If you want to explore it, for example for your own research project, Gimond’s chapter in the essential readings explains how it works, and <code>gstat</code> supports it as well.</p>
 </section>
 </section>
-<section id="assignment" class="level2" data-number="1.6">
-<h2 data-number="1.6" class="anchored" data-anchor-id="assignment"><span class="header-section-number">6.6</span> Assignment</h2>
+<section id="assignment" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="assignment"><span class="header-section-number">6.6</span> Assignment</h2>
 <p>Having run through all the steps during the tutorial, we can conduct some more granular analysis of the NO<sub>2</sub> measurements. For example, instead of examining the annual average measurements, we could compare data across different months. Please try the following tasks:</p>
 <ol type="1">
 <li>Create monthly averages for the pollution data.</li>
@@ -1515,8 +1554,8 @@ Figure&nbsp;13: Interpolation of average NO<sub>2</sub> measurements in London u
 <li>Compare the results. Do the patterns match what you expected, and what might explain any differences you observe?</li>
 </ol>
 </section>
-<section id="before-you-leave" class="level2" data-number="1.7">
-<h2 data-number="1.7" class="anchored" data-anchor-id="before-you-leave"><span class="header-section-number">6.7</span> Before you leave</h2>
+<section id="before-you-leave" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="before-you-leave"><span class="header-section-number">6.7</span> Before you leave</h2>
 <p>This week, we have explored raster datasets and how to manage and process them using the <code>terra</code> library. While you will typically encounter vector data, particularly in relation to government statistics and administrative boundaries, there are also many use cases where raster data may be encountered. With that being said: <a href="https://www.youtube.com/watch?v=8iwBM_YB1sE">that is it for this week</a>!</p>
 
 
@@ -1939,13 +1978,13 @@ Figure&nbsp;13: Interpolation of average NO<sub>2</sub> measurements in London u
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./05-models.html" class="pagination-link" aria-label="Spatial Models">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Spatial Models</span>
+      <a href="./05-models.html" class="pagination-link" aria-label="5 Spatial Models">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">5 Spatial Models</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./07-geodemographics.html" class="pagination-link" aria-label="Geodemographic Classification">
-        <span class="nav-page-text">Geodemographic Classification</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./07-geodemographics.html" class="pagination-link" aria-label="7 Geodemographic Classification">
+        <span class="nav-page-text">7 Geodemographic Classification</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -290,7 +290,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-spatial.html">Core Spatial Analysis</a></li><li class="breadcrumb-item"><a href="./02-operations.html">Spatial Queries and Geometric Operations</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-spatial.html">Core Spatial Analysis</a></li><li class="breadcrumb-item"><a href="./02-operations.html">2 Spatial Queries and Geometric Operations</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -476,21 +476,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="toc-actions"><ul><li><a href="https://github.com/jtvandijk/GEOG0030/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-spatial.html">Core Spatial Analysis</a></li><li class="breadcrumb-item"><a href="./02-operations.html">Spatial Queries and Geometric Operations</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-spatial.html">Core Spatial Analysis</a></li><li class="breadcrumb-item"><a href="./02-operations.html">2 Spatial Queries and Geometric Operations</a></li></ol></nav></header>
 
 
 
 
 
-<section id="spatial-queries-and-geometric-operations" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">2</span> Spatial Queries and Geometric Operations</h1>
+<section id="spatial-queries-and-geometric-operations" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Spatial Queries and Geometric Operations</h1>
 <p>This week, we look at geometric operations and spatial queries: the fundamental building blocks when it comes to spatial data processing and analysis. This includes selecting features based on their distance to other features, running a <em>buffer</em> analysis, and <em>intersecting</em> different spatial layers.</p>
-<section id="lecture-slides" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="lecture-slides"><span class="header-section-number">2.1</span> Lecture slides</h2>
+<section id="lecture-slides" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="lecture-slides"><span class="header-section-number">2.1</span> Lecture slides</h2>
 <p>You can download the slides of this week’s lecture here: <a href="https://github.com/jtvandijk/GEOG0030/blob/master/slides/w02-geo.pdf">[Link]</a>.</p>
 </section>
-<section id="reading-list" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="reading-list"><span class="header-section-number">2.2</span> Reading list</h2>
+<section id="reading-list" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="reading-list"><span class="header-section-number">2.2</span> Reading list</h2>
 <section id="essential-readings" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="essential-readings">Essential readings</h4>
 <ul>
@@ -509,8 +509,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 </section>
 </section>
-<section id="start-of-session" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="start-of-session"><span class="header-section-number">2.3</span> Start of session</h2>
+<section id="start-of-session" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="start-of-session"><span class="header-section-number">2.3</span> Start of session</h2>
 <p>Before working through the tutorial, we will spend a few minutes looking at:</p>
 <ul>
 <li>One month of raw crime data from data.police.uk</li>
@@ -518,8 +518,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>The trade-offs of relying on a live API query for data</li>
 </ul>
 </section>
-<section id="bike-theft-in-london-i" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="bike-theft-in-london-i"><span class="header-section-number">2.4</span> Bike theft in London I</h2>
+<section id="bike-theft-in-london-i" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="bike-theft-in-london-i"><span class="header-section-number">2.4</span> Bike theft in London I</h2>
 <p>This week, we will examine to what extent reported bicycle theft in London clusters around train and underground stations. We will be using open data from <a href="https://data.police.uk/">data.police.uk</a> on reported crimes alongside <a href="https://www.openstreetmap.org/#map=6/54.91/-3.43">OpenStreetMap</a> data for this analysis. We will use R to directly download the necessary data from OpenStreetMap, but the crime data will need to be manually downloaded from the data portal. We further have access to a <code>GeoPackage</code> that contains the London 2021 MSOA boundaries that we can use as a reference layer. If you do not already have it on your computer, save this file in your <code>data/spatial</code> folder.</p>
 <table class="caption-top table">
 <thead>
@@ -537,8 +537,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
-<section id="crime-data" class="level3" data-number="1.4.1">
-<h3 data-number="1.4.1" class="anchored" data-anchor-id="crime-data"><span class="header-section-number">2.4.1</span> Crime data</h3>
+<section id="crime-data" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="crime-data"><span class="header-section-number">2.4.1</span> Crime data</h3>
 <p>The UK Police Data Portal allows you to access and generate tabular data for crime recorded in the UK across the different police forces. To download recorded crime data for London:</p>
 <ol type="1">
 <li>Navigate to <a href="https://data.police.uk/">data.police.uk</a> and click on <strong>Downloads</strong>.</li>
@@ -821,8 +821,8 @@ Figure&nbsp;2: Reported bicycle thefts in London.
 </div>
 </div>
 </section>
-<section id="station-data" class="level3" data-number="1.4.2">
-<h3 data-number="1.4.2" class="anchored" data-anchor-id="station-data"><span class="header-section-number">2.4.2</span> Station data</h3>
+<section id="station-data" class="level3" data-number="2.4.2">
+<h3 data-number="2.4.2" class="anchored" data-anchor-id="station-data"><span class="header-section-number">2.4.2</span> Station data</h3>
 <p>OpenStreetMap (OSM) is a free, editable map of the world. Each map element (whether a point, line, or polygon) in OSM is tagged with various attribute data. To download the station data we need, we must use the appropriate tags, represented as <code>key</code> and <code>value</code> pairs, to query the OSM database. In our case, we are looking for train stations, which fall under the <em>Public Transport</em> <code>key</code>, with a <code>value</code> of <em>station</em>. To limit our search to London, we can use the spatial extent of the 2021 MSOA boundaries as the bounding box for data extraction.</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
@@ -834,10 +834,17 @@ Figure&nbsp;2: Reported bicycle thefts in London.
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="dv">4326</span>) <span class="sc">|&gt;</span></span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_bbox</span>()</span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co"># osm query</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>osm_stations <span class="ot">&lt;-</span> <span class="fu">opq</span>(<span class="at">bbox =</span> bbox_london) <span class="sc">|&gt;</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_osm_feature</span>(<span class="at">key =</span> <span class="st">"public_transport"</span>, <span class="at">value =</span> <span class="st">"station"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">osmdata_sf</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co"># osm query, fall back to the prepared copy if the query fails</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>osm_stations <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">opq</span>(<span class="at">bbox =</span> bbox_london) <span class="sc">|&gt;</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_osm_feature</span>(<span class="at">key =</span> <span class="st">"public_transport"</span>, <span class="at">value =</span> <span class="st">"station"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">osmdata_sf</span>(),</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">error =</span> <span class="cf">function</span>(e) {</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">message</span>(<span class="st">"OSM query failed, loading the prepared copy instead."</span>)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">load</span>(<span class="st">"data/spatial/London-OSM-Stations.RData"</span>)</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>    osm_stations</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <div class="callout callout-style-simple callout-warning">
@@ -846,7 +853,7 @@ Figure&nbsp;2: Reported bicycle thefts in London.
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>In some cases, the OSM query may return an error, particularly when multiple users from the same location are executing the exact same query. If so, you can download a prepared copy of the data here: <a href="https://github.com/jtvandijk/GEOG0030/raw/refs/heads/master/data/spatial/London-OSM-Stations.RData">[Download]</a>. You can load this copy into R through <code>load('data/spatial/London-OSM-Stations.RData')</code></p>
+<p>OSM is edited continuously, so the numbers you obtain may differ slightly from those in the text.</p>
 </div>
 </div>
 </div>
@@ -873,34 +880,34 @@ all geometries</code></pre>
 <pre><code>Simple feature collection with 6 features and 6 fields
 Geometry type: POINT
 Dimension:     XY
-Bounding box:  xmin: 506148.8 ymin: 168292.6 xmax: 546593.8 ymax: 191878.8
+Bounding box:  xmin: 506148.8 ymin: 168292.6 xmax: 546593.8 ymax: 191714.7
 Projected CRS: OSGB36 / British National Grid
            osm_id                   name                      network
 780856     780856 Shepherd's Bush Market           London Underground
-1256794   1256794           West Drayton National Rail;Elizabeth line
+1256794   1256794           West Drayton National Rail;Elizabeth Line
 2013971   2013971       Finchley Central           London Underground
 9780241   9780241           St Mary Cray                National Rail
+13330343 13330343               Woodford           London Underground
 13790683 13790683               Mile End           London Underground
-13884199 13884199     Mill Hill Broadway                National Rail
-                           operator public_transport railway
-780856           London Underground          station station
-1256794              Elizabeth line          station station
-2013971          London Underground          station station
-9780241                Southeastern          station station
-13790683         London Underground    stop_position    stop
-13884199 Greater Thameslink Railway          station station
+                     operator public_transport railway
+780856                   &lt;NA&gt;          station station
+1256794              TfL Rail          station station
+2013971  Transport for London          station station
+9780241          Southeastern          station station
+13330343   London Underground    stop_position    stop
+13790683   London Underground    stop_position    stop
                           geometry
 780856   POINT (523195.9 180061.9)
 1256794  POINT (506148.8 180085.4)
 2013971    POINT (525294.7 190658)
 9780241  POINT (546593.8 168292.6)
-13790683   POINT (536524.6 182545)
-13884199 POINT (521351.6 191878.8)</code></pre>
+13330343 POINT (540946.1 191714.7)
+13790683   POINT (536524.6 182545)</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(osm_stations)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 4003</code></pre>
+<pre><code>[1] 3865</code></pre>
 </div>
 </div>
 <p>The total number of data points seems rather high. In fact, looking at the <code>railway</code> variable, several points are not tagged as station or do not have a value at all:</p>
@@ -916,14 +923,14 @@ Projected CRS: OSGB36 / British National Grid
 <pre><code>Simple feature collection with 5 features and 2 fields
 Geometry type: GEOMETRY
 Dimension:     XY
-Bounding box:  xmin: 504982.3 ymin: 159027.2 xmax: 556185.7 ymax: 200139.5
+Bounding box:  xmin: 505078.2 ymin: 159027.2 xmax: 556185.7 ymax: 200138.6
 Projected CRS: OSGB36 / British National Grid
                  railway    n                       geometry
-1                station  614 MULTIPOINT ((505078.2 17673...
-2                   stop   14 MULTIPOINT ((528197.7 18571...
-3        subway_entrance   37 MULTIPOINT ((525226.4 18745...
-4 train_station_entrance    1      POINT (538196.2 184826.5)
-5                   &lt;NA&gt; 3337 MULTIPOINT ((504982.3 17581...</code></pre>
+1                station  616 MULTIPOINT ((505078.2 17673...
+2                   stop   17 MULTIPOINT ((528197.7 18571...
+3        subway_entrance   36 MULTIPOINT ((525226.4 18745...
+4 train_station_entrance    1      POINT (538196.3 184826.5)
+5                   &lt;NA&gt; 3195 MULTIPOINT ((505572.7 18421...</code></pre>
 </div>
 </div>
 <p>The points tagged as station in the railway field are most likely the only points in our dataset that represent actual stations, so we will only retain those points.</p>
@@ -992,8 +999,8 @@ Figure&nbsp;3: Train and underground stations in London.
 </div>
 </div>
 </section>
-<section id="spatial-queries" class="level3" data-number="1.4.3">
-<h3 data-number="1.4.3" class="anchored" data-anchor-id="spatial-queries"><span class="header-section-number">2.4.3</span> Spatial queries</h3>
+<section id="spatial-queries" class="level3" data-number="2.4.3">
+<h3 data-number="2.4.3" class="anchored" data-anchor-id="spatial-queries"><span class="header-section-number">2.4.3</span> Spatial queries</h3>
 <p>A spatial query is used to retrieve data based on its geographic location or spatial relationships. It uses spatial information from one or more layers to find features that meet specific criteria, such as proximity, intersection, or containment. In contrast to the attribute query we used earlier, a spatial query selects features by where they are rather than by their values. For instance, we can use a spatial query to count all the bicycle thefts that have occurred within 500 metres of a train or underground station:</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
@@ -1042,6 +1049,19 @@ Projected CRS: OSGB36 / British National Grid
 </div>
 </div>
 <p>The distances in this query are straight-line (Euclidean) distances in metres, because our data use the British National Grid.</p>
+<div class="exercise callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Predict first
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Before you run the code below, estimate what share of the bicycle thefts takes place within 500 metres of a station: about a quarter, half, or two-thirds? Then compare the counts with your estimate.</p>
+</div>
+</div>
 <p>We can use the <code>count()</code> function to find out just how many thefts fall in each of these categories. We first drop the geometry column with <code>st_drop_geometry()</code>, so that <code>count()</code> returns a simple table rather than a spatial object:</p>
 <div class="cell styled-output">
 <div class="code-with-filename">
@@ -1057,8 +1077,8 @@ Projected CRS: OSGB36 / British National Grid
 <pre><code># A tibble: 2 × 2
   d500      n
   &lt;lgl&gt; &lt;int&gt;
-1 FALSE  4938
-2 TRUE   9156</code></pre>
+1 FALSE  4932
+2 TRUE   9162</code></pre>
 </div>
 </div>
 <p>Around two-thirds of all reported bicycle thefts in London occur within 500 metres of a train or underground station. Of course, we can map the results for a visual inspection:</p>
@@ -1145,9 +1165,22 @@ Figure&nbsp;4: Reported bicycle thefts in London within 500 metres of a train or
 </div>
 </div>
 </div>
+<div class="exercise callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Try it yourself
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Change <code>dist = 500</code> in the spatial query to <code>250</code> or <code>1000</code>, and predict whether the share of thefts within the distance goes up or down, and by how much. Rerun the code and compare the result with your prediction.</p>
+</div>
+</div>
 </section>
-<section id="geometric-operations" class="level3" data-number="1.4.4">
-<h3 data-number="1.4.4" class="anchored" data-anchor-id="geometric-operations"><span class="header-section-number">2.4.4</span> Geometric operations</h3>
+<section id="geometric-operations" class="level3" data-number="2.4.4">
+<h3 data-number="2.4.4" class="anchored" data-anchor-id="geometric-operations"><span class="header-section-number">2.4.4</span> Geometric operations</h3>
 <p>Geometric operations are used to manipulate and analyse the shapes and spatial properties of geometric objects, such as points, lines, and polygons. These operations include tasks like calculating intersections, buffering, and determining the distance between shapes.</p>
 <p>The lecture introduced the main geometric operations, and we have already used two of them in this tutorial without naming them. <em>Clipping</em> keeps only the parts of one layer that fall within another, which is what <code>st_intersection()</code> did when we removed the stations outside London. <em>Dissolve</em> merges separate geometries into one, which is what <code>st_union()</code> did when we created the outline of London and the single station geometry. The lecture’s <em>union</em> of two layers, which keeps every shape from both, is not needed in this tutorial. A <em>buffer</em> creates a zone of a given distance around a geometry.</p>
 <p>In this case, we can create 500-metre buffers around each station and then count how many bicycle thefts fall within these buffers.</p>
@@ -1168,11 +1201,11 @@ Figure&nbsp;4: Reported bicycle thefts in London within 500 metres of a train or
 <pre><code>Geometry set for 1 feature 
 Geometry type: MULTIPOLYGON
 Dimension:     XY
-Bounding box:  xmin: 504578.2 ymin: 158527.2 xmax: 556685.7 ymax: 200639.5
+Bounding box:  xmin: 504578.2 ymin: 158527.2 xmax: 556685.7 ymax: 200638.6
 Projected CRS: OSGB36 / British National Grid</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>MULTIPOLYGON (((517709.6 169311.1, 517686.6 169...</code></pre>
+<pre><code>MULTIPOLYGON (((518349.2 163095.5, 518336.7 163...</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-tip">
@@ -1247,8 +1280,8 @@ Figure&nbsp;5: Train and underground stations in London with a 500 metre buffer.
 <pre><code># A tibble: 2 × 2
   d500_buffer     n
   &lt;lgl&gt;       &lt;int&gt;
-1 FALSE        4941
-2 TRUE         9153</code></pre>
+1 FALSE        4935
+2 TRUE         9159</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-important">
@@ -1259,6 +1292,19 @@ Figure&nbsp;5: Train and underground stations in London with a 500 metre buffer.
 <div class="callout-body-container">
 <p>The results are almost identical, with a tiny difference between the two methods. The <code>st_buffer()</code> function approximates a circle with a polygon, and the straight edges of this polygon lie slightly inside the true 500-metre circle. A point that is just within 500 metres of a station, but falls in the thin sliver between the polygon and the circle, is therefore found by <code>st_is_within_distance()</code> but missed by <code>st_intersects()</code>. The difference can only go in this direction: the buffer can miss points that are within 500 metres, but it never includes points that are further away.</p>
 </div>
+</div>
+</div>
+<div class="exercise callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Predict first
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Before you run the code below, estimate what share of London’s area lies within 500 metres of a station. Compare your estimate with the share of thefts we found earlier.</p>
 </div>
 </div>
 <p>To judge whether two-thirds is a high share, we need a point of comparison. The buffers do not cover all of London, so we can calculate how much of London lies within 500 metres of a station:</p>
@@ -1279,14 +1325,14 @@ Figure&nbsp;5: Train and underground stations in London with a 500 metre buffer.
 <span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a><span class="fu">as.numeric</span>(buffer_area<span class="sc">/</span>london_area)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2427948</code></pre>
+<pre><code>[1] 0.2419365</code></pre>
 </div>
 </div>
 <p>The buffers cover roughly a quarter of London’s area, yet contain around two-thirds of the reported bicycle thefts. Bicycle thefts are therefore far more concentrated around stations than the area alone would suggest. This does not mean that stations cause bicycle theft: both are more likely to be found where many people are. Comparing an observed pattern with what we would expect by chance is a theme we return to in the coming weeks.</p>
 </section>
 </section>
-<section id="assignment" class="level2" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="assignment"><span class="header-section-number">2.5</span> Assignment</h2>
+<section id="assignment" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="assignment"><span class="header-section-number">2.5</span> Assignment</h2>
 <p>Now that we are familiar with basic spatial queries and geometric operations, we can conduct a similar analysis on the number of <em>serious</em> and <em>fatal</em> road crashes in London in 2025 and determine how many occurred on or near a main road. Try to do the following:</p>
 <ol type="1">
 <li>Download the two datasets provided below and save them in the appropriate subfolder within your <code>data</code> directory. The datasets include:
@@ -1319,8 +1365,8 @@ Figure&nbsp;5: Train and underground stations in London with a 500 metre buffer.
 </tbody>
 </table>
 </section>
-<section id="before-you-leave" class="level2" data-number="1.6">
-<h2 data-number="1.6" class="anchored" data-anchor-id="before-you-leave"><span class="header-section-number">2.6</span> Before you leave</h2>
+<section id="before-you-leave" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="before-you-leave"><span class="header-section-number">2.6</span> Before you leave</h2>
 <p>Boom. That is how you can conduct basic spatial queries and geometric operations using R and <code>sf</code>. Yet more RGIS coming over the next couple of weeks, but <a href="https://www.youtube.com/watch?v=Xyt810Ahbxk">this concludes the tutorial for this week</a>. Time to check out that reading list?</p>
 
 
@@ -1743,13 +1789,13 @@ Figure&nbsp;5: Train and underground stations in London with a 500 metre buffer.
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./01-spatial.html" class="pagination-link" aria-label="Reproducible Spatial Analysis">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Reproducible Spatial Analysis</span>
+      <a href="./01-spatial.html" class="pagination-link" aria-label="1 Reproducible Spatial Analysis">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">1 Reproducible Spatial Analysis</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./03-point-pattern.html" class="pagination-link" aria-label="Point Pattern Analysis">
-        <span class="nav-page-text">Point Pattern Analysis</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./03-point-pattern.html" class="pagination-link" aria-label="3 Point Pattern Analysis">
+        <span class="nav-page-text">3 Point Pattern Analysis</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

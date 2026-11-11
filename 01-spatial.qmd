@@ -353,6 +353,11 @@ The `fill` parameter within `tm_polygons()` allows you to fill polygons with col
 - The name of a data variable within the spatial data file. This variable can either contain specific colour values or numeric/categorical values that will be mapped to a colour palette.
 :::
 
+::: {.callout-note .exercise icon=false}
+## Predict first
+Before you run the map below, decide where in London you expect the highest shares of European-born residents: the centre or the outskirts? Compare your guess with the map.
+:::
+
 Let us go ahead and pass our `prop_eur21` variable within the `fill` parameter and see what we get:
 
 ```{r tidy='styler'}
@@ -373,6 +378,11 @@ tm_shape(msoa21) +
 ```
 
 We are making progress, but there is still an issue with our map: the classification breaks do not adequately reflect the variation in our dataset. By default, `tmap` uses *pretty* breaks, which may not be the most effective for our data. An alternative, such as *natural breaks* (or *jenks*), might better reveal the data's variation.
+
+::: {.callout-note .exercise icon=false}
+## Predict first
+Before you run the histogram below, decide whether you expect the shares to be spread symmetrically around a typical value or to be strongly skewed, and roughly what that typical value is. Then check the histogram.
+:::
 
 To judge which classification method suits the data, it helps to look at how the values are distributed first. A histogram shows how many MSOAs fall within each range of values:
 
@@ -499,6 +509,11 @@ tm_scalebar(
   )
 
 ```
+
+::: {.callout-note .exercise icon=false}
+## Try it yourself
+Change `n = 5` to `n = 3` or `n = 9`, or replace `'jenks'` with `'quantile'`, and predict what happens to the map. Run the code and compare the result with your prediction.
+:::
 
 We can also have some map labels, if we want, by extracting centroids from selected polygons, here the MSOAs Camden 015 and Lambeth 025, and adding these as a separate map layer:
 
