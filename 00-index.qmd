@@ -68,7 +68,7 @@ This workbook is created using the [Quarto](https://quarto.org/) publishing syst
 - The [GEOG0030: Geocomputation 2023-2024](https://jtvandijk.github.io/GEOG0030_20232024/) workbook by [Justin van Dijk](https://www.mappingdutchman.com)
 - The [GEOG0030: Geocomputation 2022-2023](https://jtvandijk.github.io/GEOG0030_20222023/) workbook by [Justin van Dijk](https://www.mappingdutchman.com)
 - The [GEOG0030: Geocomputation 2021-2022](https://jtvandijk.github.io/GEOG0030_20212022/) workbook by [Justin van Dijk](https://www.mappingdutchman.com)
-- The [GEOG0030: Geocomputation 2020-2021](https://jo-wilkin.github.io/GEOG0030/coursebook/index.html) workbook by [Jo Wilkin](https://github.com/jo-wilkin)
+- The [GEOG0030: Geocomputation 2020-2021](https://jo-wilkin.github.io/GEOG0030/coursebook/index.html) workbook by [Dr Jo Wilkin](https://github.com/jo-wilkin)
 
 This year's workbook also takes inspiration and design elements from:
 
