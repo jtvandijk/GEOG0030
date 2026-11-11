@@ -25,10 +25,10 @@ main p {
 }
 
 .callout.exercise {
-  border-left-color: var(--main-color, var(--bs-primary)) !important;
-  background-color: color-mix(in srgb, var(--main-color, var(--bs-primary)) 5%, transparent);
+  border-left-color: var(--main-color, var(--bs-link-color)) !important;
+  background-color: color-mix(in srgb, var(--main-color, var(--bs-link-color)) 5%, transparent);
 }
 
 .callout.exercise .callout-title-container {
-  color: var(--main-color, var(--bs-primary));
+  color: var(--main-color, var(--bs-link-color));
 }
